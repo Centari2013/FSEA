@@ -31,7 +31,7 @@ class authenticate(QMainWindow):
 
         # make window borderless
         self.setWindowFlag(Qt.FramelessWindowHint)
-        #self.setWindowOpacity(0.85)
+        self.setWindowOpacity(0.85)
 
         class login_text_entry(QLineEdit):
             def __init__(self):
@@ -141,6 +141,15 @@ class authenticate(QMainWindow):
         main_window.setLayout(main_layout)
 
         self.setCentralWidget(main_window)
+        self.prevPos = self.pos()
+
+    def mousePressEvent(self, event):
+        self.prevPos = event.globalPos()
+
+    def mouseMoveEvent(self, event):
+        delta = QPoint(event.globalPos() - self.prevPos)
+        self.move(self.x() + delta.x(), self.y() + delta.y())
+        self.prevPos = event.globalPos()
 
 
 
