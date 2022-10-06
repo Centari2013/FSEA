@@ -2,7 +2,6 @@ import os.path
 import json
 from passlib.hash import bcrypt
 
-
 class userTable:
     def __init__(self):
         self.users = {}
