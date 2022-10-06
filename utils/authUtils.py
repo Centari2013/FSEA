@@ -1,6 +1,9 @@
 import os.path
 import json
+from random import randint
+
 from passlib.hash import bcrypt
+
 
 class userTable:
     def __init__(self):
@@ -49,3 +52,10 @@ class userTable:
 
     def clearUserTable(self):
         self.users.clear()
+
+
+def generateUID():
+    uid = randint(0, 99999999)
+    uid = str(uid)
+    uid = uid.zfill(8 - len(uid))
+    return uid
