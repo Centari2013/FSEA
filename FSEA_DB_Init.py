@@ -17,7 +17,6 @@ except:
     print("Employee table does not exist.")
 
 # create Employee table in db
-# TODO add CHECK constraints
 cur.execute('''create table Employee( 
                 empDep          TEXT CHECK(empDep IN ('SPEC-OP', 'EX-HEAD')),
                 empID           TEXT CHECK(LENGTH(empID) == 8) NOT NULL,
@@ -32,9 +31,9 @@ cur.execute('''create table Employee(
 con.commit()
 print('Employee table created.')
 
-data = [('SPEC-OP', '', 'CP', 'Prisca', 'Poteau', authUtils.generatePWD()),
-        ('SPEC-OP', '', 'ELEC-ENG', 'Revy', 'Sagan', authUtils.generatePWD()),
-        ('SPEC-OP', '', 'CHEM', 'Michael', 'Lowe', authUtils.generatePWD())]
+data = [('SPEC-OP', '', 'CP',       'Prisca',   'Poteau',   authUtils.generatePWD()),
+        ('SPEC-OP', '', 'ELEC-ENG', 'Revy',     'Sagan',    authUtils.generatePWD()),
+        ('SPEC-OP', '', 'CHEM',     'Michael',  'Lowe',     authUtils.generatePWD())]
 
 data = [list(row) for row in data]
 
