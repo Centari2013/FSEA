@@ -58,13 +58,14 @@ class userTable:
 def generateUID():
     uid = randint(0, 99999999)
     uid = str(uid)
-    uid = uid.zfill(8 - len(uid))
+
+    uid = uid.zfill(8)
     return uid
 
 
 def generatePWD():
     alphabet = string.ascii_letters + string.digits
-    password = ''.join(secrets.choice(alphabet) for i in range(8))
+    password = ''.join(secrets.choice(alphabet) for _ in range(8))
     password = password + '-'
-    password += ''.join(secrets.choice(alphabet) for i in range(8))
+    password += ''.join(secrets.choice(alphabet) for _ in range(8))
     return password
