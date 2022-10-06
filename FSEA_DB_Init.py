@@ -17,14 +17,14 @@ except:
     print("Employee table does not exist.")
 
 # create Employee table in db
-# TODO add CHECK contraint
+# TODO add CHECK constraints
 cur.execute('''create table Employee( 
                 empDep          TEXT CHECK(empDep IN ('SPEC-OP', 'EX-HEAD')),
-                empID           TEXT NOT NULL,
+                empID           TEXT CHECK(LENGTH(empID) == 8) NOT NULL,
                 designation     TEXT CHECK(designation IN ('CP', 'ELEC-ENG', 'PLAN-GEO', 'MECH-ENG', 'CHEM')),
-                FirstName       TEXT NOT NULL,
-                LastName        TEXT NOT NULL,
-                password        TEXT NOT NULL,
+                firstName       TEXT CHECK(LENGTH(firstName) <= 50) NOT NULL,
+                lastName        TEXT CHECK(LENGTH(lastName) <= 50)  NOT NULL,
+                password        TEXT CHECK(LENGTH(password) >= 8)   NOT NULL,
                 PRIMARY KEY (empDep, empID)
                 );''')
 
@@ -47,6 +47,7 @@ for row in data:
         cur.execute('select empID from Employee where empID = ?', [uid])
         query = cur.fetchone()
     row[1] = uid
+    print("UID: ", uid)
 
 data = [tuple(row) for row in data]
 
