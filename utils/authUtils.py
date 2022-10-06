@@ -1,7 +1,8 @@
 import os.path
 import json
 from random import randint
-
+import secrets
+import string
 from passlib.hash import bcrypt
 
 
@@ -59,3 +60,11 @@ def generateUID():
     uid = str(uid)
     uid = uid.zfill(8 - len(uid))
     return uid
+
+
+def generatePWD():
+    alphabet = string.ascii_letters + string.digits
+    password = ''.join(secrets.choice(alphabet) for i in range(8))
+    password = password + '-'
+    password += ''.join(secrets.choice(alphabet) for i in range(8))
+    return password
