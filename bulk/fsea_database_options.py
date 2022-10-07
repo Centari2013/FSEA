@@ -19,8 +19,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class database_options(QMainWindow):
 
-    #class searchResult(QTextBrowser):
-
+    # class searchResult(QTextBrowser):
 
     def __init__(self):
         super().__init__()
@@ -88,10 +87,10 @@ class database_options(QMainWindow):
         def minOrMax():
             if self.isMaximized():
                 self.showNormal()
-                #self.restoreButton.setStyleSheet("border-image: url(bulk/assets/restore.png);")
+                # self.restoreButton.setStyleSheet("border-image: url(bulk/assets/restore.png);")
             elif not self.isMaximized():
                 self.showMaximized()
-                #self.restoreButton.setStyleSheet("border-image: url(bulk/assets/maximize.png);")
+                # self.restoreButton.setStyleSheet("border-image: url(bulk/assets/maximize.png);")
 
         self.restoreButton.clicked.connect(minOrMax)
         self.restoreButton.setMinimumSize(QtCore.QSize(18, 18))
@@ -271,6 +270,3 @@ def test():
     options = database_options()
     options.show()
     app.exec()
-
-
-test()
