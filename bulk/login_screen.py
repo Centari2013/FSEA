@@ -1,17 +1,12 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from utils.authUtils import *
+from utils.authUtils import authenticate as auth
 
 
 def authentication(username, password):
     try:
-        # create user hash table from authUtils
-        users = userTable()
-        # load usernames and hashed passwords from json file
-        users.loadCredentials('data/users.json')
-
-        if users.authenticate(username, password):
+        if auth(username, password):
             print("AUTHENTICATION SUCCESSFUL")
             return True
         else:
