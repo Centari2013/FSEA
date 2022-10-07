@@ -1,61 +1,37 @@
-import os.path
-import json
+import sqlite3
 from random import randint
 import secrets
 import string
-from passlib.hash import bcrypt
+from utils import encryption
 
 
-class userTable:
-    def __init__(self):
-        self.users = {}
+def authenticate(user, pwd):
+    # TODO add exception handling
+    # encrypt username and password for comparison to encrypted database
+    user = str(encryption.cipher.encrypt(bytes(user, 'utf-8')).decode('utf-8'))
+    pwd = str(encryption.cipher.encrypt(bytes(pwd, 'utf-8')).decode('utf-8'))
 
-    def loadCredentials(self, filepath):
-        if os.path.exists(filepath):
-            dataFile = open(filepath, 'r')
-            self.users = json.load(dataFile)
+    # connnect to database
+    con = sqlite3.connect('FSEA.db')
+
+    cur = con.cursor()
+    cur.execute('select password from Employee where username = ? ', [user])
+
+    # get tuple containing singular password
+    p = cur.fetchone()
+    if p is not None:
+        # convert tuple to list and extract string by indexing
+        p = list(p)[0]
+        if pwd == p: # user authenticated
             return True
-        else:
+        else:  # password does not match user
+            # TODO implement login attempt counter
             return False
-
-    def authenticate(self, user, password):
-        if user.lower() in self.users:
-            if bcrypt.verify(bytes(password, 'utf-8'), bytes(self.users[user.lower()], 'utf-8')):
-                return True
-        return False  # wrong pass/ user does not exist
-
-    def addUser(self, user, password):
-        # user already exists
-        if user.lower() in self.users:
-            return False
-        # user does not exist
-        else:
-            self.users[user.lower()] = bcrypt.hash(password)
-        return True
-
-    def removeUser(self, user, password):
-        if self.authenticate(user, password):
-            del self.users[user.lower()]
-            return True
-        else:
-            return False
-
-    def changePassword(self, user, oldPass, newPass):
-        if self.authenticate(user, oldPass):
-            self.users[user.lower()] = bcrypt.hash(newPass)
-            return True
-        else:
-            return False
-
-    def writeCredentials(self, filepath):
-        with open(filepath, 'w+') as dataFile:
-            json.dump(self.users, dataFile)
-
-    def clearUserTable(self):
-        self.users.clear()
+    else: # user does not exist
+        return False
 
 
-def generateUID():
+def generateUID():  # generate random 8 digit str(int)
     uid = randint(0, 99999999)
     uid = str(uid)
 
@@ -63,7 +39,7 @@ def generateUID():
     return uid
 
 
-def generatePWD():
+def generatePWD():  # generate random temp password for new users
     alphabet = string.ascii_letters + string.digits
     password = ''.join(secrets.choice(alphabet) for _ in range(8))
     password = password + '-'
