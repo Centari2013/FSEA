@@ -15,8 +15,8 @@ The database query page is depicted below.
 ![image](https://user-images.githubusercontent.com/60724207/194465141-159120ce-4f40-4834-ac9c-f7ff7adf1069.png)
 
 ### TODO
-[] **implement database search page GUI**
-[] implement database search engine
-[] implement user permission levels
+- [ ] **implement database search page GUI**
+- [ ] implement database search engine
+- [ ] implement user permission levels
 
 **bolded tasks are being actively worked on*
