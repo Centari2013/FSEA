@@ -122,11 +122,11 @@ query = ['%s' % item for item in query]
 
 for e in query:
     username = generateUsername(e)
-    password = generatePWD()
+    password = str(encryption.cipher.encrypt(bytes(generatePWD(), 'utf-8')).decode('utf-8'))
 
     cur.execute('INSERT INTO Credentials (empID, username, password) VALUES(?, ?, ?)', (e, username, password))
 
-
+con.commit()
 print('Data inserted into Credentials table')
 
 # iterate over rows in table
@@ -142,6 +142,9 @@ print('\n')
 
 print('Credentials Table')
 for row in cur.execute('SELECT * FROM Credentials;'):
+    row = list(row)
+    row[1] = str(encryption.cipher.decrypt(bytes(row[1], 'utf-8')).encode('utf-8').decode('utf-8'))
+    row[2] = str(encryption.cipher.decrypt(bytes(row[2], 'utf-8')).encode('utf-8').decode('utf-8'))
     print(row)
 
 

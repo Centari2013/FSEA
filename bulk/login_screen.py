@@ -13,7 +13,7 @@ def authentication(username, password):
             print("AUTHENTICATION UNSUCCESSFUL")
             return False
 
-    except ValueError:
+    except:
         return False
 
 
@@ -69,7 +69,7 @@ class authenticate(QMainWindow):
         password.returnPressed.connect(lambda: auth(username.text(), password.text()))
 
         # make text labels for username / login text entry
-        username_text = login_text("Employee ID")
+        username_text = login_text("User")
         password_text = login_text("Passkey")
 
         # make label to hold logo
