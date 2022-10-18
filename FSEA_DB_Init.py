@@ -48,7 +48,7 @@ con.commit()
 cur.execute('''CREATE TABLE Employee( 
                 empDep          INT NOT NULL,
                 empID           TEXT NOT NULL,
-                designation     TEXT CHECK(designation IN ('CP', 'ELEC-ENG', 'PLAN-GEO', 'MECH-ENG', 'CHEM')),
+                designation     TEXT CHECK(designation IN ('ADMIN','CP', 'ELEC-ENG', 'PLAN-GEO', 'MECH-ENG', 'CHEM')),
                 firstName       TEXT CHECK(LENGTH(firstName) <= 50) NOT NULL,
                 lastName        TEXT CHECK(LENGTH(lastName) <= 50)  NOT NULL,
                 PRIMARY KEY (empID),
@@ -129,6 +129,29 @@ for e in query:
 con.commit()
 print('Data inserted into Credentials table')
 
+deptNum = 2
+idNum = '00000000'
+designation = 'ADMIN'
+firstName = b'Zaria'
+lastName = b'Burton'
+username = b'zburton_ADMIN'
+password = b'admin'
+loginAttempts = 0
+
+firstName = str(encryption.cipher.encrypt(firstName).decode('utf-8'))
+lastName = str(encryption.cipher.encrypt(lastName).decode('utf-8'))
+username = str(encryption.cipher.encrypt(username).decode('utf-8'))
+password = str(encryption.cipher.encrypt(password).decode('utf-8'))
+
+admin = (deptNum, idNum, designation, firstName, lastName)
+creds = (idNum, username, password, loginAttempts)
+
+cur.execute('INSERT INTO Employee VALUES (?,?,?,?,?)', admin)
+con.commit()
+cur.execute('INSERT INTO Credentials VALUES (?,?,?,?)', creds)
+con.commit()
+print('admin credentials added')
+
 # iterate over rows in table
 print('Department Table')
 for row in cur.execute('SELECT * FROM Department;'):
@@ -146,7 +169,6 @@ for row in cur.execute('SELECT * FROM Credentials;'):
     row[1] = str(encryption.cipher.decrypt(bytes(row[1], 'utf-8')).encode('utf-8').decode('utf-8'))
     row[2] = str(encryption.cipher.decrypt(bytes(row[2], 'utf-8')).encode('utf-8').decode('utf-8'))
     print(row)
-
 
 con.close()
 print('Connection closed.')
