@@ -32,7 +32,7 @@ class authenticate(QMainWindow):
             def __init__(self):
                 super().__init__()
                 self.setFixedWidth(150)
-                self.setFixedHeight(20)
+                self.setFixedHeight(25)
                 self.setAlignment(Qt.AlignVCenter)
                 self.setStyleSheet("QLineEdit {border-radius: 10px;"
                                    "border-left: 5px;"
