@@ -119,7 +119,7 @@ query = cur.fetchall()
 # convert list of tuples to list of strings
 query = ['%s' % item for item in query]
 
-# TODO FIX USERNAME GEN
+
 for e in query:
     username = generateUsername(e)
     password = generatePWD()

@@ -49,10 +49,15 @@ def generateUID():  # generate random 8 digit str(int)
     return uid
 
 
-def generateUsername(empID):  # TODO FIX USERNAME GEN
+def generateUsername(empID):
     def firstNLetters(s, n):
-        for i in range(0, n):
-            new_s = new_s + s[i]
+        new_s = ""
+        if len(s) >= n:
+            for i in range(0, n):
+                new_s = new_s + s[i]
+        else:
+            for i in range(0, len(s)):
+                new_s = new_s + s[i]
 
         return new_s
 
@@ -65,13 +70,14 @@ def generateUsername(empID):  # TODO FIX USERNAME GEN
         query = cur.fetchone()
         if query is not None:
             query = list(query)
-            firstName = str(encryption.cipher.decrypt(bytes(query[0], 'utf-8')).decode('utf-8'))
-            lastName = str(encryption.cipher.decrypt(bytes(query[1], 'utf-8')).decode('utf-8'))
+            firstName = str(encryption.cipher.decrypt(bytes(query[0], 'utf-8')).encode('utf-8').decode('utf-8'))
+            lastName = str(encryption.cipher.decrypt(bytes(query[1], 'utf-8')).encode('utf-8').decode('utf-8'))
             designation = query[2]
 
             username = (firstName[0] + firstNLetters(lastName, 8)).lower() + '_' + designation.upper()
-            username = str(encryption.cipher.encrypt(bytes(username, 'utf-8')).decode('utf-8'))
             print(username)
+            username = str(encryption.cipher.encrypt(bytes(username, 'utf-8')).decode('utf-8'))
+
             return username
 
     except:
