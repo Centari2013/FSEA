@@ -1,7 +1,6 @@
-from PyQt6.QtWidgets import *
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
-from bulk.baseWindows import draggableFrameless
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from utils.authUtils import authenticate as auth
 
 
@@ -18,7 +17,7 @@ def authentication(username, password):
         return False
 
 
-class authenticate(draggableFrameless):
+class authenticate(QMainWindow):
     def __init__(self, unlock_this, *args):
         super().__init__()
         self.setFixedSize(QSize(300, 375))
@@ -26,6 +25,7 @@ class authenticate(draggableFrameless):
         self.setWindowTitle("F-SEA Authentication")
 
         # make window borderless
+        self.setWindowFlag(Qt.FramelessWindowHint)
         self.setWindowOpacity(0.85)
 
         class login_text_entry(QLineEdit):
@@ -33,7 +33,7 @@ class authenticate(draggableFrameless):
                 super().__init__()
                 self.setFixedWidth(150)
                 self.setFixedHeight(25)
-                self.setAlignment(Qt.AlignmentFlag.AlignVCenter)
+                self.setAlignment(Qt.AlignVCenter)
                 self.setStyleSheet("QLineEdit {border-radius: 10px;"
                                    "border-left: 5px;"
                                    "border-right: 5px;"
@@ -65,7 +65,7 @@ class authenticate(draggableFrameless):
         username = login_text_entry()
         username.returnPressed.connect(lambda: auth(username.text(), password.text()))
         password = login_text_entry()
-        password.setEchoMode(QLineEdit.EchoMode.Password)
+        password.setEchoMode(2)
         password.returnPressed.connect(lambda: auth(username.text(), password.text()))
 
         # make text labels for username / login text entry
@@ -76,7 +76,7 @@ class authenticate(draggableFrameless):
         logo_label = QLabel()
         logo_pixmap = QPixmap('bulk/assets/F-SEAlogo.png')
         logo_label.setPixmap(logo_pixmap)
-        logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        logo_label.setAlignment(Qt.AlignCenter)
 
         # make window close button (because window is borderless)
         exit_button = QPushButton()
@@ -101,14 +101,14 @@ class authenticate(draggableFrameless):
         main_layout = QGridLayout()
         # make exit button container and add exit button to upper right
         exit_container = QVBoxLayout()
-        exit_container.addWidget(exit_button, alignment=(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop))
+        exit_container.addWidget(exit_button, alignment=(Qt.AlignRight | Qt.AlignTop))
         # make form container to hold login widgets
         form_container = QVBoxLayout()
 
         # holds exit button container
         main_layout.addLayout(exit_container, 0, 2, 3, 3)
         # holds login form
-        main_layout.addLayout(form_container, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
+        main_layout.addLayout(form_container, 1, 1, alignment=Qt.AlignCenter)
         # empty container for space on left
         main_layout.addLayout(QVBoxLayout(), 0, 0, 3, 3)
 
@@ -120,7 +120,7 @@ class authenticate(draggableFrameless):
         main_layout.setRowStretch(2, 1)
 
         # add form widgets to form container
-        form_container.addWidget(logo_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        form_container.addWidget(logo_label, alignment=Qt.AlignCenter)
         form_container.addWidget(username_text)
         form_container.addSpacing(2)
         form_container.addWidget(username)
@@ -128,16 +128,23 @@ class authenticate(draggableFrameless):
         form_container.addSpacing(2)
         form_container.addWidget(password)
         form_container.addSpacing(2)
-        form_container.addWidget(errorMsg, alignment=Qt.AlignmentFlag.AlignCenter)
-        form_container.addWidget(submit_button, alignment=Qt.AlignmentFlag.AlignCenter)
+        form_container.addWidget(errorMsg, alignment=Qt.AlignCenter)
+        form_container.addWidget(submit_button, alignment=Qt.AlignCenter)
 
         # make main window and set the main layout
         main_window = QWidget()
         main_window.setLayout(main_layout)
 
         self.setCentralWidget(main_window)
+        self.prevPos = self.pos()
 
+    def mousePressEvent(self, event):
+        self.prevPos = event.globalPos()
 
+    def mouseMoveEvent(self, event):
+        delta = QPoint(event.globalPos() - self.prevPos)
+        self.move(self.x() + delta.x(), self.y() + delta.y())
+        self.prevPos = event.globalPos()
 
 
 
