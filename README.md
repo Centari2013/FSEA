@@ -7,6 +7,7 @@ At this point in time, the program only authenticates users through a login page
 the database.
 
 The login screen is depicted below. (It is a semi-transparent window.)
+Test username & password: admin
 
 ![image](https://user-images.githubusercontent.com/60724207/194465001-7d667144-dffc-4b6a-8c1a-77b882d14c37.png)
 
