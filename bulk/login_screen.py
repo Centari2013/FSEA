@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
-from bulk.baseWindows import draggableFrameless
+from bulk.baseWindows import windowWithToolbar
 from utils.authUtils import authenticate as auth
 
 
@@ -18,12 +18,15 @@ def authentication(username, password):
         return False
 
 
-class authenticate(draggableFrameless):
+class authenticate(QMainWindow):
     def __init__(self, unlock_this, *args):
         super().__init__()
         self.setFixedSize(QSize(300, 375))
         self.setStyleSheet("background-color: #31353D;")
         self.setWindowTitle("F-SEA Authentication")
+        self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
+        self.setWindowModality(Qt.WindowModality.WindowModal)
+        self.prevPos = None
 
         # make window borderless
         self.setWindowOpacity(0.85)
@@ -137,7 +140,13 @@ class authenticate(draggableFrameless):
 
         self.setCentralWidget(main_window)
 
+    def mousePressEvent(self, event):
+        self.prevPos = event.globalPosition().toPoint()
 
+    def mouseMoveEvent(self, event):
+        delta = QPoint(event.globalPosition().toPoint() - self.prevPos)
+        self.move(self.x() + delta.x(), self.y() + delta.y())
+        self.prevPos = event.globalPosition().toPoint()
 
 
 
