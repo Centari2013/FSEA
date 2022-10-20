@@ -130,7 +130,7 @@ class windowWithToolbar(QMainWindow):
                 # TODO fix NoneType object return from clicked
                 clicked = self.childAt(QPoint(event.globalPosition().toPoint()))
                 self.move(clicked.mapFromGlobal(QPoint(event.globalPosition().toPoint())))
-            delta = QPoint(event.globalPosition().toPoint() - self.prevPos)
             '''
+            delta = QPoint(event.globalPosition().toPoint() - self.prevPos)
             self.move(self.x() + delta.x(), self.y() + delta.y())
             self.prevPos = event.globalPosition().toPoint()
