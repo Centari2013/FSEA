@@ -107,9 +107,30 @@ class windowWithToolbar(QMainWindow):
         self.titlebar.mouseMoveEvent = lambda event: self.toolbarMove(event)
 
     def toolbarClick(self, event):
-        self.prevPos = event.globalPosition().toPoint()
+        if self.exitButton.underMouse():
+            pass
+        elif self.minimizeButton.underMouse():
+            pass
+        elif self.restoreButton.underMouse():
+            pass
+        else:
+            self.prevPos = event.globalPosition().toPoint()
 
     def toolbarMove(self, event):
-        delta = QPoint(event.globalPosition().toPoint() - self.prevPos)
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.prevPos = event.globalPosition().toPoint()
+        if self.exitButton.underMouse():
+            pass
+        elif self.minimizeButton.underMouse():
+            pass
+        elif self.restoreButton.underMouse():
+            pass
+        else:
+            '''
+            if self.isMaximized():
+                self.showNormal()
+                # TODO fix NoneType object return from clicked
+                clicked = self.childAt(QPoint(event.globalPosition().toPoint()))
+                self.move(clicked.mapFromGlobal(QPoint(event.globalPosition().toPoint())))
+            delta = QPoint(event.globalPosition().toPoint() - self.prevPos)
+            '''
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.prevPos = event.globalPosition().toPoint()
