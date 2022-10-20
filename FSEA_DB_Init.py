@@ -134,7 +134,7 @@ idNum = '00000000'
 designation = 'ADMIN'
 firstName = b'Zaria'
 lastName = b'Burton'
-username = b'zburton_ADMIN'
+username = b'admin'
 password = b'admin'
 loginAttempts = 0
 

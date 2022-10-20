@@ -1,27 +1,24 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6 import QtCore, QtGui, QtWidgets
+from bulk.baseWindows import draggableFrameless
 
 
-class database_options(QMainWindow):
+class database_options(draggableFrameless):
 
     # class searchResult(QTextBrowser):
 
     def __init__(self):
         super().__init__()
-        self.setObjectName("MainWindow")
-        self.setWindowFlag(Qt.FramelessWindowHint)
-        self.setWindowModality(QtCore.Qt.WindowModal)
-        self.resize(550, 345)
 
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
 
         self.setMinimumSize(QtCore.QSize(550, 345))
-        self.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.setAutoFillBackground(False)
 
         self.centralwidget = QtWidgets.QWidget(self)
@@ -37,10 +34,10 @@ class database_options(QMainWindow):
 
         self.titlebar = QtWidgets.QFrame(self.centralwidget)
         self.titlebar.setMaximumSize(QtCore.QSize(16777215, 30))
-        self.titlebar.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.titlebar.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.titlebar.setStyleSheet("background-color: #31353D;\n"
                                     "color: white;")
-        self.titlebar.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.titlebar.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.titlebar.setObjectName("titlebar")
 
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.titlebar)
@@ -51,14 +48,14 @@ class database_options(QMainWindow):
         self.title.setObjectName("title")
         self.horizontalLayout.addWidget(self.title)
 
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
 
         self.minimizeButton = QtWidgets.QPushButton(self.titlebar)
         self.minimizeButton.clicked.connect(self.showMinimized)
         self.minimizeButton.setMinimumSize(QtCore.QSize(18, 18))
         self.minimizeButton.setMaximumSize(QtCore.QSize(18, 18))
-        self.minimizeButton.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.minimizeButton.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.minimizeButton.setStyleSheet("QPushButton { color: white;\n"
                                           "border-image: url(bulk/assets/minimize.png);"
                                           "background-color: #31353D;\n"
@@ -81,7 +78,7 @@ class database_options(QMainWindow):
         self.restoreButton.clicked.connect(minOrMax)
         self.restoreButton.setMinimumSize(QtCore.QSize(18, 18))
         self.restoreButton.setMaximumSize(QtCore.QSize(18, 18))
-        self.restoreButton.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.restoreButton.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.restoreButton.setStyleSheet("QPushButton { color: white;\n"
                                          "border-image: url(bulk/assets/maximize.png);"
                                          "background-color: #31353D;\n"
@@ -95,7 +92,7 @@ class database_options(QMainWindow):
         self.exitButton.clicked.connect(QCoreApplication.instance().quit)
         self.exitButton.setMinimumSize(QtCore.QSize(18, 18))
         self.exitButton.setMaximumSize(QtCore.QSize(18, 18))
-        self.exitButton.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.exitButton.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.exitButton.setStyleSheet("QPushButton { color: white;\n"
                                       "background-color: #31353D;\n"
                                       "border-image: url(bulk/assets/closeButton.png); }\n"
@@ -107,7 +104,7 @@ class database_options(QMainWindow):
         self.gridLayout_2.addWidget(self.titlebar, 0, 0, 1, 2)
 
         self.buttonFrame = QtWidgets.QFrame(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.buttonFrame.sizePolicy().hasHeightForWidth())
@@ -117,13 +114,13 @@ class database_options(QMainWindow):
         self.buttonFrame.setObjectName("buttonFrame")
 
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.buttonFrame)
-        self.verticalLayout_4.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
+        self.verticalLayout_4.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
         self.verticalLayout_4.setContentsMargins(9, 0, 9, 9)
         self.verticalLayout_4.setSpacing(9)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
 
         self.employeedbButton = QtWidgets.QPushButton("Employees")
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.employeedbButton.sizePolicy().hasHeightForWidth())
@@ -155,7 +152,7 @@ class database_options(QMainWindow):
         self.verticalLayout_4.addWidget(self.missiondbButton)
 
         self.departmentdbButton = QtWidgets.QPushButton("Departments")
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.departmentdbButton.sizePolicy().hasHeightForWidth())
@@ -171,8 +168,8 @@ class database_options(QMainWindow):
         self.gridLayout_2.addWidget(self.buttonFrame, 1, 0, 1, 1)
         self.searchFrame = QtWidgets.QFrame(self.centralwidget)
         self.searchFrame.setStyleSheet("background-color: #E3E4A;")
-        self.searchFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.searchFrame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.searchFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.searchFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.searchFrame.setObjectName("searchFrame")
 
         self.gridLayout = QtWidgets.QGridLayout(self.searchFrame)
@@ -194,8 +191,8 @@ class database_options(QMainWindow):
 
         self.scrollArea = QtWidgets.QScrollArea(self.searchFrame)
         self.scrollArea.setStyleSheet("")
-        self.scrollArea.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.scrollArea.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaLayout = QtWidgets.QWidget()
@@ -212,17 +209,17 @@ class database_options(QMainWindow):
         self.buttonSpacerFrame.setStyleSheet(" background-color: #31353d;")
         self.buttonSpacerFrame.setObjectName("buttonSpacerFrame")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.buttonSpacerFrame)
-        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
         self.verticalLayout.setContentsMargins(-1, -1, -1, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        spacerItem1 = QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        spacerItem1 = QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         self.verticalLayout.addItem(spacerItem1)
         self.gridLayout_2.addWidget(self.buttonSpacerFrame, 2, 0, 2, 1)
         self.footer = QtWidgets.QFrame(self.centralwidget)
         self.footer.setMaximumSize(QtCore.QSize(16777215, 10))
         self.footer.setStyleSheet("background-color: #E3E4EA;")
-        self.footer.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.footer.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.footer.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.footer.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.footer.setObjectName("footer")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.footer)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -232,23 +229,11 @@ class database_options(QMainWindow):
         self.sizeGrip = QSizeGrip(self)
 
         self.horizontalLayout_2.addWidget(self.sizeGrip)
-        self.gridLayout_2.addWidget(self.footer, 3, 1, 1, 1, QtCore.Qt.AlignRight)
+        self.gridLayout_2.addWidget(self.footer, 3, 1, 1, 1, QtCore.Qt.AlignmentFlag.AlignRight)
         self.setCentralWidget(self.centralwidget)
 
-        self.prevPos = self.pos()
+        self.prevPos = None
 
     # TODO fix drag and resize overlap
-    def mousePressEvent(self, event):
-        self.prevPos = event.globalPos()
-
-    def mouseMoveEvent(self, event):
-        if self.isMaximized():
-            self.showNormal()
-            clicked = self.childAt(QPoint(event.globalPos()))
-            self.move(clicked.mapFromGlobal(QPoint(event.globalPos())))
-
-        delta = QPoint(event.globalPos() - self.prevPos)
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.prevPos = event.globalPos()
 
 
