@@ -38,7 +38,6 @@ class windowWithToolbar(QMainWindow):
                                     "color: white;")
         self.titlebar.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.titlebar.setObjectName("titlebar")
-        self.titlebar.mousePressEvent = lambda event: print('here')
         self.gridLayout_2.addWidget(self.titlebar, 0, 0, 1, 2)
 
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.titlebar)
@@ -49,9 +48,10 @@ class windowWithToolbar(QMainWindow):
         self.title.setObjectName("title")
         self.horizontalLayout.addWidget(self.title)
 
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding,
+        self.spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding,
                                            QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
+        self.horizontalLayout.addItem(self.spacerItem)
+
 
         self.minimizeButton = QtWidgets.QPushButton(self.titlebar)
         self.minimizeButton.clicked.connect(self.showMinimized)
