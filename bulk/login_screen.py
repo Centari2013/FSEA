@@ -1,7 +1,6 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
-from bulk.baseWindows import windowWithToolbar
 from utils.authUtils import authenticate as auth
 
 
@@ -52,101 +51,111 @@ class authenticate(QMainWindow):
                 self.setStyleSheet("color: white")
                 self.setText(name)
         # make error message label
-        errorMsg = QLabel("Credentials not recognized.")
-        errorMsg.setStyleSheet("color: #E85D04;")
-        errorMsg.hide()
+        self.errorMsg = QLabel("Credentials not recognized.")
+        self.errorMsg.setStyleSheet("color: #E85D04;")
+        self.errorMsg.hide()
 
         def auth(user, pswd):
             good = authentication(user, pswd)
             if not good:
-                errorMsg.show()
+                self.errorMsg.show()
             else:
                 self.close()
                 unlock_this(*args)
 
         # make text entry for username and password / add functionality
-        username = login_text_entry()
-        username.returnPressed.connect(lambda: auth(username.text(), password.text()))
-        password = login_text_entry()
-        password.setEchoMode(QLineEdit.EchoMode.Password)
-        password.returnPressed.connect(lambda: auth(username.text(), password.text()))
+        self.username = login_text_entry()
+        self.username.returnPressed.connect(lambda: auth(self.username.text(), self.password.text()))
+        self.password = login_text_entry()
+        self.password.setEchoMode(QLineEdit.EchoMode.Password)
+        self.password.returnPressed.connect(lambda: auth(self.username.text(), self.password.text()))
 
         # make text labels for username / login text entry
-        username_text = login_text("User")
-        password_text = login_text("Passkey")
+        self.username_text = login_text("User")
+        self.password_text = login_text("Passkey")
 
         # make label to hold logo
-        logo_label = QLabel()
-        logo_pixmap = QPixmap('bulk/assets/F-SEAlogo.png')
-        logo_label.setPixmap(logo_pixmap)
-        logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.logo_label = QLabel()
+        self.logo_pixmap = QPixmap('bulk/assets/F-SEAlogo.png')
+        self.logo_label.setPixmap(self.logo_pixmap)
+        self.logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # make window close button (because window is borderless)
-        exit_button = QPushButton()
-        exit_button.clicked.connect(QCoreApplication.instance().quit)
-        exit_button.setFixedSize(18, 18)
-        exit_button.setStyleSheet("QPushButton { border-image: url(bulk/assets/closeButton.png);"
+        self.exit_button = QPushButton()
+        self.exit_button.clicked.connect(QCoreApplication.instance().quit)
+        self.exit_button.setFixedSize(18, 18)
+        self.exit_button.setStyleSheet("QPushButton { border-image: url(bulk/assets/closeButton.png);"
                                   "background-repeat: no-repeat; }"
                                   "QPushButton::pressed { background-color: #242830; }")
-        exit_button.setFlat(True)
+        self.exit_button.setFlat(True)
 
         # make submit button
-        submit_button = QPushButton("Authenticate")
-        submit_button.setFixedWidth(80)
-        submit_button.setFixedHeight(25)
-        submit_button.clicked.connect(lambda: auth(username.text(), password.text()))
-        submit_button.setStyleSheet("QPushButton { color: white;"
+        self.submit_button = QPushButton("Authenticate")
+        self.submit_button.setFixedWidth(80)
+        self.submit_button.setFixedHeight(25)
+        self.submit_button.clicked.connect(lambda: auth(self.username.text(), self.password.text()))
+        self.submit_button.setStyleSheet("QPushButton { color: white;"
                                     "background-color: #262829;"
                                     "border: none; }"
                                     "QPushButton::pressed { background-color: #111314; }")
 
         # make main_layout grid container to hold other layouts
-        main_layout = QGridLayout()
+        self.main_layout = QGridLayout()
         # make exit button container and add exit button to upper right
-        exit_container = QVBoxLayout()
-        exit_container.addWidget(exit_button, alignment=(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop))
+        self.exit_container = QVBoxLayout()
+        self.exit_container.addWidget(self.exit_button, alignment=(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop))
         # make form container to hold login widgets
-        form_container = QVBoxLayout()
+        self.form_container = QVBoxLayout()
 
         # holds exit button container
-        main_layout.addLayout(exit_container, 0, 2, 3, 3)
+        self.main_layout.addLayout(self.exit_container, 0, 2, 3, 3)
         # holds login form
-        main_layout.addLayout(form_container, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.main_layout.addLayout(self.form_container, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
         # empty container for space on left
-        main_layout.addLayout(QVBoxLayout(), 0, 0, 3, 3)
+        self.main_layout.addLayout(QVBoxLayout(), 0, 0, 3, 3)
 
         # make first column equal to width of third column to center login form horizontally
-        main_layout.setColumnStretch(0, 1)
-        main_layout.setColumnStretch(2, 1)
+        self.main_layout.setColumnStretch(0, 1)
+        self.main_layout.setColumnStretch(2, 1)
         # make first row equal to width of third row to center login form vertically
-        main_layout.setRowStretch(0, 1)
-        main_layout.setRowStretch(2, 1)
+        self.main_layout.setRowStretch(0, 1)
+        self.main_layout.setRowStretch(2, 1)
 
         # add form widgets to form container
-        form_container.addWidget(logo_label, alignment=Qt.AlignmentFlag.AlignCenter)
-        form_container.addWidget(username_text)
-        form_container.addSpacing(2)
-        form_container.addWidget(username)
-        form_container.addWidget(password_text)
-        form_container.addSpacing(2)
-        form_container.addWidget(password)
-        form_container.addSpacing(2)
-        form_container.addWidget(errorMsg, alignment=Qt.AlignmentFlag.AlignCenter)
-        form_container.addWidget(submit_button, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.form_container.addWidget(self.logo_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.form_container.addWidget(self.username_text)
+        self.form_container.addSpacing(2)
+        self.form_container.addWidget(self.username)
+        self.form_container.addWidget(self.password_text)
+        self.form_container.addSpacing(2)
+        self.form_container.addWidget(self.password)
+        self.form_container.addSpacing(2)
+        self.form_container.addWidget(self.errorMsg, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.form_container.addWidget(self.submit_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
         # make main window and set the main layout
-        main_window = QWidget()
-        main_window.setLayout(main_layout)
+        self.main_window = QWidget()
+        self.main_window.setLayout(self.main_layout)
 
-        self.setCentralWidget(main_window)
+        self.setCentralWidget(self.main_window)
 
     def mousePressEvent(self, event):
-        self.prevPos = event.globalPosition().toPoint()
+        if self.exit_button.underMouse():
+            pass
+        elif self.submit_button.underMouse():
+            pass
+        else:
+            self.prevPos = event.globalPosition().toPoint()
 
     def mouseMoveEvent(self, event):
-        delta = QPoint(event.globalPosition().toPoint() - self.prevPos)
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.prevPos = event.globalPosition().toPoint()
+        if self.exit_button.underMouse():
+            pass
+        elif self.submit_button.underMouse():
+            pass
+        else:
+            delta = QPoint(event.globalPosition().toPoint() - self.prevPos)
+            self.move(self.x() + delta.x(), self.y() + delta.y())
+            self.prevPos = event.globalPosition().toPoint()
 
 
 
