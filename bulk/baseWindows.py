@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-# TODO fix drag and button overlay
+
 class windowWithToolbar(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -49,9 +49,8 @@ class windowWithToolbar(QMainWindow):
         self.horizontalLayout.addWidget(self.title)
 
         self.spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding,
-                                           QtWidgets.QSizePolicy.Policy.Minimum)
+                                                QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(self.spacerItem)
-
 
         self.minimizeButton = QtWidgets.QPushButton(self.titlebar)
         self.minimizeButton.clicked.connect(self.showMinimized)
