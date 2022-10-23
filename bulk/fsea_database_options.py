@@ -4,10 +4,22 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from bulk.baseWindows import windowWithToolbar
 
 
+class searchResult(QtWidgets.QTextBrowser):
+    def __init__(self, parent):
+        super(searchResult, self).__init__(parent)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        self.setMinimumSize(QtCore.QSize(0, 75))
+        self.setMaximumSize(QtCore.QSize(16777215, 75))
+        self.setAutoFillBackground(False)
+        self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setObjectName("textBrowser_4")
+
+
 class database_options(windowWithToolbar):
-
-    # class searchResult(QTextBrowser):
-
     def __init__(self):
         super().__init__()
 
@@ -103,13 +115,29 @@ class database_options(windowWithToolbar):
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaLayout = QtWidgets.QWidget()
-        self.scrollAreaLayout.setLayout(QVBoxLayout())
-        self.scrollAreaLayout.setGeometry(QtCore.QRect(0, 0, 395, 260))
-        self.scrollAreaLayout.setObjectName("scrollAreaWidgetContents")
-        self.scrollArea.setWidget(self.scrollAreaLayout)
+        self.scrollAreaContents = QtWidgets.QWidget()
+        self.scrollAreaContents.setEnabled(True)
+        self.scrollAreaContents.setGeometry(QtCore.QRect(0, 0, 395, 660))
+        self.scrollAreaContents.setMinimumSize(QtCore.QSize(395, 0))
+        self.scrollAreaContents.setObjectName("scrollAreaWidgetContents")
 
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.scrollAreaContents)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.verticalFrame = QtWidgets.QFrame(self.scrollAreaContents)
+        self.verticalFrame.setObjectName("verticalFrame")
+
+        # vertical layout for scroll area
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalFrame)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+
+        # add search result to vertical layout
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setSpacing(10)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.verticalLayout_2.addWidget(searchResult(self.verticalFrame))
+        self.scrollArea.setWidget(self.scrollAreaContents)
         self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
+        self.verticalLayout_3.addWidget(self.verticalFrame, 0, QtCore.Qt.AlignmentFlag.AlignTop)
 
         self.gridLayout_2.addWidget(self.searchFrame, 1, 1, 2, 1)
         self.buttonSpacerFrame = QtWidgets.QFrame(self.centralwidget)
