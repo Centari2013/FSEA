@@ -17,7 +17,7 @@ The database query page is depicted below.
 
 ### Primary TODO
 - [ ] **implement database search engine**
-- [ ] implement database search page GUI
+- [ ] **implement database search page GUI**
 - [ ] implement user permission levels
 
 **bolded tasks are being actively worked on*
