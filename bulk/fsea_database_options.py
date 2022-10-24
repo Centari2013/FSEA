@@ -4,7 +4,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from bulk.baseWindows import windowWithToolbar
 
 
-class searchResult(QtWidgets.QTextBrowser):
+class searchResult(QtWidgets.QLabel):
     def __init__(self, parent):
         super(searchResult, self).__init__(parent)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
@@ -15,8 +15,34 @@ class searchResult(QtWidgets.QTextBrowser):
         self.setMinimumSize(QtCore.QSize(0, 75))
         self.setMaximumSize(QtCore.QSize(16777215, 75))
         self.setAutoFillBackground(False)
-        self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.setObjectName("textBrowser_4")
+        #self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setObjectName("search_label")
+        #self.setAcceptRichText(True)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.NoContextMenu)
+        self.setStyleSheet("border: 1px solid gray; padding: 6")
+        self.append_text()
+
+        #self.verticalScrollBar().setValue(self.verticalScrollBar().minimum())
+
+    def append_text(self):
+        text = '''Plain Text
+                <b>Bold</b>
+                <i>Italic</i>
+                <p style="color: red">Red</p>
+                <p style="font-size: 20px">20px</p>
+                <a href="https://www.google.com">Google</a>'''
+        self.setText(text)
+
+    def clear_text(self):
+        self.clear()
+
+    def mouseMoveEvent(self):
+        if self.underMouse():
+            self.setStyleSheet("border: 1px solid blue"
+                               "; padding: 6")
+    def wheelEvent(self, event):
+        if event.type() == QtCore.QEvent.Type.Wheel:
+            event.ignore()
 
 
 class database_options(windowWithToolbar):
@@ -134,6 +160,8 @@ class database_options(windowWithToolbar):
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setSpacing(10)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+
+        # add search result text browser to vertical layout
         self.verticalLayout_2.addWidget(searchResult(self.verticalFrame))
         self.scrollArea.setWidget(self.scrollAreaContents)
         self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
