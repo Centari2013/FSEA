@@ -13,7 +13,7 @@ Test username & password: admin
 
 The database query page is depicted below.
 
-![image](https://user-images.githubusercontent.com/60724207/194465141-159120ce-4f40-4834-ac9c-f7ff7adf1069.png)
+![image](https://user-images.githubusercontent.com/60724207/197868520-716f5b72-426c-4a07-b96d-2ded58b8b7ed.png)
 
 ### Primary TODO
 - [ ] **implement database search engine**
