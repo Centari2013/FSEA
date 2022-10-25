@@ -4,17 +4,42 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from bulk.baseWindows import windowWithToolbar
 
 
-class ElidedLabel(QLabel):
+class elidedLabel(QLabel):
     def __init__(self, parent):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
-
 
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
         metrics = QtGui.QFontMetrics(self.font())
         elided = metrics.elidedText(self.text(), Qt.TextElideMode.ElideRight, self.width())
         painter.drawText(self.rect(), self.alignment(), elided)
+
+
+class clickableLabel(QLabel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setStyleSheet('border: 0px; padding: 0px;')
+
+    def enterEvent(self, event):
+        palette = self.palette()
+        palette.setColor(self.backgroundRole(), QtGui.QColor('blue'))
+        palette.setColor(self.foregroundRole(), QtGui.QColor('blue'))
+        self.setPalette(palette)
+
+        f = QtGui.QFont()
+        f.setUnderline(True)
+        self.setFont(f)
+
+    def leaveEvent(self, event):
+        palette = self.palette()
+        palette.setColor(self.backgroundRole(), QtGui.QColor('black'))
+        palette.setColor(self.foregroundRole(), QtGui.QColor('black'))
+        self.setPalette(palette)
+
+        f = QtGui.QFont()
+        f.setUnderline(False)
+        self.setFont(f)
 
 
 class searchResult(QFrame):
@@ -34,10 +59,10 @@ class searchResult(QFrame):
 
         self.gridLayout = QGridLayout(parent)
 
-        self.id = ElidedLabel('00000000')
-        self.lastName = ElidedLabel('Last Name: {}'.format('Burton'))
-        self.firstName = ElidedLabel('First Name: {}'.format('Zaria'))
-        self.description = ElidedLabel('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas at eros '
+        self.id = clickableLabel('00000000')
+        self.lastName = elidedLabel('Last Name: {}'.format('Burton'))
+        self.firstName = elidedLabel('First Name: {}'.format('Zaria'))
+        self.description = elidedLabel('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas at eros '
                                        'metus. Nulla dui enim, scelerisque vel lectus in, ullamcorper finibus enim. '
                                        'Praesent condimentum pharetra fermentum. Integer in consectetur metus. '
                                        'Suspendisse potenti. Cras elit lacus, posuere quis risus a, pellentesque '
@@ -57,12 +82,13 @@ class searchResult(QFrame):
         self.gridLayout.setColumnStretch(2, 8)
 
         self.setLayout(self.gridLayout)
-
+    '''
     def enterEvent(self, enter):
         self.setStyleSheet("border: 1px solid blue; padding: 6; ")
 
     def leaveEvent(self, event):
         self.setStyleSheet("border: 1px solid gray; padding: 6;")
+    '''
 
 
 class database_options(windowWithToolbar):
@@ -218,4 +244,3 @@ class database_options(windowWithToolbar):
         self.setCentralWidget(self.centralwidget)
 
         self.prevPos = None
-
