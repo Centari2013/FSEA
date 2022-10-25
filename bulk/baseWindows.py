@@ -128,7 +128,7 @@ class windowWithToolbar(QMainWindow):
                 self.showNormal()
                 w = self.titlebar.geometry().width()
                 h = self.titlebar.frameGeometry().height()
-                self.move(QPoint(self.prevPos.x() - (0.2 * w), self.prevPos.y() - (0.2 * h)))
+                self.move(QPoint(int(self.prevPos.x() - (0.2 * w)), int(self.prevPos.y() - (0.2 * h))))
 
             delta = QPoint(event.globalPosition().toPoint() - self.prevPos)
             self.move(self.x() + delta.x(), self.y() + delta.y())
