@@ -4,7 +4,20 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from bulk.baseWindows import windowWithToolbar
 
 
-class searchResult(QtWidgets.QLabel):
+class ElidedLabel(QLabel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setStyleSheet('border: 0px; padding: 0px;')
+
+
+    def paintEvent(self, event):
+        painter = QtGui.QPainter(self)
+        metrics = QtGui.QFontMetrics(self.font())
+        elided = metrics.elidedText(self.text(), Qt.TextElideMode.ElideRight, self.width())
+        painter.drawText(self.rect(), self.alignment(), elided)
+
+
+class searchResult(QFrame):
     def __init__(self, parent):
         super(searchResult, self).__init__(parent)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
@@ -12,37 +25,38 @@ class searchResult(QtWidgets.QLabel):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QtCore.QSize(0, 75))
-        self.setMaximumSize(QtCore.QSize(16777215, 75))
+        self.setMinimumSize(QtCore.QSize(0, 90))
+        self.setMaximumSize(QtCore.QSize(16777215, 90))
         self.setAutoFillBackground(False)
-        #self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.setObjectName("search_label")
-        #self.setAcceptRichText(True)
-        self.setContextMenuPolicy(Qt.ContextMenuPolicy.NoContextMenu)
-        self.setStyleSheet("border: 1px solid gray; padding: 6")
-        self.append_text()
+        self.setStyleSheet("border: 1px solid gray; padding: 6;")
 
-        #self.verticalScrollBar().setValue(self.verticalScrollBar().minimum())
+        self.gridLayout = QGridLayout(parent)
 
-    def append_text(self):
-        text = '''Plain Text
-                <b>Bold</b>
-                <i>Italic</i>
-                <p style="color: red">Red</p>
-                <p style="font-size: 20px">20px</p>
-                <a href="https://www.google.com">Google</a>'''
-        self.setText(text)
+        self.id = ElidedLabel('00000000')
+        self.lastName = ElidedLabel('Last Name: Burton')
+        self.firstName = ElidedLabel('First Name: Zaria')
+        self.description = ElidedLabel('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas at eros metus. Nulla dui enim, scelerisque vel lectus in, ullamcorper finibus enim. Praesent condimentum pharetra fermentum. Integer in consectetur metus. Suspendisse potenti. Cras elit lacus, posuere quis risus a, pellentesque mollis leo. Nam mollis enim quis lacinia finibus. Donec blandit dignissim tincidunt. Etiam ut est tellus. In suscipit laoreet feugiat. Curabitur finibus id elit in maximus. Donec mi tellus, tincidunt in pharetra nec, euismod nec dui. Sed tincidunt est id ligula blandit, at dictum enim tincidunt. Quisque hendrerit massa et sapien scelerisque aliquet.')
 
-    def clear_text(self):
-        self.clear()
+        self.gridLayout.addWidget(self.id, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(self.lastName, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(self.firstName, 1, 1, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(self.description, 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
-    def mouseMoveEvent(self):
-        if self.underMouse():
-            self.setStyleSheet("border: 1px solid blue"
-                               "; padding: 6")
-    def wheelEvent(self, event):
-        if event.type() == QtCore.QEvent.Type.Wheel:
-            event.ignore()
+        self.gridLayout.setColumnStretch(0, 1)
+        self.gridLayout.setColumnStretch(1, 20)
+        self.gridLayout.setColumnStretch(2, 8)
+
+        self.setLayout(self.gridLayout)
+
+    def enterEvent(self, enter):
+        self.setStyleSheet("border: 1px solid blue; padding: 6; ")
+
+    def leaveEvent(self, event):
+        self.setStyleSheet("border: 1px solid gray; padding: 6;")
+
+
 
 
 class database_options(windowWithToolbar):
