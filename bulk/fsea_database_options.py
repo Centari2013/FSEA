@@ -35,9 +35,17 @@ class searchResult(QFrame):
         self.gridLayout = QGridLayout(parent)
 
         self.id = ElidedLabel('00000000')
-        self.lastName = ElidedLabel('Last Name: Burton')
-        self.firstName = ElidedLabel('First Name: Zaria')
-        self.description = ElidedLabel('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas at eros metus. Nulla dui enim, scelerisque vel lectus in, ullamcorper finibus enim. Praesent condimentum pharetra fermentum. Integer in consectetur metus. Suspendisse potenti. Cras elit lacus, posuere quis risus a, pellentesque mollis leo. Nam mollis enim quis lacinia finibus. Donec blandit dignissim tincidunt. Etiam ut est tellus. In suscipit laoreet feugiat. Curabitur finibus id elit in maximus. Donec mi tellus, tincidunt in pharetra nec, euismod nec dui. Sed tincidunt est id ligula blandit, at dictum enim tincidunt. Quisque hendrerit massa et sapien scelerisque aliquet.')
+        self.lastName = ElidedLabel('Last Name: {}'.format('Burton'))
+        self.firstName = ElidedLabel('First Name: {}'.format('Zaria'))
+        self.description = ElidedLabel('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas at eros '
+                                       'metus. Nulla dui enim, scelerisque vel lectus in, ullamcorper finibus enim. '
+                                       'Praesent condimentum pharetra fermentum. Integer in consectetur metus. '
+                                       'Suspendisse potenti. Cras elit lacus, posuere quis risus a, pellentesque '
+                                       'mollis leo. Nam mollis enim quis lacinia finibus. Donec blandit dignissim '
+                                       'tincidunt. Etiam ut est tellus. In suscipit laoreet feugiat. Curabitur '
+                                       'finibus id elit in maximus. Donec mi tellus, tincidunt in pharetra nec, '
+                                       'euismod nec dui. Sed tincidunt est id ligula blandit, at dictum enim '
+                                       'tincidunt. Quisque hendrerit massa et sapien scelerisque aliquet.')
 
         self.gridLayout.addWidget(self.id, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
         self.gridLayout.addWidget(self.lastName, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
@@ -55,8 +63,6 @@ class searchResult(QFrame):
 
     def leaveEvent(self, event):
         self.setStyleSheet("border: 1px solid gray; padding: 6;")
-
-
 
 
 class database_options(windowWithToolbar):
