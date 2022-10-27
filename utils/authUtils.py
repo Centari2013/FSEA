@@ -75,7 +75,6 @@ def generateUsername(empID):
             designation = query[2]
 
             username = (firstName[0] + firstNLetters(lastName, 8)).lower() + '_' + designation.upper()
-            print(username)
             username = str(encryption.cipher.encrypt(bytes(username, 'utf-8')).decode('utf-8'))
 
             return username
