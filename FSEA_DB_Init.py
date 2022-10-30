@@ -9,23 +9,51 @@ con = sqlite3.connect('FSEA.db')
 # create cursor for statement execution
 cur = con.cursor()
 
-# drop Department table from database if it exists
+# drop SpecimenMedical table from database if it exists
 try:
-    con.execute('DROP TABLE Department')
+    con.execute('''DROP TABLE SpecimenMedical''')
     con.commit()
-    print('Department table dropped\n')
+    print('SpecimenMedical table dropped\n')
 
 except:
-    print('Department table does not exist\n')
+    print('SpecimenMedical table does not exist\n')
 
-# drop Employee table from database if it exists
+# drop Origin table from database if it exists
 try:
-    con.execute('''DROP TABLE Employee''')
+    con.execute('''DROP TABLE Origin''')
     con.commit()
-    print('Employee table dropped\n')
+    print('Origin table dropped\n')
 
 except:
-    print('Employee table does not exist\n')
+    print('Origin table does not exist\n')
+
+# drop Mission table from database if it exists
+try:
+    con.execute('''DROP TABLE Mission''')
+    con.commit()
+    print('Mission table dropped\n')
+
+except:
+    print('Mission table does not exist\n')
+
+# drop Specimen table from database if it exists
+try:
+    con.execute('''DROP TABLE Specimen''')
+    con.commit()
+    print('Specimen table dropped\n')
+
+except:
+    print('Specimen table does not exist\n')
+
+# drop Credentials table from database if it exists
+try:
+    con.execute('DROP TABLE Credentials')
+    con.commit()
+    print('Credentials table dropped\n')
+
+except:
+    print('Credentials table does not exist\n')
+
 
 # drop EmployeeMedical table from database if it exists
 try:
@@ -36,14 +64,35 @@ try:
 except:
     print('EmployeeMedical table does not exist\n')
 
-# drop Credentials table from database if it exists
+
+# drop Employee table from database if it exists
 try:
-    con.execute('DROP TABLE Credentials')
+    con.execute('''DROP TABLE Employee''')
     con.commit()
-    print('Credentials table dropped\n')
+    print('Employee table dropped\n')
 
 except:
-    print('Credentials table does not exist\n')
+    print('Employee table does not exist\n')
+
+
+# drop Department table from database if it exists
+try:
+    con.execute('DROP TABLE Department')
+    con.commit()
+    print('Department table dropped\n')
+
+except:
+    print('Department table does not exist\n')
+
+# drop EmployeeSpecimen table from database if it exists
+try:
+    con.execute('''DROP TABLE EmployeeSpecimen''')
+    con.commit()
+    print('EmployeeSpecimen table dropped\n')
+
+except:
+    print('EmployeeSpecimem table does not exist\n')
+
 
 # create Department table
 cur.execute('''CREATE TABLE Department(
@@ -215,7 +264,62 @@ cur.execute('INSERT INTO Employee VALUES (?,?,?,?,?,?,NULL)', admin)
 con.commit()
 cur.execute('INSERT INTO Credentials VALUES (?,?,?,?)', creds)
 con.commit()
-print('Admin credentials added')
+print('Admin credentials added\n')
+
+cur.execute('''CREATE TABLE Origin(
+                originID    TEXT NOT NULL,
+                name        TEXT NOT NULL,
+                missionID   TEXT NOT NULL,
+                description TEXT NOT NULL,
+                PRIMARY KEY (originID)
+                );''')
+con.commit()
+
+cur.execute('''CREATE TABLE Mission(
+                missionID       TEXT NOT NULL,
+                name            TEXT NOT NULL,
+                originID        TEXT NOT NULL,
+                startDate       TEXT DEFAULT NULL,
+                endDate         TEXT DEFAULT NULL,
+                captainID       TEXT NOT NULL,
+                supervisorID    TEXT NOT NULL,
+                description     TEXT NOT NULL,
+                PRIMARY KEY (originID),
+                FOREIGN KEY (captainID) REFERENCES Employee(empID),
+                FOREIGN KEY (supervisorID) REFERENCES Employee(empID)
+                );''')
+con.commit()
+
+cur.execute('''CREATE TABLE Specimen(
+                specimenID  TEXT NOT NULL,
+                name        TEXT NOT NULL,
+                origin      TEXT NOT NULL,
+                mission     TEXT NOT NULL,
+                threatLevel REAL DEFAULT NULL,
+                dob         TEXT NOT NULL,
+                notes       TEXT DEFAULT NULL,
+               PRIMARY KEY (specimenID),
+               CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
+               CONSTRAINT missionID FOREIGN KEY (mission) REFERENCES Mission(missionID) ON DELETE CASCADE
+               );''')
+con.commit()
+
+cur.execute('''CREATE TABLE EmployeeSpecimen(
+                empID       TEXT NOT NULL,
+                specimenID  TEXT NOT NULL,
+               PRIMARY KEY (empID, specimenID),
+               CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE, 
+               CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
+               );''')
+con.commit()
+
+cur.execute('''CREATE TABLE SpecimenMedical(
+                specimenID  TEXT NOT NULL,
+                bloodtype   TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')) NOT NULL,
+                sex         TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')) NOT NULL,
+                kilograms   REAL DEFAULT NULL,
+                notes       TEXT DEFAULT NULL
+                );''')
 
 # iterate over rows in table
 print('Department Table')

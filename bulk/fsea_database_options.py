@@ -43,8 +43,8 @@ class clickableLabel(QLabel):
 
 
 class searchResult(QFrame):
-    def __init__(self, parent):
-        super(searchResult, self).__init__(parent)
+    def __init__(self, parent=None, ID='', lastName='', firstName='', description=''):
+        super(searchResult, self).__init__(parent=None)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -59,29 +59,22 @@ class searchResult(QFrame):
 
         self.gridLayout = QGridLayout(parent)
 
-        self.id = clickableLabel('00000000')
-        self.lastName = elidedLabel('Last Name: {}'.format('Burton'))
-        self.firstName = elidedLabel('First Name: {}'.format('Zaria'))
-        self.description = elidedLabel('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas at eros '
-                                       'metus. Nulla dui enim, scelerisque vel lectus in, ullamcorper finibus enim. '
-                                       'Praesent condimentum pharetra fermentum. Integer in consectetur metus. '
-                                       'Suspendisse potenti. Cras elit lacus, posuere quis risus a, pellentesque '
-                                       'mollis leo. Nam mollis enim quis lacinia finibus. Donec blandit dignissim '
-                                       'tincidunt. Etiam ut est tellus. In suscipit laoreet feugiat. Curabitur '
-                                       'finibus id elit in maximus. Donec mi tellus, tincidunt in pharetra nec, '
-                                       'euismod nec dui. Sed tincidunt est id ligula blandit, at dictum enim '
-                                       'tincidunt. Quisque hendrerit massa et sapien scelerisque aliquet.')
+        self.id = ID
+        self.lastName = lastName
+        self.firstName = firstName
+        self.description = description
 
-        self.gridLayout.addWidget(self.id, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(self.lastName, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(self.firstName, 1, 1, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(self.description, 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(clickableLabel(self.id), 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(elidedLabel('Last Name: {}'.format(self.lastName)), 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(elidedLabel('First Name: {}'.format(self.firstName)), 1, 1, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(elidedLabel(self.description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
         self.gridLayout.setColumnStretch(0, 1)
         self.gridLayout.setColumnStretch(1, 20)
         self.gridLayout.setColumnStretch(2, 8)
 
         self.setLayout(self.gridLayout)
+
     '''
     def enterEvent(self, enter):
         self.setStyleSheet("border: 1px solid blue; padding: 6; ")
@@ -208,7 +201,7 @@ class database_options(windowWithToolbar):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
 
         # add search result text browser to vertical layout
-        self.verticalLayout_2.addWidget(searchResult(self.verticalFrame))
+
         self.scrollArea.setWidget(self.scrollAreaContents)
         self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
         self.verticalLayout_3.addWidget(self.verticalFrame, 0, QtCore.Qt.AlignmentFlag.AlignTop)
@@ -244,3 +237,8 @@ class database_options(windowWithToolbar):
         self.setCentralWidget(self.centralwidget)
 
         self.prevPos = None
+        self.addSearchResult(searchResult())
+
+    def addSearchResult(self, result):
+        self.verticalLayout_2.addWidget(searchResult(result))
+
