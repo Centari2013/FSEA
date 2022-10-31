@@ -310,25 +310,28 @@ cur.executemany('INSERT INTO Mission VALUES(?,?,?,?,?,?,?,?)', missions)
 con.commit()
 print('Data inserted into Mission table')
 
-#cur.execute('''UPDATE Origin
-#                SET missionID = (SELECT missionID
-#                                    FROM Mission
- #                                   WHERE originID = Origin.originID
- #           )''')
+cur.execute('''UPDATE Origin
+                SET missionID = (SELECT missionID
+                                    FROM Mission
+                                   WHERE originID = Origin.originID
+           )''')
+
 
 cur.execute('''CREATE TABLE Specimen(
                 specimenID  TEXT NOT NULL,
                 name        TEXT NOT NULL,
-                origin      TEXT NOT NULL,
-                mission     TEXT NOT NULL,
+                origin      TEXT DEFAULT 'unknown',
+                mission     TEXT DEFAULT 'N/A',
                 threatLevel REAL DEFAULT NULL,
-                dob         TEXT NOT NULL,
-                notes       TEXT DEFAULT NULL,
+                dob         TEXT DEFAULT 'unknown',
+                notes       TEXT DEFAULT 'No Notes',
                PRIMARY KEY (specimenID),
                CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
                CONSTRAINT missionID FOREIGN KEY (mission) REFERENCES Mission(missionID) ON DELETE CASCADE
                );''')
 con.commit()
+
+cur.execute('INSERT INTO Specimen(specimenID, name, notes) VALUES(?,?,?)', (generateUID(), 'Massimo', 'member of 0'))
 
 cur.execute('''CREATE TABLE EmployeeSpecimen(
                 empID       TEXT NOT NULL,
