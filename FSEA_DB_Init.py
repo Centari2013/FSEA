@@ -137,7 +137,7 @@ cur.execute('''CREATE TABLE EmployeeMedical(
                 sex             TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')) NOT NULL,
                 kilograms       REAL DEFAULT NULL,
                 height          REAL DEFAULT NULL,
-                notes           TEXT DEFAULT NULL,
+                notes           TEXT DEFAULT 'No Notes',
                 PRIMARY KEY (empID),
                 FOREIGN KEY (empID) REFERENCES Employee(empID)
                 );''')
@@ -145,33 +145,33 @@ cur.execute('''CREATE TABLE EmployeeMedical(
 con.commit()
 print('EmployeeMedical table created\n')
 
-employees = [[1, '', 'CP',      'Prisca',   'Poteau',   datetime.date(2071, 9, 19),     None],
-             [1, '', 'ENG',     'Revy',     'Sagan',    datetime.date(2072, 6, 30),     None],
-             [1, '', 'CHEM',    'Michael',  'Lowe',     datetime.date(2056, 7, 25),     None],
-             [1, '', 'ENG',     'Benjamin', 'Colson',   datetime.date(2047, 4, 15),     None],
-             [1, '', 'BIO',     'Mingmei',  'Gao',      datetime.date(2061, 12, 3),     None],
-             [1, '', 'GEO',     'Abdul',    'Said',     datetime.date(2061, 12, 3),     None],
-             [1, '', 'SUPER',   'Historia', 'Lowe',     datetime.date(2038, 1, 31),     None],
-             [2, '', 'SUPER',   'Jurio',    'Caldero',  datetime.date(2042, 6, 30),     None],
-             [1, '', 'SOLDIER', 'Joseph',   'Smith',    datetime.date(2060, 11, 12),    None],
-             [2, '', 'SUPER',   'Markus',   'Belcost',  datetime.date(2067, 6, 8),      None],
-             [2, '', 'SOLDIER', 'Aurelis',  'Dreymond', datetime.date(2075, 12, 13),    None],
-             [2, '', 'SOLDIER', 'Quani',    'Dreymond', datetime.date(2075, 12, 13),    None],
-             [1, '', 'TECH',    'Daryl',    'Belcost',  datetime.date(2071, 3, 16),     None]]
+employees = [[1, '', 'CP',      'Prisca',   'Poteau',   datetime.date(2071, 9, 19)  ],
+             [1, '', 'ENG',     'Revy',     'Sagan',    datetime.date(2072, 6, 30)  ],
+             [1, '', 'CHEM',    'Michael',  'Lowe',     datetime.date(2056, 7, 25)  ],
+             [1, '', 'ENG',     'Benjamin', 'Colson',   datetime.date(2047, 4, 15)  ],
+             [1, '', 'BIO',     'Mingmei',  'Gao',      datetime.date(2061, 12, 3)  ],
+             [1, '', 'GEO',     'Abdul',    'Said',     datetime.date(2061, 12, 3)  ],
+             [1, '', 'SUPER',   'Historia', 'Lowe',     datetime.date(2038, 1, 31)  ],
+             [2, '', 'SUPER',   'Jurio',    'Caldero',  datetime.date(2042, 6, 30)  ],
+             [1, '', 'SOLDIER', 'Joseph',   'Smith',    datetime.date(2060, 11, 12) ],
+             [2, '', 'SUPER',   'Markus',   'Belcost',  datetime.date(2067, 6, 8)   ],
+             [2, '', 'SOLDIER', 'Aurelis',  'Dreymond', datetime.date(2075, 12, 13) ],
+             [2, '', 'SOLDIER', 'Quani',    'Dreymond', datetime.date(2075, 12, 13) ],
+             [1, '', 'TECH',    'Daryl',    'Belcost',  datetime.date(2071, 3, 16)  ]]
 
-medicalData = [['', datetime.date(2052, 10, 15),    'undefined',    'female',   85.3,   177.8,  None],
+medicalData = [['', datetime.date(2052, 10, 15),    'undefined',    'female',   85.3,   177.8],
                ['', datetime.date(2053, 3, 7),      'V-',           'female',   75.7,   158.75, 'monitoring hemochromia'],
                ['', datetime.date(2040, 7, 24),     'B+',           'male',     87.1,   182.88, '8th regen cycle'],
-               ['', datetime.date(2019, 9, 22),     'O+',           'inter',    95.3,   177.8,  None],
+               ['', datetime.date(2019, 9, 22),     'O+',           'inter',    95.3,   177.8],
                ['', datetime.date(2038, 5, 9),      'AB+',          'female',   59.9,   166.37, 'pregnant'],
-               ['', datetime.date(2041, 5, 9),      'A+',           'male',     78.5,   185.42, None],
+               ['', datetime.date(2041, 5, 9),      'A+',           'male',     78.5,   185.42],
                ['', datetime.date(2024, 12, 25),    'AB-',          'female',   70.3,   170.18, '3rd regen cycle'],
                ['', datetime.date(2022, 9, 1),      'A-',           'male',     88.5,   186.69, '2nd regen cycle'],
-               ['', datetime.date(2042, 5, 15),     'O-',           'male',     90.7,   175.26, None],
+               ['', datetime.date(2042, 5, 15),     'O-',           'male',     90.7,   175.26],
                ['', datetime.date(2052, 1, 1),      'undefined',    'male',     72.1,   473.99, 'dormant massimonia'],
-               ['', None,                           'undefined',    'female',   81.6,   186.69, None],
-               ['', None,                           'undefined',    'female',   77.6,   177.8,  None],
-               ['', None,                           'BF',           'male',     113.4,  180.34, 'has gained sentience']]
+               ['', 'undefined',    'female',   81.6,   186.69],
+               ['', 'undefined',    'female',   77.6,   177.8],
+               ['', 'BF',           'male',     113.4,  180.34, 'has gained sentience']]
 
 # generate random empID for each employee
 for i in range(len(employees)):
@@ -192,8 +192,7 @@ for i in range(len(employees)):
 
     medicalData[i][0] = uid
 
-    data = medicalData[i][6]
-    if data is not None:
+    if len(medicalData[i]) > 6:
         medicalData[i][6] = str(encryption.cipher.encrypt(bytes(medicalData[i][6], 'utf-8')).decode('utf-8'))
 
 
@@ -201,10 +200,13 @@ employees = [tuple(row) for row in employees]
 medicalData = [tuple(row) for row in medicalData]
 
 # populate Employee table & EmployeeMedical table
-cur.executemany('INSERT INTO Employee VALUES(?,?,?,?,?,?,?);', employees)
+cur.executemany('INSERT INTO Employee(empDep, empID, designation, firstName, lastName, startDate) VALUES(?,?,?,?,?,?);', employees)
 con.commit()
 print('Data inserted into Employee table\n')
-cur.executemany('INSERT INTO EmployeeMedical VALUES(?,?,?,?,?,?,?);', medicalData)
+cur.executemany('INSERT INTO EmployeeMedical VALUES(?,?,?,?,?,?,?);', [medicalData[1], medicalData[2], medicalData[4], medicalData[6], medicalData[7], medicalData[9]])
+cur.executemany('INSERT INTO EmployeeMedical(empID, dob, bloodtype, sex, kilograms, height) VALUES(?,?,?,?,?,?);', [medicalData[0], medicalData[3], medicalData[5], medicalData[8]])
+cur.executemany('INSERT INTO EmployeeMedical(empID, bloodtype, sex, kilograms, height) VALUES(?,?,?,?,?)', [medicalData[10], medicalData[11]])
+cur.executemany('INSERT INTO EmployeeMedical(empID, bloodtype, sex, kilograms, height, notes) VALUES(?,?,?,?,?,?)', [medicalData[12]])
 con.commit()
 print('Data inserted into EmployeeMedical table\n')
 
@@ -266,29 +268,53 @@ cur.execute('INSERT INTO Credentials VALUES (?,?,?,?)', creds)
 con.commit()
 print('Admin credentials added\n')
 
+# create Origin table
 cur.execute('''CREATE TABLE Origin(
                 originID    TEXT NOT NULL,
                 name        TEXT NOT NULL,
-                missionID   TEXT NOT NULL,
+                missionID   TEXT DEFAULT "MISSION-PENDING",
                 description TEXT NOT NULL,
                 PRIMARY KEY (originID)
                 );''')
 con.commit()
 
+
 cur.execute('''CREATE TABLE Mission(
                 missionID       TEXT NOT NULL,
                 name            TEXT NOT NULL,
-                originID        TEXT NOT NULL,
+                originID        TEXT DEFAULT 'ORIGIN-PENDING',
                 startDate       TEXT DEFAULT NULL,
                 endDate         TEXT DEFAULT NULL,
-                captainID       TEXT NOT NULL,
-                supervisorID    TEXT NOT NULL,
+                captainID       TEXT DEFAULT NULL,
+                supervisorID    TEXT DEFAULT NULL,
                 description     TEXT NOT NULL,
-                PRIMARY KEY (originID),
+                PRIMARY KEY (missionID),
                 FOREIGN KEY (captainID) REFERENCES Employee(empID),
                 FOREIGN KEY (supervisorID) REFERENCES Employee(empID)
                 );''')
 con.commit()
+
+# origin and mission data
+origins = [[generateUID(), 'Lypso', b'highly hazardous gaseous ice planet']]
+missions = [[generateUID(), 'Dying Prophet', origins[0][0], None, None, None, None, b'recon for reports of glowing \'rosetta-stone-like\' object']]
+origins[0][2] = str(encryption.cipher.encrypt(origins[0][2]).decode('utf-8'))
+missions[0][7] = str(encryption.cipher.encrypt(missions[0][7]).decode('utf-8'))
+
+origins = [tuple(r) for r in origins]
+missions = [tuple(r) for r in missions]
+
+cur.executemany('INSERT INTO Origin(originID, name, description) VALUES(?,?,?)', origins)
+con.commit()
+print('Data inserted into Origin table')
+cur.executemany('INSERT INTO Mission VALUES(?,?,?,?,?,?,?,?)', missions)
+con.commit()
+print('Data inserted into Mission table')
+
+#cur.execute('''UPDATE Origin
+#                SET missionID = (SELECT missionID
+#                                    FROM Mission
+ #                                   WHERE originID = Origin.originID
+ #           )''')
 
 cur.execute('''CREATE TABLE Specimen(
                 specimenID  TEXT NOT NULL,
@@ -340,9 +366,21 @@ print('\n')
 print('Credentials Table')
 for row in cur.execute('SELECT * FROM Credentials;'):
     row = list(row)
-    #row[1] = str(encryption.cipher.decrypt(bytes(row[1], 'utf-8')).encode('utf-8').decode('utf-8'))
-    #row[2] = str(encryption.cipher.decrypt(bytes(row[2], 'utf-8')).encode('utf-8').decode('utf-8'))
     print(row)
+print('\n')
+
+print('Origin Table')
+for row in cur.execute('SELECT * FROM Origin;'):
+    row = list(row)
+    print(row)
+print('\n')
+
+print('Mission Table')
+for row in cur.execute('SELECT * FROM Mission;'):
+    row = list(row)
+    print(row)
+print('\n')
+
 
 con.close()
 print('Database connection closed.')
