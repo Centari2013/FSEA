@@ -91,7 +91,7 @@ try:
     print('EmployeeSpecimen table dropped\n')
 
 except:
-    print('EmployeeSpecimem table does not exist\n')
+    print('EmployeeSpecimen table does not exist\n')
 
 
 # create Department table
@@ -104,14 +104,6 @@ cur.execute('''CREATE TABLE Department(
                 );''')
 con.commit()
 print('Department table created')
-
-# insert departments
-departments = [(1, 'ZERO'),
-              (2, 'EXEC')]
-cur.executemany('INSERT INTO Department (depID, depName) VALUES(?, ?);', departments)
-con.commit()
-print('Data inserted into Department table\n')
-
 
 # create Employee table in db
 cur.execute('''CREATE TABLE Employee( 
@@ -144,6 +136,84 @@ cur.execute('''CREATE TABLE EmployeeMedical(
 # save changes
 con.commit()
 print('EmployeeMedical table created\n')
+
+# create Credentials table
+cur.execute('''CREATE TABLE Credentials( 
+                empID           TEXT NOT NULL,
+                username        TEXT NOT NULL,
+                password        TEXT NOT NULL,
+                loginAttempts   INT DEFAULT 0,
+                PRIMARY KEY (empID),
+                CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE
+                );''')
+con.commit()
+print('Credentials table created')
+
+# create Origin table
+cur.execute('''CREATE TABLE Origin(
+                originID    TEXT NOT NULL,
+                name        TEXT NOT NULL,
+                missionID   TEXT DEFAULT "MISSION-PENDING",
+                description TEXT NOT NULL,
+                PRIMARY KEY (originID)
+                );''')
+con.commit()
+
+
+cur.execute('''CREATE TABLE Mission(
+                missionID       TEXT NOT NULL,
+                name            TEXT NOT NULL,
+                originID        TEXT DEFAULT 'ORIGIN-PENDING',
+                startDate       TEXT DEFAULT NULL,
+                endDate         TEXT DEFAULT NULL,
+                captainID       TEXT DEFAULT NULL,
+                supervisorID    TEXT DEFAULT NULL,
+                description     TEXT NOT NULL,
+                PRIMARY KEY (missionID),
+                FOREIGN KEY (captainID) REFERENCES Employee(empID),
+                FOREIGN KEY (supervisorID) REFERENCES Employee(empID)
+                );''')
+con.commit()
+
+
+cur.execute('''CREATE TABLE Specimen(
+                specimenID  TEXT NOT NULL,
+                name        TEXT NOT NULL,
+                origin      TEXT DEFAULT 'unknown',
+                mission     TEXT DEFAULT 'N/A',
+                threatLevel REAL DEFAULT NULL,
+                dob         TEXT DEFAULT 'unknown',
+                notes       TEXT DEFAULT NULL,
+               PRIMARY KEY (specimenID),
+               CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
+               CONSTRAINT missionID FOREIGN KEY (mission) REFERENCES Mission(missionID) ON DELETE CASCADE
+               );''')
+con.commit()
+
+cur.execute('''CREATE TABLE EmployeeSpecimen(
+                empID       TEXT NOT NULL,
+                specimenID  TEXT NOT NULL,
+               PRIMARY KEY (empID, specimenID),
+               CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE, 
+               CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
+               );''')
+con.commit()
+
+cur.execute('''CREATE TABLE SpecimenMedical(
+                specimenID  TEXT NOT NULL,
+                bloodtype   TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')) NOT NULL,
+                sex         TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')) NOT NULL,
+                kilograms   REAL DEFAULT NULL,
+                notes       TEXT DEFAULT NULL,
+                CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
+                );''')
+
+# insert departments
+departments = [(1, 'ZERO'),
+              (2, 'EXEC')]
+cur.executemany('INSERT INTO Department (depID, depName) VALUES(?, ?);', departments)
+con.commit()
+print('Data inserted into Department table\n')
 
 employees = [[1, '', 'CP',      'Prisca',   'Poteau',   datetime.date(2071, 9, 19)  ],
              [1, '', 'ENG',     'Revy',     'Sagan',    datetime.date(2072, 6, 30)  ],
@@ -212,25 +282,11 @@ print('Data inserted into EmployeeMedical table\n')
 
 
 # populate EmployeeMedical table
-
-
 cur.execute('SELECT empID FROM Employee;')
 query = cur.fetchall()
 # convert list of tuples to list of strings
 query = ['%s' % item for item in query]
 
-
-# create Credentials table
-cur.execute('''CREATE TABLE Credentials( 
-                empID           TEXT NOT NULL,
-                username        TEXT NOT NULL,
-                password        TEXT NOT NULL,
-                loginAttempts   INT DEFAULT 0,
-                PRIMARY KEY (empID),
-                CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE
-                );''')
-con.commit()
-print('Credentials table created')
 
 for e in query:
     username = generateUsername(e)
@@ -265,32 +321,6 @@ cur.execute('INSERT INTO Credentials VALUES (?,?,?,?)', creds)
 con.commit()
 print('Admin credentials added\n')
 
-# create Origin table
-cur.execute('''CREATE TABLE Origin(
-                originID    TEXT NOT NULL,
-                name        TEXT NOT NULL,
-                missionID   TEXT DEFAULT "MISSION-PENDING",
-                description TEXT NOT NULL,
-                PRIMARY KEY (originID)
-                );''')
-con.commit()
-
-
-cur.execute('''CREATE TABLE Mission(
-                missionID       TEXT NOT NULL,
-                name            TEXT NOT NULL,
-                originID        TEXT DEFAULT 'ORIGIN-PENDING',
-                startDate       TEXT DEFAULT NULL,
-                endDate         TEXT DEFAULT NULL,
-                captainID       TEXT DEFAULT NULL,
-                supervisorID    TEXT DEFAULT NULL,
-                description     TEXT NOT NULL,
-                PRIMARY KEY (missionID),
-                FOREIGN KEY (captainID) REFERENCES Employee(empID),
-                FOREIGN KEY (supervisorID) REFERENCES Employee(empID)
-                );''')
-con.commit()
-
 # origin and mission data
 origins = [[generateUID(), 'Lypso', b'highly hazardous gaseous ice planet']]
 missions = [[generateUID(), 'Dying Prophet', origins[0][0], None, None, None, None, b'recon for reports of glowing \'rosetta-stone-like\' object']]
@@ -313,40 +343,7 @@ cur.execute('''UPDATE Origin
                                    WHERE originID = Origin.originID
            )''')
 
-
-cur.execute('''CREATE TABLE Specimen(
-                specimenID  TEXT NOT NULL,
-                name        TEXT NOT NULL,
-                origin      TEXT DEFAULT 'unknown',
-                mission     TEXT DEFAULT 'N/A',
-                threatLevel REAL DEFAULT NULL,
-                dob         TEXT DEFAULT 'unknown',
-                notes       TEXT DEFAULT NULL,
-               PRIMARY KEY (specimenID),
-               CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
-               CONSTRAINT missionID FOREIGN KEY (mission) REFERENCES Mission(missionID) ON DELETE CASCADE
-               );''')
-con.commit()
-
-cur.execute('INSERT INTO Specimen(specimenID, name, notes) VALUES(?,?,?)', (generateUID(), 'Massimo', 'member of 0'))
-
-cur.execute('''CREATE TABLE EmployeeSpecimen(
-                empID       TEXT NOT NULL,
-                specimenID  TEXT NOT NULL,
-               PRIMARY KEY (empID, specimenID),
-               CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE, 
-               CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
-               );''')
-con.commit()
-
-cur.execute('''CREATE TABLE SpecimenMedical(
-                specimenID  TEXT NOT NULL,
-                bloodtype   TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')) NOT NULL,
-                sex         TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')) NOT NULL,
-                kilograms   REAL DEFAULT NULL,
-                notes       TEXT DEFAULT NULL,
-                CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
-                );''')
+cur.execute('INSERT INTO Specimen(specimenID, name, notes) VALUES(?,?,?)', (generateUID(), 'Massimo', 'member of department 0'))
 
 # iterate over rows in table
 print('Department Table')
