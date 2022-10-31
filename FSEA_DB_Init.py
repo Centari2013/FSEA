@@ -137,9 +137,9 @@ cur.execute('''CREATE TABLE EmployeeMedical(
                 sex             TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')) NOT NULL,
                 kilograms       REAL DEFAULT NULL,
                 height          REAL DEFAULT NULL,
-                notes           TEXT DEFAULT 'No Notes',
+                notes           TEXT DEFAULT NULL,
                 PRIMARY KEY (empID),
-                FOREIGN KEY (empID) REFERENCES Employee(empID)
+                CONSTRAINT  empID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE
                 );''')
 # save changes
 con.commit()
@@ -227,10 +227,7 @@ cur.execute('''CREATE TABLE Credentials(
                 password        TEXT NOT NULL,
                 loginAttempts   INT DEFAULT 0,
                 PRIMARY KEY (empID),
-                CONSTRAINT employeeID
-                    FOREIGN KEY (empID)
-                    REFERENCES Employee(empID)
-                    ON DELETE CASCADE
+                CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE
                 );''')
 con.commit()
 print('Credentials table created')
@@ -324,7 +321,7 @@ cur.execute('''CREATE TABLE Specimen(
                 mission     TEXT DEFAULT 'N/A',
                 threatLevel REAL DEFAULT NULL,
                 dob         TEXT DEFAULT 'unknown',
-                notes       TEXT DEFAULT 'No Notes',
+                notes       TEXT DEFAULT NULL,
                PRIMARY KEY (specimenID),
                CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
                CONSTRAINT missionID FOREIGN KEY (mission) REFERENCES Mission(missionID) ON DELETE CASCADE
@@ -347,7 +344,8 @@ cur.execute('''CREATE TABLE SpecimenMedical(
                 bloodtype   TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')) NOT NULL,
                 sex         TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')) NOT NULL,
                 kilograms   REAL DEFAULT NULL,
-                notes       TEXT DEFAULT NULL
+                notes       TEXT DEFAULT NULL,
+                CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
                 );''')
 
 # iterate over rows in table
