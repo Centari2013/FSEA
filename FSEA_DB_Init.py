@@ -202,6 +202,18 @@ cur.execute('''CREATE TABLE SpecimenMedical(
                 CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
                 );''')
 
+con.create_function('uid_gen', 0, generateUID)
+con.create_function('username_gen', 1, generateUsername)
+con.create_function('pwd_gen', 0, generatePWD)
+con.commit()
+
+# TODO: create trigger on insert to employee to insert into employee medical and credentials as well
+#  trigger should:
+#  - generate uid and insert into Employee
+#  - insert uid into EmployeeMedical
+#  - generate username and temp pwd and insert into Credentials
+
+
 # insert departments
 departments = [(1, 'ZERO'),
                (2, 'EXEC')]
