@@ -105,7 +105,7 @@ print('Department table created')
 cur.execute('''CREATE TABLE Employee( 
                 empDep          INT NOT NULL,
                 empID           TEXT NOT NULL,
-                designation     TEXT CHECK(designation IN ('ADMIN','CP', 'ENG', 'GEO', 'CHEM', 'SUPER', 'TECH', 'SOLDIER', 'BIO')),
+                designation     TEXT CHECK(designation IN ('ADMIN','CP', 'ENG', 'GEO', 'CHEM', 'SUPER', 'TECH', 'SOLDIER', 'BIO')) NOT NULL,
                 firstName       TEXT CHECK(LENGTH(firstName) <= 50) NOT NULL,
                 lastName        TEXT CHECK(LENGTH(lastName) <= 50)  NOT NULL,
                 startDate       TEXT NOT NULL,
@@ -121,8 +121,8 @@ print('Employee table created\n')
 cur.execute('''CREATE TABLE EmployeeMedical( 
                 empID           TEXT NOT NULL,
                 dob             TEXT DEFAULT NULL,
-                bloodtype       TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')) NOT NULL,
-                sex             TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')) NOT NULL,
+                bloodtype       TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')),
+                sex             TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')),
                 kilograms       REAL DEFAULT NULL,
                 height          REAL DEFAULT NULL,
                 notes           TEXT DEFAULT NULL,
@@ -195,7 +195,7 @@ con.commit()
 
 cur.execute('''CREATE TABLE SpecimenMedical(
                 specimenID  TEXT NOT NULL,
-                bloodtype   TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')) NOT NULL,
+                bloodtype   TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')),
                 sex         TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')) NOT NULL,
                 kilograms   REAL DEFAULT NULL,
                 notes       TEXT DEFAULT NULL,
@@ -203,10 +203,19 @@ cur.execute('''CREATE TABLE SpecimenMedical(
                 );''')
 
 con.create_function('uid_gen', 0, generateUID)
-con.create_function('username_gen', 1, generateUsername)
+con.create_function('username_gen', 3, generateUsername)
 con.create_function('pwd_gen', 0, generatePWD)
 con.commit()
 
+con.execute('''CREATE TRIGGER IF NOT EXISTS employeeSetup 
+                    AFTER INSERT 
+                    ON Employee
+                BEGIN
+                    
+                    INSERT INTO EmployeeMedical (empID) VALUES (NEW.empID);
+                    INSERT INTO Credentials (empID, username, password) 
+                        VALUES (NEW.empID, username_gen(NEW.firstName, NEW.lastName, NEW.designation), pwd_gen());
+                END;''')
 # TODO: create trigger on insert to employee to insert into employee medical and credentials as well
 #  trigger should:
 #  - generate uid and insert into Employee
@@ -277,57 +286,9 @@ medicalData = [tuple(row) for row in medicalData]
 # populate Employee table & EmployeeMedical table
 cur.executemany('INSERT INTO Employee(empDep, empID, designation, firstName, lastName, startDate) VALUES(?,?,?,?,?,?);',
                 employees)
-con.commit()
-print('Data inserted into Employee table\n')
-cur.executemany('INSERT INTO EmployeeMedical VALUES(?,?,?,?,?,?,?);',
-                [medicalData[1], medicalData[2], medicalData[4], medicalData[6], medicalData[7], medicalData[9]])
-cur.executemany('INSERT INTO EmployeeMedical(empID, dob, bloodtype, sex, kilograms, height) VALUES(?,?,?,?,?,?);',
-                [medicalData[0], medicalData[3], medicalData[5], medicalData[8]])
-cur.executemany('INSERT INTO EmployeeMedical(empID, bloodtype, sex, kilograms, height) VALUES(?,?,?,?,?)',
-                [medicalData[10], medicalData[11]])
-cur.executemany('INSERT INTO EmployeeMedical(empID, bloodtype, sex, kilograms, height, notes) VALUES(?,?,?,?,?,?)',
-                [medicalData[12]])
-con.commit()
-print('Data inserted into EmployeeMedical table\n')
 
-# populate EmployeeMedical table
-cur.execute('SELECT empID FROM Employee;')
-query = cur.fetchall()
-# convert list of tuples to list of strings
-query = ['%s' % item for item in query]
-
-for e in query:
-    username = generateUsername(e)
-    password = str(encryption.cipher.encrypt(bytes(generatePWD(), 'utf-8')).decode('utf-8'))
-
-    cur.execute('INSERT INTO Credentials (empID, username, password) VALUES(?, ?, ?)', (e, username, password))
 
 con.commit()
-print('Data inserted into Credentials table\n')
-
-# insert admin data
-deptNum = 2
-idNum = '00000000'
-designation = 'ADMIN'
-firstName = b'Zaria'
-lastName = b'Burton'
-username = b'admin'
-password = b'admin'
-loginAttempts = 0
-
-firstName = str(encryption.cipher.encrypt(firstName).decode('utf-8'))
-lastName = str(encryption.cipher.encrypt(lastName).decode('utf-8'))
-username = str(encryption.cipher.encrypt(username).decode('utf-8'))
-password = str(encryption.cipher.encrypt(password).decode('utf-8'))
-
-admin = (deptNum, idNum, designation, firstName, lastName, datetime.date(2022, 10, 27))
-creds = (idNum, username, password, loginAttempts)
-
-cur.execute('INSERT INTO Employee VALUES (?,?,?,?,?,?,NULL)', admin)
-con.commit()
-cur.execute('INSERT INTO Credentials VALUES (?,?,?,?)', creds)
-con.commit()
-print('Admin credentials added\n')
 
 # origin and mission data
 origins = [[generateUID(), 'Lypso', b'highly hazardous gaseous ice planet']]

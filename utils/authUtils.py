@@ -49,7 +49,7 @@ def generateUID():  # generate random 8 digit str(int)
     return uid
 
 
-def generateUsername(empID):
+def generateUsername(firstName, lastName, designation):
     def firstNLetters(s, n):
         new_s = ""
         if len(s) >= n:
@@ -61,28 +61,13 @@ def generateUsername(empID):
 
         return new_s
 
-    try:
-        con = sqlite3.connect('FSEA.db')
-        cur = con.cursor()
-        cur.execute('''SELECT firstName, lastName, designation 
-                        FROM Employee
-                        WHERE empID = ?;''', [empID])
-        query = cur.fetchone()
-        if query is not None:
-            query = list(query)
-            firstName = str(encryption.cipher.decrypt(bytes(query[0], 'utf-8')).encode('utf-8').decode('utf-8'))
-            lastName = str(encryption.cipher.decrypt(bytes(query[1], 'utf-8')).encode('utf-8').decode('utf-8'))
-            designation = query[2]
+    firstName = str(encryption.cipher.decrypt(bytes(firstName, 'utf-8')).encode('utf-8').decode('utf-8'))
+    lastName = str(encryption.cipher.decrypt(bytes(lastName, 'utf-8')).encode('utf-8').decode('utf-8'))
 
-            username = (firstName[0] + firstNLetters(lastName, 8)).lower() + '_' + designation.upper()
-            username = str(encryption.cipher.encrypt(bytes(username, 'utf-8')).decode('utf-8'))
+    username = (firstName[0] + firstNLetters(lastName, 8)).lower() + '_' + designation.upper()
+    username = str(encryption.cipher.encrypt(bytes(username, 'utf-8')).decode('utf-8'))
 
-            return username
-
-    except:
-        print('Could not access database.')
-
-    return None
+    return username
 
 
 def generatePWD():  # generate random temp password for new users
