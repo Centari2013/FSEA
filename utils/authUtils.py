@@ -2,6 +2,7 @@ import sqlite3
 from random import randint
 import secrets
 import string
+from utils.variables import db
 from utils import encryption
 
 
@@ -12,8 +13,8 @@ def authenticate(user, pwd):
     pwd = str(encryption.cipher.encrypt(bytes(pwd, 'utf-8')).decode('utf-8'))
 
     try:
-        # connnect to database
-        con = sqlite3.connect('FSEA.db')
+        # connect to database
+        con = sqlite3.connect(db)
 
         cur = con.cursor()
         cur.execute('SELECT password FROM Credentials WHERE username = ? ;', [user])

@@ -1,10 +1,11 @@
 import datetime
 import sqlite3
 from utils.encryption import *
+from utils.variables import db
 from utils.authUtils import *
 
 # create new db (or open if already exists)
-con = sqlite3.connect('FSEA.db')
+con = sqlite3.connect(db)
 
 # create cursor for statement execution
 cur = con.cursor()
@@ -216,12 +217,9 @@ con.execute('''CREATE TRIGGER IF NOT EXISTS employeeSetup
                     INSERT INTO Credentials (empID, username, password) 
                         VALUES (NEW.empID, username_gen(NEW.firstName, NEW.lastName, NEW.designation), pwd_gen());
                 END;''')
-# TODO: create trigger on insert to employee to insert into employee medical and credentials as well
-#  trigger should:
-#  - generate uid and insert into Employee
-#  - insert uid into EmployeeMedical
-#  - generate username and temp pwd and insert into Credentials
 
+
+''''''''''INSERTS'''''''''
 
 # insert departments
 departments = [(1, 'ZERO'),

@@ -27,3 +27,10 @@ key = b'BLhgpCL81fdLBk23HkZp8BgbT913cqt0'
 iv = b'OWFJATh1Zowac2xr'
 
 cipher = AESCipher(key,iv)
+
+def encrypt(text):
+    return str(cipher.encrypt(bytes(text, 'utf-8')).decode('utf-8'))
+
+
+def decrypt(text):
+    return str(cipher.decrypt(bytes(text, 'utf-8')))
