@@ -1,7 +1,6 @@
 import datetime
-import sqlite3
 from utils.encryption import *
-from utils.variables import db
+from utils.variables import *
 from utils.authUtils import *
 
 # create new db (or open if already exists)
@@ -106,14 +105,14 @@ print('Department table created')
 cur.execute('''CREATE TABLE Employee( 
                 empDep          INT NOT NULL,
                 empID           TEXT NOT NULL,
-                designation     TEXT CHECK(designation IN ('ADMIN','CP', 'ENG', 'GEO', 'CHEM', 'SUPER', 'TECH', 'SOLDIER', 'BIO')) NOT NULL,
+                designation     TEXT CHECK(designation IN {}) NOT NULL,
                 firstName       TEXT CHECK(LENGTH(firstName) <= 50) NOT NULL,
                 lastName        TEXT CHECK(LENGTH(lastName) <= 50)  NOT NULL,
                 startDate       TEXT NOT NULL,
                 endDate         TEXT DEFAULT NULL,
                 PRIMARY KEY (empID),
                 FOREIGN KEY (empDep) REFERENCES Department(depId)
-                );''')
+                );'''.format(designation))
 # save changes
 con.commit()
 print('Employee table created\n')
@@ -122,14 +121,14 @@ print('Employee table created\n')
 cur.execute('''CREATE TABLE EmployeeMedical( 
                 empID           TEXT NOT NULL,
                 dob             TEXT DEFAULT NULL,
-                bloodtype       TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')),
-                sex             TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')),
+                bloodtype       TEXT CHECK(bloodtype IN {}),
+                sex             TEXT CHECK(sex IN {}),
                 kilograms       REAL DEFAULT NULL,
                 height          REAL DEFAULT NULL,
                 notes           TEXT DEFAULT NULL,
                 PRIMARY KEY (empID),
                 CONSTRAINT  empID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE
-                );''')
+                );'''.format(bloodtypes, sex))
 # save changes
 con.commit()
 print('EmployeeMedical table created\n')
@@ -196,12 +195,12 @@ con.commit()
 
 cur.execute('''CREATE TABLE SpecimenMedical(
                 specimenID  TEXT NOT NULL,
-                bloodtype   TEXT CHECK(bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')),
-                sex         TEXT CHECK(sex IN ('male', 'female', 'inter', 'unknown','undefined')) NOT NULL,
+                bloodtype   TEXT CHECK(bloodtype IN {}),
+                sex         TEXT CHECK(sex IN {}) DEFAULT NULL,
                 kilograms   REAL DEFAULT NULL,
                 notes       TEXT DEFAULT NULL,
                 CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
-                );''')
+                );'''.format(bloodtypes, sex))
 
 con.create_function('username_gen', 3, generateUsername)
 con.create_function('pwd_gen', 0, generatePWD)
@@ -215,6 +214,14 @@ con.execute('''CREATE TRIGGER IF NOT EXISTS employeeSetup
                     INSERT INTO EmployeeMedical (empID) VALUES (NEW.empID);
                     INSERT INTO Credentials (empID, username, password) 
                         VALUES (NEW.empID, username_gen(NEW.firstName, NEW.lastName, NEW.designation), pwd_gen());
+                END;''')
+
+con.execute('''CREATE TRIGGER IF NOT EXISTS specimenSetup 
+                    AFTER INSERT 
+                    ON Specimen
+                BEGIN
+
+                    INSERT INTO SpecimenMedical (specimenID) VALUES (NEW.specimenID);
                 END;''')
 
 
