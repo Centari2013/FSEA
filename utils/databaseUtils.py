@@ -4,7 +4,7 @@ from utils.encryption import encrypt, decrypt
 from authUtils import generateUID, generatePWD, generateUsername
 
 
-def addDepartment(name, supervisor=None, desc=None):
+def addDepartment(name, superID=None, desc=None):
     # encrypt data
     name = encrypt(name)
     if desc is not None:
@@ -19,8 +19,10 @@ def addDepartment(name, supervisor=None, desc=None):
 
         cur.execute('INSERT INTO Department(depName) VALUES(?)',
                     name)
+        con.commit()
         row = cur.lastrowid
-        updateDepartment(row,supervisor=supervisor,desc=desc)
+        updateDepartment(row, superID=superID, desc=desc)
+
 
 
 
@@ -33,7 +35,7 @@ def addDepartment(name, supervisor=None, desc=None):
             con.close()
 
 
-def updateDepartment(ID, name=None, supervisor=None, desc=None):
+def updateDepartment(ID, name=None, superID=None, desc=None):
     # encrypt data
     if name is not None:
         name = encrypt(name)
@@ -47,13 +49,14 @@ def updateDepartment(ID, name=None, supervisor=None, desc=None):
 
         cur = con.cursor()
 
-        args = [[name, 'depName'], [supervisor, 'supervisorID'], [desc, 'description']]
+        args = [[name, 'depName'], [superID, 'supervisorID'], [desc, 'description']]
 
         for a in args:
             if a[0] is not None:
                 cur.execute('''UPDATE Department
                                    SET {} = ?
                                    WHERE depID = ?'''.format(a[1]), (a[0], ID))
+        con.commit()
 
     except Exception as e:
         print(e)
@@ -73,6 +76,7 @@ def deleteDeparment(ID):
         cur = con.cursor()
 
         cur.execute('DELETE FROM Department WHERE depID = ?', ID)
+        con.commit()
 
     except Exception as e:
         print(e)
@@ -111,6 +115,8 @@ def addEmployee(fName, lName, dep, role, sDate):
         cur.execute('''INSERT INTO Employee(empDep, empID, designation, firstName, lastName, startDate) 
                         VALUES(?,?,?,?,?,?)''', (dep, ID, role, fName, lName, sDate))
 
+        con.commit()
+
     except Exception as e:
         print(e)
 
@@ -143,6 +149,8 @@ def updateEmployee(ID, dep=None, role=None, fName=None, lName=None, sDate=None, 
                                 SET {} = ?
                                 WHERE empID = ?'''.format(a[1]), (a[0], ID))
 
+            con.commit()
+
     except Exception as e:
         print(e)
 
@@ -161,6 +169,8 @@ def deleteEmployee(ID):
         cur = con.cursor()
 
         cur.execute('DELETE FROM Employee WHERE empID = ?', ID)
+
+        con.commit()
 
     except Exception as e:
         print(e)
@@ -194,6 +204,8 @@ def updateEmployeeMedical(ID, dob=None, btype=None, sex=None, kg=None, h=None, n
             if a[0] is not None:
                 cur.execute('UPDATE EmployeeMedical SET {} = ? WHERE empID = ?'.format(a[1]), (a[0], ID))
 
+        con.commit()
+
     except Exception as e:
         print(e)
 
@@ -203,7 +215,7 @@ def updateEmployeeMedical(ID, dob=None, btype=None, sex=None, kg=None, h=None, n
             con.close()
 
 
-def updateCredentials(ID, uname=None, pwd=None, logAttemps=None):
+def updateCredentials(ID, uname=None, pwd=None, logAttempts=None):
     # encrypt data
     if uname is not None:
         uname = encrypt(uname)
@@ -214,14 +226,15 @@ def updateCredentials(ID, uname=None, pwd=None, logAttemps=None):
     try:
         # connect to database
         con = sqlite3.connect(db)
-
         cur = con.cursor()
 
-        args = [[uname, 'username'], [pwd, 'password'], [logAttemps, 'loginAttempts']]
+        args = [[uname, 'username'], [pwd, 'password'], [logAttempts, 'loginAttempts']]
 
         for a in args:
             if a[0] is not None:
                 cur.execute('UPDATE Credentials SET {} = ? WHERE empID = ?'.format(a[1]), (a[0], ID))
+
+        con.commit()
 
     except Exception as e:
         print(e)
@@ -232,7 +245,97 @@ def updateCredentials(ID, uname=None, pwd=None, logAttemps=None):
             con.close()
 
 # TODO: complete helper functions
-# def addOrigin(name, desc, missionID=None):
-# def updateOrigin(name=None, missionID=None, desc=None)
+def addOrigin(name, desc, missionID=None):
+    # encrypt data
+    name = encrypt(name)
+    desc = encrypt(desc)
+
+    con = None
+
+    try:
+        con = sqlite3.connect(db)
+        cur = con.cursor()
+
+        cur.execute('INSERT INTO Origin(name, description) VALUES (?,?)', (name, desc))
+        con.commit()
+        updateOrigin(cur.lastrowid, missionID)
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+
+def updateOrigin(ID,
+                 name=None, missionID=None, desc=None):
+    # encrypt data
+    if name is not None:
+        name = encrypt(name)
+    if desc is not None:
+        desc = encrypt(desc)
+
+    con = None
+    try:
+        con = sqlite3.connect(db)
+        cur = con.cursor()
+
+        args = [[name, 'name'], [missionID, 'missionID'], [desc, 'description']]
+
+        for a in args:
+            cur.execute('UPDATE Origin SET {} = ? WHERE originID = ?'.format(a[1]), (a[0], ID))
+
+        con.commit()
+    except Exception as e:
+        print(e)
+
+    finally:
+        if con is not None:
+            con.close()
+
+
+def deleteOrigin(ID):
+    con = None
+    try:
+        con = sqlite3.connect(db)
+        cur = con.cursor()
+
+        cur.execute('DELETE FROM Origin WHERE originID = ?', ID)
+        con.commit()
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        if con is not None:
+            con.close()
+
+
+def addMission(name, desc, oID=None, sDate=None, eDate=None, capID=None, superID=None):
+    # encrypt data
+    name = encrypt(name)
+    desc = encrypt(desc)
+
+    con = None
+    try:
+        con = sqlite3.connect(db)
+        cur = con.cursor()
+
+        cur.execute('INSERT INTO Mission(name, description) VALUES (?,?)', (name, desc))
+        con.commit()
+
+        updateMission(cur.lastrowid, name)
+
+
+def updateMission(ID, name=None, desc=None, oID=None, sDate=None, eDate=None, capID=None, superID=None)
+# def deleteMission(ID)
+# def addSpecimen(name, oID=None, mID=None, threat=None, dob=None, notes=None)
+# def updateSpecimen(ID, name=None, oID=None, mID=None, threat=None, dob=None, notes=None)
+# def deleteSpecimen(ID)
+# def addEmployeeSpecimen(eID, sID)
+# def updateEmployeeSpecimen(eID, sID, newEiD=None, newEiD=None)
+# def deleteEmployeeSpecimen(eID, sID)
+# def updateSpecimenMedical(ID, btype=None, sex=None, kg=None, notes=None)
+
 
 
