@@ -96,7 +96,7 @@ cur.execute('''CREATE TABLE Department(
                 depID           INT NOT NULL,
                 depName         TEXT NOT NULL,
                 supervisorID    TEXT DEFAULT NULL,
-                description     TEXT,
+                description     TEXT DEFAULT NULL,
                 PRIMARY KEY (depID)
                 );''')
 con.commit()
@@ -203,7 +203,6 @@ cur.execute('''CREATE TABLE SpecimenMedical(
                 CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
                 );''')
 
-con.create_function('uid_gen', 0, generateUID)
 con.create_function('username_gen', 3, generateUsername)
 con.create_function('pwd_gen', 0, generatePWD)
 con.commit()
