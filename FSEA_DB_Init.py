@@ -103,14 +103,15 @@ print('Department table created')
 
 # create Employee table in db
 cur.execute('''CREATE TABLE Employee( 
+                id              INT,
                 empDep          INT NOT NULL,
-                empID           TEXT NOT NULL,
+                empID           TEXT NOT NULL UNIQUE,
                 designation     TEXT CHECK(designation IN {}) NOT NULL,
                 firstName       TEXT CHECK(LENGTH(firstName) <= 50) NOT NULL,
                 lastName        TEXT CHECK(LENGTH(lastName) <= 50)  NOT NULL,
                 startDate       TEXT NOT NULL,
                 endDate         TEXT DEFAULT NULL,
-                PRIMARY KEY (empID),
+                PRIMARY KEY (id),
                 FOREIGN KEY (empDep) REFERENCES Department(depId)
                 );'''.format(designation))
 # save changes
@@ -119,7 +120,7 @@ print('Employee table created\n')
 
 # create EmployeeMedical table in db
 cur.execute('''CREATE TABLE EmployeeMedical( 
-                empID           TEXT NOT NULL,
+                empID           TEXT NOT NULL UNIQUE,
                 dob             TEXT DEFAULT NULL,
                 bloodtype       TEXT CHECK(bloodtype IN {}),
                 sex             TEXT CHECK(sex IN {}),
@@ -134,8 +135,8 @@ con.commit()
 print('EmployeeMedical table created\n')
 
 # create Credentials table
-cur.execute('''CREATE TABLE Credentials( 
-                empID           TEXT NOT NULL,
+cur.execute('''CREATE TABLE Credentials(
+                empID           TEXT NOT NULL UNIQUE,
                 username        TEXT NOT NULL,
                 password        TEXT NOT NULL,
                 loginAttempts   INT DEFAULT 0,
@@ -147,16 +148,18 @@ print('Credentials table created')
 
 # create Origin table
 cur.execute('''CREATE TABLE Origin(
-                originID    TEXT NOT NULL,
+                id          INT,
+                originID    TEXT NOT NULL UNIQUE,
                 name        TEXT NOT NULL,
                 missionID   TEXT DEFAULT 'MISSION-PENDING',
                 description TEXT NOT NULL,
-                PRIMARY KEY (originID)
+                PRIMARY KEY (id)
                 );''')
 con.commit()
 
 cur.execute('''CREATE TABLE Mission(
-                missionID       TEXT NOT NULL,
+                id              INT,
+                missionID       TEXT NOT NULL UNIQUE,
                 name            TEXT NOT NULL,
                 originID        TEXT DEFAULT 'ORIGIN-PENDING',
                 startDate       TEXT DEFAULT NULL,
@@ -164,21 +167,22 @@ cur.execute('''CREATE TABLE Mission(
                 captainID       TEXT DEFAULT NULL,
                 supervisorID    TEXT DEFAULT NULL,
                 description     TEXT NOT NULL,
-                PRIMARY KEY (missionID),
+                PRIMARY KEY (id),
                 FOREIGN KEY (captainID) REFERENCES Employee(empID),
                 FOREIGN KEY (supervisorID) REFERENCES Employee(empID)
                 );''')
 con.commit()
 
 cur.execute('''CREATE TABLE Specimen(
-                specimenID  TEXT NOT NULL,
-                name        TEXT NOT NULL,
-                origin      TEXT DEFAULT 'unknown',
-                mission     TEXT DEFAULT 'N/A',
-                threatLevel REAL DEFAULT NULL,
-                dob         TEXT DEFAULT 'unknown',
-                notes       TEXT DEFAULT NULL,
-               PRIMARY KEY (specimenID),
+                id                      INT,
+                specimenID              TEXT NOT NULL UNIQUE,
+                name                    TEXT NOT NULL,
+                origin                  TEXT DEFAULT 'unknown',
+                mission                 TEXT DEFAULT 'N/A',
+                threatLevel             REAL DEFAULT NULL,
+                acquisitionDate         TEXT NOT NULL,
+                notes                   TEXT DEFAULT NULL,
+               PRIMARY KEY (id),
                CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
                CONSTRAINT missionID FOREIGN KEY (mission) REFERENCES Mission(missionID) ON DELETE CASCADE
                );''')
@@ -199,6 +203,7 @@ cur.execute('''CREATE TABLE SpecimenMedical(
                 sex         TEXT CHECK(sex IN {}) DEFAULT NULL,
                 kilograms   REAL DEFAULT NULL,
                 notes       TEXT DEFAULT NULL,
+                PRIMARY KEY (specimenID),
                 CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
                 );'''.format(bloodtypes, sex))
 
