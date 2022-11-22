@@ -1,5 +1,5 @@
 import datetime
-from utils.encryption import *
+from utils.databaseUtils import *
 from utils.variables import *
 from utils.authUtils import *
 
@@ -229,30 +229,52 @@ con.execute('''CREATE TRIGGER IF NOT EXISTS specimenSetup
                     INSERT INTO SpecimenMedical (specimenID) VALUES (NEW.specimenID);
                 END;''')
 
-
 ''''''''''INSERTS'''''''''
 
 # insert departments
-departments = [(1, 'ZERO'),
-               (2, 'EXEC')]
-cur.executemany('INSERT INTO Department (depID, depName) VALUES(?, ?);', departments)
-con.commit()
+departments = [{
+    'id': 1,
+    'name': 'ZERO',
+    'desc': 'spec-ops'
+},
+    {
+        'id': 2,
+        'name': 'EXEC',
+        'desc': 'executive branch'
+    }]
+
+for d in departments:
+    addDepartment(d['name'], d['desc'])
+
 print('Data inserted into Department table\n')
 
-employees = [[1, '', 'CP', 'Prisca', 'Poteau', datetime.date(2071, 9, 19)],
-             [1, '', 'ENG', 'Revy', 'Sagan', datetime.date(2072, 6, 30)],
-             [1, '', 'CHEM', 'Michael', 'Lowe', datetime.date(2056, 7, 25)],
-             [1, '', 'ENG', 'Benjamin', 'Colson', datetime.date(2047, 4, 15)],
-             [1, '', 'BIO', 'Mingmei', 'Gao', datetime.date(2061, 12, 3)],
-             [1, '', 'GEO', 'Abdul', 'Said', datetime.date(2061, 12, 3)],
-             [1, '', 'SUPER', 'Historia', 'Lowe', datetime.date(2038, 1, 31)],
-             [2, '', 'SUPER', 'Jurio', 'Caldero', datetime.date(2042, 6, 30)],
-             [1, '', 'SOLDIER', 'Joseph', 'Smith', datetime.date(2060, 11, 12)],
-             [2, '', 'SUPER', 'Markus', 'Belcost', datetime.date(2067, 6, 8)],
-             [2, '', 'SOLDIER', 'Aurelis', 'Dreymond', datetime.date(2075, 12, 13)],
-             [2, '', 'SOLDIER', 'Quani', 'Dreymond', datetime.date(2075, 12, 13)],
-             [1, '', 'TECH', 'Daryl', 'Belcost', datetime.date(2071, 3, 16)]]
+employees = [{
+    'dep': 1,
+    'designation': 'CP',
+    'firstName': 'Prisca',
+    'lastName': 'Poteau',
+    'dob': datetime.date(2071, 9, 19)
+},
+{
+    'dep': 1,
+    'designation': 'ENG',
+    'firstName': 'Revy',
+    'lastName': 'Sagan',
+    'dob': datetime.date(2072, 6, 30)}]
 
+'''
+ [1, '', 'CHEM', 'Michael', 'Lowe', datetime.date(2056, 7, 25)],
+ [1, '', 'ENG', 'Benjamin', 'Colson', datetime.date(2047, 4, 15)],
+ [1, '', 'BIO', 'Mingmei', 'Gao', datetime.date(2061, 12, 3)],
+ [1, '', 'GEO', 'Abdul', 'Said', datetime.date(2061, 12, 3)],
+ [1, '', 'SUPER', 'Historia', 'Lowe', datetime.date(2038, 1, 31)],
+ [2, '', 'SUPER', 'Jurio', 'Caldero', datetime.date(2042, 6, 30)],
+ [1, '', 'SOLDIER', 'Joseph', 'Smith', datetime.date(2060, 11, 12)],
+ [2, '', 'SUPER', 'Markus', 'Belcost', datetime.date(2067, 6, 8)],
+ [2, '', 'SOLDIER', 'Aurelis', 'Dreymond', datetime.date(2075, 12, 13)],
+ [2, '', 'SOLDIER', 'Quani', 'Dreymond', datetime.date(2075, 12, 13)],
+ [1, '', 'TECH', 'Daryl', 'Belcost', datetime.date(2071, 3, 16)]]
+'''
 medicalData = [['', datetime.date(2052, 10, 15), 'undefined', 'female', 85.3, 177.8],
                ['', datetime.date(2053, 3, 7), 'V-', 'female', 75.7, 158.75, 'monitoring hemochromia'],
                ['', datetime.date(2040, 7, 24), 'B+', 'male', 87.1, 182.88, '8th regen cycle'],
@@ -268,34 +290,12 @@ medicalData = [['', datetime.date(2052, 10, 15), 'undefined', 'female', 85.3, 17
                ['', 'BF', 'male', 113.4, 180.34, 'has gained sentience']]
 
 # generate random empID for each employee
-for i in range(len(employees)):
-    uid = generateUID()
-    cur.execute('SELECT empID FROM Employee WHERE empID = ?', [uid])
-    query = cur.fetchone()
+# TODO: TURN LISTS TO DICTIONARIES FOR READABILITY AND EASE OF ACCESS
 
-    while query is not None:
-        uid = generateUID()
-        cur.execute('SELECT empID FROM Employee WHERE empID = ?', [uid])
-        query = cur.fetchone()
-
-    employees[i][1] = uid
-    # encrypt first name
-    employees[i][3] = str(encryption.cipher.encrypt(bytes(employees[i][3], 'utf-8')).decode('utf-8'))
-    # encrypt last name
-    employees[i][4] = str(encryption.cipher.encrypt(bytes(employees[i][4], 'utf-8')).decode('utf-8'))
-
-    medicalData[i][0] = uid
-
-    if len(medicalData[i]) > 6:
-        medicalData[i][6] = str(encryption.cipher.encrypt(bytes(medicalData[i][6], 'utf-8')).decode('utf-8'))
-
-employees = [tuple(row) for row in employees]
-medicalData = [tuple(row) for row in medicalData]
 
 # populate Employee table & EmployeeMedical table
 cur.executemany('INSERT INTO Employee(empDep, empID, designation, firstName, lastName, startDate) VALUES(?,?,?,?,?,?);',
                 employees)
-
 
 con.commit()
 
