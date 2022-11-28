@@ -1,7 +1,5 @@
-import datetime
-from utils.databaseUtils import *
-from utils.variables import *
 from utils.authUtils import *
+from utils.variables import *
 
 # create new db (or open if already exists)
 con = sqlite3.connect(db)
@@ -92,19 +90,19 @@ except:
 
 # create Department table
 cur.execute('''CREATE TABLE Department(
-                depID           INT NOT NULL,
+                depID           INTEGER,
                 depName         TEXT NOT NULL,
                 supervisorID    TEXT DEFAULT NULL,
                 description     TEXT DEFAULT NULL,
                 PRIMARY KEY (depID)
                 );''')
 con.commit()
-print('Department table created')
+print('Department table created\n')
 
 # create Employee table in db
 cur.execute('''CREATE TABLE Employee( 
-                id              INT,
-                empDep          INT NOT NULL,
+                id              INTEGER,
+                empDep          INTEGER NOT NULL,
                 empID           TEXT NOT NULL UNIQUE,
                 designation     TEXT CHECK(designation IN {}) NOT NULL,
                 firstName       TEXT CHECK(LENGTH(firstName) <= 50) NOT NULL,
@@ -139,7 +137,7 @@ cur.execute('''CREATE TABLE Credentials(
                 empID           TEXT NOT NULL UNIQUE,
                 username        TEXT NOT NULL,
                 password        TEXT NOT NULL,
-                loginAttempts   INT DEFAULT 0,
+                loginAttempts   INTEGER DEFAULT 0,
                 PRIMARY KEY (empID),
                 CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE
                 );''')
@@ -148,7 +146,7 @@ print('Credentials table created')
 
 # create Origin table
 cur.execute('''CREATE TABLE Origin(
-                id          INT,
+                id          INTEGER,
                 originID    TEXT NOT NULL UNIQUE,
                 name        TEXT NOT NULL,
                 missionID   TEXT DEFAULT 'MISSION-PENDING',
@@ -158,7 +156,7 @@ cur.execute('''CREATE TABLE Origin(
 con.commit()
 
 cur.execute('''CREATE TABLE Mission(
-                id              INT,
+                id              INTEGER,
                 missionID       TEXT NOT NULL UNIQUE,
                 name            TEXT NOT NULL,
                 originID        TEXT DEFAULT 'ORIGIN-PENDING',
@@ -174,7 +172,7 @@ cur.execute('''CREATE TABLE Mission(
 con.commit()
 
 cur.execute('''CREATE TABLE Specimen(
-                id                      INT,
+                id                      INTEGER,
                 specimenID              TEXT NOT NULL UNIQUE,
                 name                    TEXT NOT NULL,
                 origin                  TEXT DEFAULT 'unknown',
@@ -206,158 +204,7 @@ cur.execute('''CREATE TABLE SpecimenMedical(
                 PRIMARY KEY (specimenID),
                 CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
                 );'''.format(bloodtypes, sex))
-
-con.create_function('username_gen', 3, generateUsername)
-con.create_function('pwd_gen', 0, generatePWD)
 con.commit()
 
-con.execute('''CREATE TRIGGER IF NOT EXISTS employeeSetup 
-                    AFTER INSERT 
-                    ON Employee
-                BEGIN
-                    
-                    INSERT INTO EmployeeMedical (empID) VALUES (NEW.empID);
-                    INSERT INTO Credentials (empID, username, password) 
-                        VALUES (NEW.empID, username_gen(NEW.firstName, NEW.lastName, NEW.designation), pwd_gen());
-                END;''')
-
-con.execute('''CREATE TRIGGER IF NOT EXISTS specimenSetup 
-                    AFTER INSERT 
-                    ON Specimen
-                BEGIN
-
-                    INSERT INTO SpecimenMedical (specimenID) VALUES (NEW.specimenID);
-                END;''')
-
-''''''''''INSERTS'''''''''
-
-# insert departments
-departments = [{
-    'id': 1,
-    'name': 'ZERO',
-    'desc': 'spec-ops'
-},
-    {
-        'id': 2,
-        'name': 'EXEC',
-        'desc': 'executive branch'
-    }]
-
-for d in departments:
-    addDepartment(d['name'], d['desc'])
-
-print('Data inserted into Department table\n')
-
-employees = [{
-    'dep': 1,
-    'designation': 'CP',
-    'firstName': 'Prisca',
-    'lastName': 'Poteau',
-    'dob': datetime.date(2071, 9, 19)
-},
-{
-    'dep': 1,
-    'designation': 'ENG',
-    'firstName': 'Revy',
-    'lastName': 'Sagan',
-    'dob': datetime.date(2072, 6, 30)}]
-
-'''
- [1, '', 'CHEM', 'Michael', 'Lowe', datetime.date(2056, 7, 25)],
- [1, '', 'ENG', 'Benjamin', 'Colson', datetime.date(2047, 4, 15)],
- [1, '', 'BIO', 'Mingmei', 'Gao', datetime.date(2061, 12, 3)],
- [1, '', 'GEO', 'Abdul', 'Said', datetime.date(2061, 12, 3)],
- [1, '', 'SUPER', 'Historia', 'Lowe', datetime.date(2038, 1, 31)],
- [2, '', 'SUPER', 'Jurio', 'Caldero', datetime.date(2042, 6, 30)],
- [1, '', 'SOLDIER', 'Joseph', 'Smith', datetime.date(2060, 11, 12)],
- [2, '', 'SUPER', 'Markus', 'Belcost', datetime.date(2067, 6, 8)],
- [2, '', 'SOLDIER', 'Aurelis', 'Dreymond', datetime.date(2075, 12, 13)],
- [2, '', 'SOLDIER', 'Quani', 'Dreymond', datetime.date(2075, 12, 13)],
- [1, '', 'TECH', 'Daryl', 'Belcost', datetime.date(2071, 3, 16)]]
-'''
-medicalData = [['', datetime.date(2052, 10, 15), 'undefined', 'female', 85.3, 177.8],
-               ['', datetime.date(2053, 3, 7), 'V-', 'female', 75.7, 158.75, 'monitoring hemochromia'],
-               ['', datetime.date(2040, 7, 24), 'B+', 'male', 87.1, 182.88, '8th regen cycle'],
-               ['', datetime.date(2019, 9, 22), 'O+', 'inter', 95.3, 177.8],
-               ['', datetime.date(2038, 5, 9), 'AB+', 'female', 59.9, 166.37, 'pregnant'],
-               ['', datetime.date(2041, 5, 9), 'A+', 'male', 78.5, 185.42],
-               ['', datetime.date(2024, 12, 25), 'AB-', 'female', 70.3, 170.18, '3rd regen cycle'],
-               ['', datetime.date(2022, 9, 1), 'A-', 'male', 88.5, 186.69, '2nd regen cycle'],
-               ['', datetime.date(2042, 5, 15), 'O-', 'male', 90.7, 175.26],
-               ['', datetime.date(2052, 1, 1), 'undefined', 'male', 72.1, 473.99, 'dormant massimonia'],
-               ['', 'undefined', 'female', 81.6, 186.69],
-               ['', 'undefined', 'female', 77.6, 177.8],
-               ['', 'BF', 'male', 113.4, 180.34, 'has gained sentience']]
-
-# generate random empID for each employee
-# TODO: TURN LISTS TO DICTIONARIES FOR READABILITY AND EASE OF ACCESS
-
-
-# populate Employee table & EmployeeMedical table
-cur.executemany('INSERT INTO Employee(empDep, empID, designation, firstName, lastName, startDate) VALUES(?,?,?,?,?,?);',
-                employees)
-
-con.commit()
-
-# origin and mission data
-origins = [[generateUID(), 'Lypso', b'highly hazardous gaseous ice planet']]
-missions = [[generateUID(), 'Dying Prophet', origins[0][0], None, None, None, None,
-             b'recon for reports of glowing \'rosetta-stone-like\' object']]
-origins[0][2] = str(encryption.cipher.encrypt(origins[0][2]).decode('utf-8'))
-missions[0][7] = str(encryption.cipher.encrypt(missions[0][7]).decode('utf-8'))
-
-origins = [tuple(r) for r in origins]
-missions = [tuple(r) for r in missions]
-
-cur.executemany('INSERT INTO Origin(originID, name, description) VALUES(?,?,?)', origins)
-con.commit()
-print('Data inserted into Origin table')
-cur.executemany('INSERT INTO Mission VALUES(?,?,?,?,?,?,?,?)', missions)
-con.commit()
-print('Data inserted into Mission table')
-
-cur.execute('''UPDATE Origin
-                SET missionID = (SELECT missionID
-                                    FROM Mission
-                                   WHERE originID = Origin.originID
-           )''')
-
-cur.execute('INSERT INTO Specimen(specimenID, name, notes) VALUES(?,?,?)',
-            (generateUID(), 'Massimo', 'member of department 0'))
-
-# iterate over rows in table
-print('Department Table')
-for row in cur.execute('SELECT * FROM Department;'):
-    print(row)
-print('\n')
-
-print('Employee Table')
-for row in cur.execute('SELECT * FROM Employee;'):
-    print(row)
-print('\n')
-
-print('EmployeeMedical Table')
-for row in cur.execute('SELECT * FROM EmployeeMedical;'):
-    print(row)
-print('\n')
-
-print('Credentials Table')
-for row in cur.execute('SELECT * FROM Credentials;'):
-    row = list(row)
-    print(row)
-print('\n')
-
-print('Origin Table')
-for row in cur.execute('SELECT * FROM Origin;'):
-    row = list(row)
-    print(row)
-print('\n')
-
-print('Mission Table')
-for row in cur.execute('SELECT * FROM Mission;'):
-    row = list(row)
-    print(row)
-print('\n')
 
 con.close()
-print('Database connection closed.')
