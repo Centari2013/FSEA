@@ -1,7 +1,7 @@
 import sqlite3
-from variables import db
+from utils.variables import db
 from utils.encryption import encrypt, decrypt
-from authUtils import generateUID, generatePWD, generateUsername
+from utils.authUtils import generateUID, generateUsername, generatePWD
 
 
 def addDepartment(name, supervisorID=None, desc=None):
@@ -17,14 +17,10 @@ def addDepartment(name, supervisorID=None, desc=None):
 
         cur = con.cursor()
 
-        cur.execute('INSERT INTO Department(depName) VALUES(?)',
-                    name)
+        cur.execute('INSERT INTO Department(depName) VALUES(?)', (name,))
         con.commit()
         row = cur.lastrowid
         updateDepartment(row, supervisorID, desc)
-
-
-
 
     except Exception as e:
         print(e)
@@ -87,10 +83,11 @@ def deleteDepartment(depID):
             con.close()
 
 
-def addEmployee(fName, lName, dep, role, sDate):
-    fName = encrypt(fName)
-    lName = encrypt(lName)
+def addEmployee(firstName, lastName, dep, role, startDate):
+    firstName = encrypt(firstName)
+    lastName = encrypt(lastName)
 
+    ID = None
     con = None
     try:
         # connect to database
@@ -98,22 +95,25 @@ def addEmployee(fName, lName, dep, role, sDate):
 
         cur = con.cursor()
 
-        # check for repeat empID
+        # check for repeat ID
         ID = generateUID()
-        cur.execute('SELECT empID FROM Employee WHERE empID = ?', ID)
+        cur.execute('SELECT empID FROM Employee WHERE empID = ?', (ID,))
         r1 = cur.fetchone()
-        cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', ID)
+        cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (ID,))
         r2 = cur.fetchone()
 
         while r1 and r2 is not None:
             ID = generateUID()
-            cur.execute('SELECT empID FROM Employee WHERE empID = ?', ID)
+            cur.execute('SELECT empID FROM Employee WHERE empID = ?', (ID,))
             r1 = cur.fetchone()
-            cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', ID)
+            cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (ID,))
             r2 = cur.fetchone()
 
         cur.execute('''INSERT INTO Employee(empDep, empID, designation, firstName, lastName, startDate) 
-                        VALUES(?,?,?,?,?,?)''', (dep, ID, role, fName, lName, sDate))
+                        VALUES(?,?,?,?,?,?)''', (dep, ID, role, firstName, lastName, startDate))
+        cur.execute('''INSERT INTO EmployeeMedical (empID) VALUES (?)''', (ID,))
+        cur.execute('''INSERT INTO Credentials (empID, username, password) 
+                        VALUES (?,?,?) ''', (ID, generateUsername(firstName, lastName, role), generatePWD()))
 
         con.commit()
 
@@ -124,14 +124,16 @@ def addEmployee(fName, lName, dep, role, sDate):
         # close connection and return
         if con is not None:
             con.close()
+        if ID is not None:
+            return ID
 
 
-def updateEmployee(empID, dep=None, role=None, fName=None, lName=None, sDate=None, eDate=None):
+def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None):
     # encrypt data
-    if fName is not None:
-        fName = encrypt(fName)
-    if lName is not None:
-        lName = encrypt(lName)
+    if firstName is not None:
+        firstName = encrypt(firstName)
+    if lastName is not None:
+        lastName = encrypt(lastName)
 
     con = None
     try:
@@ -140,8 +142,8 @@ def updateEmployee(empID, dep=None, role=None, fName=None, lName=None, sDate=Non
 
         cur = con.cursor()
 
-        args = [[dep, 'empDep'], [role, 'designation'], [fName, 'firstName'],
-                [lName, 'lastName'], [sDate, 'startDate'], [eDate, 'endDate']]
+        args = [[dep, 'empDep'], [role, 'designation'], [firstName, 'firstName'],
+                [lastName, 'lastName'], [startDate, 'startDate'], [endDate, 'endDate']]
 
         for a in args:
             if a[0] is not None:
@@ -168,7 +170,7 @@ def deleteEmployee(empID):
 
         cur = con.cursor()
 
-        cur.execute('DELETE FROM Employee WHERE empID = ?', empID)
+        cur.execute('DELETE FROM Employee WHERE empID = ?', (empID,))
 
         con.commit()
 
@@ -301,7 +303,7 @@ def deleteOrigin(originID):
         con = sqlite3.connect(db)
         cur = con.cursor()
 
-        cur.execute('DELETE FROM Origin WHERE originID = ?', originID)
+        cur.execute('DELETE FROM Origin WHERE originID = ?', (originID,))
         con.commit()
 
     except Exception as e:
@@ -369,7 +371,7 @@ def deleteMission(missionID):
         con = sqlite3.connect(db)
         cur = con.cursor()
 
-        cur.execute('DELETE FROM Mission WHERE missionID = ?', missionID)
+        cur.execute('DELETE FROM Mission WHERE missionID = ?', (missionID,))
         con.commit()
 
     except Exception as e:
@@ -392,7 +394,22 @@ def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLeve
         con = sqlite3.connect(db)
         cur = con.cursor()
 
-        cur.execute('INSERT INTO Specimen(name, acquisitionDate) VALUES (?,?)', (name, acquisitionDate))
+        # check for repeat ID
+        ID = generateUID()
+        cur.execute('SELECT empID FROM Employee WHERE empID = ?', (ID,))
+        r1 = cur.fetchone()
+        cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (ID,))
+        r2 = cur.fetchone()
+
+        while r1 and r2 is not None:
+            ID = generateUID()
+            cur.execute('SELECT empID FROM Employee WHERE empID = ?', (ID,))
+            r1 = cur.fetchone()
+            cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (ID,))
+            r2 = cur.fetchone()
+
+        cur.execute('INSERT INTO Specimen(specimenID, name, acquisitionDate) VALUES (?,?,?)', (ID, name, acquisitionDate))
+        cur.execute('INSERT INTO SpecimenMedical(specimenID) VALUES (?)', (ID,))
         con.commit()
 
         updateSpecimen(cur.lastrowid, originID, missionID, threatLevel, notes)
@@ -439,7 +456,7 @@ def deleteSpecimen(specimenID):
         con = sqlite3.connect(db)
         cur = con.cursor()
 
-        cur.execute('DELETE FROM Specimen WHERE specimenID = ?', specimenID)
+        cur.execute('DELETE FROM Specimen WHERE specimenID = ?', (specimenID,))
         con.commit()
     except Exception as e:
         print(e)
