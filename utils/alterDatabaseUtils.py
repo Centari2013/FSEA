@@ -1,9 +1,11 @@
 import sqlite3
 from utils.variables import db
 from utils.encryption import encrypt, decrypt
-from utils.authUtils import generateUID, generateUsername, generatePWD
+from utils.authUtils import generateUID, generateUsername, generatePWD, generateOID
 
+'''''''''''''''''''''ALTER DATABASE'''''''''''''''''''''
 
+# TODO: ADD USER_FRIENDLY ID RETURNS FROM ALL FUNCTIONS
 def addDepartment(name, supervisorID=None, desc=None):
     # encrypt data
     name = encrypt(name)
@@ -124,8 +126,7 @@ def addEmployee(firstName, lastName, dep, role, startDate):
         # close connection and return
         if con is not None:
             con.close()
-        if ID is not None:
-            return ID
+        return ID
 
 
 def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None):
@@ -188,7 +189,7 @@ def updateEmployeeMedical(empID, dob=None, bloodtype=None, sex=None, kg=None, he
     if kg is not None:
         kg = encrypt(str(kg))
     if height is not None:
-        height = encrypt(height)
+        height = encrypt(str(height))
     if notes is not None:
         notes = encrypt(notes)
 
@@ -253,14 +254,25 @@ def addOrigin(name, desc, missionID=None):
     desc = encrypt(desc)
 
     con = None
-
+    ID = None
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
 
-        cur.execute('INSERT INTO Origin(name, description) VALUES (?,?)', (name, desc))
+        oid = generateOID()
+
+        cur.execute('SELECT originID FROM Origin WHERE originID = ?', (oid,))
+        r = cur.fetchone()
+
+        while r is not None:
+            oid = generateOID()
+            cur.execute('SELECT originID FROM Origin WHERE originID = ?', (oid,))
+            r = cur.fetchone()
+
+        cur.execute('INSERT INTO Origin(originID, name, description) VALUES (?,?,?)', (oid, name, desc))
         con.commit()
-        updateOrigin(cur.lastrowid, missionID)
+        ID = cur.lastrowid
+        updateOrigin(ID, missionID)
     except Exception as e:
         print(e)
 
@@ -268,6 +280,7 @@ def addOrigin(name, desc, missionID=None):
         # close connection and return
         if con is not None:
             con.close()
+        return ID
 
 
 def updateOrigin(rowID, name=None, missionID=None, desc=None):
@@ -319,20 +332,32 @@ def addMission(name, desc, originID=None, startDate=None, endDate=None, captainI
     name = encrypt(name)
     desc = encrypt(desc)
 
+    ID = None
     con = None
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
 
-        cur.execute('INSERT INTO Mission(name, description) VALUES (?,?)', (name, desc))
-        con.commit()
+        mid = generateOID()
 
-        updateMission(cur.lastrowid, name, originID, startDate, endDate, captainID, supervisorID)
+        cur.execute('SELECT originID FROM Origin WHERE originID = ?', (mid,))
+        r = cur.fetchone()
+
+        while r is not None:
+            mid = generateOID()
+            cur.execute('SELECT missionID FROM Mission WHERE missionID = ?', (mid,))
+            r = cur.fetchone()
+
+        cur.execute('INSERT INTO Mission(missionID, name, description) VALUES (?,?,?)', (mid, name, desc))
+        con.commit()
+        ID = cur.lastrowid
+        updateMission(ID, name, originID, startDate, endDate, captainID, supervisorID)
     except Exception as e:
         print(e)
     finally:
         if con is not None:
             con.close()
+        return ID
 
 
 def updateMission(rowID, name=None, desc=None, originID=None, startDate=None, endDate=None, captainID=None,
@@ -408,7 +433,8 @@ def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLeve
             cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (ID,))
             r2 = cur.fetchone()
 
-        cur.execute('INSERT INTO Specimen(specimenID, name, acquisitionDate) VALUES (?,?,?)', (ID, name, acquisitionDate))
+        cur.execute('INSERT INTO Specimen(specimenID, name, acquisitionDate) VALUES (?,?,?)',
+                    (ID, name, acquisitionDate))
         cur.execute('INSERT INTO SpecimenMedical(specimenID) VALUES (?)', (ID,))
         con.commit()
 
