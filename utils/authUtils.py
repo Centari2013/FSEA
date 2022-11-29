@@ -50,6 +50,22 @@ def generateUID():  # generate random 8 digit str(int)
     return uid
 
 
+def generateOID():  # generate random 7 digit str(int)
+    oid = randint(0, 9999999)
+    oid = str(oid)
+
+    oid = oid.zfill(7)
+    return 'O' + oid
+
+
+def generateMID():  # generate random 7 digit str(int)
+    mid = randint(0, 9999999)
+    mid = str(mid)
+
+    mid = mid.zfill(7)
+    return 'M' + mid
+
+
 def generateUsername(firstName, lastName, designation):
     def firstNLetters(s, n):
         new_s = ""
