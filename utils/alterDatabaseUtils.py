@@ -5,6 +5,7 @@ from utils.authUtils import generateUID, generateUsername, generatePWD, generate
 
 '''''''''''''''''''''ALTER DATABASE'''''''''''''''''''''
 
+
 # TODO: ADD USER_FRIENDLY ID RETURNS FROM ALL FUNCTIONS
 def addDepartment(name, supervisorID=None, desc=None):
     # encrypt data
