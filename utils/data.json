@@ -70,8 +70,8 @@
       "firstName": "Mingmei",
       "lastName": "Gao",
       "startDate": "2061-12-03",
-      "dob": "",
-      "bloodtype": "",
+      "dob": "2038-05-09",
+      "bloodtype": "AB+",
       "sex": "f",
       "weight": 59.9,
       "height": 166.37,
@@ -194,6 +194,7 @@
 
   "specimen": [{
     "name": "Massimo",
-    "notes:": "member of department 0"
+    "acquisitionDate": "0000-00-00",
+    "notes": "member of department 0"
   }]
 }
