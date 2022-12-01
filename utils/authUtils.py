@@ -10,7 +10,7 @@ def authenticate(user, pwd):
     return_val = None
     # encrypt username and password for comparison to encrypted database
     user = encrypt(user)
-    pwd = decrypt(user)
+    pwd = encrypt(pwd)
 
     try:
         # connect to database
@@ -24,6 +24,7 @@ def authenticate(user, pwd):
         if p is not None:
             # convert tuple to list and extract string by indexing
             p = list(p)[0]
+
             if pwd == p:  # user authenticated
                 return_val = True
             else:  # password does not match user
