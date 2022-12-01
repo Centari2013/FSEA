@@ -1,4 +1,5 @@
 from utils.alterDatabaseUtils import *
+from utils.encryption import decrypt
 import json
 
 '''
@@ -55,6 +56,8 @@ print('\n')
 print('Credentials Table')
 for row in cur.execute('SELECT * FROM Credentials;'):
     row = list(row)
+    row[1] = decrypt(row[1])
+    row[2] = decrypt(row[2])
     print(row)
 print('\n')
 
