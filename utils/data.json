@@ -14,7 +14,7 @@
   "employee": [
     {
       "dep": 1,
-      "designation": "CP",
+      "designation": "CAPTAIN",
       "firstName": "Prisca",
       "lastName": "Poteau",
       "startDate": "2071-09-19",
@@ -27,7 +27,7 @@
     },
     {
       "dep": 1,
-      "designation": "ENG",
+      "designation": "ENGINEER",
       "firstName": "Revy",
       "lastName": "Sagan",
       "startDate": "2072-06-30",
@@ -40,7 +40,7 @@
     },
     {
       "dep": 1,
-      "designation": "CHEM",
+      "designation": "CHEMIST",
       "firstName": "Michael",
       "lastName": "Lowe",
       "startDate": "2056-07-25",
@@ -53,7 +53,7 @@
     },
     {
       "dep": 1,
-      "designation": "ENG",
+      "designation": "ENGINEER",
       "firstName": "Benjamin",
       "lastName": "Colson",
       "startDate": "2047-04-15",
@@ -66,7 +66,7 @@
     },
     {
       "dep": 1,
-      "designation": "BIO",
+      "designation": "BIOLOGIST",
       "firstName": "Mingmei",
       "lastName": "Gao",
       "startDate": "2061-12-03",
@@ -79,7 +79,7 @@
     },
     {
       "dep": 1,
-      "designation": "GEO",
+      "designation": "GEOLOGIST",
       "firstName": "Abdul",
       "lastName": "Said",
       "startDate": "2061-12-03",
@@ -92,7 +92,7 @@
     },
     {
       "dep": 1,
-      "designation": "SUPER",
+      "designation": "SUPERVISOR",
       "firstName": "Historia",
       "lastName": "Lowe",
       "startDate": "2038-01-31",
@@ -105,7 +105,7 @@
     },
     {
       "dep": 2,
-      "designation": "SUPER",
+      "designation": "SUPERVISOR",
       "firstName": "Jurio",
       "lastName": "Caldero",
       "startDate": "2042-06-30",
@@ -131,7 +131,7 @@
     },
     {
       "dep": 2,
-      "designation": "SUPER",
+      "designation": "SUPERVISOR",
       "firstName": "Markus",
       "lastName": "Belcost",
       "startDate": "2067-06-08",
@@ -170,7 +170,7 @@
     },
     {
       "dep": 1,
-      "designation": "TECH",
+      "designation": "IT",
       "firstName": "Daryl",
       "lastName": "Belcost",
       "startDate": "2071-03-16",
