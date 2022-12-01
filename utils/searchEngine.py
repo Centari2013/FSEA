@@ -19,10 +19,11 @@ def searchEmployee(query):
         cur.execute('''SELECT empID as empID, 
                         firstName as firstName, 
                         lastName as lastName,
-                        designation as designation
-                        FROM Employee_fts(?) ORDER BY rank;''', (query + '*',))
+                        designation as designation,
+                        summary as summary
+                        FROM Employee_fts(?)
+                        ORDER BY rank;''', (query + '*',))
         results = cur.fetchall()
-        print(results)
 
     except Exception as e:
         print(e)

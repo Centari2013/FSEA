@@ -1,5 +1,8 @@
+import os
+
 from utils.alterDatabaseUtils import *
 from utils.encryption import decrypt
+import time
 import json
 
 '''
@@ -15,7 +18,7 @@ for d in data["department"]:
 
 for e in data["employee"]:
     print(e)
-    ID = addEmployee(e["firstName"], e["lastName"], e["dep"], e["designation"], e["startDate"])
+    ID = addEmployee(e["firstName"], e["lastName"], e["dep"], e["designation"], e["startDate"], e["summary"])
     updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"], e["notes"])
 
 oID = None
@@ -32,7 +35,7 @@ updateOrigin(oID, missionID=mID)
 updateMission(mID, originID=oID)
 
 for s in data["specimen"]:
-    addSpecimen(s['name'], s["acquisitionDate"], notes=s["notes"])
+    addSpecimen(s['name'], s["acquisitionDate"], notes=s["notes"], )
 
 con = sqlite3.connect(db)
 cur = con.cursor()

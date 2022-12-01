@@ -74,7 +74,7 @@ def deleteDepartment(depID):
             con.close()
 
 
-def addEmployee(firstName, lastName, dep, role, startDate):
+def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
     ID = None
     con = None
     try:
@@ -102,8 +102,8 @@ def addEmployee(firstName, lastName, dep, role, startDate):
         cur.execute('''INSERT INTO EmployeeMedical (empID) VALUES (?)''', (ID,))
         cur.execute('''INSERT INTO Credentials (empID, username, password) 
                         VALUES (?,?,?) ''', (ID, generateUsername(firstName, lastName, role), generatePWD()))
-
         con.commit()
+        updateEmployee(cur.lastrowid, summary=summary)
 
     except Exception as e:
         print(e)
@@ -115,7 +115,7 @@ def addEmployee(firstName, lastName, dep, role, startDate):
         return ID
 
 
-def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None):
+def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None, summary=None):
     con = None
     try:
         # connect to database
@@ -124,7 +124,7 @@ def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, st
         cur = con.cursor()
 
         args = [[dep, 'empDep'], [role, 'designation'], [firstName, 'firstName'],
-                [lastName, 'lastName'], [startDate, 'startDate'], [endDate, 'endDate']]
+                [lastName, 'lastName'], [startDate, 'startDate'], [endDate, 'endDate'], [summary, 'summary']]
 
         for a in args:
             if a[0] is not None:
@@ -353,7 +353,7 @@ def deleteMission(missionID):
             con.close()
 
 
-def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLevel=None, notes=None):
+def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLevel=None, notes=None, description=None):
     con = None
 
     try:
@@ -379,7 +379,7 @@ def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLeve
         cur.execute('INSERT INTO SpecimenMedical(specimenID) VALUES (?)', (ID,))
         con.commit()
 
-        updateSpecimen(cur.lastrowid, originID, missionID, threatLevel, notes)
+        updateSpecimen(cur.lastrowid, originID, missionID, threatLevel, notes, description)
 
     except Exception as e:
         print(e)
@@ -388,7 +388,7 @@ def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLeve
             con.close()
 
 
-def updateSpecimen(rowID, name=None, acquisitionDate=None, originID=None, missionID=None, threatLevel=None, notes=None):
+def updateSpecimen(rowID, name=None, acquisitionDate=None, originID=None, missionID=None, threatLevel=None, notes=None, description=None):
     con = None
 
     try:
@@ -396,7 +396,7 @@ def updateSpecimen(rowID, name=None, acquisitionDate=None, originID=None, missio
         cur = con.cursor()
 
         args = [[name, 'name'], [acquisitionDate, 'acquisitionDate'], [originID, 'originID'],
-                [missionID, 'missionID'], [threatLevel, 'threatLevel'], [notes, 'notes']]
+                [missionID, 'missionID'], [threatLevel, 'threatLevel'], [notes, 'notes'], [description, 'description']]
 
         for a in args:
             if a[0] is not None:

@@ -23,7 +23,8 @@
       "sex": "f",
       "weight": 85.3,
       "height": 177.8,
-      "notes": null
+      "notes": null,
+      "summary": ""
     },
     {
       "dep": 1,
@@ -36,7 +37,8 @@
       "sex": "f",
       "weight": 75.7,
       "height": 158.75,
-      "notes": "monitoring hemochromia"
+      "notes": "monitoring hemochromia",
+      "summary": ""
     },
     {
       "dep": 1,
@@ -49,7 +51,8 @@
       "sex": "m",
       "weight": 87.1,
       "height": 182.88,
-      "notes": "8th regen cycle"
+      "notes": "8th regen cycle",
+      "summary": ""
     },
     {
       "dep": 1,
@@ -62,7 +65,8 @@
       "sex": "inter",
       "weight": 95.3,
       "height": 177.8,
-      "notes": null
+      "notes": null,
+      "summary": ""
     },
     {
       "dep": 1,
@@ -75,7 +79,8 @@
       "sex": "f",
       "weight": 59.9,
       "height": 166.37,
-      "notes": "pregnant"
+      "notes": "pregnant",
+      "summary": ""
     },
     {
       "dep": 1,
@@ -88,7 +93,8 @@
       "sex": "m",
       "weight": 78.5,
       "height": 185.42,
-      "notes": null
+      "notes": null,
+      "summary": ""
     },
     {
       "dep": 1,
@@ -101,7 +107,8 @@
       "sex": "f",
       "weight": 70.3,
       "height": 170.18,
-      "notes": "3rd regen cycle"
+      "notes": "3rd regen cycle",
+      "summary": ""
     },
     {
       "dep": 2,
@@ -114,7 +121,8 @@
       "sex": "m",
       "weight": 88.5 ,
       "height": 186.69,
-      "notes": "2nd regen cycle"
+      "notes": "2nd regen cycle",
+      "summary": ""
     },
     {
       "dep": 1,
@@ -127,7 +135,8 @@
       "sex": "m",
       "weight": 90.7,
       "height": 175.26,
-      "notes": null
+      "notes": null,
+      "summary": ""
     },
     {
       "dep": 2,
@@ -140,7 +149,8 @@
       "sex": "m",
       "weight": 72.1,
       "height": 473.99,
-      "notes": "dormant massimonia"
+      "notes": "dormant massimonia",
+      "summary": ""
     },
     {
       "dep": 2,
@@ -153,7 +163,8 @@
       "sex": "f",
       "weight": 81.6,
       "height": 186.69,
-      "notes": null
+      "notes": null,
+      "summary": ""
     },
     {
       "dep": 2,
@@ -166,7 +177,8 @@
       "sex": "f",
       "weight": 77.6,
       "height": 177.8,
-      "notes": null
+      "notes": null,
+      "summary": ""
     },
     {
       "dep": 1,
@@ -179,7 +191,8 @@
       "sex": "m",
       "weight": 113.4,
       "height": 180.34,
-      "notes": "has gained sentience"
+      "notes": "has gained sentience",
+      "summary": ""
     },
     {
       "dep": 2,
@@ -192,7 +205,8 @@
       "sex": "f",
       "weight": 74.8,
       "height": 162.6,
-      "notes": "founder"
+      "notes": "founder",
+      "summary": ""
     }],
 
   "origin": [{
@@ -208,6 +222,7 @@
   "specimen": [{
     "name": "Massimo",
     "acquisitionDate": "0000-00-00",
-    "notes": "member of department 0"
+    "notes": "member of department 0",
+    "summary": ""
   }]
 }

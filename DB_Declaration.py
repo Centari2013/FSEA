@@ -88,7 +88,7 @@ try:
 except:
     print('EmployeeSpecimen table does not exist\n')
 
-# drop SEARCH table from database if it exists
+# drop Employee_fts table from database if it exists
 try:
     con.execute('''DROP TABLE Employee_fts''')
     con.commit()
@@ -96,6 +96,7 @@ try:
 
 except:
     print('Employee_fts table does not exist\n')
+
 
 # create Department table
 cur.execute('''CREATE TABLE Department(
@@ -118,6 +119,7 @@ cur.execute('''CREATE TABLE Employee(
                 lastName        TEXT CHECK(LENGTH(lastName) <= 50)  NOT NULL,
                 startDate       TEXT NOT NULL,
                 endDate         TEXT DEFAULT NULL,
+                summary         TEXT DEFAULT NULL,
                 PRIMARY KEY (id),
                 FOREIGN KEY (empDep) REFERENCES Department(depId)
                 );'''.format(designation))
@@ -191,6 +193,7 @@ cur.execute('''CREATE TABLE Specimen(
                 threatLevel             REAL DEFAULT NULL,
                 acquisitionDate         TEXT NOT NULL,
                 notes                   TEXT DEFAULT NULL,
+                description             TEXT DEFAULT NULL,
                PRIMARY KEY (id),
                CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
                CONSTRAINT missionID FOREIGN KEY (missionID) REFERENCES Mission(missionID) ON DELETE CASCADE
@@ -228,6 +231,7 @@ cur.execute('''CREATE VIRTUAL TABLE Employee_fts USING fts5(
                 lastName, 
                 startDate UNINDEXED, 
                 endDate UNINDEXED,
+                summary,
                 content='Employee',
                 content_rowid='id'  
             )''')
@@ -236,22 +240,22 @@ print('Employee_fts table created\n')
 
 cur.execute('''CREATE TRIGGER emp_fts_insert AFTER INSERT ON Employee
                 BEGIN
-                    INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName)
-                    VALUES (new.id, new.empID, new.empDep, new.designation, new.firstName, new.lastName);
+                    INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName, summary)
+                    VALUES (new.id, new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
                 END;''')
 
 cur.execute('''CREATE TRIGGER emp_fts_delete AFTER DELETE ON Employee
                 BEGIN
-                    INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName)
-                    VALUES ('delete', old.id, old.empID, old.empDep, old.designation, old.firstName, old.lastName);
+                    INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName, summary)
+                    VALUES ('delete', old.id, old.empID, old.empDep, old.designation, old.firstName, old.lastName, old.summary);
                 END;''')
 
 cur.execute('''CREATE TRIGGER emp_fts_update AFTER UPDATE ON Employee
                 BEGIN
-                    INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName)
-                    VALUES ('delete', old.id, old.empID, old.empDep, old.designation, old.firstName, old.lastName);
-                    INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName)
-                    VALUES (new.id, new.empID, new.empDep, new.designation, new.firstName, new.lastName);
+                    INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName, summary)
+                    VALUES ('delete', old.id, old.empID, old.empDep, old.designation, old.firstName, old.lastName, old.summary);
+                    INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName, summary)
+                    VALUES (new.id, new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
                 END;''')
 con.commit()
 

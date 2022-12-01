@@ -66,7 +66,8 @@ class searchResult(QFrame):
         self.description = description
 
         self.gridLayout.addWidget(clickableLabel(self.id), 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(elidedLabel('{}, {}'.format(self.lastName, self.firstName)), 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(elidedLabel('{},  {}'.format(self.lastName, self.firstName)), 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        # self.gridLayout.addWidget(elidedLabel('{}'.format(self.firstName)), 1, 1, 1, 1, Qt.AlignmentFlag.AlignLeft)
         self.gridLayout.addWidget(elidedLabel(self.description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
         self.gridLayout.setColumnStretch(0, 1)
@@ -245,10 +246,11 @@ class database_options(windowWithToolbar):
 
     def getResults(self):
         query = str(self.searchBar.text())
-        results = searchEmployee(query)
+        if query != '':
+            results = searchEmployee(query)
 
-        for r in results:
-            self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=r['designation'])
+            for r in results:
+                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=r['summary'])
 
 
 
