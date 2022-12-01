@@ -3,14 +3,14 @@ from random import randint
 import secrets
 import string
 from utils.variables import db
-from utils import encryption
+from utils.encryption import encrypt, decrypt
 
 
 def authenticate(user, pwd):
     return_val = None
     # encrypt username and password for comparison to encrypted database
-    user = str(encryption.cipher.encrypt(bytes(user, 'utf-8')).decode('utf-8'))
-    pwd = str(encryption.cipher.encrypt(bytes(pwd, 'utf-8')).decode('utf-8'))
+    user = encrypt(user)
+    pwd = decrypt(user)
 
     try:
         # connect to database
@@ -33,8 +33,8 @@ def authenticate(user, pwd):
                 return_val = False
         else:  # user does not exist
             return_val = False
-    except:
-        print('Error connecting to FSEA database')
+    except Exception as e:
+        print(e)
         return_val = False
 
     # close connection and return
@@ -78,13 +78,9 @@ def generateUsername(firstName, lastName, designation):
 
         return new_s
 
-    firstName = str(encryption.cipher.decrypt(bytes(firstName, 'utf-8')).encode('utf-8').decode('utf-8'))
-    lastName = str(encryption.cipher.decrypt(bytes(lastName, 'utf-8')).encode('utf-8').decode('utf-8'))
-
     username = (firstName[0] + firstNLetters(lastName, 8)).lower() + '_' + designation.upper()
-    username = str(encryption.cipher.encrypt(bytes(username, 'utf-8')).decode('utf-8'))
 
-    return username
+    return encrypt(username)
 
 
 def generatePWD():  # generate random temp password for new users
@@ -92,4 +88,4 @@ def generatePWD():  # generate random temp password for new users
     password = ''.join(secrets.choice(alphabet) for _ in range(8))
     password = password + '-'
     password += ''.join(secrets.choice(alphabet) for _ in range(8))
-    return password
+    return encrypt(password)
