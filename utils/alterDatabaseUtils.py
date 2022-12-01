@@ -1,6 +1,5 @@
 import sqlite3
 from utils.variables import db
-from utils.encryption import encrypt, decrypt
 from utils.authUtils import generateUID, generateUsername, generatePWD, generateOID
 
 '''''''''''''''''''''ALTER DATABASE'''''''''''''''''''''
@@ -8,11 +7,6 @@ from utils.authUtils import generateUID, generateUsername, generatePWD, generate
 
 # TODO: ADD USER_FRIENDLY ID RETURNS FROM ALL FUNCTIONS
 def addDepartment(name, supervisorID=None, desc=None):
-    # encrypt data
-    name = encrypt(name)
-    if desc is not None:
-        desc = encrypt(desc)
-
     con = None
     try:
         # connect to database
@@ -35,12 +29,6 @@ def addDepartment(name, supervisorID=None, desc=None):
 
 
 def updateDepartment(depID, name=None, supervisorID=None, desc=None):
-    # encrypt data
-    if name is not None:
-        name = encrypt(name)
-    if desc is not None:
-        desc = encrypt(desc)
-
     con = None
     try:
         # connect to database
@@ -87,9 +75,6 @@ def deleteDepartment(depID):
 
 
 def addEmployee(firstName, lastName, dep, role, startDate):
-    firstName = encrypt(firstName)
-    lastName = encrypt(lastName)
-
     ID = None
     con = None
     try:
@@ -131,12 +116,6 @@ def addEmployee(firstName, lastName, dep, role, startDate):
 
 
 def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None):
-    # encrypt data
-    if firstName is not None:
-        firstName = encrypt(firstName)
-    if lastName is not None:
-        lastName = encrypt(lastName)
-
     con = None
     try:
         # connect to database
@@ -186,14 +165,6 @@ def deleteEmployee(empID):
 
 
 def updateEmployeeMedical(empID, dob=None, bloodtype=None, sex=None, kg=None, height=None, notes=None):
-    # encrypt data
-    if kg is not None:
-        kg = encrypt(str(kg))
-    if height is not None:
-        height = encrypt(str(height))
-    if notes is not None:
-        notes = encrypt(notes)
-
     con = None
     try:
         # connect to database
@@ -220,12 +191,6 @@ def updateEmployeeMedical(empID, dob=None, bloodtype=None, sex=None, kg=None, he
 
 
 def updateCredentials(empID, username=None, pwd=None, loginAttempts=None):
-    # encrypt data
-    if username is not None:
-        username = encrypt(username)
-    if pwd is not None:
-        pwd = encrypt(pwd)
-
     con = None
     try:
         # connect to database
@@ -250,10 +215,6 @@ def updateCredentials(empID, username=None, pwd=None, loginAttempts=None):
 
 
 def addOrigin(name, desc, missionID=None):
-    # encrypt data
-    name = encrypt(name)
-    desc = encrypt(desc)
-
     con = None
     ID = None
     try:
@@ -273,7 +234,7 @@ def addOrigin(name, desc, missionID=None):
         cur.execute('INSERT INTO Origin(originID, name, description) VALUES (?,?,?)', (oid, name, desc))
         con.commit()
         ID = cur.lastrowid
-        updateOrigin(ID, missionID)
+        updateOrigin(ID, missionID=missionID)
     except Exception as e:
         print(e)
 
@@ -285,12 +246,6 @@ def addOrigin(name, desc, missionID=None):
 
 
 def updateOrigin(rowID, name=None, missionID=None, desc=None):
-    # encrypt data
-    if name is not None:
-        name = encrypt(name)
-    if desc is not None:
-        desc = encrypt(desc)
-
     con = None
     try:
         con = sqlite3.connect(db)
@@ -329,10 +284,6 @@ def deleteOrigin(originID):
 
 
 def addMission(name, desc, originID=None, startDate=None, endDate=None, captainID=None, supervisorID=None):
-    # encrypt data
-    name = encrypt(name)
-    desc = encrypt(desc)
-
     ID = None
     con = None
     try:
@@ -363,12 +314,6 @@ def addMission(name, desc, originID=None, startDate=None, endDate=None, captainI
 
 def updateMission(rowID, name=None, desc=None, originID=None, startDate=None, endDate=None, captainID=None,
                   supervisorID=None):
-    # encrypt data
-    if name is not None:
-        name = encrypt(name)
-    if desc is not None:
-        desc = encrypt(desc)
-
     con = None
     try:
         con = sqlite3.connect(db)
@@ -409,11 +354,6 @@ def deleteMission(missionID):
 
 
 def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLevel=None, notes=None):
-    # encrypt data
-    name = encrypt(name)
-    if notes is not None:
-        notes = encrypt(notes)
-
     con = None
 
     try:
@@ -449,12 +389,6 @@ def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLeve
 
 
 def updateSpecimen(rowID, name=None, acquisitionDate=None, originID=None, missionID=None, threatLevel=None, notes=None):
-    # encrypt data
-    if name is not None:
-        name = encrypt(name)
-    if notes is not None:
-        notes = encrypt(notes)
-
     con = None
 
     try:
@@ -563,12 +497,6 @@ def deleteEmployeeSpecimen(empID, specimenID):
 
 
 def updateSpecimenMedical(specimenID, name=None, acquisitionDate=None, bloodtype=None, sex=None, kg=None, notes=None):
-    # encrypt data
-    if kg is not None:
-        kg = encrypt(str(kg))
-    if notes is not None:
-        notes = encrypt(notes)
-
     con = None
     try:
         # connect to database
