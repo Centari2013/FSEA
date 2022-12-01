@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6 import QtCore, QtGui, QtWidgets
 from bulk.baseWindows import windowWithToolbar
+from utils.searchEngine import searchEmployee
 
 
 class elidedLabel(QLabel):
@@ -65,13 +66,12 @@ class searchResult(QFrame):
         self.description = description
 
         self.gridLayout.addWidget(clickableLabel(self.id), 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(elidedLabel('Last Name: {}'.format(self.lastName)), 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(elidedLabel('First Name: {}'.format(self.firstName)), 1, 1, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(elidedLabel('{}, {}'.format(self.lastName, self.firstName)), 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
         self.gridLayout.addWidget(elidedLabel(self.description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
         self.gridLayout.setColumnStretch(0, 1)
         self.gridLayout.setColumnStretch(1, 20)
-        self.gridLayout.setColumnStretch(2, 8)
+        self.gridLayout.setColumnStretch(2, 0)
 
         self.setLayout(self.gridLayout)
 
@@ -160,11 +160,6 @@ class database_options(windowWithToolbar):
         self.gridLayout = QtWidgets.QGridLayout(self.searchFrame)
         self.gridLayout.setObjectName("gridLayout")
 
-        self.searchBar = QtWidgets.QLineEdit(self.searchFrame)
-        self.searchBar.setStyleSheet("background-color: white;")
-        self.searchBar.setObjectName("searchBar")
-        self.gridLayout.addWidget(self.searchBar, 0, 0, 1, 1)
-
         self.searchButton = QtWidgets.QPushButton("Search")
         self.searchButton.setMinimumSize(QtCore.QSize(50, 20))
         self.searchButton.setStyleSheet("QPushButton { color: white;\n"
@@ -172,7 +167,14 @@ class database_options(windowWithToolbar):
                                         "border: none; }\n"
                                         "QPushButton::pressed { background-color: #262829; }")
         self.searchButton.setObjectName("searchButton")
+        self.searchButton.clicked.connect(self.getResults)
         self.gridLayout.addWidget(self.searchButton, 0, 1, 1, 2)
+
+        self.searchBar = QtWidgets.QLineEdit(self.searchFrame)
+        self.searchBar.setStyleSheet("background-color: white;")
+        self.searchBar.setObjectName("searchBar")
+        self.searchBar.returnPressed.connect(self.searchButton.click)
+        self.gridLayout.addWidget(self.searchBar, 0, 0, 1, 1)
 
         self.scrollArea = QtWidgets.QScrollArea(self.searchFrame)
         self.scrollArea.setStyleSheet("")
@@ -237,8 +239,18 @@ class database_options(windowWithToolbar):
         self.setCentralWidget(self.centralwidget)
 
         self.prevPos = None
-        self.addSearchResult(searchResult())
 
-    def addSearchResult(self, result):
-        self.verticalLayout_2.addWidget(searchResult(result))
+    def addSearchResult(self, parent=None, ID='', lastName='', firstName='', description=''):
+        self.verticalLayout_2.addWidget(searchResult(parent, ID, lastName, firstName, description))
+
+    def getResults(self):
+        query = str(self.searchBar.text())
+        results = searchEmployee(query)
+
+        for r in results:
+            self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=r['designation'])
+
+
+
+
 
