@@ -88,6 +88,15 @@ try:
 except:
     print('EmployeeSpecimen table does not exist\n')
 
+# drop SEARCH table from database if it exists
+try:
+    con.execute('''DROP TABLE Employee_fts''')
+    con.commit()
+    print('Employee_fts table dropped\n')
+
+except:
+    print('Employee_fts table does not exist\n')
+
 # create Department table
 cur.execute('''CREATE TABLE Department(
                 depID           INTEGER,
@@ -142,7 +151,7 @@ cur.execute('''CREATE TABLE Credentials(
                 CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE
                 );''')
 con.commit()
-print('Credentials table created')
+print('Credentials table created\n')
 
 # create Origin table
 cur.execute('''CREATE TABLE Origin(
@@ -154,6 +163,7 @@ cur.execute('''CREATE TABLE Origin(
                 PRIMARY KEY (id)
                 );''')
 con.commit()
+print('Origin table created\n')
 
 cur.execute('''CREATE TABLE Mission(
                 id              INTEGER,
@@ -170,21 +180,23 @@ cur.execute('''CREATE TABLE Mission(
                 FOREIGN KEY (supervisorID) REFERENCES Employee(empID)
                 );''')
 con.commit()
+print('Mission table created\n')
 
 cur.execute('''CREATE TABLE Specimen(
                 id                      INTEGER,
                 specimenID              TEXT NOT NULL UNIQUE,
                 name                    TEXT NOT NULL,
                 origin                  TEXT DEFAULT 'unknown',
-                mission                 TEXT DEFAULT 'N/A',
+                missionID               TEXT DEFAULT 'N/A',
                 threatLevel             REAL DEFAULT NULL,
                 acquisitionDate         TEXT NOT NULL,
                 notes                   TEXT DEFAULT NULL,
                PRIMARY KEY (id),
                CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
-               CONSTRAINT missionID FOREIGN KEY (mission) REFERENCES Mission(missionID) ON DELETE CASCADE
+               CONSTRAINT missionID FOREIGN KEY (missionID) REFERENCES Mission(missionID) ON DELETE CASCADE
                );''')
 con.commit()
+print('Specimen table created\n')
 
 cur.execute('''CREATE TABLE EmployeeSpecimen(
                 empID       TEXT NOT NULL,
@@ -194,6 +206,7 @@ cur.execute('''CREATE TABLE EmployeeSpecimen(
                CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
                );''')
 con.commit()
+print('EmployeeSpecimen table created\n')
 
 cur.execute('''CREATE TABLE SpecimenMedical(
                 specimenID  TEXT NOT NULL,
@@ -205,6 +218,41 @@ cur.execute('''CREATE TABLE SpecimenMedical(
                 CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
                 );'''.format(bloodtypes, sex))
 con.commit()
+print('SpecimenMedical table created\n')
 
+cur.execute('''CREATE VIRTUAL TABLE Employee_fts USING fts5(
+                empID, 
+                empDep, 
+                designation, 
+                firstName, 
+                lastName, 
+                startDate UNINDEXED, 
+                endDate UNINDEXED,
+                content='Employee',
+                content_rowid='id'  
+            )''')
+con.commit()
+print('Employee_fts table created\n')
+
+cur.execute('''CREATE TRIGGER emp_fts_insert AFTER INSERT ON Employee
+                BEGIN
+                    INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName)
+                    VALUES (new.id, new.empID, new.empDep, new.designation, new.firstName, new.lastName);
+                END;''')
+
+cur.execute('''CREATE TRIGGER emp_fts_delete AFTER DELETE ON Employee
+                BEGIN
+                    INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName)
+                    VALUES ('delete', old.id, old.empID, old.empDep, old.designation, old.firstName, old.lastName);
+                END;''')
+
+cur.execute('''CREATE TRIGGER emp_fts_update AFTER UPDATE ON Employee
+                BEGIN
+                    INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName)
+                    VALUES ('delete', old.id, old.empID, old.empDep, old.designation, old.firstName, old.lastName);
+                    INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName)
+                    VALUES (new.id, new.empID, new.empDep, new.designation, new.firstName, new.lastName);
+                END;''')
+con.commit()
 
 con.close()
