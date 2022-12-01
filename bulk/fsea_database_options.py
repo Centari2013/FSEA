@@ -241,16 +241,22 @@ class database_options(windowWithToolbar):
 
         self.prevPos = None
 
+    def clearSearchResults(self):
+        for i in reversed(range(self.verticalLayout_2.count())):
+            self.verticalLayout_2.itemAt(i).widget().setParent(None)
+
     def addSearchResult(self, parent=None, ID='', lastName='', firstName='', description=''):
         self.verticalLayout_2.addWidget(searchResult(parent, ID, lastName, firstName, description))
 
     def getResults(self):
         query = str(self.searchBar.text())
         if query != '':
+            self.clearSearchResults()
             results = searchEmployee(query)
-
             for r in results:
                 self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=r['summary'])
+        else:
+            self.clearSearchResults()
 
 
 
