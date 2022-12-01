@@ -180,6 +180,19 @@
       "weight": 113.4,
       "height": 180.34,
       "notes": "has gained sentience"
+    },
+    {
+      "dep": 2,
+      "designation": "ADMIN",
+      "firstName": "Zaria",
+      "lastName": "Burton",
+      "startDate": "2022-06-24",
+      "dob": "2000-09-22",
+      "bloodtype": "B+",
+      "sex": "f",
+      "weight": 74.8,
+      "height": 162.6,
+      "notes": "founder"
     }],
 
   "origin": [{
