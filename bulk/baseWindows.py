@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import *
+from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtCore import *
-from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import *
 
 
 class windowWithToolbar(QMainWindow):
@@ -20,39 +20,40 @@ class windowWithToolbar(QMainWindow):
         self.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.setAutoFillBackground(False)
 
-        self.centralwidget = QtWidgets.QWidget(self)
-        self.centralwidget.setEnabled(True)
-        self.centralwidget.setAutoFillBackground(False)
-        self.centralwidget.setStyleSheet("background-color: #E3E4EA;")
-        self.centralwidget.setObjectName("centralwidget")
+        self.centralWidget = QtWidgets.QWidget(self)
+        self.centralWidget.setEnabled(True)
+        self.centralWidget.setAutoFillBackground(False)
+        self.centralWidget.setStyleSheet("background-color: #E3E4EA;")
+        self.centralWidget.setObjectName("centralWidget")
 
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_2.setSpacing(0)
-        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.primaryGridLayout = QtWidgets.QGridLayout(self.centralWidget)
+        self.primaryGridLayout.setContentsMargins(0, 0, 0, 0)
+        self.primaryGridLayout.setSpacing(0)
+        self.primaryGridLayout.setObjectName("primaryGridLayout")
 
-        self.titlebar = QtWidgets.QFrame(self.centralwidget)
-        self.titlebar.setMaximumSize(QtCore.QSize(16777215, 30))
-        self.titlebar.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.titlebar.setStyleSheet("background-color: #31353D;\n"
+        self.titlebarFrame = QtWidgets.QFrame(self.centralWidget)
+        self.titlebarFrame.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.titlebarFrame.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.titlebarFrame.setStyleSheet("background-color: #31353D;\n"
                                     "color: white;")
-        self.titlebar.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
-        self.titlebar.setObjectName("titlebar")
-        self.gridLayout_2.addWidget(self.titlebar, 0, 0, 1, 2)
+        self.titlebarFrame.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        self.titlebarFrame.setObjectName("titlebarFrame")
+        self.primaryGridLayout.addWidget(self.titlebarFrame, 0, 0, 1, 2)
 
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.titlebar)
-        self.horizontalLayout.setContentsMargins(15, 5, -1, 5)
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.titlebarLayout = QtWidgets.QHBoxLayout(self.titlebarFrame)
+        self.titlebarLayout.setContentsMargins(15, 5, -1, 5)
+        self.titlebarLayout.setObjectName("titlebarLayout")
 
         self.title = QtWidgets.QLabel("F-SEA Database")
         self.title.setObjectName("title")
-        self.horizontalLayout.addWidget(self.title)
+        self.titlebarLayout.addWidget(self.title)
 
+        # separates buttons from QLabel
         self.spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding,
                                                 QtWidgets.QSizePolicy.Policy.Minimum)
-        self.horizontalLayout.addItem(self.spacerItem)
+        self.titlebarLayout.addItem(self.spacerItem)
 
-        self.minimizeButton = QtWidgets.QPushButton(self.titlebar)
+        self.minimizeButton = QtWidgets.QPushButton(self.titlebarFrame)
         self.minimizeButton.clicked.connect(self.showMinimized)
         self.minimizeButton.setMinimumSize(QtCore.QSize(18, 18))
         self.minimizeButton.setMaximumSize(QtCore.QSize(18, 18))
@@ -64,17 +65,14 @@ class windowWithToolbar(QMainWindow):
                                           "QPushButton::pressed { background-color: #111314; }")
 
         self.minimizeButton.setObjectName("minimizeButton")
-        self.horizontalLayout.addWidget(self.minimizeButton)
-
-        self.restoreButton = QtWidgets.QPushButton(self.titlebar)
+        self.titlebarLayout.addWidget(self.minimizeButton)
+        self.restoreButton = QtWidgets.QPushButton(self.titlebarFrame)
 
         def minOrMax():
             if self.isMaximized():
                 self.showNormal()
-                # self.restoreButton.setStyleSheet("border-image: url(bulk/assets/restore.png);")
             elif not self.isMaximized():
                 self.showMaximized()
-                # self.restoreButton.setStyleSheet("border-image: url(bulk/assets/maximize.png);")
 
         self.restoreButton.clicked.connect(minOrMax)
         self.restoreButton.setMinimumSize(QtCore.QSize(18, 18))
@@ -87,9 +85,9 @@ class windowWithToolbar(QMainWindow):
                                          "QPushButton::pressed { background-color: #111314; }")
 
         self.restoreButton.setObjectName("restoreButton")
-        self.horizontalLayout.addWidget(self.restoreButton)
+        self.titlebarLayout.addWidget(self.restoreButton)
 
-        self.exitButton = QtWidgets.QPushButton(self.titlebar)
+        self.exitButton = QtWidgets.QPushButton(self.titlebarFrame)
         self.exitButton.clicked.connect(QCoreApplication.instance().quit)
         self.exitButton.setMinimumSize(QtCore.QSize(18, 18))
         self.exitButton.setMaximumSize(QtCore.QSize(18, 18))
@@ -100,10 +98,13 @@ class windowWithToolbar(QMainWindow):
                                       "QPushButton::pressed { background-color: #111314; }")
 
         self.exitButton.setObjectName("exitButton")
-        self.horizontalLayout.addWidget(self.exitButton)
+        self.titlebarLayout.addWidget(self.exitButton)
 
-        self.titlebar.mousePressEvent = lambda event: self.toolbarClick(event)
-        self.titlebar.mouseMoveEvent = lambda event: self.toolbarMove(event)
+        self.titlebarFrame.mousePressEvent = lambda event: self.toolbarClick(event)
+        self.titlebarFrame.mouseMoveEvent = lambda event: self.toolbarMove(event)
+
+        self.prevPos = None
+        self.savedResults = None
 
     def toolbarClick(self, event):
         if self.exitButton.underMouse():
@@ -126,8 +127,8 @@ class windowWithToolbar(QMainWindow):
 
             if self.isMaximized():
                 self.showNormal()
-                w = self.titlebar.geometry().width()
-                h = self.titlebar.frameGeometry().height()
+                w = self.titlebarFrame.geometry().width()
+                h = self.titlebarFrame.frameGeometry().height()
                 self.move(QPoint(int(self.prevPos.x() - (0.2 * w)), int(self.prevPos.y() - (0.2 * h))))
 
             delta = QPoint(event.globalPosition().toPoint() - self.prevPos)

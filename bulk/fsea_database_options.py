@@ -11,6 +11,7 @@ class elidedLabel(QLabel):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
 
+    # allows for long text to appear elided; when label is expanded, more elided text is shown
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
         metrics = QtGui.QFontMetrics(self.font())
@@ -18,7 +19,7 @@ class elidedLabel(QLabel):
         painter.drawText(self.rect(), self.alignment(), elided)
 
 
-class clickableLabel(QLabel):
+class clickableLabel(QLabel):  # used to emulate hyperlink on searchResults
     def __init__(self, parent):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
@@ -44,7 +45,7 @@ class clickableLabel(QLabel):
         self.setFont(f)
 
 
-class searchResult(QFrame):
+class searchResult(QFrame):  # used to populate search results
     def __init__(self, parent=None, ID='', lastName='', firstName='', description=''):
         super(searchResult, self).__init__(parent=None)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
@@ -66,9 +67,14 @@ class searchResult(QFrame):
         self.firstName = firstName
         self.description = description
 
+        # allows for things with only one name to use this class
+        if lastName != '':
+            nameLabel = elidedLabel('{},  {}'.format(self.lastName, self.firstName))
+        else:
+            nameLabel = elidedLabel(self.firstName)
+
         self.gridLayout.addWidget(clickableLabel(self.id), 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(elidedLabel('{},  {}'.format(self.lastName, self.firstName)), 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        # self.gridLayout.addWidget(elidedLabel('{}'.format(self.firstName)), 1, 1, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(nameLabel, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
         self.gridLayout.addWidget(elidedLabel(self.description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
         self.gridLayout.setColumnStretch(0, 1)
@@ -77,89 +83,81 @@ class searchResult(QFrame):
 
         self.setLayout(self.gridLayout)
 
-    '''
-    def enterEvent(self, enter):
-        self.setStyleSheet("border: 1px solid blue; padding: 6; ")
-
-    def leaveEvent(self, event):
-        self.setStyleSheet("border: 1px solid gray; padding: 6;")
-    '''
-
 
 class database_options(windowWithToolbar):
     def __init__(self):
         super().__init__()
 
-        self.buttonFrame = QtWidgets.QFrame(self.centralwidget)
+        self.panelFrame = QtWidgets.QFrame(self.centralWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.buttonFrame.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.panelFrame.sizePolicy().hasHeightForWidth())
 
-        self.buttonFrame.setSizePolicy(sizePolicy)
-        self.buttonFrame.setStyleSheet(" background-color: #31353d;")
-        self.buttonFrame.setObjectName("buttonFrame")
+        self.panelFrame.setSizePolicy(sizePolicy)
+        self.panelFrame.setStyleSheet("background-color: #31353d;")
+        self.panelFrame.setObjectName("leftPanelFrame")
 
-        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.buttonFrame)
-        self.verticalLayout_4.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
-        self.verticalLayout_4.setContentsMargins(9, 0, 9, 9)
-        self.verticalLayout_4.setSpacing(9)
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.panelVLayout = QtWidgets.QVBoxLayout(self.panelFrame)
+        self.panelVLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
+        self.panelVLayout.setContentsMargins(9, 0, 9, 9)
+        self.panelVLayout.setSpacing(9)
+        self.panelVLayout.setObjectName("panelVLayout")
 
-        self.employeedbButton = QtWidgets.QPushButton("Employees")
+        self.employeeButton = QtWidgets.QPushButton("Employees")
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.employeedbButton.sizePolicy().hasHeightForWidth())
-        self.employeedbButton.setSizePolicy(sizePolicy)
-        self.employeedbButton.setMinimumSize(QtCore.QSize(100, 65))
-        self.employeedbButton.setStyleSheet("QPushButton { color: white;\n"
-                                            "background-color: #262829;\n"
-                                            "border: none; }\n"
-                                            "QPushButton::pressed { background-color: #111314; }")
-        self.employeedbButton.setObjectName("employeedbButton")
-        self.verticalLayout_4.addWidget(self.employeedbButton)
+        sizePolicy.setHeightForWidth(self.employeeButton.sizePolicy().hasHeightForWidth())
+        self.employeeButton.setSizePolicy(sizePolicy)
+        self.employeeButton.setMinimumSize(QtCore.QSize(100, 65))
+        self.employeeButton.setStyleSheet("QPushButton { color: white;\n"
+                                          "background-color: #262829;\n"
+                                          "border: none; }\n"
+                                          "QPushButton::pressed { background-color: #111314; }")
+        self.employeeButton.setObjectName("employeeButton")
+        self.panelVLayout.addWidget(self.employeeButton)
 
-        self.specimendbButton = QtWidgets.QPushButton("Specimens")
-        self.specimendbButton.setMinimumSize(QtCore.QSize(100, 65))
-        self.specimendbButton.setStyleSheet("QPushButton { color: white;\n"
-                                            "background-color: #262829;\n"
-                                            "border: none; }\n"
-                                            "QPushButton::pressed { background-color: #111314; }")
-        self.specimendbButton.setObjectName("specimendbButton")
-        self.verticalLayout_4.addWidget(self.specimendbButton)
+        self.specimenButton = QtWidgets.QPushButton("Specimens")
+        self.specimenButton.setMinimumSize(QtCore.QSize(100, 65))
+        self.specimenButton.setStyleSheet("QPushButton { color: white;\n"
+                                          "background-color: #262829;\n"
+                                          "border: none; }\n"
+                                          "QPushButton::pressed { background-color: #111314; }")
+        self.specimenButton.setObjectName("specimenButton")
+        self.panelVLayout.addWidget(self.specimenButton)
 
-        self.missiondbButton = QtWidgets.QPushButton("Missions")
-        self.missiondbButton.setMinimumSize(QtCore.QSize(100, 65))
-        self.missiondbButton.setStyleSheet("QPushButton { color: white;\n"
-                                           "background-color: #262829;\n"
-                                           "border: none; }\n"
-                                           "QPushButton::pressed { background-color: #111314; }")
-        self.missiondbButton.setObjectName("missiondbButton")
-        self.verticalLayout_4.addWidget(self.missiondbButton)
+        self.missionButton = QtWidgets.QPushButton("Missions")
+        self.missionButton.setMinimumSize(QtCore.QSize(100, 65))
+        self.missionButton.setStyleSheet("QPushButton { color: white;\n"
+                                         "background-color: #262829;\n"
+                                         "border: none; }\n"
+                                         "QPushButton::pressed { background-color: #111314; }")
+        self.missionButton.setObjectName("missionButton")
+        self.panelVLayout.addWidget(self.missionButton)
 
-        self.departmentdbButton = QtWidgets.QPushButton("Departments")
+        self.departmentButton = QtWidgets.QPushButton("Departments")
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.departmentdbButton.sizePolicy().hasHeightForWidth())
-        self.departmentdbButton.setSizePolicy(sizePolicy)
-        self.departmentdbButton.setMinimumSize(QtCore.QSize(100, 65))
-        self.departmentdbButton.setStyleSheet("QPushButton { color: white;\n"
-                                              "background-color: #262829;\n"
-                                              "border: none; }\n"
-                                              "QPushButton::pressed { background-color: #111314; }")
-        self.departmentdbButton.setObjectName("departmentdbButton")
-        self.verticalLayout_4.addWidget(self.departmentdbButton)
+        sizePolicy.setHeightForWidth(self.departmentButton.sizePolicy().hasHeightForWidth())
+        self.departmentButton.setSizePolicy(sizePolicy)
+        self.departmentButton.setMinimumSize(QtCore.QSize(100, 65))
+        self.departmentButton.setStyleSheet("QPushButton { color: white;\n"
+                                            "background-color: #262829;\n"
+                                            "border: none; }\n"
+                                            "QPushButton::pressed { background-color: #111314; }")
+        self.departmentButton.setObjectName("departmentButton")
+        self.panelVLayout.addWidget(self.departmentButton)
 
-        self.gridLayout_2.addWidget(self.buttonFrame, 1, 0, 1, 1)
-        self.searchFrame = QtWidgets.QFrame(self.centralwidget)
+        self.primaryGridLayout.addWidget(self.panelFrame, 1, 0, 1, 1)
+        self.searchFrame = QtWidgets.QFrame(self.centralWidget)
         self.searchFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.searchFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.searchFrame.setObjectName("searchFrame")
 
-        self.gridLayout = QtWidgets.QGridLayout(self.searchFrame)
-        self.gridLayout.setObjectName("gridLayout")
+        self.searchGridLayout = QtWidgets.QGridLayout(self.searchFrame)
+        self.searchGridLayout.setObjectName("searchGridLayout")
 
         self.searchButton = QtWidgets.QPushButton("Search")
         self.searchButton.setMinimumSize(QtCore.QSize(50, 20))
@@ -169,19 +167,19 @@ class database_options(windowWithToolbar):
                                         "QPushButton::pressed { background-color: #262829; }")
         self.searchButton.setObjectName("searchButton")
         self.searchButton.clicked.connect(lambda: self.getResults(self.sortSelect.currentIndex()))
-        self.gridLayout.addWidget(self.searchButton, 0, 1, 1, 2)
+        self.searchGridLayout.addWidget(self.searchButton, 0, 1, 1, 2)
 
         self.searchBar = QtWidgets.QLineEdit(self.searchFrame)
         self.searchBar.setStyleSheet("background-color: white;")
         self.searchBar.setObjectName("searchBar")
         self.searchBar.returnPressed.connect(self.searchButton.click)
-        self.gridLayout.addWidget(self.searchBar, 0, 0, 1, 1)
+        self.searchGridLayout.addWidget(self.searchBar, 0, 0, 1, 1)
 
         self.sortFrame = QFrame()
-        self.sortLayout = QGridLayout(self.sortFrame)
+        self.sortGridLayout = QGridLayout(self.sortFrame)
 
         self.sortLabel = QLabel('Sort by:')
-        self.sortLayout.addWidget(self.sortLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.sortGridLayout.addWidget(self.sortLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
 
         self.sortSelect = QtWidgets.QComboBox()
 
@@ -189,15 +187,15 @@ class database_options(windowWithToolbar):
         self.sortSelect.addItem('Alphabet')
         self.sortSelect.addItem(('Alphabet DESC'))
         self.sortSelect.currentIndexChanged.connect(self.sortResults)
-        self.sortLayout.addWidget(self.sortSelect, 0, 1, 1, 3, Qt.AlignmentFlag.AlignLeft)
+        self.sortGridLayout.addWidget(self.sortSelect, 0, 1, 1, 3, Qt.AlignmentFlag.AlignLeft)
 
-        self.sortLayout.setColumnStretch(0,0)
-        self.sortLayout.setColumnStretch(1,100)
+        self.sortGridLayout.setColumnStretch(0, 0)
+        self.sortGridLayout.setColumnStretch(1, 100)
 
-        self.sortFrame.setLayout(self.sortLayout)
+        self.sortFrame.setLayout(self.sortGridLayout)
 
-        self.gridLayout.addWidget(self.sortFrame)
-        self.gridLayout.setVerticalSpacing(0)
+        self.searchGridLayout.addWidget(self.sortFrame)
+        self.searchGridLayout.setVerticalSpacing(0)
 
         self.scrollArea = QtWidgets.QScrollArea(self.searchFrame)
         self.scrollArea.setStyleSheet("")
@@ -211,82 +209,88 @@ class database_options(windowWithToolbar):
         self.scrollAreaContents.setMinimumSize(QtCore.QSize(395, 0))
         self.scrollAreaContents.setObjectName("scrollAreaWidgetContents")
 
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.scrollAreaContents)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.verticalFrame = QtWidgets.QFrame(self.scrollAreaContents)
-        self.verticalFrame.setObjectName("verticalFrame")
+        # vertical layout for scrollAreaContentsFrame
+        self.scrollAreaVLayout = QtWidgets.QVBoxLayout(self.scrollAreaContents)
+        self.scrollAreaVLayout.setObjectName("scrollAreaVLayout")
+        self.scrollAreaContentsFrame = QtWidgets.QFrame(self.scrollAreaContents)
+        self.scrollAreaContentsFrame.setObjectName("scrollAreaContentsFrame")
 
-        # vertical layout for scroll area
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalFrame)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        # vertical layout for search results
+        self.searchResultsVLayout = QtWidgets.QVBoxLayout(self.scrollAreaContentsFrame)
+        self.searchResultsVLayout.setContentsMargins(0, 0, 0, 0)
+        self.searchResultsVLayout.setSpacing(10)
+        self.searchResultsVLayout.setObjectName("searchResultsVLayout")
 
-        # add search result to vertical layout
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setSpacing(10)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-
-        # add search result text browser to vertical layout
-
+        # add search result scrollArea to vertical layout
         self.scrollArea.setWidget(self.scrollAreaContents)
-        self.gridLayout.addWidget(self.scrollArea, 2, 0, 1, 3)
-        self.verticalLayout_3.addWidget(self.verticalFrame, 0, QtCore.Qt.AlignmentFlag.AlignTop)
+        self.searchGridLayout.addWidget(self.scrollArea, 2, 0, 1, 3)
+        self.scrollAreaVLayout.addWidget(self.scrollAreaContentsFrame, 0, QtCore.Qt.AlignmentFlag.AlignTop)
 
-        self.gridLayout_2.addWidget(self.searchFrame, 1, 1, 2, 1)
-        self.buttonSpacerFrame = QtWidgets.QFrame(self.centralwidget)
+        self.primaryGridLayout.addWidget(self.searchFrame, 1, 1, 2, 1)
+        self.buttonSpacerFrame = QtWidgets.QFrame(self.centralWidget)
         self.buttonSpacerFrame.setEnabled(True)
         self.buttonSpacerFrame.setStyleSheet(" background-color: #31353d;")
         self.buttonSpacerFrame.setObjectName("buttonSpacerFrame")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.buttonSpacerFrame)
-        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
-        self.verticalLayout.setContentsMargins(-1, -1, -1, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        spacerItem1 = QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Policy.Minimum,
-                                            QtWidgets.QSizePolicy.Policy.Fixed)
-        self.verticalLayout.addItem(spacerItem1)
-        self.gridLayout_2.addWidget(self.buttonSpacerFrame, 2, 0, 2, 1)
-        self.footer = QtWidgets.QFrame(self.centralwidget)
-        self.footer.setMaximumSize(QtCore.QSize(16777215, 10))
-        self.footer.setStyleSheet("background-color: #E3E4EA;")
-        self.footer.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.footer.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.footer.setObjectName("footer")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.footer)
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_2.setSpacing(0)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
+        self.primaryGridLayout.addWidget(self.buttonSpacerFrame, 2, 0, 2, 1)
+
+        self.footerFrame = QtWidgets.QFrame(self.centralWidget)
+        self.footerFrame.setMaximumSize(QtCore.QSize(16777215, 10))
+        self.footerFrame.setStyleSheet("background-color: #E3E4EA;")
+        self.footerFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.footerFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+        self.footerFrame.setObjectName("footerFrame")
+
+        self.footerLayout = QtWidgets.QHBoxLayout(self.footerFrame)
+        self.footerLayout.setContentsMargins(0, 0, 0, 0)
+        self.footerLayout.setSpacing(0)
+        self.footerLayout.setObjectName("footerLayout")
 
         self.sizeGrip = QSizeGrip(self)
 
-        self.horizontalLayout_2.addWidget(self.sizeGrip)
-        self.gridLayout_2.addWidget(self.footer, 3, 1, 1, 1, QtCore.Qt.AlignmentFlag.AlignRight)
-        self.setCentralWidget(self.centralwidget)
-
-        self.prevPos = None
-        self.savedResults = None
+        self.footerLayout.addWidget(self.sizeGrip)
+        self.primaryGridLayout.addWidget(self.footerFrame, 3, 1, 1, 1, QtCore.Qt.AlignmentFlag.AlignRight)
+        self.setCentralWidget(self.centralWidget)
 
     def clearSearchResults(self):
-        for i in reversed(range(self.verticalLayout_2.count())):
-            self.verticalLayout_2.itemAt(i).widget().setParent(None)
+        # remove search results starting from last one
+        for i in reversed(range(self.searchResultsVLayout.count())):
+            self.searchResultsVLayout.itemAt(i).widget().setParent(None)
 
-    def addSearchResult(self, parent=None, ID='', lastName='', firstName='', description=''):
-        self.verticalLayout_2.addWidget(searchResult(parent, ID, lastName, firstName, description))
+    def addSearchResult(self, parent=None, ID='', lastName='', firstName='', description='', resultObj=None):
+        if resultObj is None:
+            self.searchResultsVLayout.addWidget(searchResult(parent, ID, lastName, firstName, description))
+        else:
+            self.searchResultsVLayout.addWidget(resultObj)
 
     def getResults(self, order):
-        def cleanText(text): # remove special characters for fts5 search in sqlite
+        def showNoResults():
+            self.clearSearchResults()
+            noResults = searchResult(firstName='No Results')
+            noResults.setStyleSheet('{border 0px;}')
+            self.addSearchResult(resultObj=noResults)
+
+        def cleanText(text):  # remove punctuation for fts5 search in sqlite
             return text.translate(str.maketrans('', '', string.punctuation))
 
+        # text cleaned here to avoid blank query (and any subsequent error resulting from it)
         query = cleanText(str(self.searchBar.text()))
         if query != '':
             self.clearSearchResults()
             results = searchEmployee(query)
-            self.savedResults = results
-            for r in results[order]:
-                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=' '.join(r["summary"].split()))
+            if results[order]:
+                self.savedResults = results
+                for r in results[order]:
+                    self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'],
+                                         description=' '.join(r["summary"].split()))
+            else:
+                showNoResults()
         else:
-            self.clearSearchResults()
+            showNoResults()
 
     def sortResults(self, order):
         if self.savedResults is not None:
             self.clearSearchResults()
             for r in self.savedResults[order]:
-                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=' '.join(r["summary"].split()))
+                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'],
+                                     description=' '.join(r["summary"].split()))
