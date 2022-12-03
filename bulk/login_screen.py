@@ -76,7 +76,7 @@ class authenticate(QMainWindow):
 
         # make label to hold logo
         self.logo_label = QLabel()
-        self.logo_pixmap = QPixmap('bulk/assets/F-SEAlogo.png')
+        self.logo_pixmap = QPixmap('bulk/assets/FSEAlogo.png')
         self.logo_label.setPixmap(self.logo_pixmap)
         self.logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 

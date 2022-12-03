@@ -154,7 +154,6 @@ class database_options(windowWithToolbar):
 
         self.gridLayout_2.addWidget(self.buttonFrame, 1, 0, 1, 1)
         self.searchFrame = QtWidgets.QFrame(self.centralwidget)
-        self.searchFrame.setStyleSheet("background-color: #E3E4A;")
         self.searchFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.searchFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.searchFrame.setObjectName("searchFrame")

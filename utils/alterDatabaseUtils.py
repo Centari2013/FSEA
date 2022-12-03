@@ -1,6 +1,7 @@
 import sqlite3
 from utils.variables import db
 from utils.authUtils import generateUID, generateUsername, generatePWD, generateOID
+from utils.encryption import encrypt
 
 '''''''''''''''''''''ALTER DATABASE'''''''''''''''''''''
 
@@ -192,6 +193,8 @@ def updateEmployeeMedical(empID, dob=None, bloodtype=None, sex=None, kg=None, he
 
 def updateCredentials(empID, username=None, pwd=None, loginAttempts=None):
     con = None
+    username = encrypt(username)
+    pwd = encrypt(pwd)
     try:
         # connect to database
         con = sqlite3.connect(db)
