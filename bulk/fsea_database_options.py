@@ -3,6 +3,7 @@ from PyQt6.QtCore import *
 from PyQt6 import QtCore, QtGui, QtWidgets
 from bulk.baseWindows import windowWithToolbar
 from utils.searchEngine import searchEmployee
+import string
 
 
 class elidedLabel(QLabel):
@@ -168,7 +169,7 @@ class database_options(windowWithToolbar):
                                         "border: none; }\n"
                                         "QPushButton::pressed { background-color: #262829; }")
         self.searchButton.setObjectName("searchButton")
-        self.searchButton.clicked.connect(self.getResults)
+        self.searchButton.clicked.connect(lambda: self.getResults(self.sortSelect.currentIndex()))
         self.gridLayout.addWidget(self.searchButton, 0, 1, 1, 2)
 
         self.searchBar = QtWidgets.QLineEdit(self.searchFrame)
@@ -176,6 +177,28 @@ class database_options(windowWithToolbar):
         self.searchBar.setObjectName("searchBar")
         self.searchBar.returnPressed.connect(self.searchButton.click)
         self.gridLayout.addWidget(self.searchBar, 0, 0, 1, 1)
+
+        self.sortFrame = QFrame()
+        self.sortLayout = QGridLayout(self.sortFrame)
+
+        self.sortLabel = QLabel('Sort by:')
+        self.sortLayout.addWidget(self.sortLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+
+        self.sortSelect = QtWidgets.QComboBox()
+
+        self.sortSelect.addItem('Relevance')
+        self.sortSelect.addItem('Alphabet')
+        self.sortSelect.addItem(('Alphabet DESC'))
+        self.sortSelect.currentIndexChanged.connect(self.sortResults)
+        self.sortLayout.addWidget(self.sortSelect, 0, 1, 1, 3, Qt.AlignmentFlag.AlignLeft)
+
+        self.sortLayout.setColumnStretch(0,0)
+        self.sortLayout.setColumnStretch(1,100)
+
+        self.sortFrame.setLayout(self.sortLayout)
+
+        self.gridLayout.addWidget(self.sortFrame)
+        self.gridLayout.setVerticalSpacing(0)
 
         self.scrollArea = QtWidgets.QScrollArea(self.searchFrame)
         self.scrollArea.setStyleSheet("")
@@ -206,7 +229,7 @@ class database_options(windowWithToolbar):
         # add search result text browser to vertical layout
 
         self.scrollArea.setWidget(self.scrollAreaContents)
-        self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
+        self.gridLayout.addWidget(self.scrollArea, 2, 0, 1, 3)
         self.verticalLayout_3.addWidget(self.verticalFrame, 0, QtCore.Qt.AlignmentFlag.AlignTop)
 
         self.gridLayout_2.addWidget(self.searchFrame, 1, 1, 2, 1)
@@ -240,6 +263,7 @@ class database_options(windowWithToolbar):
         self.setCentralWidget(self.centralwidget)
 
         self.prevPos = None
+        self.savedResults = None
 
     def clearSearchResults(self):
         for i in reversed(range(self.verticalLayout_2.count())):
@@ -248,17 +272,22 @@ class database_options(windowWithToolbar):
     def addSearchResult(self, parent=None, ID='', lastName='', firstName='', description=''):
         self.verticalLayout_2.addWidget(searchResult(parent, ID, lastName, firstName, description))
 
-    def getResults(self):
-        query = str(self.searchBar.text())
+    def getResults(self, order):
+        def cleanText(text): # remove special characters for fts5 search in sqlite
+            return text.translate(str.maketrans('', '', string.punctuation))
+
+        query = cleanText(str(self.searchBar.text()))
         if query != '':
             self.clearSearchResults()
             results = searchEmployee(query)
-            for r in results:
+            self.savedResults = results
+            for r in results[order]:
                 self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=r['summary'])
         else:
             self.clearSearchResults()
 
-
-
-
-
+    def sortResults(self, order):
+        if self.savedResults is not None:
+            self.clearSearchResults()
+            for r in self.savedResults[order]:
+                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=r['summary'])

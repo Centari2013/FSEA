@@ -1,8 +1,10 @@
+import sys
+
 from bulk.login_screen import authenticate
 from bulk.fsea_database_options import database_options
 from PyQt6.QtWidgets import QApplication
 
-app = QApplication([])
+app = QApplication(sys.argv)
 options = database_options()
 options.show()
 # launch login window; options is passed as the window to unlock

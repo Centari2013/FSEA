@@ -233,7 +233,8 @@ cur.execute('''CREATE VIRTUAL TABLE Employee_fts USING fts5(
                 endDate UNINDEXED,
                 summary,
                 content='Employee',
-                content_rowid='id'  
+                content_rowid='id',
+                tokenize="porter"  
             )''')
 con.commit()
 print('Employee_fts table created\n')

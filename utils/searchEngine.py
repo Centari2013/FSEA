@@ -1,6 +1,7 @@
 import sqlite3
 from utils.variables import db
 
+
 def dict_factory(cursor, row):
     d = {}
     for idx, col in enumerate(cursor.description):
@@ -16,14 +17,33 @@ def searchEmployee(query):
         con.row_factory = dict_factory
         cur = con.cursor()
 
-        cur.execute('''SELECT empID as empID, 
-                        firstName as firstName, 
-                        lastName as lastName,
-                        designation as designation,
-                        summary as summary
+        cur.execute('''SELECT empID, 
+                        firstName, 
+                        lastName,
+                        designation,
+                        summary
                         FROM Employee_fts(?)
                         ORDER BY rank;''', (query + '*',))
-        results = cur.fetchall()
+        results = [None, None, None]
+        results[0] = cur.fetchall()
+
+        cur.execute('''SELECT empID, 
+                                firstName, 
+                                lastName,
+                                designation,
+                                summary
+                                FROM Employee_fts(?)
+                                ORDER BY lastName;''', (query + '*',))
+        results[1] = cur.fetchall()
+
+        cur.execute('''SELECT empID, 
+                                firstName, 
+                                lastName,
+                                designation,
+                                summary
+                                FROM Employee_fts(?)
+                                ORDER BY lastName DESC ;''', (query + '*',))
+        results[2] = cur.fetchall()
 
     except Exception as e:
         print(e)

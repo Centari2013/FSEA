@@ -11,7 +11,7 @@ def authenticate(user, pwd):
     # encrypt username and password for comparison to encrypted database
     user = encrypt(user)
     pwd = encrypt(pwd)
-
+    con = None
     try:
         # connect to database
         con = sqlite3.connect(db)
@@ -37,10 +37,11 @@ def authenticate(user, pwd):
     except Exception as e:
         print(e)
         return_val = False
+    finally:
+        if con is not None:
+            con.close()
 
-    # close connection and return
-    con.close()
-    return return_val
+        return return_val
 
 
 def generateUID():  # generate random 8 digit str(int)
