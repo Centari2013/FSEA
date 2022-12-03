@@ -1,7 +1,11 @@
-from utils.alterDatabaseUtils import *
-from utils.encryption import decrypt
 import json
+import random
+
+import names
+from essential_generators import DocumentGenerator
+
 from DB_Declaration import *
+from utils.alterDatabaseUtils import *
 
 '''
 IMPORTANT!!!!
@@ -18,6 +22,12 @@ for e in data["employee"]:
     print(e)
     ID = addEmployee(e["firstName"], e["lastName"], e["dep"], e["designation"], e["startDate"], e["summary"])
     updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"], e["notes"])
+
+gen = DocumentGenerator()
+for i in range(1000):
+    addEmployee(names.get_first_name(), names.get_last_name(), random.choice(range(1, 3)), random.choice(designation),
+                '0000-00-00',gen.paragraph())
+    print(i)
 
 oID = None
 for o in data["origin"]:

@@ -25,6 +25,7 @@ def searchEmployee(query):
                         FROM Employee_fts(?)
                         ORDER BY rank;''', (query + '*',))
         results = [None, None, None]
+
         results[0] = cur.fetchall()
 
         cur.execute('''SELECT empID, 
@@ -39,7 +40,6 @@ def searchEmployee(query):
         cur.execute('''SELECT empID, 
                                 firstName, 
                                 lastName,
-                                designation,
                                 summary
                                 FROM Employee_fts(?)
                                 ORDER BY lastName DESC ;''', (query + '*',))

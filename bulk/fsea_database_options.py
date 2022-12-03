@@ -53,7 +53,7 @@ class searchResult(QFrame):
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
         self.setMinimumSize(QtCore.QSize(0, 90))
-        self.setMaximumSize(QtCore.QSize(16777215, 90))
+        self.setMaximumSize(QtCore.QSize(16777215, 100))
         self.setAutoFillBackground(False)
         self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.setObjectName("search_label")
@@ -282,7 +282,7 @@ class database_options(windowWithToolbar):
             results = searchEmployee(query)
             self.savedResults = results
             for r in results[order]:
-                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=r['summary'])
+                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=' '.join(r["summary"].split()))
         else:
             self.clearSearchResults()
 
@@ -290,4 +290,4 @@ class database_options(windowWithToolbar):
         if self.savedResults is not None:
             self.clearSearchResults()
             for r in self.savedResults[order]:
-                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=r['summary'])
+                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'], description=' '.join(r["summary"].split()))

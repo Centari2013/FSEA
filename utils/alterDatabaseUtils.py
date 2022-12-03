@@ -103,7 +103,7 @@ def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
         cur.execute('''INSERT INTO Credentials (empID, username, password) 
                         VALUES (?,?,?) ''', (ID, generateUsername(firstName, lastName, role), generatePWD()))
         con.commit()
-        updateEmployee(cur.lastrowid, summary=summary)
+        updateEmployee(ID, summary=summary)
 
     except Exception as e:
         print(e)
