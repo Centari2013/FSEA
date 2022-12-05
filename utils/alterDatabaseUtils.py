@@ -7,7 +7,7 @@ from utils.encryption import encrypt
 
 
 # TODO: ADD USER_FRIENDLY ID RETURNS FROM ALL FUNCTIONS
-def addDepartment(name, supervisorID=None, desc=None):
+def addDepartment(name, depID, supervisorID=None, desc=None):
     con = None
     try:
         # connect to database
@@ -15,7 +15,7 @@ def addDepartment(name, supervisorID=None, desc=None):
 
         cur = con.cursor()
 
-        cur.execute('INSERT INTO Department(depName) VALUES(?)', (name,))
+        cur.execute('INSERT INTO Department(depName, depID) VALUES(?,?)', (name, depID))
         con.commit()
         row = cur.lastrowid
         updateDepartment(row, supervisorID, desc)

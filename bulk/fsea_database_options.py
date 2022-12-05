@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6 import QtCore, QtGui, QtWidgets
 from bulk.baseWindows import windowWithToolbar
-from utils.searchEngine import searchEmployee
+from utils.searchEngine import search
 import string
 
 
@@ -46,7 +46,7 @@ class clickableLabel(QLabel):  # used to emulate hyperlink on searchResults
 
 
 class searchResult(QFrame):  # used to populate search results
-    def __init__(self, parent=None, ID='', lastName='', firstName='', description=''):
+    def __init__(self, parent=None, ID=None, type=None, lastName=None, firstName=None, description=None):
         super(searchResult, self).__init__(parent=None)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -66,12 +66,13 @@ class searchResult(QFrame):  # used to populate search results
         self.lastName = lastName
         self.firstName = firstName
         self.description = description
+        self.type = type
 
         # allows for things with only one name to use this class
-        if lastName != '':
+        if firstName is not None:
             nameLabel = elidedLabel('{},  {}'.format(self.lastName, self.firstName))
         else:
-            nameLabel = elidedLabel(self.firstName)
+            nameLabel = elidedLabel(self.lastName)
 
         self.gridLayout.addWidget(clickableLabel(self.id), 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
         self.gridLayout.addWidget(nameLabel, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
@@ -259,14 +260,14 @@ class database_options(windowWithToolbar):
 
     def addSearchResult(self, parent=None, ID='', lastName='', firstName='', description='', resultObj=None):
         if resultObj is None:
-            self.searchResultsVLayout.addWidget(searchResult(parent, ID, lastName, firstName, description))
+            self.searchResultsVLayout.addWidget(searchResult(parent=parent, ID=ID, lastName=lastName, firstName=firstName, description=description))
         else:
             self.searchResultsVLayout.addWidget(resultObj)
 
     def getResults(self, order):
         def showNoResults():
             self.clearSearchResults()
-            noResults = searchResult(firstName='No Results')
+            noResults = searchResult(lastName='No Results')
             noResults.setStyleSheet('{border 0px;}')
             self.addSearchResult(resultObj=noResults)
 
@@ -277,12 +278,12 @@ class database_options(windowWithToolbar):
         query = cleanText(str(self.searchBar.text()))
         if query != '':
             self.clearSearchResults()
-            results = searchEmployee(query)
+            results = search(query)
             if results[order]:
                 self.savedResults = results
                 for r in results[order]:
-                    self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'],
-                                         description=' '.join(r["summary"].split()))
+                    self.addSearchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'],
+                                         description=' '.join(r['description'].split()))
             else:
                 showNoResults()
         else:
@@ -292,5 +293,5 @@ class database_options(windowWithToolbar):
         if self.savedResults is not None:
             self.clearSearchResults()
             for r in self.savedResults[order]:
-                self.addSearchResult(ID=r['empID'], firstName=r['firstName'], lastName=r['lastName'],
-                                     description=' '.join(r["summary"].split()))
+                self.addSearchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'],
+                                     description=' '.join(r['description'].split()))

@@ -16,7 +16,7 @@ with open('utils/data.json') as d:
     data = json.load(d)
 
 for d in data["department"]:
-    addDepartment(d["name"], desc=d["description"])
+    addDepartment(d["name"], depID=d["id"], desc=d["description"])
 
 for e in data["employee"]:
     print(e)
