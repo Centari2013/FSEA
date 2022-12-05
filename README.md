@@ -17,7 +17,8 @@ The database query page is depicted below with dummy search results.
 ![image](https://user-images.githubusercontent.com/60724207/205428048-928f1f39-fbd7-4424-8207-099c84633f5a.gif)
 
 ### Primary TODO
-- [ ] ***implement full database search engine***
+- [ ] implement simple search filters
+- [x] implement full database search engine
 - [x] implement basic database search page GUI
 
 **bolded tasks are being actively worked on*
