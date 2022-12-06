@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6 import QtCore, QtGui, QtWidgets
 from bulk.baseWindows import windowWithToolbar
+from bulk.color_presets import *
 from utils.searchEngine import search
 import string
 
@@ -85,6 +86,40 @@ class searchResult(QFrame):  # used to populate search results
         self.setLayout(self.gridLayout)
 
 
+class panelButton(QPushButton):
+    def __init__(self, buttonText, flag):
+        super().__init__(buttonText)
+
+        self.flag = flag
+        self.setCheckable(True)
+        self.clicked.connect(self.changeButtonColor)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        self.setMinimumSize(QtCore.QSize(100, 65))
+        self.setStyleSheet("QPushButton { color: white;\n"
+                           "background-color: %s;\n"
+                           "border: none; }\n"
+                           "QPushButton::pressed { background-color: %s; }" % (
+                               push_button_color, push_button_pressed_color))
+
+    def changeButtonColor(self):
+        if self.isChecked():
+            self.setStyleSheet("QPushButton { color: %s;\n"
+                               "background-color: %s;\n"
+                               "border: none; }\n"
+                               "QPushButton::pressed { background-color: %s; }" % (
+                                   push_button_text_color, push_button_pressed_color, push_button_pressed_color))
+        else:
+            self.setStyleSheet("QPushButton { color: %s;\n"
+                               "background-color: %s;\n"
+                               "border: none; }\n"
+                               "QPushButton::pressed { background-color: %s; }" % (
+                                   push_button_text_color, push_button_color, push_button_pressed_color))
+
+
 class database_options(windowWithToolbar):
     def __init__(self):
         super().__init__()
@@ -96,7 +131,7 @@ class database_options(windowWithToolbar):
         sizePolicy.setHeightForWidth(self.panelFrame.sizePolicy().hasHeightForWidth())
 
         self.panelFrame.setSizePolicy(sizePolicy)
-        self.panelFrame.setStyleSheet("background-color: #31353d;")
+        self.panelFrame.setStyleSheet("background-color: %s;" % frame_color)
         self.panelFrame.setObjectName("leftPanelFrame")
 
         self.panelVLayout = QtWidgets.QVBoxLayout(self.panelFrame)
@@ -105,49 +140,29 @@ class database_options(windowWithToolbar):
         self.panelVLayout.setSpacing(9)
         self.panelVLayout.setObjectName("panelVLayout")
 
-        self.employeeButton = QtWidgets.QPushButton("Employees")
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.employeeButton.sizePolicy().hasHeightForWidth())
-        self.employeeButton.setSizePolicy(sizePolicy)
-        self.employeeButton.setMinimumSize(QtCore.QSize(100, 65))
-        self.employeeButton.setStyleSheet("QPushButton { color: white;\n"
-                                          "background-color: #262829;\n"
-                                          "border: none; }\n"
-                                          "QPushButton::pressed { background-color: #111314; }")
+        self.filterList = []
+
+        self.employeeButton = panelButton("Employees", 'E')
+        self.employeeButton.clicked.connect(lambda: self.setFilterFlag(self.employeeButton))
+        self.employeeButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.employeeButton.setObjectName("employeeButton")
         self.panelVLayout.addWidget(self.employeeButton)
 
-        self.specimenButton = QtWidgets.QPushButton("Specimens")
-        self.specimenButton.setMinimumSize(QtCore.QSize(100, 65))
-        self.specimenButton.setStyleSheet("QPushButton { color: white;\n"
-                                          "background-color: #262829;\n"
-                                          "border: none; }\n"
-                                          "QPushButton::pressed { background-color: #111314; }")
+        self.specimenButton = panelButton("Specimens", 'S')
+        self.specimenButton.clicked.connect(lambda: self.setFilterFlag(self.specimenButton))
+        self.specimenButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.specimenButton.setObjectName("specimenButton")
         self.panelVLayout.addWidget(self.specimenButton)
 
-        self.missionButton = QtWidgets.QPushButton("Missions")
-        self.missionButton.setMinimumSize(QtCore.QSize(100, 65))
-        self.missionButton.setStyleSheet("QPushButton { color: white;\n"
-                                         "background-color: #262829;\n"
-                                         "border: none; }\n"
-                                         "QPushButton::pressed { background-color: #111314; }")
+        self.missionButton = panelButton("Missions", 'M')
+        self.missionButton.clicked.connect(lambda: self.setFilterFlag(self.missionButton))
+        self.missionButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.missionButton.setObjectName("missionButton")
         self.panelVLayout.addWidget(self.missionButton)
 
-        self.departmentButton = QtWidgets.QPushButton("Departments")
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.departmentButton.sizePolicy().hasHeightForWidth())
-        self.departmentButton.setSizePolicy(sizePolicy)
-        self.departmentButton.setMinimumSize(QtCore.QSize(100, 65))
-        self.departmentButton.setStyleSheet("QPushButton { color: white;\n"
-                                            "background-color: #262829;\n"
-                                            "border: none; }\n"
-                                            "QPushButton::pressed { background-color: #111314; }")
+        self.departmentButton = panelButton("Departments", 'D')
+        self.departmentButton.clicked.connect(lambda: self.setFilterFlag(self.departmentButton))
+        self.departmentButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.departmentButton.setObjectName("departmentButton")
         self.panelVLayout.addWidget(self.departmentButton)
 
@@ -162,16 +177,17 @@ class database_options(windowWithToolbar):
 
         self.searchButton = QtWidgets.QPushButton("Search")
         self.searchButton.setMinimumSize(QtCore.QSize(50, 20))
-        self.searchButton.setStyleSheet("QPushButton { color: white;\n"
-                                        "background-color: rgb(107, 116, 130);\n"
+        self.searchButton.setStyleSheet("QPushButton { color: %s;\n"
+                                        "background-color: %s;\n"
                                         "border: none; }\n"
-                                        "QPushButton::pressed { background-color: #262829; }")
+                                        "QPushButton::pressed { background-color: %s; }" % (
+                                            push_button_text_color, search_button_color, push_button_color))
         self.searchButton.setObjectName("searchButton")
         self.searchButton.clicked.connect(lambda: self.getResults(self.sortSelect.currentIndex()))
         self.searchGridLayout.addWidget(self.searchButton, 0, 1, 1, 2)
 
         self.searchBar = QtWidgets.QLineEdit(self.searchFrame)
-        self.searchBar.setStyleSheet("background-color: white;")
+        self.searchBar.setStyleSheet("background-color: %s;" % search_bar_color)
         self.searchBar.setObjectName("searchBar")
         self.searchBar.returnPressed.connect(self.searchButton.click)
         self.searchGridLayout.addWidget(self.searchBar, 0, 0, 1, 1)
@@ -199,7 +215,6 @@ class database_options(windowWithToolbar):
         self.searchGridLayout.setVerticalSpacing(0)
 
         self.scrollArea = QtWidgets.QScrollArea(self.searchFrame)
-        self.scrollArea.setStyleSheet("")
         self.scrollArea.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.scrollArea.setWidgetResizable(True)
@@ -230,14 +245,13 @@ class database_options(windowWithToolbar):
         self.primaryGridLayout.addWidget(self.searchFrame, 1, 1, 2, 1)
         self.buttonSpacerFrame = QtWidgets.QFrame(self.centralWidget)
         self.buttonSpacerFrame.setEnabled(True)
-        self.buttonSpacerFrame.setStyleSheet(" background-color: #31353d;")
+        self.buttonSpacerFrame.setStyleSheet(" background-color: %s;" % frame_color)
         self.buttonSpacerFrame.setObjectName("buttonSpacerFrame")
 
         self.primaryGridLayout.addWidget(self.buttonSpacerFrame, 2, 0, 2, 1)
 
         self.footerFrame = QtWidgets.QFrame(self.centralWidget)
         self.footerFrame.setMaximumSize(QtCore.QSize(16777215, 10))
-        self.footerFrame.setStyleSheet("background-color: #E3E4EA;")
         self.footerFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.footerFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.footerFrame.setObjectName("footerFrame")
@@ -253,14 +267,19 @@ class database_options(windowWithToolbar):
         self.primaryGridLayout.addWidget(self.footerFrame, 3, 1, 1, 1, QtCore.Qt.AlignmentFlag.AlignRight)
         self.setCentralWidget(self.centralWidget)
 
+        self.savedResults = None
+        self.resultOrder = 0
+
     def clearSearchResults(self):
         # remove search results starting from last one
         for i in reversed(range(self.searchResultsVLayout.count())):
             self.searchResultsVLayout.itemAt(i).widget().setParent(None)
 
-    def addSearchResult(self, parent=None, ID='', lastName='', firstName='', description='', resultObj=None):
+    def addSearchResult(self, parent=None, ID='', lastName='', firstName='', description='', resultObj=None, type=None):
         if resultObj is None:
-            self.searchResultsVLayout.addWidget(searchResult(parent=parent, ID=ID, lastName=lastName, firstName=firstName, description=description))
+            self.searchResultsVLayout.addWidget(
+                searchResult(parent=parent, ID=ID, lastName=lastName, firstName=firstName, description=description,
+                             type=type))
         else:
             self.searchResultsVLayout.addWidget(resultObj)
 
@@ -279,19 +298,35 @@ class database_options(windowWithToolbar):
         if query != '':
             self.clearSearchResults()
             results = search(query)
-            if results[order]:
+            if results:
                 self.savedResults = results
-                for r in results[order]:
-                    self.addSearchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'],
-                                         description=' '.join(r['description'].split()))
+                self.filterHelper(order)
             else:
                 showNoResults()
         else:
             showNoResults()
 
     def sortResults(self, order):
+        self.resultOrder = order
         if self.savedResults is not None:
             self.clearSearchResults()
+            self.filterHelper(order)
+
+    def filterHelper(self, order):
+        if self.filterList:
+            for r in self.savedResults[order]:
+                if r['type'] in self.filterList:
+                    self.addSearchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'],
+                                         description=' '.join(r['description'].split()), type=r['type'])
+        else:
             for r in self.savedResults[order]:
                 self.addSearchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'],
-                                     description=' '.join(r['description'].split()))
+                                     description=' '.join(r['description'].split()), type=r['type'])
+
+    def setFilterFlag(self, button):
+        if button.isChecked():
+            self.filterList.append(button.flag)
+        else:
+            self.filterList.remove(button.flag)
+
+        print(self.filterList)

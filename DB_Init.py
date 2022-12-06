@@ -48,6 +48,13 @@ for s in data["specimen"]:
 con = sqlite3.connect(db)
 cur = con.cursor()
 
+# add test user
+cur.execute('''UPDATE Credentials
+                SET username = ?, password = ?
+                WHERE empID = (SELECT empID
+                                FROM Employee
+                                WHERE firstName = 'Zaria');''', (encrypt('test'), encrypt('test')))
+
 '''''''''''''''''''''''''''PRINT TABLES'''''''''''''''''''''''''''
 print('Department Table')
 for row in cur.execute('SELECT * FROM Department;'):
