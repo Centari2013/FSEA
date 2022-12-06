@@ -120,6 +120,17 @@ class panelButton(QPushButton):
                                    push_button_text_color, push_button_color, push_button_pressed_color))
 
 
+class threadWorker(QRunnable):
+    def __init__(self, function, *args):
+        super().__init__()
+        self.function = function
+        self.args = args
+
+    def run(self):
+        self.function(*self.args)
+
+
+
 class database_options(windowWithToolbar):
     def __init__(self):
         super().__init__()
@@ -140,7 +151,13 @@ class database_options(windowWithToolbar):
         self.panelVLayout.setSpacing(9)
         self.panelVLayout.setObjectName("panelVLayout")
 
+        self.threadpool = QThreadPool()
+        print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
         self.filterList = []
+
+        # TODO: implement thread handling for search and sort functionality
+        #def filterThreadHandler(button):
+
 
         self.employeeButton = panelButton("Employees", 'E')
         self.employeeButton.clicked.connect(lambda: self.setFilterFlag(self.employeeButton))
@@ -329,4 +346,3 @@ class database_options(windowWithToolbar):
         else:
             self.filterList.remove(button.flag)
 
-        print(self.filterList)
