@@ -417,7 +417,7 @@ cur.execute('''CREATE VIRTUAL TABLE Mission_fts USING fts5(
                 originID,
                 startDate UNINDEXED,
                 endDate UNINDEXED,
-                capitainID,
+                captainID,
                 supervisorID,
                 description,
                 content_rowid='id',
