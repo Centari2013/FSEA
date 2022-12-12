@@ -130,7 +130,6 @@ class threadWorker(QRunnable):
         self.function(*self.args)
 
 
-
 class database_options(windowWithToolbar):
     def __init__(self):
         super().__init__()
@@ -151,13 +150,7 @@ class database_options(windowWithToolbar):
         self.panelVLayout.setSpacing(9)
         self.panelVLayout.setObjectName("panelVLayout")
 
-        self.threadpool = QThreadPool()
-        print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
         self.filterList = []
-
-        # TODO: implement thread handling for search and sort functionality
-        #def filterThreadHandler(button):
-
 
         self.employeeButton = panelButton("Employees", 'E')
         self.employeeButton.clicked.connect(lambda: self.setFilterFlag(self.employeeButton))
@@ -285,6 +278,8 @@ class database_options(windowWithToolbar):
         self.setCentralWidget(self.centralWidget)
 
         self.savedResults = None
+        self.savedResultObjects = []
+        self.newResults = True  # used to avoid needless object creation when sorting
         self.resultOrder = 0
 
     def clearSearchResults(self):
@@ -292,32 +287,26 @@ class database_options(windowWithToolbar):
         for i in reversed(range(self.searchResultsVLayout.count())):
             self.searchResultsVLayout.itemAt(i).widget().setParent(None)
 
-    def addSearchResult(self, parent=None, ID='', lastName='', firstName='', description='', resultObj=None, type=None):
-        if resultObj is None:
-            self.searchResultsVLayout.addWidget(
-                searchResult(parent=parent, ID=ID, lastName=lastName, firstName=firstName, description=description,
-                             type=type))
-        else:
-            self.searchResultsVLayout.addWidget(resultObj)
+    def addSearchResults(self, results: list):
+        for r in results:
+            self.searchResultsVLayout.addWidget(r)
 
     def getResults(self, order):
         def showNoResults():
             self.clearSearchResults()
             noResults = searchResult(lastName='No Results')
             noResults.setStyleSheet('{border 0px;}')
-            self.addSearchResult(resultObj=noResults)
+            self.addSearchResults([noResults])
 
-        def cleanText(text):  # remove punctuation for fts5 search in sqlite
-            return text.translate(str.maketrans('', '', string.punctuation))
-
-        # text cleaned here to avoid blank query (and any subsequent error resulting from it)
-        query = cleanText(str(self.searchBar.text()))
+        self.newResults = True
+        # text punctuation removed  here to avoid blank query (and any subsequent error resulting from it)
+        query = str(self.searchBar.text()).translate(str.maketrans('', '', string.punctuation))
         if query != '':
             self.clearSearchResults()
             results = search(query)
             if results:
                 self.savedResults = results
-                self.filterHelper(order)
+                self.addSearchResults(self.filterHelper(order))
             else:
                 showNoResults()
         else:
@@ -327,22 +316,26 @@ class database_options(windowWithToolbar):
         self.resultOrder = order
         if self.savedResults is not None:
             self.clearSearchResults()
-            self.filterHelper(order)
+            self.addSearchResults(self.filterHelper(order))
 
     def filterHelper(self, order):
+        if self.newResults:
+            self.savedResultObjects.clear()
+            for i in self.savedResults:
+                poop = {s: s.type for s in (searchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'], description=' '.join(
+                    r['description'].split()), type=r['type']) for r in i)}
+                self.savedResultObjects.append(poop)
+            self.newResults = False
+
         if self.filterList:
-            for r in self.savedResults[order]:
-                if r['type'] in self.filterList:
-                    self.addSearchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'],
-                                         description=' '.join(r['description'].split()), type=r['type'])
+            results = [k for k, v in self.savedResultObjects[order].items() if (v in self.filterList)]
         else:
-            for r in self.savedResults[order]:
-                self.addSearchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'],
-                                     description=' '.join(r['description'].split()), type=r['type'])
+            return [k for k in self.savedResultObjects[order]]
+
+        return results
 
     def setFilterFlag(self, button):
         if button.isChecked():
             self.filterList.append(button.flag)
         else:
             self.filterList.remove(button.flag)
-
