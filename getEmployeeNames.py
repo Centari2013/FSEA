@@ -1,12 +1,8 @@
-import sqlite3
-from utils.variables import db
+import json
 
-con = sqlite3.connect(db)
-cur = con.cursor()
+with open('utils/data.json') as d:
+    data = json.load(d)
 
-cur.execute('SELECT firstName, lastName from Employee')
+for e in data["employee"]:
+    print('{} {}'.format(e["firstName"], e["lastName"]))
 
-emps = cur.fetchall()
-emps = [list(e) for e in emps]
-for e in emps:
-    print('{} {}'.format(e[0], e[1]))
