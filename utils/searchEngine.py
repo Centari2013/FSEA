@@ -59,11 +59,7 @@ def search(query):
 
         results[0] = cur.fetchall()
 
-        cur.execute('''SELECT type,
-                        id, 
-                        firstName, 
-                        lastName,
-                        description
+        cur.execute('''SELECT *
                         FROM search_results
                         ORDER BY lastName;''')
         results[1] = cur.fetchall()
