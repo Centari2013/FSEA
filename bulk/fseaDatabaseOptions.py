@@ -2,9 +2,12 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6 import QtCore, QtGui, QtWidgets
 from bulk.baseWindows import windowWithToolbar
-from bulk.color_presets import *
+from bulk.colorPresets import *
 from utils.searchEngine import search
 import string
+from bulk.infoWindow import employeeInfo
+from utils.variables import employeeType, specimenType, originType, missionType, departmentType
+import time
 
 
 class elidedLabel(QLabel):
@@ -20,7 +23,7 @@ class elidedLabel(QLabel):
         painter.drawText(self.rect(), self.alignment(), elided)
 
 
-class clickableLabel(QLabel):  # used to emulate hyperlink on searchResults
+class idLabel(QLabel):  # used to emulate hyperlink on searchResults
     def __init__(self, parent):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
@@ -75,7 +78,10 @@ class searchResult(QFrame):  # used to populate search results
         else:
             nameLabel = elidedLabel(self.lastName)
 
-        self.gridLayout.addWidget(clickableLabel(self.id), 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self.idLabel = idLabel(self.id)
+        self.idLabel.mousePressEvent = self.openInfoWindow
+
+        self.gridLayout.addWidget(self.idLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
         self.gridLayout.addWidget(nameLabel, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
         self.gridLayout.addWidget(elidedLabel(self.description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
@@ -84,6 +90,13 @@ class searchResult(QFrame):  # used to populate search results
         self.gridLayout.setColumnStretch(2, 0)
 
         self.setLayout(self.gridLayout)
+        self.Window = None
+
+    def openInfoWindow(self, QMouseEvent):
+        if self.type == employeeType:
+            self.Window = employeeInfo(self.id)
+
+        self.Window.show()
 
 
 class panelButton(QPushButton):
@@ -133,6 +146,7 @@ class threadWorker(QRunnable):
 class database_options(windowWithToolbar):
     def __init__(self):
         super().__init__()
+        self.exitButton.clicked.connect(QCoreApplication.instance().quit)
 
         self.panelFrame = QtWidgets.QFrame(self.centralWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Preferred)
@@ -152,29 +166,35 @@ class database_options(windowWithToolbar):
 
         self.filterList = []
 
-        self.employeeButton = panelButton("Employees", 'E')
+        self.employeeButton = panelButton("Employees", employeeType)
         self.employeeButton.clicked.connect(lambda: self.setFilterFlag(self.employeeButton))
         self.employeeButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.employeeButton.setObjectName("employeeButton")
         self.panelVLayout.addWidget(self.employeeButton)
 
-        self.specimenButton = panelButton("Specimens", 'S')
+        self.specimenButton = panelButton("Specimens", specimenType)
         self.specimenButton.clicked.connect(lambda: self.setFilterFlag(self.specimenButton))
         self.specimenButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.specimenButton.setObjectName("specimenButton")
         self.panelVLayout.addWidget(self.specimenButton)
 
-        self.missionButton = panelButton("Missions", 'M')
+        self.missionButton = panelButton("Missions", missionType)
         self.missionButton.clicked.connect(lambda: self.setFilterFlag(self.missionButton))
         self.missionButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.missionButton.setObjectName("missionButton")
         self.panelVLayout.addWidget(self.missionButton)
 
-        self.departmentButton = panelButton("Departments", 'D')
+        self.departmentButton = panelButton("Departments", departmentType)
         self.departmentButton.clicked.connect(lambda: self.setFilterFlag(self.departmentButton))
         self.departmentButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.departmentButton.setObjectName("departmentButton")
         self.panelVLayout.addWidget(self.departmentButton)
+
+        self.originButton = panelButton("Origins", originType)
+        self.originButton.clicked.connect(lambda: self.setFilterFlag(self.departmentButton))
+        self.originButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
+        self.originButton.setObjectName("originButton")
+        self.panelVLayout.addWidget(self.originButton)
 
         self.primaryGridLayout.addWidget(self.panelFrame, 1, 0, 1, 1)
         self.searchFrame = QtWidgets.QFrame(self.centralWidget)
@@ -292,6 +312,8 @@ class database_options(windowWithToolbar):
             self.searchResultsVLayout.addWidget(r)
 
     def getResults(self, order):
+        start = time.time()
+
         def showNoResults():
             self.clearSearchResults()
             noResults = searchResult(lastName='No Results')
@@ -311,27 +333,38 @@ class database_options(windowWithToolbar):
                 showNoResults()
         else:
             showNoResults()
+        end = time.time()
+
+        print('getResults execution time: {}'.format(end - start))
 
     def sortResults(self, order):
+        start = time.time()
         self.resultOrder = order
         if self.savedResults is not None:
             self.clearSearchResults()
             self.addSearchResults(self.filterHelper(order))
+        end = time.time()
+        print('sortResults execution time: {}'.format(end - start))
 
     def filterHelper(self, order):
+        start = time.time()
         if self.newResults:
             self.savedResultObjects.clear()
             for i in self.savedResults:
-                poop = {s: s.type for s in (searchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'], description=' '.join(
-                    r['description'].split()), type=r['type']) for r in i)}
+                poop = {s: s.type for s in (
+                    searchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'], description=' '.join(
+                        r['description'].split()), type=r['type']) for r in i)}
                 self.savedResultObjects.append(poop)
             self.newResults = False
 
         if self.filterList:
             results = [k for k, v in self.savedResultObjects[order].items() if (v in self.filterList)]
         else:
+            end = time.time()
+            print('filterHelper execution time: {}'.format(end - start))
             return [k for k in self.savedResultObjects[order]]
-
+        end = time.time()
+        print('filterHelper execution time: {}'.format(end - start))
         return results
 
     def setFilterFlag(self, button):
