@@ -7,7 +7,7 @@ class windowWithToolbar(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
-        self.setWindowModality(Qt.WindowModality.WindowModal)
+        self.setWindowModality(Qt.WindowModality.NonModal)
         self.prevPos = None
 
         sizePolicy = QtWidgets.QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
@@ -16,7 +16,7 @@ class windowWithToolbar(QMainWindow):
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
 
-        self.setMinimumSize(QtCore.QSize(550, 345))
+        self.setMinimumSize(QtCore.QSize(550, 400))
         self.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.setAutoFillBackground(False)
 
@@ -88,7 +88,6 @@ class windowWithToolbar(QMainWindow):
         self.titlebarLayout.addWidget(self.restoreButton)
 
         self.exitButton = QtWidgets.QPushButton(self.titlebarFrame)
-        self.exitButton.clicked.connect(QCoreApplication.instance().quit)
         self.exitButton.setMinimumSize(QtCore.QSize(18, 18))
         self.exitButton.setMaximumSize(QtCore.QSize(18, 18))
         self.exitButton.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
