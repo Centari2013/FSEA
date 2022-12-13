@@ -1,7 +1,7 @@
 import sys
 
-from bulk.login_screen import authenticate
-from bulk.fsea_database_options import database_options
+from bulk.loginScreen import authenticate
+from bulk.fseaDatabaseOptions import database_options
 from PyQt6.QtWidgets import QApplication
 
 app = QApplication(sys.argv)
