@@ -5,10 +5,10 @@ from utils.encryption import encrypt
 
 '''''''''''''''''''''ALTER DATABASE'''''''''''''''''''''
 
-
-# TODO: ADD USER_FRIENDLY ID RETURNS FROM ALL FUNCTIONS
 def addDepartment(name, depID, supervisorID=None, desc=None):
     con = None
+    success = False
+
     try:
         # connect to database
         con = sqlite3.connect(db)
@@ -19,6 +19,7 @@ def addDepartment(name, depID, supervisorID=None, desc=None):
         con.commit()
         row = cur.lastrowid
         updateDepartment(row, supervisorID, desc)
+        success = True
 
     except Exception as e:
         print(e)
@@ -27,10 +28,12 @@ def addDepartment(name, depID, supervisorID=None, desc=None):
         # close connection and return
         if con is not None:
             con.close()
+        return success
 
 
 def updateDepartment(depID, name=None, supervisorID=None, desc=None):
     con = None
+    success = False
     try:
         # connect to database
         con = sqlite3.connect(db)
@@ -45,6 +48,7 @@ def updateDepartment(depID, name=None, supervisorID=None, desc=None):
                                    SET {} = ?
                                    WHERE depID = ?'''.format(a[1]), (a[0], depID))
         con.commit()
+        success = True
 
     except Exception as e:
         print(e)
@@ -53,10 +57,12 @@ def updateDepartment(depID, name=None, supervisorID=None, desc=None):
         # close connection and return
         if con is not None:
             con.close()
+        return success
 
 
 def deleteDepartment(depID):
     con = None
+    success = False
     try:
         # connect to database
         con = sqlite3.connect(db)
@@ -65,6 +71,7 @@ def deleteDepartment(depID):
 
         cur.execute('DELETE FROM Department WHERE depID = ?', depID)
         con.commit()
+        success = True
 
     except Exception as e:
         print(e)
@@ -73,6 +80,7 @@ def deleteDepartment(depID):
         # close connection and return
         if con is not None:
             con.close()
+        return success
 
 
 def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
@@ -118,6 +126,8 @@ def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
 
 def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None, summary=None):
     con = None
+    success = False
+
     try:
         # connect to database
         con = sqlite3.connect(db)
@@ -134,6 +144,7 @@ def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, st
                                 WHERE empID = ?'''.format(a[1]), (a[0], empID))
 
         con.commit()
+        success = True
 
     except Exception as e:
         print(e)
@@ -142,10 +153,13 @@ def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, st
         # close connection and return
         if con is not None:
             con.close()
+        return success
 
 
 def deleteEmployee(empID):
     con = None
+    success = False
+
     try:
         # connect to database
         con = sqlite3.connect(db)
@@ -155,6 +169,7 @@ def deleteEmployee(empID):
         cur.execute('DELETE FROM Employee WHERE empID = ?', (empID,))
 
         con.commit()
+        success = True
 
     except Exception as e:
         print(e)
@@ -163,10 +178,12 @@ def deleteEmployee(empID):
         # close connection and return
         if con is not None:
             con.close()
+        return success
 
 
 def updateEmployeeMedical(empID, dob=None, bloodtype=None, sex=None, kg=None, height=None, notes=None):
     con = None
+    success = False
     try:
         # connect to database
         con = sqlite3.connect(db)
@@ -181,6 +198,7 @@ def updateEmployeeMedical(empID, dob=None, bloodtype=None, sex=None, kg=None, he
                 cur.execute('UPDATE EmployeeMedical SET {} = ? WHERE empID = ?'.format(a[1]), (a[0], empID))
 
         con.commit()
+        success = True
 
     except Exception as e:
         print(e)
@@ -189,12 +207,14 @@ def updateEmployeeMedical(empID, dob=None, bloodtype=None, sex=None, kg=None, he
         # close connection and return
         if con is not None:
             con.close()
+        return success
 
 
 def updateCredentials(empID, username=None, pwd=None, loginAttempts=None):
     con = None
     username = encrypt(username)
     pwd = encrypt(pwd)
+    success = False
     try:
         # connect to database
         con = sqlite3.connect(db)
@@ -207,6 +227,7 @@ def updateCredentials(empID, username=None, pwd=None, loginAttempts=None):
                 cur.execute('UPDATE Credentials SET {} = ? WHERE empID = ?'.format(a[1]), (a[0], empID))
 
         con.commit()
+        success = True
 
     except Exception as e:
         print(e)
@@ -215,6 +236,7 @@ def updateCredentials(empID, username=None, pwd=None, loginAttempts=None):
         # close connection and return
         if con is not None:
             con.close()
+        return success
 
 
 def addOrigin(name, desc, missionID=None):
@@ -250,6 +272,7 @@ def addOrigin(name, desc, missionID=None):
 
 def updateOrigin(rowID, name=None, missionID=None, desc=None):
     con = None
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
@@ -261,22 +284,26 @@ def updateOrigin(rowID, name=None, missionID=None, desc=None):
                 cur.execute('UPDATE Origin SET {} = ? WHERE id = ?'.format(a[1]), (a[0], rowID))
 
         con.commit()
+        success = True
     except Exception as e:
         print(e)
 
     finally:
         if con is not None:
             con.close()
+        return success
 
 
 def deleteOrigin(originID):
     con = None
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
 
         cur.execute('DELETE FROM Origin WHERE originID = ?', (originID,))
         con.commit()
+        success = True
 
     except Exception as e:
         print(e)
@@ -284,6 +311,7 @@ def deleteOrigin(originID):
     finally:
         if con is not None:
             con.close()
+        return success
 
 
 def addMission(name, desc, originID=None, startDate=None, endDate=None, captainID=None, supervisorID=None):
@@ -318,6 +346,7 @@ def addMission(name, desc, originID=None, startDate=None, endDate=None, captainI
 def updateMission(rowID, name=None, desc=None, originID=None, startDate=None, endDate=None, captainID=None,
                   supervisorID=None):
     con = None
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
@@ -330,23 +359,26 @@ def updateMission(rowID, name=None, desc=None, originID=None, startDate=None, en
                 cur.execute('UPDATE Mission SET {} = ? WHERE id = ?'.format(a[1]), (a[0], rowID))
 
         con.commit()
+        success = True
     except Exception as e:
         print(e)
 
     finally:
         if con is not None:
             con.close()
+        return success
 
 
 def deleteMission(missionID):
     con = None
-
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
 
         cur.execute('DELETE FROM Mission WHERE missionID = ?', (missionID,))
         con.commit()
+        success = True
 
     except Exception as e:
         print(e)
@@ -354,11 +386,12 @@ def deleteMission(missionID):
     finally:
         if con is not None:
             con.close()
+        return success
 
 
 def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLevel=None, notes=None, description=None):
     con = None
-
+    ID = None
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
@@ -389,11 +422,13 @@ def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLeve
     finally:
         if con is not None:
             con.close()
+        return ID
 
 
-def updateSpecimen(rowID, name=None, acquisitionDate=None, originID=None, missionID=None, threatLevel=None, notes=None, description=None):
+def updateSpecimen(rowID, name=None, acquisitionDate=None, originID=None, missionID=None, threatLevel=None, notes=None,
+                   description=None):
     con = None
-
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
@@ -406,49 +441,55 @@ def updateSpecimen(rowID, name=None, acquisitionDate=None, originID=None, missio
                 cur.execute('UPDATE Specimen SET {} = ? WHERE id = ?'.format(a[1]), (a[0], rowID))
 
         con.commit()
+        success = True
     except Exception as e:
         print(e)
     finally:
         if con is not None:
             con.close()
+        return success
 
 
 def deleteSpecimen(specimenID):
     con = None
-
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
 
         cur.execute('DELETE FROM Specimen WHERE specimenID = ?', (specimenID,))
         con.commit()
+        success = True
     except Exception as e:
         print(e)
     finally:
         if con is not None:
             con.close()
+        return False
 
 
 def addEmployeeSpecimen(empID, specimenID):
     con = None
-
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
 
         cur.execute('INSERT INTO EmployeeSpecimen(empID, specimenID) VALUES(?,?)', (empID, specimenID))
         con.commit()
+        success = True
     except Exception as e:
         print(e)
 
     finally:
         if con is not None:
             con.close()
+        return success
 
 
 def updateSpecimenSupervisor(empID, specimenID, newEmployeeID):
     con = None
-
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
@@ -457,17 +498,19 @@ def updateSpecimenSupervisor(empID, specimenID, newEmployeeID):
                         SET empID = ?
                         WHERE empID = ? AND specimenID = ?''', (newEmployeeID, empID, specimenID))
         con.commit()
+        success = True
     except Exception as e:
         print(e)
 
     finally:
         if con is not None:
             con.close()
+        return success
 
 
 def updateSupervisorSpecimen(empID, specimenID, newSpecimenID):
     con = None
-
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
@@ -476,31 +519,37 @@ def updateSupervisorSpecimen(empID, specimenID, newSpecimenID):
                             SET specimenID = ?
                             WHERE empID = ? AND specimenID = ?''', (newSpecimenID, empID, specimenID))
         con.commit()
+        success = True
     except Exception as e:
         print(e)
 
     finally:
         if con is not None:
             con.close()
+        return success
 
 
 def deleteEmployeeSpecimen(empID, specimenID):
     con = None
+    success = False
     try:
         con = sqlite3.connect(db)
         cur = con.cursor()
 
         cur.execute('DELETE FROM EmployeeSpecimen WHERE empID = ? AND specimenID = ?', (empID, specimenID))
         con.commit()
+        success = True
     except Exception as e:
         print(e)
     finally:
         if con is not None:
             con.close()
+        return success
 
 
 def updateSpecimenMedical(specimenID, name=None, acquisitionDate=None, bloodtype=None, sex=None, kg=None, notes=None):
     con = None
+    success = False
     try:
         # connect to database
         con = sqlite3.connect(db)
@@ -515,6 +564,7 @@ def updateSpecimenMedical(specimenID, name=None, acquisitionDate=None, bloodtype
                 cur.execute('UPDATE SpecimenMedical SET {} = ? WHERE specimenID = ?'.format(a[1]), (a[0], specimenID))
 
         con.commit()
+        success = True
 
     except Exception as e:
         print(e)
@@ -523,3 +573,4 @@ def updateSpecimenMedical(specimenID, name=None, acquisitionDate=None, bloodtype
         # close connection and return
         if con is not None:
             con.close()
+        return success
