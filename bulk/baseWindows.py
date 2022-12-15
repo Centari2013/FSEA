@@ -23,7 +23,6 @@ class windowWithToolbar(QMainWindow):
         self.centralWidget = QtWidgets.QWidget(self)
         self.centralWidget.setEnabled(True)
         self.centralWidget.setAutoFillBackground(False)
-        self.centralWidget.setStyleSheet("background-color: #E3E4EA;")
         self.centralWidget.setObjectName("centralWidget")
 
         self.primaryGridLayout = QtWidgets.QGridLayout(self.centralWidget)

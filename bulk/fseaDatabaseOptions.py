@@ -7,7 +7,6 @@ from utils.searchEngine import search
 import string
 from bulk.infoWindow import employeeInfo
 from utils.variables import employeeType, specimenType, originType, missionType, departmentType
-import time
 
 
 class elidedLabel(QLabel):
@@ -133,16 +132,6 @@ class panelButton(QPushButton):
                                    push_button_text_color, push_button_color, push_button_pressed_color))
 
 
-class threadWorker(QRunnable):
-    def __init__(self, function, *args):
-        super().__init__()
-        self.function = function
-        self.args = args
-
-    def run(self):
-        self.function(*self.args)
-
-
 class database_options(windowWithToolbar):
     def __init__(self):
         super().__init__()
@@ -191,7 +180,7 @@ class database_options(windowWithToolbar):
         self.panelVLayout.addWidget(self.departmentButton)
 
         self.originButton = panelButton("Origins", originType)
-        self.originButton.clicked.connect(lambda: self.setFilterFlag(self.departmentButton))
+        self.originButton.clicked.connect(lambda: self.setFilterFlag(self.originButton))
         self.originButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.originButton.setObjectName("originButton")
         self.panelVLayout.addWidget(self.originButton)
@@ -312,7 +301,6 @@ class database_options(windowWithToolbar):
             self.searchResultsVLayout.addWidget(r)
 
     def getResults(self, order):
-        start = time.time()
 
         def showNoResults():
             self.clearSearchResults()
@@ -333,21 +321,14 @@ class database_options(windowWithToolbar):
                 showNoResults()
         else:
             showNoResults()
-        end = time.time()
-
-        print('getResults execution time: {}'.format(end - start))
 
     def sortResults(self, order):
-        start = time.time()
         self.resultOrder = order
         if self.savedResults is not None:
             self.clearSearchResults()
             self.addSearchResults(self.filterHelper(order))
-        end = time.time()
-        print('sortResults execution time: {}'.format(end - start))
 
     def filterHelper(self, order):
-        start = time.time()
         if self.newResults:
             self.savedResultObjects.clear()
             for i in self.savedResults:
@@ -360,11 +341,8 @@ class database_options(windowWithToolbar):
         if self.filterList:
             results = [k for k, v in self.savedResultObjects[order].items() if (v in self.filterList)]
         else:
-            end = time.time()
-            print('filterHelper execution time: {}'.format(end - start))
             return [k for k in self.savedResultObjects[order]]
-        end = time.time()
-        print('filterHelper execution time: {}'.format(end - start))
+
         return results
 
     def setFilterFlag(self, button):
@@ -372,3 +350,4 @@ class database_options(windowWithToolbar):
             self.filterList.append(button.flag)
         else:
             self.filterList.remove(button.flag)
+
