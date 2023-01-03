@@ -296,7 +296,7 @@ class database_options(windowWithToolbar):
         for i in reversed(range(self.searchResultsVLayout.count())):
             self.searchResultsVLayout.itemAt(i).widget().setParent(None)
 
-    def addSearchResults(self, results: list):
+    def addSearchResults(self, results):
         for r in results:
             self.searchResultsVLayout.addWidget(r)
 
