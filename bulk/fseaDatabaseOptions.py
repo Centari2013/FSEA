@@ -321,8 +321,6 @@ class database_options(windowWithToolbar):
         self.setCentralWidget(self.centralWidget)
 
         self.savedResults = None
-        self.savedResultObjects = []
-        self.newResults = True  # used to avoid needless object creation when sorting
         self.resultOrder = 0
 
 
@@ -351,6 +349,9 @@ class database_options(windowWithToolbar):
                 if page > int(self.totalPagesLabel.text()):
                     self.pageSelect.setText(self.totalPagesLabel.text())
 
+                self.clearSearchResults()
+                self.addSearchResults(self.filterHelper(self.sortSelect.currentIndex()))
+
 
         self.prevPage.clicked.connect(prevPage)
         self.nextPage.clicked.connect(nextPage)
@@ -371,7 +372,11 @@ class database_options(windowWithToolbar):
         for i in range(startingIndex, startingIndex + limit):
             if i == len(results):
                 break
-            self.searchResultsVLayout.addWidget(results[i])
+
+            r = results[i]
+            obj = searchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'], description=' '.join(
+                        r['description'].split()), type=r['type'])
+            self.searchResultsVLayout.addWidget(obj)
         end = time.time()
         executionTime = end - start
         print("addSearchResults Execution Time: ", executionTime)
@@ -410,19 +415,10 @@ class database_options(windowWithToolbar):
 
     def filterHelper(self, order):
         start = time.time()
-        if self.newResults:
-            self.savedResultObjects.clear()
-            for i in self.savedResults:
-                poop = {s: s.type for s in (
-                    searchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'], description=' '.join(
-                        r['description'].split()), type=r['type']) for r in i)}
-                self.savedResultObjects.append(poop)
-            self.newResults = False
-
         if self.filterList:
-            results = [k for k, v in self.savedResultObjects[order].items() if (v in self.filterList)]
+            results = [k for k in self.savedResults[order] if (k['type'] in self.filterList)]
         else:
-            results = [k for k in self.savedResultObjects[order]]
+            results = [k for k in self.savedResults[order]]
 
         perPage = int(self.resultLimitDropDown.currentText())
         numOfResults = len(results)
