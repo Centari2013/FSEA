@@ -226,7 +226,7 @@ class database_options(windowWithToolbar):
         self.sortGridLayout.addWidget(self.sortSelect, 0, 1, 1, 3, Qt.AlignmentFlag.AlignLeft)
 
         self.resultLimitDropDown = QComboBox(self)
-        self.resultLimitDropDown.addItems(['10', '25', '50', '100'])
+        self.resultLimitDropDown.addItems(['10', '25', '50'])
         self.sortGridLayout.addWidget(QLabel("Per Page"), 0, 2)
         self.sortGridLayout.addWidget(self.resultLimitDropDown, 0, 3, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
@@ -274,24 +274,13 @@ class database_options(windowWithToolbar):
 
         self.primaryGridLayout.addWidget(self.buttonSpacerFrame, 2, 0, 2, 1)
 
-        self.footerFrame = QtWidgets.QFrame(self.centralWidget)
-        self.footerFrame.setMaximumSize(QtCore.QSize(16777215, 10))
-        self.footerFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.footerFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.footerFrame.setObjectName("footerFrame")
 
-        self.footerLayout = QtWidgets.QHBoxLayout(self.footerFrame)
-        self.footerLayout.setContentsMargins(0, 0, 0, 0)
-        self.footerLayout.setSpacing(0)
-        self.footerLayout.setObjectName("footerLayout")
-
-        self.sizeGrip = QSizeGrip(self)
-        self.footerLayout.addWidget(self.sizeGrip)
 
         self.pageSelect = QLineEdit()
         validator = QtGui.QRegularExpressionValidator(QtCore.QRegularExpression("^[0-9]*$"), self)
         self.pageSelect.setValidator(validator)
         self.pageSelect.setText("1")
+        self.pageSelect.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.pageSelect.setFixedWidth(30)
 
         self.prevPage = QPushButton("<-")
@@ -305,19 +294,44 @@ class database_options(windowWithToolbar):
         self.totalPagesLabel = QLabel("1")
         self.totalPagesLabel.setFixedWidth(25)
         self.totalPagesLabel.setMargin(5)
-        self.pageNavFrame = QHBoxLayout()
+        self.resultPos = QLabel("0 - 0")
+        self.resultPos.setFixedWidth(50)
+        self.pageNavFrame = QFrame(self)
+        self.pageNavLayout = QGridLayout(self.pageNavFrame)
+        self.resultPosLabel = QLabel("Results")
+        self.resultPosLabel.setMargin(5)
+        self.resultPosLabel.setFixedWidth(50)
 
         self.initPageNav()
 
-        self.pageNavFrame.addWidget(self.prevPage)
-        self.pageNavFrame.addWidget(self.pageSelect)
-        self.pageNavFrame.addWidget(of)
-        self.pageNavFrame.addWidget(self.totalPagesLabel)
-        self.pageNavFrame.addWidget(self.nextPage)
+        self.pageNavLayout.setContentsMargins(5, 0, 0, 5)
+        self.pageNavLayout.addWidget(self.resultPosLabel, 0, 0)
+        self.pageNavLayout.addWidget(self.resultPos, 0, 1)
+        self.pageNavLayout.addItem(QSpacerItem(100, 20), 0, 2)
+        self.pageNavLayout.addWidget(self.prevPage, 0, 3)
+        self.pageNavLayout.addWidget(self.pageSelect, 0, 4)
+        self.pageNavLayout.addWidget(of, 0, 5)
+        self.pageNavLayout.addWidget(self.totalPagesLabel, 0, 6)
+        self.pageNavLayout.addWidget(self.nextPage, 0, 8)
+        self.pageNavLayout.addItem(QSpacerItem(100, 20), 0, 9, 1, 2)
 
-        self.primaryGridLayout.addLayout(self.pageNavFrame,2, 1, Qt.AlignmentFlag.AlignHCenter)
+        self.pageNavFrame.setLayout(self.pageNavLayout)
 
-        self.primaryGridLayout.addWidget(self.footerFrame, 3, 1, 1, 1, QtCore.Qt.AlignmentFlag.AlignRight)
+        self.footerFrame = QtWidgets.QFrame(self.centralWidget)
+        self.footerFrame.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.footerFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.footerFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+        self.footerFrame.setObjectName("footerFrame")
+
+        self.footerLayout = QtWidgets.QGridLayout(self.footerFrame)
+        self.footerLayout.setContentsMargins(0, 0, 0, 0)
+        self.footerLayout.setObjectName("footerLayout")
+
+        self.sizeGrip = QSizeGrip(self)
+        self.footerLayout.addWidget(self.pageNavFrame, 0, 0, Qt.AlignmentFlag.AlignCenter)
+        self.footerLayout.addWidget(self.sizeGrip, 0, 1, Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignRight)
+
+        self.primaryGridLayout.addWidget(self.footerFrame, 3, 1)
         self.setCentralWidget(self.centralWidget)
 
         self.savedResults = None
@@ -325,21 +339,27 @@ class database_options(windowWithToolbar):
 
 
     def initPageNav(self):
+        def updateResults():
+            self.clearSearchResults()
+            self.addSearchResults(self.filterHelper(self.sortSelect.currentIndex()))
+            bar = self.scrollArea.verticalScrollBar()
+            bar.setValue(bar.minimum())
+
+            #TODO: add "Resuluts # - # of #" functionality
         def prevPage():
             page = self.pageSelect.text()
             if page != "":
                 if int(page) > 1:
                     self.pageSelect.setText(str(int(page) - 1))
-                    self.clearSearchResults()
-                    self.addSearchResults(self.filterHelper(self.sortSelect.currentIndex()))
+                    updateResults()
+
 
         def nextPage():
             page = self.pageSelect.text()
             if page != "":
                 if int(page) < int(self.totalPagesLabel.text()):
                     self.pageSelect.setText(str(int(page) + 1))
-                    self.clearSearchResults()
-                    self.addSearchResults(self.filterHelper(self.sortSelect.currentIndex()))
+                    updateResults()
 
         def submitPage():
             if self.pageSelect.text() != "":
@@ -349,13 +369,13 @@ class database_options(windowWithToolbar):
                 if page > int(self.totalPagesLabel.text()):
                     self.pageSelect.setText(self.totalPagesLabel.text())
 
-                self.clearSearchResults()
-                self.addSearchResults(self.filterHelper(self.sortSelect.currentIndex()))
+                updateResults()
 
 
         self.prevPage.clicked.connect(prevPage)
         self.nextPage.clicked.connect(nextPage)
         self.pageSelect.returnPressed.connect(submitPage)
+        self.resultLimitDropDown.currentIndexChanged.connect(updateResults)
 
     def clearSearchResults(self):
         start = time.time()
@@ -385,14 +405,19 @@ class database_options(windowWithToolbar):
 
         def showNoResults():
             self.clearSearchResults()
-            noResults = searchResult(lastName='No Results')
-            noResults.setStyleSheet('{border 0px;}')
+            noResults = {'id': '',
+                         'lastName': 'No Results',
+                         'firstName': None,
+                         'description': '',
+                         'type': ''}
             self.addSearchResults([noResults])
+            self.pageSelect.setText("1")
+            self.totalPagesLabel.setText("1")
 
         self.newResults = True
         # text punctuation removed  here to avoid blank query (and any subsequent error resulting from it)
         query = str(self.searchBar.text()).translate(str.maketrans('', '', string.punctuation))
-        if query != '':
+        if query :
             self.clearSearchResults()
             start = time.time()
             results = search(query)

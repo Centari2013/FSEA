@@ -54,6 +54,7 @@ cur.execute('''UPDATE Credentials
                 WHERE empID = (SELECT empID
                                 FROM Employee
                                 WHERE firstName = 'Zaria');''', (encrypt('test'), encrypt('test')))
+con.commit()
 
 '''''''''''''''''''''''''''PRINT TABLES'''''''''''''''''''''''''''
 print('Department Table')

@@ -7,7 +7,7 @@ app = QApplication(sys.argv)
 options = database_options()
 options.show()
 # launch login window; options is passed as the window to unlock
-# login = authenticate(options.show)
-# login.show()
+login = authenticate(options.show)
+#login.show()
 app.exec()
 
