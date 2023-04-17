@@ -1,5 +1,4 @@
 import sys
-
 from bulk.loginScreen import authenticate
 from bulk.fseaDatabaseOptions import database_options
 from PyQt6.QtWidgets import QApplication

@@ -1,7 +1,6 @@
 import sqlite3
 from utils.variables import db
 
-
 def dict_factory(cursor, row):
     d = {}
     for idx, col in enumerate(cursor.description):
@@ -18,14 +17,7 @@ def search(query):
         cur = con.cursor()
         results = [None, None, None]
 
-        cur.execute('''CREATE TEMPORARY TABLE search_results(
-                        type        TEXT,
-                        id          TEXT,
-                        firstName   TEXT,
-                        lastName    TEXT,
-                        description TEXT,
-                        rank        INTEGER
-                        );''')
+        cur.execute('''DELETE FROM search_results;''')
 
         cur.execute('''INSERT INTO search_results (type, id, firstName, lastName, description, rank)
                         SELECT 'D', depID, NULL, depName, description, bm25(Department_fts)

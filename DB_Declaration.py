@@ -447,4 +447,14 @@ cur.execute('''CREATE TRIGGER Mission_fts_update AFTER UPDATE ON Mission
                 END;''')
 con.commit()
 
+cur.execute('''CREATE TABLE search_results(
+                        type        TEXT,
+                        id          TEXT,
+                        firstName   TEXT,
+                        lastName    TEXT,
+                        description TEXT,
+                        rank        INTEGER
+                        );''')
+con.commit()
+
 con.close()

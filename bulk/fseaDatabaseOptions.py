@@ -7,7 +7,7 @@ from utils.searchEngine import search
 import string
 from bulk.infoWindow import employeeInfo
 from utils.variables import employeeType, specimenType, originType, missionType, departmentType
-
+import time
 
 class elidedLabel(QLabel):
     def __init__(self, parent):
@@ -211,10 +211,10 @@ class database_options(windowWithToolbar):
         self.searchBar.returnPressed.connect(self.searchButton.click)
         self.searchGridLayout.addWidget(self.searchBar, 0, 0, 1, 1)
 
-        self.sortFrame = QFrame()
+        self.sortFrame = QFrame(self)
         self.sortGridLayout = QGridLayout(self.sortFrame)
 
-        self.sortLabel = QLabel('Sort by:')
+        self.sortLabel = QLabel('Sort by')
         self.sortGridLayout.addWidget(self.sortLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
 
         self.sortSelect = QtWidgets.QComboBox()
@@ -224,6 +224,11 @@ class database_options(windowWithToolbar):
         self.sortSelect.addItem(('Alphabet DESC'))
         self.sortSelect.currentIndexChanged.connect(self.sortResults)
         self.sortGridLayout.addWidget(self.sortSelect, 0, 1, 1, 3, Qt.AlignmentFlag.AlignLeft)
+
+        self.resultLimitDropDown = QComboBox(self)
+        self.resultLimitDropDown.addItems(['10', '25', '50', '100'])
+        self.sortGridLayout.addWidget(QLabel("Per Page"), 0, 2)
+        self.sortGridLayout.addWidget(self.resultLimitDropDown, 0, 3, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
         self.sortGridLayout.setColumnStretch(0, 0)
         self.sortGridLayout.setColumnStretch(1, 100)
@@ -281,8 +286,37 @@ class database_options(windowWithToolbar):
         self.footerLayout.setObjectName("footerLayout")
 
         self.sizeGrip = QSizeGrip(self)
-
         self.footerLayout.addWidget(self.sizeGrip)
+
+        self.pageSelect = QLineEdit()
+        validator = QtGui.QRegularExpressionValidator(QtCore.QRegularExpression("^[0-9]*$"), self)
+        self.pageSelect.setValidator(validator)
+        self.pageSelect.setText("1")
+        self.pageSelect.setFixedWidth(30)
+
+        self.prevPage = QPushButton("<-")
+        self.prevPage.setFixedWidth(30)
+        self.nextPage = QPushButton("->")
+        self.nextPage.setFixedWidth(30)
+
+        of = QLabel("of")
+        of.setMargin(5)
+        of.setFixedWidth(25)
+        self.totalPagesLabel = QLabel("1")
+        self.totalPagesLabel.setFixedWidth(25)
+        self.totalPagesLabel.setMargin(5)
+        self.pageNavFrame = QHBoxLayout()
+
+        self.initPageNav()
+
+        self.pageNavFrame.addWidget(self.prevPage)
+        self.pageNavFrame.addWidget(self.pageSelect)
+        self.pageNavFrame.addWidget(of)
+        self.pageNavFrame.addWidget(self.totalPagesLabel)
+        self.pageNavFrame.addWidget(self.nextPage)
+
+        self.primaryGridLayout.addLayout(self.pageNavFrame,2, 1, Qt.AlignmentFlag.AlignHCenter)
+
         self.primaryGridLayout.addWidget(self.footerFrame, 3, 1, 1, 1, QtCore.Qt.AlignmentFlag.AlignRight)
         self.setCentralWidget(self.centralWidget)
 
@@ -291,14 +325,56 @@ class database_options(windowWithToolbar):
         self.newResults = True  # used to avoid needless object creation when sorting
         self.resultOrder = 0
 
+
+    def initPageNav(self):
+        def prevPage():
+            page = self.pageSelect.text()
+            if page != "":
+                if int(page) > 1:
+                    self.pageSelect.setText(str(int(page) - 1))
+                    self.clearSearchResults()
+                    self.addSearchResults(self.filterHelper(self.sortSelect.currentIndex()))
+
+        def nextPage():
+            page = self.pageSelect.text()
+            if page != "":
+                if int(page) < int(self.totalPagesLabel.text()):
+                    self.pageSelect.setText(str(int(page) + 1))
+                    self.clearSearchResults()
+                    self.addSearchResults(self.filterHelper(self.sortSelect.currentIndex()))
+
+        def submitPage():
+            if self.pageSelect.text() != "":
+                page = int(self.pageSelect.text())
+                if page < 1:
+                    self.pageSelect.setText("1")
+                if page > int(self.totalPagesLabel.text()):
+                    self.pageSelect.setText(self.totalPagesLabel.text())
+
+
+        self.prevPage.clicked.connect(prevPage)
+        self.nextPage.clicked.connect(nextPage)
+        self.pageSelect.returnPressed.connect(submitPage)
+
     def clearSearchResults(self):
+        start = time.time()
         # remove search results starting from last one
         for i in reversed(range(self.searchResultsVLayout.count())):
             self.searchResultsVLayout.itemAt(i).widget().setParent(None)
-
+        end = time.time()
+        executionTime = end - start
+        print("clearSearchResults Execution Time: ", executionTime)
     def addSearchResults(self, results):
-        for r in results:
-            self.searchResultsVLayout.addWidget(r)
+        start = time.time()
+        limit = int(self.resultLimitDropDown.currentText())
+        startingIndex = (int(self.pageSelect.text()) - 1) * limit
+        for i in range(startingIndex, startingIndex + limit):
+            if i == len(results):
+                break
+            self.searchResultsVLayout.addWidget(results[i])
+        end = time.time()
+        executionTime = end - start
+        print("addSearchResults Execution Time: ", executionTime)
 
     def getResults(self, order):
 
@@ -313,7 +389,11 @@ class database_options(windowWithToolbar):
         query = str(self.searchBar.text()).translate(str.maketrans('', '', string.punctuation))
         if query != '':
             self.clearSearchResults()
+            start = time.time()
             results = search(query)
+            end = time.time()
+            executionTime = end - start
+            print("Search Execution Time: ", executionTime)
             if results:
                 self.savedResults = results
                 self.addSearchResults(self.filterHelper(order))
@@ -329,6 +409,7 @@ class database_options(windowWithToolbar):
             self.addSearchResults(self.filterHelper(order))
 
     def filterHelper(self, order):
+        start = time.time()
         if self.newResults:
             self.savedResultObjects.clear()
             for i in self.savedResults:
@@ -341,8 +422,18 @@ class database_options(windowWithToolbar):
         if self.filterList:
             results = [k for k, v in self.savedResultObjects[order].items() if (v in self.filterList)]
         else:
-            return [k for k in self.savedResultObjects[order]]
+            results = [k for k in self.savedResultObjects[order]]
 
+        perPage = int(self.resultLimitDropDown.currentText())
+        numOfResults = len(results)
+        modResult = 0
+        if numOfResults % perPage != 0:
+            modResult = 1
+
+        self.totalPagesLabel.setText(str(int(numOfResults / perPage) + modResult))
+        end = time.time()
+        executionTime = end - start
+        print("filterHelper Execution Time: ", executionTime)
         return results
 
     def setFilterFlag(self, button):
