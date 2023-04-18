@@ -1,7 +1,7 @@
 import string
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox, QLineEdit, QSizeGrip, QSpacerItem
+from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox, QLineEdit, QSpacerItem, QSizePolicy
 
 from bulk.baseWindows import windowWithToolbar
 from bulk.colorPresets import colors
@@ -170,7 +170,7 @@ class database_options(windowWithToolbar):
         self.prevPage = QPushButton("<-")
         self.nextPage = QPushButton("->")
         self.totalPagesLabel = QLabel("1")
-        self.maxResultLabel = QLabel("of 0")
+        self.maxResultLabel = QLabel("of\t0")
         self.resultPos = QLabel("0 - 0")
         self.pageNavFrame = QFrame(self)
         self.pageNavLayout = QGridLayout(self.pageNavFrame)
@@ -307,6 +307,7 @@ class database_options(windowWithToolbar):
         self.pageSelect.setFixedWidth(30)
         self.prevPage.setFixedWidth(30)
         self.nextPage.setFixedWidth(30)
+        self.maxResultLabel.setFixedWidth(75)
 
         of = QLabel("of")
         of.setMargin(5)
@@ -352,17 +353,19 @@ class database_options(windowWithToolbar):
         self.resultLimitDropDown.currentIndexChanged.connect(lambda: self.pageSelect.setText("1"))
         self.resultLimitDropDown.currentIndexChanged.connect(self.updateResults)
 
+        self.pageNavLayout.setSpacing(10)
         self.pageNavLayout.setContentsMargins(5, 0, 0, 5)
         self.pageNavLayout.addWidget(resultPosLabel, 0, 0)
-        self.pageNavLayout.addWidget(self.resultPos, 0, 1, Qt.AlignmentFlag.AlignRight)
+        self.pageNavLayout.addWidget(self.resultPos, 0, 1)
         self.pageNavLayout.addWidget(self.maxResultLabel, 0, 2, Qt.AlignmentFlag.AlignLeft)
-        self.pageNavLayout.addItem(QSpacerItem(100, 20), 0, 3)
-        self.pageNavLayout.addWidget(self.prevPage, 0, 4)
-        self.pageNavLayout.addWidget(self.pageSelect, 0, 5)
-        self.pageNavLayout.addWidget(of, 0, 6)
-        self.pageNavLayout.addWidget(self.totalPagesLabel, 0, 7)
-        self.pageNavLayout.addWidget(self.nextPage, 0, 9)
-        self.pageNavLayout.addItem(QSpacerItem(100, 20), 0, 10, 1, 2)
+        self.pageNavLayout.addWidget(self.prevPage, 0, 3)
+        self.pageNavLayout.addWidget(self.pageSelect, 0, 4)
+        self.pageNavLayout.addWidget(of, 0, 5)
+        self.pageNavLayout.addWidget(self.totalPagesLabel, 0, 6)
+        self.pageNavLayout.addWidget(self.nextPage, 0, 7)
+
+        spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.pageNavLayout.addItem(spacer, 0, 8, 1, 2)
 
         self.pageNavFrame.setLayout(self.pageNavLayout)
 
@@ -391,7 +394,7 @@ class database_options(windowWithToolbar):
             toResultNum = fromResultNum + (self.numOfResults % limit) - 1
 
         self.resultPos.setText(f"{fromResultNum} - {toResultNum}")
-        self.maxResultLabel.setText(f"of {self.numOfResults}")
+        self.maxResultLabel.setText(f"of\t{self.numOfResults}")
 
 
     def clearSearchResults(self):
