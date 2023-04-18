@@ -379,30 +379,47 @@ class database_options(windowWithToolbar):
 
 
     def updateResults(self):
+        def showNoResults():
+            self.clearSearchResults()
+            self.savedResults.clear()
+            noResults = {'id': '',
+                         'lastName': 'No Results',
+                         'firstName': None,
+                         'description': '',
+                         'type': ''}
+            self.populateSearchResults([noResults])
+            self.pageSelect.setText("1")
+            self.totalPagesLabel.setText("1")
+
+
+
         results = self.filterHelper()
-        perPage = int(self.resultLimitDropDown.currentText())
-        numOfResults = len(results)
-        extraPage = 0
-        if (numOfResults % perPage != 0) or numOfResults == 0:
-            extraPage = 1
-        self.totalPagesLabel.setText(f"{int(numOfResults / perPage) + extraPage}")
+        if results:
+            perPage = int(self.resultLimitDropDown.currentText())
+            numOfResults = len(results)
+            extraPage = 0
+            if (numOfResults % perPage != 0) or numOfResults == 0:
+                extraPage = 1
+            self.totalPagesLabel.setText(f"{int(numOfResults / perPage) + extraPage}")
 
-        self.clearSearchResults()
-        self.populateSearchResults(results)
-        bar = self.scrollArea.verticalScrollBar()
-        bar.setValue(bar.minimum())
+            self.clearSearchResults()
+            self.populateSearchResults(results)
+            bar = self.scrollArea.verticalScrollBar()
+            bar.setValue(bar.minimum())
 
-        page = int(self.pageSelect.text())
-        limit = int(self.resultLimitDropDown.currentText())
-        fromResultNum = (page - 1) * limit + 1
+            page = int(self.pageSelect.text())
+            limit = int(self.resultLimitDropDown.currentText())
+            fromResultNum = (page - 1) * limit + 1
 
-        toResultNum = fromResultNum + limit - 1
+            toResultNum = fromResultNum + limit - 1
 
-        if page == int(self.totalPagesLabel.text()):
-            toResultNum = fromResultNum + (self.numOfResults % limit) - 1
+            if page == int(self.totalPagesLabel.text()):
+                toResultNum = fromResultNum + (self.numOfResults % limit) - 1
 
-        self.resultPos.setText(f"{fromResultNum} - {toResultNum}")
-        self.maxResultLabel.setText(f"of\t{self.numOfResults}")
+            self.resultPos.setText(f"{fromResultNum} - {toResultNum}")
+            self.maxResultLabel.setText(f"of\t{self.numOfResults}")
+        else:
+            showNoResults()
 
 
     def clearSearchResults(self):
@@ -427,29 +444,13 @@ class database_options(windowWithToolbar):
 
     def getResults(self):
         self.pageSelect.setText("1")
-        def showNoResults():
-            self.clearSearchResults()
-            noResults = {'id': '',
-                         'lastName': 'No Results',
-                         'firstName': None,
-                         'description': '',
-                         'type': ''}
-            self.populateSearchResults([noResults])
-            self.pageSelect.setText("1")
-            self.totalPagesLabel.setText("1")
-
         # text punctuation removed  here to avoid blank query (and any subsequent error resulting from it)
         query = str(self.searchBar.text()).translate(str.maketrans('', '', string.punctuation))
-        if query :
-            self.clearSearchResults()
-            results = search(query)
-            if results:
-                self.savedResults = results
-                self.updateResults()
-            else:
-                showNoResults()
-        else:
-            showNoResults()
+
+        self.clearSearchResults()
+        results = search(query)
+        self.savedResults = results
+        self.updateResults()
 
     def sortResults(self, order):
         self.resultOrder = order
@@ -468,12 +469,16 @@ class database_options(windowWithToolbar):
                 """
 
         order = self.sortSelect.currentIndex()
-        if self.filterList:
-            results = [k for k in self.savedResults[order] if (k['type'] in self.filterList)]
-        else:
-            results = [k for k in self.savedResults[order]]
+        results = []
+        if self.savedResults:
+            if self.savedResults[0] is not None:
+                if self.filterList:
+                    results = [k for k in self.savedResults[order] if (k['type'] in self.filterList)]
+                else:
+                    results = [k for k in self.savedResults[order]]
 
-        self.numOfResults = len(results)
+                self.numOfResults = len(results)
+
         return results
 
     def setFilterFlag(self, button):
