@@ -73,7 +73,7 @@ class SearchResult(QFrame):  # used to populate search results
         self.description = description
         self.type = resultType
 
-        # allows for things with only one name to use this class
+        # allows for entities with only one name to use this class
         if firstName is not None:
             nameLabel = ElidedLabel('{},  {}'.format(self.lastName, self.firstName))
         else:
@@ -101,12 +101,21 @@ class SearchResult(QFrame):  # used to populate search results
 
 
 class PanelButton(QPushButton):
+    """
+        A button class inherited from QPushButton.
+
+        Attributes:
+            flag (str): The type of panel button set by developer.
+
+        Methods:
+            QPushButton methods.
+        """
     def __init__(self, buttonText, flag):
         super().__init__(buttonText)
 
         self.flag = flag
         self.setCheckable(True)
-        self.clicked.connect(self.changeButtonColor)
+        self.clicked.connect(self._changeButtonColor)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -119,7 +128,7 @@ class PanelButton(QPushButton):
                            "QPushButton::pressed { background-color: %s; }" % (
                                colors["PUSH_BUTTON_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
 
-    def changeButtonColor(self):
+    def _changeButtonColor(self):
         if self.isChecked():
             self.setStyleSheet("QPushButton { color: %s;\n"
                                "background-color: %s;\n"
@@ -370,7 +379,7 @@ class database_options(windowWithToolbar):
 
 
     def updateResults(self):
-        results = self.filterHelper(self.sortSelect.currentIndex())
+        results = self.filterHelper()
         perPage = int(self.resultLimitDropDown.currentText())
         numOfResults = len(results)
         extraPage = 0
@@ -397,7 +406,12 @@ class database_options(windowWithToolbar):
 
 
     def clearSearchResults(self):
-        # remove search results starting from last one
+        """
+           Removes the search results starting from last one
+
+           Returns:
+               void
+           """
         for i in reversed(range(self.searchResultsVLayout.count())):
             self.searchResultsVLayout.itemAt(i).widget().setParent(None)
 
@@ -442,7 +456,18 @@ class database_options(windowWithToolbar):
         if self.savedResults is not None:
             self.updateResults()
 
-    def filterHelper(self, order):
+    def filterHelper(self):
+        """
+                Returns a list of result dictionaries if their type is in the filter list.
+
+                Parameters:
+                    none
+
+                Returns:
+                    List of dictionaries.
+                """
+
+        order = self.sortSelect.currentIndex()
         if self.filterList:
             results = [k for k in self.savedResults[order] if (k['type'] in self.filterList)]
         else:
