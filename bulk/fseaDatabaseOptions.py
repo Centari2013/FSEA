@@ -329,7 +329,6 @@ class database_options(windowWithToolbar):
                     self.pageSelect.setText(str(int(page) - 1))
                     self.updateResults()
 
-
         def _nextPage():
             page = self.pageSelect.text()
             if page != "":
