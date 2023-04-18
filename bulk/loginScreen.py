@@ -84,7 +84,7 @@ class authenticate(QMainWindow):
         self.exit_button = QPushButton()
         self.exit_button.clicked.connect(QCoreApplication.instance().quit)
         self.exit_button.setFixedSize(18, 18)
-        self.exit_button.setStyleSheet("QPushButton { border-image: url(bulk/assets/closeButton.png);"
+        self.exit_button.setStyleSheet("QPushButton { border-image: url(bulk/assets/exit.png);"
                                   "background-repeat: no-repeat; }"
                                   "QPushButton::pressed { background-color: #242830; }")
         self.exit_button.setFlat(True)

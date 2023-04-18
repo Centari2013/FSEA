@@ -1,15 +1,15 @@
-#from PyQt6.QtWidgets
-from PyQt6.QtCore import *
+import string
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox, QLineEdit, QSizeGrip, QSpacerItem
 
 from bulk.baseWindows import windowWithToolbar
 from bulk.colorPresets import colors
-from utils.searchEngine import search
-import string
 from bulk.infoWindow import employeeInfo
+from utils.searchEngine import search
 from utils.variables import (employeeType, specimenType, originType,
-                              missionType, departmentType)
+                             missionType, departmentType)
+
 
 class ElidedLabel(QLabel):
     def __init__(self, parent):
@@ -138,8 +138,6 @@ class database_options(windowWithToolbar):
     def __init__(self):
         super(database_options, self).__init__()
 
-        self.exitButton.clicked.connect(QCoreApplication.instance().quit)
-
         self.sidePanelFrame = QtWidgets.QFrame(self.centralWidget)
         self.sidePanelVLayout = QtWidgets.QVBoxLayout(self.sidePanelFrame)
         self.filterList = []
@@ -178,12 +176,7 @@ class database_options(windowWithToolbar):
         self.pageNavLayout = QGridLayout(self.pageNavFrame)
         self._initPageNav()
 
-        self.footerFrame = QtWidgets.QFrame(self.centralWidget)
-        self.footerLayout = QtWidgets.QGridLayout(self.footerFrame)
-
-        self._initFooter()
-
-        self.setCentralWidget(self.centralWidget)
+        self.initFooter(self.pageNavFrame)
 
         self.savedResults = None
         self.resultOrder = 0
@@ -227,6 +220,9 @@ class database_options(windowWithToolbar):
         self.originButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.originButton.setObjectName("originButton")
         self.sidePanelVLayout.addWidget(self.originButton)
+
+        self.sidePanelVLayout.addStretch()
+
         self.primaryGridLayout.addWidget(self.sidePanelFrame, 1, 0, 1, 1)
 
     def _initSearchFrame(self):
@@ -370,20 +366,6 @@ class database_options(windowWithToolbar):
 
         self.pageNavFrame.setLayout(self.pageNavLayout)
 
-
-    def _initFooter(self):
-        self.footerFrame.setMaximumSize(QtCore.QSize(16777215, 30))
-        self.footerFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.footerFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.footerFrame.setObjectName("footerFrame")
-
-        self.footerLayout.setContentsMargins(0, 0, 0, 0)
-        self.footerLayout.setObjectName("footerLayout")
-
-        self.footerLayout.addWidget(self.pageNavFrame, 0, 0, Qt.AlignmentFlag.AlignCenter)
-        self.footerLayout.addWidget(QSizeGrip(self), 0, 1, Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignRight)
-
-        self.primaryGridLayout.addWidget(self.footerFrame, 3, 1)
 
     def updateResults(self):
         results = self.filterHelper(self.sortSelect.currentIndex())
