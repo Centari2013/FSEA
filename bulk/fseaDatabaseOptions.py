@@ -1,15 +1,17 @@
-from PyQt6.QtWidgets import *
+#from PyQt6.QtWidgets
 from PyQt6.QtCore import *
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox, QLineEdit, QSizeGrip, QSpacerItem
+
 from bulk.baseWindows import windowWithToolbar
-from bulk.colorPresets import *
+from bulk.colorPresets import colors
 from utils.searchEngine import search
 import string
 from bulk.infoWindow import employeeInfo
-from utils.variables import employeeType, specimenType, originType, missionType, departmentType
-import time
+from utils.variables import (employeeType, specimenType, originType,
+                              missionType, departmentType)
 
-class elidedLabel(QLabel):
+class ElidedLabel(QLabel):
     def __init__(self, parent):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
@@ -22,7 +24,7 @@ class elidedLabel(QLabel):
         painter.drawText(self.rect(), self.alignment(), elided)
 
 
-class idLabel(QLabel):  # used to emulate hyperlink on searchResults
+class IdLabel(QLabel):  # used to emulate hyperlink on searchResults
     def __init__(self, parent):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
@@ -48,9 +50,9 @@ class idLabel(QLabel):  # used to emulate hyperlink on searchResults
         self.setFont(f)
 
 
-class searchResult(QFrame):  # used to populate search results
-    def __init__(self, parent=None, ID=None, type=None, lastName=None, firstName=None, description=None):
-        super(searchResult, self).__init__(parent=None)
+class SearchResult(QFrame):  # used to populate search results
+    def __init__(self, parent=None, ID=None, resultType=None, lastName=None, firstName=None, description=None):
+        super(SearchResult, self).__init__(parent=None)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -69,20 +71,20 @@ class searchResult(QFrame):  # used to populate search results
         self.lastName = lastName
         self.firstName = firstName
         self.description = description
-        self.type = type
+        self.type = resultType
 
         # allows for things with only one name to use this class
         if firstName is not None:
-            nameLabel = elidedLabel('{},  {}'.format(self.lastName, self.firstName))
+            nameLabel = ElidedLabel('{},  {}'.format(self.lastName, self.firstName))
         else:
-            nameLabel = elidedLabel(self.lastName)
+            nameLabel = ElidedLabel(self.lastName)
 
-        self.idLabel = idLabel(self.id)
+        self.idLabel = IdLabel(self.id)
         self.idLabel.mousePressEvent = self.openInfoWindow
 
         self.gridLayout.addWidget(self.idLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
         self.gridLayout.addWidget(nameLabel, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(elidedLabel(self.description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
+        self.gridLayout.addWidget(ElidedLabel(self.description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
         self.gridLayout.setColumnStretch(0, 1)
         self.gridLayout.setColumnStretch(1, 20)
@@ -91,14 +93,14 @@ class searchResult(QFrame):  # used to populate search results
         self.setLayout(self.gridLayout)
         self.Window = None
 
-    def openInfoWindow(self, QMouseEvent):
+    def openInfoWindow(self):
         if self.type == employeeType:
             self.Window = employeeInfo(self.id)
 
         self.Window.show()
 
 
-class panelButton(QPushButton):
+class PanelButton(QPushButton):
     def __init__(self, buttonText, flag):
         super().__init__(buttonText)
 
@@ -115,7 +117,7 @@ class panelButton(QPushButton):
                            "background-color: %s;\n"
                            "border: none; }\n"
                            "QPushButton::pressed { background-color: %s; }" % (
-                               push_button_color, push_button_pressed_color))
+                               colors["PUSH_BUTTON_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
 
     def changeButtonColor(self):
         if self.isChecked():
@@ -123,114 +125,146 @@ class panelButton(QPushButton):
                                "background-color: %s;\n"
                                "border: none; }\n"
                                "QPushButton::pressed { background-color: %s; }" % (
-                                   push_button_text_color, push_button_pressed_color, push_button_pressed_color))
+                                   colors["PUSH_BUTTON_TEXT_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
         else:
             self.setStyleSheet("QPushButton { color: %s;\n"
                                "background-color: %s;\n"
                                "border: none; }\n"
                                "QPushButton::pressed { background-color: %s; }" % (
-                                   push_button_text_color, push_button_color, push_button_pressed_color))
+                                   colors["PUSH_BUTTON_TEXT_COLOR"], colors["PUSH_BUTTON_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
 
 
 class database_options(windowWithToolbar):
     def __init__(self):
-        super().__init__()
+        super(database_options, self).__init__()
+
         self.exitButton.clicked.connect(QCoreApplication.instance().quit)
 
-        self.panelFrame = QtWidgets.QFrame(self.centralWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.panelFrame.sizePolicy().hasHeightForWidth())
-
-        self.panelFrame.setSizePolicy(sizePolicy)
-        self.panelFrame.setStyleSheet("background-color: %s;" % frame_color)
-        self.panelFrame.setObjectName("leftPanelFrame")
-
-        self.panelVLayout = QtWidgets.QVBoxLayout(self.panelFrame)
-        self.panelVLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
-        self.panelVLayout.setContentsMargins(9, 0, 9, 9)
-        self.panelVLayout.setSpacing(9)
-        self.panelVLayout.setObjectName("panelVLayout")
-
+        self.sidePanelFrame = QtWidgets.QFrame(self.centralWidget)
+        self.sidePanelVLayout = QtWidgets.QVBoxLayout(self.sidePanelFrame)
         self.filterList = []
 
-        self.employeeButton = panelButton("Employees", employeeType)
+        self.employeeButton = PanelButton("Employees", employeeType)
+        self.specimenButton = PanelButton("Specimens", specimenType)
+        self.missionButton = PanelButton("Missions", missionType)
+        self.departmentButton = PanelButton("Departments", departmentType)
+        self.originButton = PanelButton("Origins", originType)
+        self._initSidePanel()
+
+        self.searchFrame = QtWidgets.QFrame(self.centralWidget)
+        self.searchGridLayout = QtWidgets.QGridLayout(self.searchFrame)
+        self.searchButton = QtWidgets.QPushButton("Search")
+        self.searchBar = QtWidgets.QLineEdit(self.searchFrame)
+        self.sortFrame = QFrame(self)
+        self.sortGridLayout = QGridLayout(self.sortFrame)
+        self.sortSelect = QtWidgets.QComboBox()
+        self.resultLimitDropDown = QComboBox(self)
+        self._initSearchFrame()
+
+        self.scrollArea = QtWidgets.QScrollArea(self.searchFrame)
+        self.scrollAreaContents = QtWidgets.QWidget()
+        self.scrollAreaContentsFrame = QtWidgets.QFrame(self.scrollAreaContents)
+        self.scrollAreaVLayout = QtWidgets.QVBoxLayout(self.scrollAreaContents) # vertical layout for scrollAreaContentsFrame
+        self.searchResultsVLayout = QtWidgets.QVBoxLayout(self.scrollAreaContentsFrame) # vertical layout for search results
+        self._initSearchResultsArea()
+
+        self.pageSelect = QLineEdit()
+        self.prevPage = QPushButton("<-")
+        self.nextPage = QPushButton("->")
+        self.totalPagesLabel = QLabel("1")
+        self.maxResultLabel = QLabel("of 0")
+        self.resultPos = QLabel("0 - 0")
+        self.pageNavFrame = QFrame(self)
+        self.pageNavLayout = QGridLayout(self.pageNavFrame)
+        self._initPageNav()
+
+        self.footerFrame = QtWidgets.QFrame(self.centralWidget)
+        self.footerLayout = QtWidgets.QGridLayout(self.footerFrame)
+
+        self._initFooter()
+
+        self.setCentralWidget(self.centralWidget)
+
+        self.savedResults = None
+        self.resultOrder = 0
+        self.numOfResults = None
+
+    def _initSidePanel(self):
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sidePanelFrame.sizePolicy().hasHeightForWidth())
+
+        self.sidePanelFrame.setSizePolicy(sizePolicy)
+        self.sidePanelFrame.setStyleSheet("background-color: %s;" % colors["FRAME_COLOR"])
+        self.sidePanelFrame.setObjectName("leftPanelFrame")
+
+        self.sidePanelVLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetMinimumSize)
+        self.sidePanelVLayout.setSpacing(9)
+        self.sidePanelVLayout.setObjectName("panelVLayout")
+
         self.employeeButton.clicked.connect(lambda: self.setFilterFlag(self.employeeButton))
         self.employeeButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.employeeButton.setObjectName("employeeButton")
-        self.panelVLayout.addWidget(self.employeeButton)
+        self.sidePanelVLayout.addWidget(self.employeeButton)
 
-        self.specimenButton = panelButton("Specimens", specimenType)
         self.specimenButton.clicked.connect(lambda: self.setFilterFlag(self.specimenButton))
         self.specimenButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.specimenButton.setObjectName("specimenButton")
-        self.panelVLayout.addWidget(self.specimenButton)
+        self.sidePanelVLayout.addWidget(self.specimenButton)
 
-        self.missionButton = panelButton("Missions", missionType)
         self.missionButton.clicked.connect(lambda: self.setFilterFlag(self.missionButton))
         self.missionButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.missionButton.setObjectName("missionButton")
-        self.panelVLayout.addWidget(self.missionButton)
+        self.sidePanelVLayout.addWidget(self.missionButton)
 
-        self.departmentButton = panelButton("Departments", departmentType)
         self.departmentButton.clicked.connect(lambda: self.setFilterFlag(self.departmentButton))
         self.departmentButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.departmentButton.setObjectName("departmentButton")
-        self.panelVLayout.addWidget(self.departmentButton)
+        self.sidePanelVLayout.addWidget(self.departmentButton)
 
-        self.originButton = panelButton("Origins", originType)
         self.originButton.clicked.connect(lambda: self.setFilterFlag(self.originButton))
         self.originButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.originButton.setObjectName("originButton")
-        self.panelVLayout.addWidget(self.originButton)
+        self.sidePanelVLayout.addWidget(self.originButton)
+        self.primaryGridLayout.addWidget(self.sidePanelFrame, 1, 0, 1, 1)
 
-        self.primaryGridLayout.addWidget(self.panelFrame, 1, 0, 1, 1)
-        self.searchFrame = QtWidgets.QFrame(self.centralWidget)
+    def _initSearchFrame(self):
         self.searchFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.searchFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.searchFrame.setObjectName("searchFrame")
 
-        self.searchGridLayout = QtWidgets.QGridLayout(self.searchFrame)
         self.searchGridLayout.setObjectName("searchGridLayout")
 
-        self.searchButton = QtWidgets.QPushButton("Search")
         self.searchButton.setMinimumSize(QtCore.QSize(50, 20))
         self.searchButton.setStyleSheet("QPushButton { color: %s;\n"
                                         "background-color: %s;\n"
                                         "border: none; }\n"
                                         "QPushButton::pressed { background-color: %s; }" % (
-                                            push_button_text_color, search_button_color, push_button_color))
+                                            colors["PUSH_BUTTON_TEXT_COLOR"], colors["SEARCH_BUTTON_COLOR"],
+                                            colors["PUSH_BUTTON_COLOR"]))
         self.searchButton.setObjectName("searchButton")
-        self.searchButton.clicked.connect(lambda: self.getResults(self.sortSelect.currentIndex()))
+        self.searchButton.clicked.connect(self.getResults)
         self.searchGridLayout.addWidget(self.searchButton, 0, 1, 1, 2)
 
-        self.searchBar = QtWidgets.QLineEdit(self.searchFrame)
-        self.searchBar.setStyleSheet("background-color: %s;" % search_bar_color)
+        self.searchBar.setStyleSheet("background-color: %s;" % colors["SEARCH_BAR_COLOR"])
         self.searchBar.setObjectName("searchBar")
         self.searchBar.returnPressed.connect(self.searchButton.click)
         self.searchGridLayout.addWidget(self.searchBar, 0, 0, 1, 1)
 
-        self.sortFrame = QFrame(self)
-        self.sortGridLayout = QGridLayout(self.sortFrame)
-
-        self.sortLabel = QLabel('Sort by')
-        self.sortGridLayout.addWidget(self.sortLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-
-        self.sortSelect = QtWidgets.QComboBox()
+        sortLabel = QLabel('Sort by')
+        self.sortGridLayout.addWidget(sortLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
 
         self.sortSelect.addItem('Relevance')
         self.sortSelect.addItem('Alphabet')
-        self.sortSelect.addItem(('Alphabet DESC'))
+        self.sortSelect.addItem('Alphabet DESC')
         self.sortSelect.currentIndexChanged.connect(self.sortResults)
         self.sortGridLayout.addWidget(self.sortSelect, 0, 1, 1, 3, Qt.AlignmentFlag.AlignLeft)
 
-        self.resultLimitDropDown = QComboBox(self)
         self.resultLimitDropDown.addItems(['10', '25', '50'])
         self.sortGridLayout.addWidget(QLabel("Per Page"), 0, 2)
         self.sortGridLayout.addWidget(self.resultLimitDropDown, 0, 3, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
-        self.sortGridLayout.setColumnStretch(0, 0)
         self.sortGridLayout.setColumnStretch(1, 100)
 
         self.sortFrame.setLayout(self.sortGridLayout)
@@ -238,25 +272,19 @@ class database_options(windowWithToolbar):
         self.searchGridLayout.addWidget(self.sortFrame)
         self.searchGridLayout.setVerticalSpacing(0)
 
-        self.scrollArea = QtWidgets.QScrollArea(self.searchFrame)
+    def _initSearchResultsArea(self):
         self.scrollArea.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaContents = QtWidgets.QWidget()
         self.scrollAreaContents.setEnabled(True)
         self.scrollAreaContents.setGeometry(QtCore.QRect(0, 0, 395, 660))
         self.scrollAreaContents.setMinimumSize(QtCore.QSize(395, 0))
         self.scrollAreaContents.setObjectName("scrollAreaWidgetContents")
 
-        # vertical layout for scrollAreaContentsFrame
-        self.scrollAreaVLayout = QtWidgets.QVBoxLayout(self.scrollAreaContents)
         self.scrollAreaVLayout.setObjectName("scrollAreaVLayout")
-        self.scrollAreaContentsFrame = QtWidgets.QFrame(self.scrollAreaContents)
         self.scrollAreaContentsFrame.setObjectName("scrollAreaContentsFrame")
 
-        # vertical layout for search results
-        self.searchResultsVLayout = QtWidgets.QVBoxLayout(self.scrollAreaContentsFrame)
         self.searchResultsVLayout.setContentsMargins(0, 0, 0, 0)
         self.searchResultsVLayout.setSpacing(10)
         self.searchResultsVLayout.setObjectName("searchResultsVLayout")
@@ -267,101 +295,52 @@ class database_options(windowWithToolbar):
         self.scrollAreaVLayout.addWidget(self.scrollAreaContentsFrame, 0, QtCore.Qt.AlignmentFlag.AlignTop)
 
         self.primaryGridLayout.addWidget(self.searchFrame, 1, 1, 2, 1)
-        self.buttonSpacerFrame = QtWidgets.QFrame(self.centralWidget)
-        self.buttonSpacerFrame.setEnabled(True)
-        self.buttonSpacerFrame.setStyleSheet(" background-color: %s;" % frame_color)
-        self.buttonSpacerFrame.setObjectName("buttonSpacerFrame")
+        buttonSpacerFrame = QtWidgets.QFrame(self.centralWidget)
+        buttonSpacerFrame.setEnabled(True)
+        buttonSpacerFrame.setStyleSheet(" background-color: %s;" % colors["FRAME_COLOR"])
+        buttonSpacerFrame.setObjectName("buttonSpacerFrame")
+        self.primaryGridLayout.addWidget(buttonSpacerFrame, 2, 0, 2, 1)
 
-        self.primaryGridLayout.addWidget(self.buttonSpacerFrame, 2, 0, 2, 1)
+    def _initPageNav(self):
 
-
-
-        self.pageSelect = QLineEdit()
         validator = QtGui.QRegularExpressionValidator(QtCore.QRegularExpression("^[0-9]*$"), self)
         self.pageSelect.setValidator(validator)
         self.pageSelect.setText("1")
         self.pageSelect.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        self.pageSelect.setFixedWidth(30)
 
-        self.prevPage = QPushButton("<-")
+        self.pageSelect.setFixedWidth(30)
         self.prevPage.setFixedWidth(30)
-        self.nextPage = QPushButton("->")
         self.nextPage.setFixedWidth(30)
 
         of = QLabel("of")
         of.setMargin(5)
         of.setFixedWidth(25)
-        self.totalPagesLabel = QLabel("1")
+
         self.totalPagesLabel.setFixedWidth(25)
         self.totalPagesLabel.setMargin(5)
-        self.resultPos = QLabel("0 - 0")
+
         self.resultPos.setFixedWidth(50)
-        self.pageNavFrame = QFrame(self)
-        self.pageNavLayout = QGridLayout(self.pageNavFrame)
-        self.resultPosLabel = QLabel("Results")
-        self.resultPosLabel.setMargin(5)
-        self.resultPosLabel.setFixedWidth(50)
 
-        self.initPageNav()
+        resultPosLabel = QLabel("Results")
+        resultPosLabel.setMargin(5)
+        resultPosLabel.setFixedWidth(50)
 
-        self.pageNavLayout.setContentsMargins(5, 0, 0, 5)
-        self.pageNavLayout.addWidget(self.resultPosLabel, 0, 0)
-        self.pageNavLayout.addWidget(self.resultPos, 0, 1)
-        self.pageNavLayout.addItem(QSpacerItem(100, 20), 0, 2)
-        self.pageNavLayout.addWidget(self.prevPage, 0, 3)
-        self.pageNavLayout.addWidget(self.pageSelect, 0, 4)
-        self.pageNavLayout.addWidget(of, 0, 5)
-        self.pageNavLayout.addWidget(self.totalPagesLabel, 0, 6)
-        self.pageNavLayout.addWidget(self.nextPage, 0, 8)
-        self.pageNavLayout.addItem(QSpacerItem(100, 20), 0, 9, 1, 2)
-
-        self.pageNavFrame.setLayout(self.pageNavLayout)
-
-        self.footerFrame = QtWidgets.QFrame(self.centralWidget)
-        self.footerFrame.setMaximumSize(QtCore.QSize(16777215, 30))
-        self.footerFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
-        self.footerFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
-        self.footerFrame.setObjectName("footerFrame")
-
-        self.footerLayout = QtWidgets.QGridLayout(self.footerFrame)
-        self.footerLayout.setContentsMargins(0, 0, 0, 0)
-        self.footerLayout.setObjectName("footerLayout")
-
-        self.sizeGrip = QSizeGrip(self)
-        self.footerLayout.addWidget(self.pageNavFrame, 0, 0, Qt.AlignmentFlag.AlignCenter)
-        self.footerLayout.addWidget(self.sizeGrip, 0, 1, Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignRight)
-
-        self.primaryGridLayout.addWidget(self.footerFrame, 3, 1)
-        self.setCentralWidget(self.centralWidget)
-
-        self.savedResults = None
-        self.resultOrder = 0
-
-
-    def initPageNav(self):
-        def updateResults():
-            self.clearSearchResults()
-            self.addSearchResults(self.filterHelper(self.sortSelect.currentIndex()))
-            bar = self.scrollArea.verticalScrollBar()
-            bar.setValue(bar.minimum())
-
-            #TODO: add "Resuluts # - # of #" functionality
-        def prevPage():
+        def _prevPage():
             page = self.pageSelect.text()
             if page != "":
                 if int(page) > 1:
                     self.pageSelect.setText(str(int(page) - 1))
-                    updateResults()
+                    self.updateResults()
 
 
-        def nextPage():
+        def _nextPage():
             page = self.pageSelect.text()
             if page != "":
                 if int(page) < int(self.totalPagesLabel.text()):
                     self.pageSelect.setText(str(int(page) + 1))
-                    updateResults()
+                    self.updateResults()
 
-        def submitPage():
+        def _submitPage():
             if self.pageSelect.text() != "":
                 page = int(self.pageSelect.text())
                 if page < 1:
@@ -369,40 +348,87 @@ class database_options(windowWithToolbar):
                 if page > int(self.totalPagesLabel.text()):
                     self.pageSelect.setText(self.totalPagesLabel.text())
 
-                updateResults()
+                self.updateResults()
+
+        self.prevPage.clicked.connect(_prevPage)
+        self.nextPage.clicked.connect(_nextPage)
+        self.pageSelect.returnPressed.connect(_submitPage)
+        self.resultLimitDropDown.currentIndexChanged.connect(lambda: self.pageSelect.setText("1"))
+        self.resultLimitDropDown.currentIndexChanged.connect(self.updateResults)
+
+        self.pageNavLayout.setContentsMargins(5, 0, 0, 5)
+        self.pageNavLayout.addWidget(resultPosLabel, 0, 0)
+        self.pageNavLayout.addWidget(self.resultPos, 0, 1, Qt.AlignmentFlag.AlignRight)
+        self.pageNavLayout.addWidget(self.maxResultLabel, 0, 2, Qt.AlignmentFlag.AlignLeft)
+        self.pageNavLayout.addItem(QSpacerItem(100, 20), 0, 3)
+        self.pageNavLayout.addWidget(self.prevPage, 0, 4)
+        self.pageNavLayout.addWidget(self.pageSelect, 0, 5)
+        self.pageNavLayout.addWidget(of, 0, 6)
+        self.pageNavLayout.addWidget(self.totalPagesLabel, 0, 7)
+        self.pageNavLayout.addWidget(self.nextPage, 0, 9)
+        self.pageNavLayout.addItem(QSpacerItem(100, 20), 0, 10, 1, 2)
+
+        self.pageNavFrame.setLayout(self.pageNavLayout)
 
 
-        self.prevPage.clicked.connect(prevPage)
-        self.nextPage.clicked.connect(nextPage)
-        self.pageSelect.returnPressed.connect(submitPage)
-        self.resultLimitDropDown.currentIndexChanged.connect(updateResults)
+    def _initFooter(self):
+        self.footerFrame.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.footerFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
+        self.footerFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
+        self.footerFrame.setObjectName("footerFrame")
+
+        self.footerLayout.setContentsMargins(0, 0, 0, 0)
+        self.footerLayout.setObjectName("footerLayout")
+
+        self.footerLayout.addWidget(self.pageNavFrame, 0, 0, Qt.AlignmentFlag.AlignCenter)
+        self.footerLayout.addWidget(QSizeGrip(self), 0, 1, Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignRight)
+
+        self.primaryGridLayout.addWidget(self.footerFrame, 3, 1)
+
+    def updateResults(self):
+        results = self.filterHelper(self.sortSelect.currentIndex())
+        perPage = int(self.resultLimitDropDown.currentText())
+        numOfResults = len(results)
+        extraPage = 0
+        if (numOfResults % perPage != 0) or numOfResults == 0:
+            extraPage = 1
+        self.totalPagesLabel.setText(f"{int(numOfResults / perPage) + extraPage}")
+
+        self.clearSearchResults()
+        self.populateSearchResults(results)
+        bar = self.scrollArea.verticalScrollBar()
+        bar.setValue(bar.minimum())
+
+        page = int(self.pageSelect.text())
+        limit = int(self.resultLimitDropDown.currentText())
+        fromResultNum = (page - 1) * limit + 1
+
+        toResultNum = fromResultNum + limit - 1
+
+        if page == int(self.totalPagesLabel.text()):
+            toResultNum = fromResultNum + (self.numOfResults % limit) - 1
+
+        self.resultPos.setText(f"{fromResultNum} - {toResultNum}")
+        self.maxResultLabel.setText(f"of {self.numOfResults}")
+
 
     def clearSearchResults(self):
-        start = time.time()
         # remove search results starting from last one
         for i in reversed(range(self.searchResultsVLayout.count())):
             self.searchResultsVLayout.itemAt(i).widget().setParent(None)
-        end = time.time()
-        executionTime = end - start
-        print("clearSearchResults Execution Time: ", executionTime)
-    def addSearchResults(self, results):
-        start = time.time()
+
+    def populateSearchResults(self, results):
         limit = int(self.resultLimitDropDown.currentText())
         startingIndex = (int(self.pageSelect.text()) - 1) * limit
-        for i in range(startingIndex, startingIndex + limit):
-            if i == len(results):
-                break
-
-            r = results[i]
-            obj = searchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'], description=' '.join(
-                        r['description'].split()), type=r['type'])
+        search_results = [
+            SearchResult(ID=r['id'], lastName=r['lastName'], firstName=r['firstName'], description=' '.join(
+                r['description'].split()), resultType=r['type']) for i, r in enumerate(results) if
+            startingIndex <= i < (startingIndex + limit) and i < len(results)]
+        for obj in search_results:
             self.searchResultsVLayout.addWidget(obj)
-        end = time.time()
-        executionTime = end - start
-        print("addSearchResults Execution Time: ", executionTime)
 
-    def getResults(self, order):
-
+    def getResults(self):
+        self.pageSelect.setText("1")
         def showNoResults():
             self.clearSearchResults()
             noResults = {'id': '',
@@ -410,23 +436,18 @@ class database_options(windowWithToolbar):
                          'firstName': None,
                          'description': '',
                          'type': ''}
-            self.addSearchResults([noResults])
+            self.populateSearchResults([noResults])
             self.pageSelect.setText("1")
             self.totalPagesLabel.setText("1")
 
-        self.newResults = True
         # text punctuation removed  here to avoid blank query (and any subsequent error resulting from it)
         query = str(self.searchBar.text()).translate(str.maketrans('', '', string.punctuation))
         if query :
             self.clearSearchResults()
-            start = time.time()
             results = search(query)
-            end = time.time()
-            executionTime = end - start
-            print("Search Execution Time: ", executionTime)
             if results:
                 self.savedResults = results
-                self.addSearchResults(self.filterHelper(order))
+                self.updateResults()
             else:
                 showNoResults()
         else:
@@ -435,26 +456,15 @@ class database_options(windowWithToolbar):
     def sortResults(self, order):
         self.resultOrder = order
         if self.savedResults is not None:
-            self.clearSearchResults()
-            self.addSearchResults(self.filterHelper(order))
+            self.updateResults()
 
     def filterHelper(self, order):
-        start = time.time()
         if self.filterList:
             results = [k for k in self.savedResults[order] if (k['type'] in self.filterList)]
         else:
             results = [k for k in self.savedResults[order]]
 
-        perPage = int(self.resultLimitDropDown.currentText())
-        numOfResults = len(results)
-        modResult = 0
-        if numOfResults % perPage != 0:
-            modResult = 1
-
-        self.totalPagesLabel.setText(str(int(numOfResults / perPage) + modResult))
-        end = time.time()
-        executionTime = end - start
-        print("filterHelper Execution Time: ", executionTime)
+        self.numOfResults = len(results)
         return results
 
     def setFilterFlag(self, button):

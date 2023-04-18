@@ -1,7 +1,8 @@
-frame_color = '#31353d'
-search_button_color = '#6B7482'
-search_bar_color = 'white'
-push_button_text_color = 'white'
-push_button_color = '#262829'
-push_button_pressed_color = '#111314'
-
+colors = {
+    "FRAME_COLOR": "#31353D",
+    "SEARCH_BUTTON_COLOR": "#6B7482",
+    "SEARCH_BAR_COLOR": "white",
+    "PUSH_BUTTON_TEXT_COLOR": "white",
+    "PUSH_BUTTON_COLOR": "#262829",
+    "PUSH_BUTTON_PRESSED_COLOR": "#111314",
+}
