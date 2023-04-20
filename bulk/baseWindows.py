@@ -4,8 +4,8 @@ from PyQt6.QtWidgets import *
 from bulk.colorPresets import colors
 
 class windowWithToolbar(QMainWindow):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent)
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.setWindowModality(Qt.WindowModality.NonModal)
         self.prevPos = None
@@ -47,11 +47,25 @@ class windowWithToolbar(QMainWindow):
         self.centralWidget.setLayout(self.primaryGridLayout)
         self.setCentralWidget(self.centralWidget)
 
+    def add_titlebar_button(self, button, click_function):
+        button.clicked.connect(click_function)
+        button.setMinimumSize(QtCore.QSize(18, 18))
+        button.setMaximumSize(QtCore.QSize(18, 18))
+        button.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        button.setStyleSheet("QPushButton { color: white;\n"
+                             "border-image: url(bulk/assets/%s.png);"
+                             "background-color: %s;\n"
+                             "border: none; }\n"
+                             "QPushButton::pressed { background-color: %s; }" % (
+                                 button.objectName().lower(), colors["TITLEBAR_BUTTON_COLOR"],
+                                 colors["PUSH_BUTTON_PRESSED_COLOR"]))
+        self.titlebarLayout.addWidget(button)
+
     def _titleBarInit(self):
         self.titlebarFrame.setMaximumSize(QtCore.QSize(16777215, 30))
         self.titlebarFrame.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.titlebarFrame.setStyleSheet("background-color: #31353D;\n"
-                                         "color: white;")
+        self.titlebarFrame.setStyleSheet("background-color: {};\n"
+                                         "color: white;".format(colors["FRAME_COLOR"]))
         self.titlebarFrame.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.titlebarFrame.setObjectName("titlebarFrame")
 
@@ -66,39 +80,13 @@ class windowWithToolbar(QMainWindow):
                                            QtWidgets.QSizePolicy.Policy.Minimum)
         self.titlebarLayout.addItem(spacerItem)
 
-        self.minimizeButton.clicked.connect(self.showMinimized)
-        self.minimizeButton.setMinimumSize(QtCore.QSize(18, 18))
-        self.minimizeButton.setMaximumSize(QtCore.QSize(18, 18))
-        self.minimizeButton.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.minimizeButton.setStyleSheet("QPushButton { color: white;\n"
-                                          "border-image: url(bulk/assets/minimize.png);"
-                                          "background-color: %s;\n"
-                                          "border: none; }\n"
-                                          "QPushButton::pressed { background-color: %s; }" % (colors["TITLEBAR_BUTTON_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
+        self.minimizeButton.setObjectName("minimize")
+        self.restoreButton.setObjectName("restore")
+        self.exitButton.setObjectName("exit")
 
-        self.titlebarLayout.addWidget(self.minimizeButton)
-
-        self.restoreButton.clicked.connect(self._minOrMax)
-        self.restoreButton.setMinimumSize(QtCore.QSize(18, 18))
-        self.restoreButton.setMaximumSize(QtCore.QSize(18, 18))
-        self.restoreButton.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.restoreButton.setStyleSheet("QPushButton { color: white;\n"
-                                          "border-image: url(bulk/assets/restore.png);"
-                                          "background-color: %s;\n"
-                                          "border: none; }\n"
-                                          "QPushButton::pressed { background-color: %s; }" % (colors["TITLEBAR_BUTTON_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
-        self.titlebarLayout.addWidget(self.restoreButton)
-
-        self.exitButton.clicked.connect(QCoreApplication.instance().quit)
-        self.exitButton.setMinimumSize(QtCore.QSize(18, 18))
-        self.exitButton.setMaximumSize(QtCore.QSize(18, 18))
-        self.exitButton.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.exitButton.setStyleSheet("QPushButton { color: white;\n"
-                                          "border-image: url(bulk/assets/exit.png);"
-                                          "background-color: %s;\n"
-                                          "border: none; }\n"
-                                          "QPushButton::pressed { background-color: %s; }" % (colors["TITLEBAR_BUTTON_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
-        self.titlebarLayout.addWidget(self.exitButton)
+        self.add_titlebar_button(self.minimizeButton, self.showMinimized)
+        self.add_titlebar_button(self.restoreButton, self._minOrMax)
+        self.add_titlebar_button(self.exitButton, self.close)
 
         self.primaryGridLayout.addWidget(self.titlebarFrame, 0, 0, 1 ,2)
 
@@ -124,7 +112,7 @@ class windowWithToolbar(QMainWindow):
     def _minOrMax(self):
         if self.isMaximized():
             self.showNormal()
-        elif not self.isMaximized():
+        else:
             self.showMaximized()
 
     def _toolbarClick(self, event):
@@ -138,6 +126,8 @@ class windowWithToolbar(QMainWindow):
             self.prevPos = event.globalPosition().toPoint()
 
     def _toolbarMove(self, event):
+
+        # ignore buttons when moving toolbar
         if self.exitButton.underMouse():
             pass
         elif self.minimizeButton.underMouse():

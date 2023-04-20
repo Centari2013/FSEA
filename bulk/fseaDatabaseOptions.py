@@ -12,11 +12,20 @@ from utils.variables import (employeeType, specimenType, originType,
 
 
 class ElidedLabel(QLabel):
+    """
+            A label class inherited from QLabel that allows for long text to appear elided
+            and when the label is expanded, more elided text is shown.
+
+            Added Attributes:
+                n/a
+
+            Added Methods:
+                n/a
+    """
     def __init__(self, parent):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
 
-    # allows for long text to appear elided; when label is expanded, more elided text is shown
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
         metrics = QtGui.QFontMetrics(self.font())
@@ -24,10 +33,32 @@ class ElidedLabel(QLabel):
         painter.drawText(self.rect(), self.alignment(), elided)
 
 
-class IdLabel(QLabel):  # used to emulate hyperlink on searchResults
-    def __init__(self, parent):
+class IdLabel(QLabel):
+    """
+            A label class inherited from QLabel that emulates a hyperlink when hovered over.
+
+            Added Attributes:
+                function (function): The function to be run after clicking the label.
+                args (tuple): The arguments to pass to function
+
+            Added Methods:
+                n/a
+    """
+    def __init__(self, parent, func, args: tuple = None):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
+        self.function = func
+        self.args = args
+
+    def mouseReleaseEvent(self, event):
+        if self.rect().contains(event.pos()):
+            if self.args is not None:
+                self.function(*self.args)
+            else:
+                self.function()
+        else:
+            pass
+
 
     def enterEvent(self, event):
         palette = self.palette()
@@ -50,8 +81,21 @@ class IdLabel(QLabel):  # used to emulate hyperlink on searchResults
         self.setFont(f)
 
 
-class SearchResult(QFrame):  # used to populate search results
-    def __init__(self, parent=None, ID=None, resultType=None, lastName=None, firstName=None, description=None):
+class SearchResult(QFrame):
+    """
+            A frame inherited from QFrame that is used to populate
+            search results
+
+            Added Attributes:
+                idLabel (IdLabel): The clickable QLabel
+                id (str): The ID you want to show in the idLabel.
+
+            Added Methods:
+                openInfoWindow(): opens window with more info on the search results
+
+            *Note: If firstName is None, then only the lastName will show on the frame.
+    """
+    def __init__(self, parent=None, ID: str=None, resultType=None, lastName=None, firstName=None, description=None):
         super(SearchResult, self).__init__(parent=None)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -65,51 +109,49 @@ class SearchResult(QFrame):  # used to populate search results
         self.setObjectName("search_label")
         self.setStyleSheet("border: 1px solid gray; padding: 6;")
 
-        self.gridLayout = QGridLayout(parent)
+        self._gridLayout = QGridLayout(parent)
 
         self.id = ID
-        self.lastName = lastName
-        self.firstName = firstName
-        self.description = description
-        self.type = resultType
+        self._lastName = lastName
+        self._firstName = firstName
+        self._description = description
+        self._type = resultType
 
         # allows for entities with only one name to use this class
         if firstName is not None:
-            nameLabel = ElidedLabel('{},  {}'.format(self.lastName, self.firstName))
+            nameLabel = ElidedLabel('{},  {}'.format(self._lastName, self._firstName))
         else:
-            nameLabel = ElidedLabel(self.lastName)
+            nameLabel = ElidedLabel(self._lastName)
 
-        self.idLabel = IdLabel(self.id)
-        self.idLabel.mousePressEvent = self.openInfoWindow
+        self.idLabel = IdLabel(self.id, self.openInfoWindow)
 
-        self.gridLayout.addWidget(self.idLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(nameLabel, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self.gridLayout.addWidget(ElidedLabel(self.description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
+        self._gridLayout.addWidget(self.idLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self._gridLayout.addWidget(nameLabel, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
+        self._gridLayout.addWidget(ElidedLabel(self._description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
 
-        self.gridLayout.setColumnStretch(0, 1)
-        self.gridLayout.setColumnStretch(1, 20)
-        self.gridLayout.setColumnStretch(2, 0)
+        self._gridLayout.setColumnStretch(0, 1)
+        self._gridLayout.setColumnStretch(1, 20)
+        self._gridLayout.setColumnStretch(2, 0)
 
-        self.setLayout(self.gridLayout)
-        self.Window = None
+        self.setLayout(self._gridLayout)
+        self._window = None
 
     def openInfoWindow(self):
-        if self.type == employeeType:
-            self.Window = employeeInfo(self.id)
-
-        self.Window.show()
+        if self._type == employeeType:
+            self._window = employeeInfo(self.id)
+            self._window.show()
 
 
 class PanelButton(QPushButton):
     """
         A button class inherited from QPushButton.
 
-        Attributes:
+        Added Attributes:
             flag (str): The type of panel button set by developer.
 
         Methods:
             QPushButton methods.
-        """
+    """
     def __init__(self, buttonText, flag):
         super().__init__(buttonText)
 
@@ -145,7 +187,7 @@ class PanelButton(QPushButton):
 
 class database_options(windowWithToolbar):
     def __init__(self):
-        super(database_options, self).__init__()
+        super(database_options, self).__init__(None)
 
         self.sidePanelFrame = QtWidgets.QFrame(self.centralWidget)
         self.sidePanelVLayout = QtWidgets.QVBoxLayout(self.sidePanelFrame)
@@ -191,6 +233,12 @@ class database_options(windowWithToolbar):
         self.resultOrder = 0
         self.numOfResults = None
 
+    def _add_filter_button(self, button):
+        button.clicked.connect(lambda: self.setFilterFlag(button))
+        button.clicked.connect(lambda: self.sortResults(self.resultOrder))
+        button.setObjectName(button.objectName())
+        self.sidePanelVLayout.addWidget(button)
+
     def _initSidePanel(self):
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -205,30 +253,17 @@ class database_options(windowWithToolbar):
         self.sidePanelVLayout.setSpacing(9)
         self.sidePanelVLayout.setObjectName("panelVLayout")
 
-        self.employeeButton.clicked.connect(lambda: self.setFilterFlag(self.employeeButton))
-        self.employeeButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.employeeButton.setObjectName("employeeButton")
-        self.sidePanelVLayout.addWidget(self.employeeButton)
-
-        self.specimenButton.clicked.connect(lambda: self.setFilterFlag(self.specimenButton))
-        self.specimenButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.specimenButton.setObjectName("specimenButton")
-        self.sidePanelVLayout.addWidget(self.specimenButton)
-
-        self.missionButton.clicked.connect(lambda: self.setFilterFlag(self.missionButton))
-        self.missionButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.missionButton.setObjectName("missionButton")
-        self.sidePanelVLayout.addWidget(self.missionButton)
-
-        self.departmentButton.clicked.connect(lambda: self.setFilterFlag(self.departmentButton))
-        self.departmentButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.departmentButton.setObjectName("departmentButton")
-        self.sidePanelVLayout.addWidget(self.departmentButton)
-
-        self.originButton.clicked.connect(lambda: self.setFilterFlag(self.originButton))
-        self.originButton.clicked.connect(lambda: self.sortResults(self.resultOrder))
         self.originButton.setObjectName("originButton")
-        self.sidePanelVLayout.addWidget(self.originButton)
+
+        self._add_filter_button(self.employeeButton)
+        self._add_filter_button(self.specimenButton)
+        self._add_filter_button(self.missionButton)
+        self._add_filter_button(self.departmentButton)
+        self._add_filter_button(self.originButton)
 
         self.sidePanelVLayout.addStretch()
 
@@ -428,7 +463,7 @@ class database_options(windowWithToolbar):
 
            Returns:
                void
-           """
+        """
         for i in reversed(range(self.searchResultsVLayout.count())):
             self.searchResultsVLayout.itemAt(i).widget().setParent(None)
 
@@ -443,7 +478,15 @@ class database_options(windowWithToolbar):
             self.searchResultsVLayout.addWidget(obj)
 
     def getResults(self):
-        self.pageSelect.setText("1")
+        """
+                   Removes the search results starting from last one
+
+                   Returns:
+                       void
+                """
+        self.pageSelect.setText("1") # stops pages from being out of bounds on new queries
+                                        # and takes user to first page of results
+
         # text punctuation removed  here to avoid blank query (and any subsequent error resulting from it)
         query = str(self.searchBar.text()).translate(str.maketrans('', '', string.punctuation))
 
@@ -462,11 +505,11 @@ class database_options(windowWithToolbar):
                 Returns a list of result dictionaries if their type is in the filter list.
 
                 Parameters:
-                    none
+                    n/a
 
                 Returns:
                     List of dictionaries.
-                """
+        """
 
         order = self.sortSelect.currentIndex()
         results = []
