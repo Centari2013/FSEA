@@ -1,7 +1,10 @@
+import sys
+
 from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from bulk.colorPresets import colors
+
 
 class windowWithToolbar(QMainWindow):
     def __init__(self, parent):
@@ -86,7 +89,7 @@ class windowWithToolbar(QMainWindow):
 
         self.add_titlebar_button(self.minimizeButton, self.showMinimized)
         self.add_titlebar_button(self.restoreButton, self._minOrMax)
-        self.add_titlebar_button(self.exitButton, self.close)
+        self.add_titlebar_button(self.exitButton, sys.exit)
 
         self.primaryGridLayout.addWidget(self.titlebarFrame, 0, 0, 1 ,2)
 
