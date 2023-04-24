@@ -5,7 +5,8 @@ from utils.encryption import encrypt
 
 '''''''''''''''''''''ALTER DATABASE'''''''''''''''''''''
 
-def addDepartment(name, depID, supervisorID=None, desc=None):
+
+def addDepartment(name, supervisorID=None, desc=None):
     con = None
     success = False
 
@@ -15,10 +16,10 @@ def addDepartment(name, depID, supervisorID=None, desc=None):
 
         cur = con.cursor()
 
-        cur.execute('INSERT INTO Department(depName, depID) VALUES(?,?)', (name, depID))
+        cur.execute('INSERT INTO Department(depName) VALUES(?);', (name,))
         con.commit()
         row = cur.lastrowid
-        updateDepartment(row, supervisorID, desc)
+        updateDepartment(row, supervisorID=supervisorID, desc=desc)
         success = True
 
     except Exception as e:
@@ -44,9 +45,9 @@ def updateDepartment(depID, name=None, supervisorID=None, desc=None):
 
         for a in args:
             if a[0] is not None:
-                cur.execute('''UPDATE Department
-                                   SET {} = ?
-                                   WHERE depID = ?'''.format(a[1]), (a[0], depID))
+                cur.execute(f'''UPDATE Department
+                                   SET {a[1]} = ?
+                                   WHERE depID = ?''', (a[0], depID))
         con.commit()
         success = True
 
@@ -124,7 +125,8 @@ def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
         return ID
 
 
-def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None, summary=None):
+def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None,
+                   summary=None):
     con = None
     success = False
 
@@ -258,8 +260,8 @@ def addOrigin(name, desc, missionID=None):
 
         cur.execute('INSERT INTO Origin(originID, name, description) VALUES (?,?,?)', (oid, name, desc))
         con.commit()
-        ID = cur.lastrowid
-        updateOrigin(ID, missionID=missionID)
+
+        updateOrigin(oid, missionID=missionID)
     except Exception as e:
         print(e)
 
@@ -333,8 +335,8 @@ def addMission(name, desc, originID=None, startDate=None, endDate=None, captainI
 
         cur.execute('INSERT INTO Mission(missionID, name, description) VALUES (?,?,?)', (mid, name, desc))
         con.commit()
-        ID = cur.lastrowid
-        updateMission(ID, name, originID, startDate, endDate, captainID, supervisorID)
+
+        updateMission(mid, name, originID, startDate, endDate, captainID, supervisorID)
     except Exception as e:
         print(e)
     finally:
@@ -415,7 +417,7 @@ def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLeve
         cur.execute('INSERT INTO SpecimenMedical(specimenID) VALUES (?)', (ID,))
         con.commit()
 
-        updateSpecimen(cur.lastrowid, originID, missionID, threatLevel, notes, description)
+        updateSpecimen(ID, originID, missionID, threatLevel, notes, description)
 
     except Exception as e:
         print(e)
@@ -459,7 +461,6 @@ def deleteSpecimen(specimenID):
 
         cur.execute('DELETE FROM Specimen WHERE specimenID = ?', (specimenID,))
         con.commit()
-        success = True
     except Exception as e:
         print(e)
     finally:

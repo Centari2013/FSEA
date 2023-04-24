@@ -1,12 +1,10 @@
 {
   "department": [
     {
-      "id": 1,
       "name": "ZERO",
       "description": "spec-ops"
     },
     {
-      "id": 2,
       "name": "EXEC",
       "description": "executive branch"
     }],

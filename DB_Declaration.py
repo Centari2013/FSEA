@@ -145,19 +145,17 @@ except:
 
 # create Department table
 cur.execute('''CREATE TABLE Department(
-                id              INTEGER,
                 depID           INTEGER UNIQUE NOT NULL,
                 depName         TEXT NOT NULL,
                 supervisorID    TEXT DEFAULT NULL,
                 description     TEXT DEFAULT '',
-                PRIMARY KEY (id)
+                PRIMARY KEY (depID)
                 );''')
 con.commit()
 print('Department table created\n')
 
 # create Employee table in db
-cur.execute('''CREATE TABLE Employee( 
-                id              INTEGER,
+cur.execute('''CREATE TABLE Employee(
                 empDep          INTEGER NOT NULL,
                 empID           TEXT NOT NULL UNIQUE,
                 designation     TEXT CHECK(designation IN {}) NOT NULL,
@@ -166,7 +164,7 @@ cur.execute('''CREATE TABLE Employee(
                 startDate       TEXT NOT NULL,
                 endDate         TEXT DEFAULT NULL,
                 summary         TEXT DEFAULT '',
-                PRIMARY KEY (id),
+                PRIMARY KEY (empID),
                 FOREIGN KEY (empDep) REFERENCES Department(depId)
                 );'''.format(designation))
 # save changes
@@ -203,18 +201,16 @@ print('Credentials table created\n')
 
 # create Origin table
 cur.execute('''CREATE TABLE Origin(
-                id          INTEGER,
                 originID    TEXT NOT NULL UNIQUE,
                 name        TEXT NOT NULL,
                 missionID   TEXT DEFAULT 'MISSION-PENDING',
                 description TEXT NOT NULL,
-                PRIMARY KEY (id)
+                PRIMARY KEY (originID)
                 );''')
 con.commit()
 print('Origin table created\n')
 
 cur.execute('''CREATE TABLE Mission(
-                id              INTEGER,
                 missionID       TEXT NOT NULL UNIQUE,
                 name            TEXT NOT NULL,
                 originID        TEXT DEFAULT 'ORIGIN-PENDING',
@@ -223,7 +219,7 @@ cur.execute('''CREATE TABLE Mission(
                 captainID       TEXT DEFAULT NULL,
                 supervisorID    TEXT DEFAULT NULL,
                 description     TEXT NOT NULL,
-                PRIMARY KEY (id),
+                PRIMARY KEY (missionID),
                 FOREIGN KEY (captainID) REFERENCES Employee(empID),
                 FOREIGN KEY (supervisorID) REFERENCES Employee(empID)
                 );''')
@@ -231,7 +227,6 @@ con.commit()
 print('Mission table created\n')
 
 cur.execute('''CREATE TABLE Specimen(
-                id                      INTEGER,
                 specimenID              TEXT NOT NULL UNIQUE,
                 name                    TEXT NOT NULL,
                 origin                  TEXT DEFAULT 'unknown',
@@ -240,7 +235,7 @@ cur.execute('''CREATE TABLE Specimen(
                 acquisitionDate         TEXT NOT NULL,
                 notes                   TEXT DEFAULT NULL,
                 description             TEXT DEFAULT '',
-               PRIMARY KEY (id),
+               PRIMARY KEY (specimenID),
                CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
                CONSTRAINT missionID FOREIGN KEY (missionID) REFERENCES Mission(missionID) ON DELETE CASCADE
                );''')
@@ -288,21 +283,21 @@ print('Employee_fts table created\n')
 cur.execute('''CREATE TRIGGER emp_fts_insert AFTER INSERT ON Employee
                 BEGIN
                     INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName, summary)
-                    VALUES (new.id, new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
+                    VALUES (new.rowid, new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
                 END;''')
 
 cur.execute('''CREATE TRIGGER emp_fts_delete AFTER DELETE ON Employee
                 BEGIN
                     INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName, summary)
-                    VALUES ('delete', old.id, old.empID, old.empDep, old.designation, old.firstName, old.lastName, old.summary);
+                    VALUES ('delete', old.rowid, old.empID, old.empDep, old.designation, old.firstName, old.lastName, old.summary);
                 END;''')
 
 cur.execute('''CREATE TRIGGER emp_fts_update AFTER UPDATE ON Employee
                 BEGIN
                     INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName, summary)
-                    VALUES ('delete', old.id, old.empID, old.empDep, old.designation, old.firstName, old.lastName, old.summary);
+                    VALUES ('delete', old.rowid, old.empID, old.empDep, old.designation, old.firstName, old.lastName, old.summary);
                     INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName, summary)
-                    VALUES (new.id, new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
+                    VALUES (new.rowid, new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
                 END;''')
 con.commit()
 
@@ -326,21 +321,21 @@ print('Specimen_fts table created\n')
 cur.execute('''CREATE TRIGGER specimen_fts_insert AFTER INSERT ON Specimen
                 BEGIN
                     INSERT INTO Specimen_fts (rowid, specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
-                    VALUES (new.id, new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
+                    VALUES (new.rowid, new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER specimen_fts_delete AFTER DELETE ON Specimen
                 BEGIN
                     INSERT INTO Specimen_fts (Specimen_fts, rowid, specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
-                    VALUES ('delete', old.id, old.specimenID, old.name, old.origin, old.missionID, old.threatLevel, old.acquisitionDate, old.notes, old.description);
+                    VALUES ('delete', old.rowid, old.specimenID, old.name, old.origin, old.missionID, old.threatLevel, old.acquisitionDate, old.notes, old.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER specimen_fts_update AFTER UPDATE ON Specimen
                 BEGIN
                     INSERT INTO Specimen_fts (Specimen_fts, rowid, specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
-                    VALUES ('delete', old.id, old.specimenID, old.name, old.origin, old.missionID, old.threatLevel, old.acquisitionDate, old.notes, old.description);
+                    VALUES ('delete', old.rowid, old.specimenID, old.name, old.origin, old.missionID, old.threatLevel, old.acquisitionDate, old.notes, old.description);
                     INSERT INTO Specimen_fts (rowid, specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
-                    VALUES (new.id, new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
+                    VALUES (new.rowid, new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
                 END;''')
 con.commit()
 
@@ -359,21 +354,21 @@ print('Department_fts table created\n')
 cur.execute('''CREATE TRIGGER department_fts_insert AFTER INSERT ON Department
                 BEGIN
                     INSERT INTO Department_fts (rowid, depID, depName, supervisorID, description)
-                    VALUES (new.id, new.depID, new.depName, new.supervisorID, new.description);
+                    VALUES (new.rowid, new.depID, new.depName, new.supervisorID, new.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER department_fts_delete AFTER DELETE ON Department
                 BEGIN
                     INSERT INTO Department_fts (Specimen_fts, rowid, depID, depName, supervisorID, description)
-                    VALUES ('delete', old.id, old.depID, old.depName, old.supervisorID, old.description);
+                    VALUES ('delete', old.rowid, old.depID, old.depName, old.supervisorID, old.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER department_fts_update AFTER UPDATE ON Department
                 BEGIN
-                    INSERT INTO Specimen_fts (Department_fts, rowid, depID, depName, supervisorID, description)
-                    VALUES ('delete', old.id, old.depID, old.depName, old.supervisorID, old.description);
+                    INSERT INTO Department_fts (Department_fts, rowid, depID, depName, supervisorID, description)
+                    VALUES ('delete', old.rowid, old.depID, old.depName, old.supervisorID, old.description);
                     INSERT INTO Department_fts (rowid, depID, depName, supervisorID, description)
-                    VALUES (new.id, new.depID, new.depName, new.supervisorID, new.description);
+                    VALUES (new.rowid, new.depID, new.depName, new.supervisorID, new.description);
                 END;''')
 con.commit()
 
@@ -392,21 +387,21 @@ print('Origin_fts table created\n')
 cur.execute('''CREATE TRIGGER origin_fts_insert AFTER INSERT ON Origin
                 BEGIN
                     INSERT INTO Origin_fts (rowid, originID, name, missionID, description)
-                    VALUES (new.id, new.originID, new.name, new.missionID, new.description);
+                    VALUES (new.rowid, new.originID, new.name, new.missionID, new.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER origin_fts_delete AFTER DELETE ON Origin
                 BEGIN
                     INSERT INTO Origin_fts (Origin_fts, rowid, originID, name, missionID, description)
-                    VALUES ('delete', old.id, old.originID, old.name, old.missionID, old.description);
+                    VALUES ('delete', old.rowid, old.originID, old.name, old.missionID, old.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER origin_fts_update AFTER UPDATE ON Origin
                 BEGIN
                     INSERT INTO Origin_fts (Origin_fts, rowid, originID, name, missionID, description)
-                    VALUES ('delete', old.id, old.originID, old.name, old.missionID, old.description);
+                    VALUES ('delete', old.rowid, old.originID, old.name, old.missionID, old.description);
                     INSERT INTO Origin_fts (rowid, originID, name, missionID, description)
-                    VALUES (new.id, new.originID, new.name, new.missionID, new.description);
+                    VALUES (new.rowid, new.originID, new.name, new.missionID, new.description);
                 END;''')
 con.commit()
 
@@ -429,21 +424,21 @@ print('Mission_fts table created\n')
 cur.execute('''CREATE TRIGGER mission_fts_insert AFTER INSERT ON Mission
                 BEGIN
                     INSERT INTO Mission_fts (rowid, missionID, name, originID, startDate, endDate, captainID, supervisorID, description)
-                    VALUES (new.id, new.missionID, new.name, new.originID, new.startDate, new.endDate, new.captainID, new.supervisorID, new.description);
+                    VALUES (new.rowid, new.missionID, new.name, new.originID, new.startDate, new.endDate, new.captainID, new.supervisorID, new.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER Mission_fts_delete AFTER DELETE ON Mission
                 BEGIN
                     INSERT INTO Mission_fts (Mission_fts, rowid, missionID, name, originID, startDate, endDate, captainID, supervisorID, description)
-                    VALUES ('delete', old.id, old.missionID, old.name, old.originID, old.startDate, old.endDate, old.captainID, old.supervisorID, old.description);
+                    VALUES ('delete', old.rowid, old.missionID, old.name, old.originID, old.startDate, old.endDate, old.captainID, old.supervisorID, old.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER Mission_fts_update AFTER UPDATE ON Mission
                 BEGIN
                     INSERT INTO Mission_fts (Mission_fts, rowid, missionID, name, originID, startDate, endDate, captainID, supervisorID, description)
-                    VALUES ('delete', old.id, old.missionID, old.name, old.originID, old.startDate, old.endDate, old.captainID, old.supervisorID, old.description);
+                    VALUES ('delete', old.rowid, old.missionID, old.name, old.originID, old.startDate, old.endDate, old.captainID, old.supervisorID, old.description);
                     INSERT INTO Mission_fts (rowid, missionID, name, originID, startDate, endDate, captainID, supervisorID, description)
-                    VALUES (new.id, new.missionID, new.name, new.originID, new.startDate, new.endDate, new.captainID, new.supervisorID, new.description);
+                    VALUES (new.rowid, new.missionID, new.name, new.originID, new.startDate, new.endDate, new.captainID, new.supervisorID, new.description);
                 END;''')
 con.commit()
 
