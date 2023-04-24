@@ -7,6 +7,7 @@ con = sqlite3.connect(db)
 # create cursor for statement execution
 cur = con.cursor()
 
+
 # drop SpecimenMedical table from database if it exists
 try:
     con.execute('''DROP TABLE SpecimenMedical''')
@@ -190,8 +191,8 @@ print('EmployeeMedical table created\n')
 # create Credentials table
 cur.execute('''CREATE TABLE Credentials(
                 empID           TEXT NOT NULL UNIQUE,
-                username        TEXT NOT NULL,
-                password        TEXT NOT NULL,
+                username        TEXT DEFAULT NULL,
+                password        TEXT DEFAULT NULL,
                 loginAttempts   INTEGER DEFAULT 0,
                 PRIMARY KEY (empID),
                 CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE
@@ -229,8 +230,8 @@ print('Mission table created\n')
 cur.execute('''CREATE TABLE Specimen(
                 specimenID              TEXT NOT NULL UNIQUE,
                 name                    TEXT NOT NULL,
-                origin                  TEXT DEFAULT 'unknown',
-                missionID               TEXT DEFAULT 'N/A',
+                origin                  TEXT DEFAULT NULL,
+                missionID               TEXT DEFAULT NULL,
                 threatLevel             REAL DEFAULT NULL,
                 acquisitionDate         TEXT NOT NULL,
                 notes                   TEXT DEFAULT NULL,
@@ -254,7 +255,7 @@ print('EmployeeSpecimen table created\n')
 
 cur.execute('''CREATE TABLE SpecimenMedical(
                 specimenID  TEXT NOT NULL,
-                bloodtype   TEXT CHECK(bloodtype IN {}),
+                bloodtype   TEXT CHECK(bloodtype IN {}) DEFAULT NULL,
                 sex         TEXT CHECK(sex IN {}) DEFAULT NULL,
                 kilograms   REAL DEFAULT NULL,
                 notes       TEXT DEFAULT NULL,
@@ -273,31 +274,37 @@ cur.execute('''CREATE VIRTUAL TABLE Employee_fts USING fts5(
                 startDate UNINDEXED, 
                 endDate UNINDEXED,
                 summary,
-                content='Employee',
-                content_rowid='id',
                 tokenize="porter"  
             )''')
 con.commit()
 print('Employee_fts table created\n')
 
-cur.execute('''CREATE TRIGGER emp_fts_insert AFTER INSERT ON Employee
+cur.execute('''CREATE TRIGGER emp_inserts AFTER INSERT ON Employee
                 BEGIN
-                    INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName, summary)
-                    VALUES (new.rowid, new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
+                    INSERT INTO Employee_fts (empID, empDep, designation, firstName, lastName, summary)
+                    VALUES (new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
+                    INSERT INTO EmployeeMedical(empID)
+                    VALUES (new.empID); 
+                    INSERT INTO Credentials (empID)
+                    VALUES (new.empID);
                 END;''')
 
-cur.execute('''CREATE TRIGGER emp_fts_delete AFTER DELETE ON Employee
+cur.execute('''CREATE TRIGGER emp_deletes AFTER DELETE ON Employee
                 BEGIN
-                    INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName, summary)
-                    VALUES ('delete', old.rowid, old.empID, old.empDep, old.designation, old.firstName, old.lastName, old.summary);
+                    DELETE FROM Employee_fts 
+                    WHERE empID = old.empID;
                 END;''')
 
 cur.execute('''CREATE TRIGGER emp_fts_update AFTER UPDATE ON Employee
                 BEGIN
-                    INSERT INTO Employee_fts (Employee_fts, rowid, empID, empDep, designation, firstName, lastName, summary)
-                    VALUES ('delete', old.rowid, old.empID, old.empDep, old.designation, old.firstName, old.lastName, old.summary);
-                    INSERT INTO Employee_fts (rowid, empID, empDep, designation, firstName, lastName, summary)
-                    VALUES (new.rowid, new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
+                    UPDATE Employee_fts
+                    SET empID = new.empID,
+                        empDep = new.empDep,
+                        designation = new.designation,
+                        firstName = new.firstName,
+                        lastName = new.lastName,
+                        summary = new.summary
+                    WHERE empID = old.empID;
                 END;''')
 con.commit()
 
@@ -311,31 +318,40 @@ cur.execute('''CREATE VIRTUAL TABLE Specimen_fts USING fts5(
                 acquisitionDate,
                 notes,
                 description,
-                content='Specimen',
-                content_rowid='id',
                 tokenize="porter"  
             )''')
 con.commit()
 print('Specimen_fts table created\n')
 
-cur.execute('''CREATE TRIGGER specimen_fts_insert AFTER INSERT ON Specimen
+cur.execute('''CREATE TRIGGER specimen_inserts AFTER INSERT ON Specimen
                 BEGIN
-                    INSERT INTO Specimen_fts (rowid, specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
-                    VALUES (new.rowid, new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
+                    INSERT INTO Specimen_fts (specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
+                    VALUES (new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
+                    INSERT INTO SpecimenMedical (specimenID)
+                    VALUES (new.specimenID);
                 END;''')
 
 cur.execute('''CREATE TRIGGER specimen_fts_delete AFTER DELETE ON Specimen
                 BEGIN
-                    INSERT INTO Specimen_fts (Specimen_fts, rowid, specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
-                    VALUES ('delete', old.rowid, old.specimenID, old.name, old.origin, old.missionID, old.threatLevel, old.acquisitionDate, old.notes, old.description);
+                    DELETE FROM Specimen_fts
+                    WHERE specimenID = old.specimenID;
                 END;''')
 
 cur.execute('''CREATE TRIGGER specimen_fts_update AFTER UPDATE ON Specimen
                 BEGIN
-                    INSERT INTO Specimen_fts (Specimen_fts, rowid, specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
-                    VALUES ('delete', old.rowid, old.specimenID, old.name, old.origin, old.missionID, old.threatLevel, old.acquisitionDate, old.notes, old.description);
-                    INSERT INTO Specimen_fts (rowid, specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
-                    VALUES (new.rowid, new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
+                    UPDATE Specimen_fts
+                    SET specimenID = new.specimenID,
+                        name = new.name,
+                        origin = new.origin,
+                        missionID = new.missionID,
+                        threatLevel = new.threatLevel,
+                        acquisitionDate = new.acquisitionDate,
+                        notes = new.notes,
+                        description = new.description
+                    WHERE specimenID = old.specimenID;
+                    UPDATE SpecimenMedical
+                    SET specimenID = new.specimenID
+                    WHERE specimenID = old.specimenID;
                 END;''')
 con.commit()
 
@@ -345,7 +361,6 @@ cur.execute('''CREATE VIRTUAL TABLE Department_fts USING fts5(
                 depName,
                 supervisorID,
                 description,
-                content_rowid='id',
                 tokenize="porter"  
             )''')
 con.commit()
@@ -353,22 +368,24 @@ print('Department_fts table created\n')
 
 cur.execute('''CREATE TRIGGER department_fts_insert AFTER INSERT ON Department
                 BEGIN
-                    INSERT INTO Department_fts (rowid, depID, depName, supervisorID, description)
-                    VALUES (new.rowid, new.depID, new.depName, new.supervisorID, new.description);
+                    INSERT INTO Department_fts (depID, depName, supervisorID, description)
+                    VALUES (new.depID, new.depName, new.supervisorID, new.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER department_fts_delete AFTER DELETE ON Department
                 BEGIN
-                    INSERT INTO Department_fts (Specimen_fts, rowid, depID, depName, supervisorID, description)
-                    VALUES ('delete', old.rowid, old.depID, old.depName, old.supervisorID, old.description);
+                    DELETE FROM Department_fts 
+                    WHERE depID = old.depID;
                 END;''')
 
 cur.execute('''CREATE TRIGGER department_fts_update AFTER UPDATE ON Department
                 BEGIN
-                    INSERT INTO Department_fts (Department_fts, rowid, depID, depName, supervisorID, description)
-                    VALUES ('delete', old.rowid, old.depID, old.depName, old.supervisorID, old.description);
-                    INSERT INTO Department_fts (rowid, depID, depName, supervisorID, description)
-                    VALUES (new.rowid, new.depID, new.depName, new.supervisorID, new.description);
+                    UPDATE Department_fts
+                    SET depID = new.depID, 
+                        depName = new.depName, 
+                        supervisorID = new.supervisorID, 
+                        description = new.description
+                    WHERE depID = old.depID;
                 END;''')
 con.commit()
 
@@ -378,7 +395,6 @@ cur.execute('''CREATE VIRTUAL TABLE Origin_fts USING fts5(
                 name,
                 missionID,
                 description,
-                content_rowid='id',
                 tokenize="porter"  
             )''')
 con.commit()
@@ -386,22 +402,24 @@ print('Origin_fts table created\n')
 
 cur.execute('''CREATE TRIGGER origin_fts_insert AFTER INSERT ON Origin
                 BEGIN
-                    INSERT INTO Origin_fts (rowid, originID, name, missionID, description)
-                    VALUES (new.rowid, new.originID, new.name, new.missionID, new.description);
+                    INSERT INTO Origin_fts (originID, name, missionID, description)
+                    VALUES (new.originID, new.name, new.missionID, new.description);
                 END;''')
 
 cur.execute('''CREATE TRIGGER origin_fts_delete AFTER DELETE ON Origin
                 BEGIN
-                    INSERT INTO Origin_fts (Origin_fts, rowid, originID, name, missionID, description)
-                    VALUES ('delete', old.rowid, old.originID, old.name, old.missionID, old.description);
+                    DELETE FROM Origin_fts 
+                    WHERE originID = old.originID;
                 END;''')
 
 cur.execute('''CREATE TRIGGER origin_fts_update AFTER UPDATE ON Origin
                 BEGIN
-                    INSERT INTO Origin_fts (Origin_fts, rowid, originID, name, missionID, description)
-                    VALUES ('delete', old.rowid, old.originID, old.name, old.missionID, old.description);
-                    INSERT INTO Origin_fts (rowid, originID, name, missionID, description)
-                    VALUES (new.rowid, new.originID, new.name, new.missionID, new.description);
+                    UPDATE Origin_fts
+                    SET originID = new.originID,
+                        name = new.name,
+                        missionID = new.missionID,
+                        description = new.description
+                    WHERE originID = old.originID;
                 END;''')
 con.commit()
 
@@ -415,7 +433,6 @@ cur.execute('''CREATE VIRTUAL TABLE Mission_fts USING fts5(
                 captainID,
                 supervisorID,
                 description,
-                content_rowid='id',
                 tokenize="porter"  
             )''')
 con.commit()
@@ -423,22 +440,28 @@ print('Mission_fts table created\n')
 
 cur.execute('''CREATE TRIGGER mission_fts_insert AFTER INSERT ON Mission
                 BEGIN
-                    INSERT INTO Mission_fts (rowid, missionID, name, originID, startDate, endDate, captainID, supervisorID, description)
-                    VALUES (new.rowid, new.missionID, new.name, new.originID, new.startDate, new.endDate, new.captainID, new.supervisorID, new.description);
+                    INSERT INTO Mission_fts (missionID, name, originID, startDate, endDate, captainID, supervisorID, description)
+                    VALUES (new.missionID, new.name, new.originID, new.startDate, new.endDate, new.captainID, new.supervisorID, new.description);
                 END;''')
 
-cur.execute('''CREATE TRIGGER Mission_fts_delete AFTER DELETE ON Mission
+cur.execute('''CREATE TRIGGER mission_fts_delete AFTER DELETE ON Mission
                 BEGIN
-                    INSERT INTO Mission_fts (Mission_fts, rowid, missionID, name, originID, startDate, endDate, captainID, supervisorID, description)
-                    VALUES ('delete', old.rowid, old.missionID, old.name, old.originID, old.startDate, old.endDate, old.captainID, old.supervisorID, old.description);
+                    DELETE FROM Mission_fts
+                    WHERE missionID = old.missionID;
                 END;''')
 
-cur.execute('''CREATE TRIGGER Mission_fts_update AFTER UPDATE ON Mission
+cur.execute('''CREATE TRIGGER mission_fts_update AFTER UPDATE ON Mission
                 BEGIN
-                    INSERT INTO Mission_fts (Mission_fts, rowid, missionID, name, originID, startDate, endDate, captainID, supervisorID, description)
-                    VALUES ('delete', old.rowid, old.missionID, old.name, old.originID, old.startDate, old.endDate, old.captainID, old.supervisorID, old.description);
-                    INSERT INTO Mission_fts (rowid, missionID, name, originID, startDate, endDate, captainID, supervisorID, description)
-                    VALUES (new.rowid, new.missionID, new.name, new.originID, new.startDate, new.endDate, new.captainID, new.supervisorID, new.description);
+                    UPDATE Mission_fts
+                    SET missionID = new.missionID,
+                        name = new.name,
+                        originID = new.originID,
+                        startDate = new.startDate,
+                        endDate = new.endDate, 
+                        captainID = new.captainID,
+                        supervisorID = new.supervisorID,
+                        description = new.description
+                    WHERE missionID = old.missionID;
                 END;''')
 con.commit()
 

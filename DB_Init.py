@@ -1,14 +1,15 @@
 import json
+import random
 
-from DB_Declaration import *
 from utils.alterDatabaseUtils import *
+from DB_Declaration import *
 
 '''
 IMPORTANT!!!!
 Run DB_Declaration.py EVERYTIME before running this script.
 '''
 
-with open('utils/test_data.json') as d:
+with open('utils/data.json') as d:
     data = json.load(d)
 
 
@@ -21,35 +22,53 @@ def employeeData():
     for e in data["employee"]:
         ID = addEmployee(e["firstName"], e["lastName"], e["dep"], e["designation"], e["startDate"], e["summary"])
         updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"], e["notes"])
+        if e["firstName"] == "Zaria":
+            updateCredentials(ID, 'test', 'test')
 
 
+originIDs = []
 def originData():
     for o in data["origin"]:
-        oID = addOrigin(o["name"], o["description"])
+        originIDs.append(addOrigin(o["name"], o["description"]))
 
+
+missionIDs = []
 
 def missionData():
     for m in data["mission"]:
-        mID = addMission(m["name"], m["description"])
+        missionIDs.append(addMission(m["name"], m["description"]))
 
+def originMissionLink():
+    for oid in originIDs:
+        updateOrigin(oid, missionID=random.choice(missionIDs))
+
+    for mid in missionIDs:
+        updateMission(mid, originID=random.choice(originIDs))
 
 def specimenData():
     for s in data["specimen"]:
-        addSpecimen(s['name'], s["acquisitionDate"], notes=s["notes"], )
+        addSpecimen(name=s['name'], acquisitionDate=s["acquisitionDate"], notes=s["notes"])
 
 
 departmentData()
+employeeData()
+
+originData()
+missionData()
+originMissionLink()
+
+specimenData()
 
 con = sqlite3.connect(db)
 cur = con.cursor()
 
 # add test user
-cur.execute('''UPDATE Credentials
+"""cur.execute('''UPDATE Credentials
                 SET username = ?, password = ?
                 WHERE empID = (SELECT empID
                                 FROM Employee
                                 WHERE firstName = 'Zaria');''', (encrypt('test'), encrypt('test')))
-con.commit()
+con.commit()"""
 
 '''''''''''''''''''''''''''PRINT TABLES'''''''''''''''''''''''''''
 print('Department Table')
@@ -69,9 +88,6 @@ print('\n')
 
 print('Credentials Table')
 for row in cur.execute('SELECT * FROM Credentials;'):
-    row = list(row)
-    row[1] = decrypt(row[1])
-    row[2] = decrypt(row[2])
     print(row)
 print('\n')
 

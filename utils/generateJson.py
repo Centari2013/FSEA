@@ -10,14 +10,14 @@ data = {"department": [],
      "origin": [],
      "mission": [],
      "specimen": []}
-numOfDepartments = 12
+numOfDepartments = 5
 for i in range(numOfDepartments):
-    data["department"].append({"name": "dep" + str(i),
+    data["department"].append({"name": "dep" + str(i + 1),
                        "description": gen.paragraph()})
 
-for i in range(1000):
+for i in range(5):
     data["employee"].append({
-                      "dep": random.randrange(numOfDepartments),
+                      "dep": random.randrange(1, numOfDepartments + 1),
                       "designation": random.choice(designation),
                       "firstName": names.get_first_name(),
                       "lastName": names.get_last_name(),
@@ -31,19 +31,19 @@ for i in range(1000):
                       "summary": gen.paragraph()
                     })
 
-for i in range(75):
+for i in range(5):
     data["origin"].append({
         "name": "origin" + str(i),
         "description": gen.paragraph()
     })
 
-for i in range(200):
+for i in range(5):
     data["mission"].append({
         "name": "mission" + str(i),
         "description": gen.paragraph()
     })
 
-for i in range(450):
+for i in range(5):
     data["specimen"].append({
         "name": "specimen" + str(i),
         "acquisitionDate": "0000-00-00",

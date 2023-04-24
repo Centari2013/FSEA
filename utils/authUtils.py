@@ -11,6 +11,7 @@ def authenticate(user, pwd):
     # encrypt username and password for comparison to encrypted database
     user = encrypt(user)
     pwd = encrypt(pwd)
+    print(user, user)
     con = None
     try:
         # connect to database
@@ -44,15 +45,21 @@ def authenticate(user, pwd):
         return return_val
 
 
-def generateUID():  # generate random 8 digit str(int)
-    uid = randint(0, 99999999)
+def generateEID():
+    uid = randint(0, 9999999)
     uid = str(uid)
 
-    uid = uid.zfill(8)
-    return uid
+    uid = uid.zfill(7)
+    return 'E' + uid
 
+def generateSID():
+    oid = randint(0, 9999999)
+    oid = str(oid)
 
-def generateOID():  # generate random 7 digit str(int)
+    oid = oid.zfill(7)
+    return 'S' + oid
+
+def generateOID():
     oid = randint(0, 9999999)
     oid = str(oid)
 
@@ -60,7 +67,7 @@ def generateOID():  # generate random 7 digit str(int)
     return 'O' + oid
 
 
-def generateMID():  # generate random 7 digit str(int)
+def generateMID():
     mid = randint(0, 9999999)
     mid = str(mid)
 
