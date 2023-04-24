@@ -10,12 +10,12 @@ data = {"department": [],
      "origin": [],
      "mission": [],
      "specimen": []}
-numOfDepartments = 5
+numOfDepartments = 12
 for i in range(numOfDepartments):
     data["department"].append({"name": "dep" + str(i + 1),
                        "description": gen.paragraph()})
 
-for i in range(5):
+for i in range(1000):
     data["employee"].append({
                       "dep": random.randrange(1, numOfDepartments + 1),
                       "designation": random.choice(designation),
@@ -31,19 +31,19 @@ for i in range(5):
                       "summary": gen.paragraph()
                     })
 
-for i in range(5):
+for i in range(250):
     data["origin"].append({
         "name": "origin" + str(i),
         "description": gen.paragraph()
     })
 
-for i in range(5):
+for i in range(3000):
     data["mission"].append({
         "name": "mission" + str(i),
         "description": gen.paragraph()
     })
 
-for i in range(5):
+for i in range(300):
     data["specimen"].append({
         "name": "specimen" + str(i),
         "acquisitionDate": "0000-00-00",
@@ -53,3 +53,5 @@ for i in range(5):
 
 with open('test_data.json', 'w', encoding='utf-8') as f:
     json.dump(data, f)
+
+from DB_Init import *

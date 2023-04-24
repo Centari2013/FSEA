@@ -11,10 +11,13 @@ Run DB_Declaration.py EVERYTIME before running this script.
 
 with open('utils/data.json') as d:
     data = json.load(d)
-
+with open('utils/test_data.json') as d:
+    test_data = json.load(d)
 
 def departmentData():
     for d in data["department"]:
+        addDepartment(name=d["name"], desc=d["description"])
+    for d in test_data["department"]:
         addDepartment(name=d["name"], desc=d["description"])
 
 
@@ -25,17 +28,26 @@ def employeeData():
         if e["firstName"] == "Zaria":
             updateCredentials(ID, 'test', 'test')
 
+    for e in test_data["employee"]:
+        ID = addEmployee(e["firstName"], e["lastName"], e["dep"], e["designation"], e["startDate"], e["summary"])
+        updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"], e["notes"])
+
+
 
 originIDs = []
 def originData():
     for o in data["origin"]:
         originIDs.append(addOrigin(o["name"], o["description"]))
 
+    for o in test_data["origin"]:
+        originIDs.append(addOrigin(o["name"], o["description"]))
 
 missionIDs = []
 
 def missionData():
     for m in data["mission"]:
+        missionIDs.append(addMission(m["name"], m["description"]))
+    for m in test_data["mission"]:
         missionIDs.append(addMission(m["name"], m["description"]))
 
 def originMissionLink():
@@ -47,6 +59,9 @@ def originMissionLink():
 
 def specimenData():
     for s in data["specimen"]:
+        addSpecimen(name=s['name'], acquisitionDate=s["acquisitionDate"], notes=s["notes"])
+
+    for s in test_data["specimen"]:
         addSpecimen(name=s['name'], acquisitionDate=s["acquisitionDate"], notes=s["notes"])
 
 
