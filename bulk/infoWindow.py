@@ -1,15 +1,17 @@
-from PyQt6.QtGui import QPalette
-from PyQt6.QtWidgets import QLabel, QVBoxLayout, QFrame, QSpacerItem, QSizePolicy, QPlainTextEdit
 import sys
-from utils.accessDatabaseUtils import *
-from bulk.baseWindows import windowWithToolbar
+
+from PyQt6.QtGui import QPalette
 from PyQt6.QtWidgets import QApplication
+from PyQt6.QtWidgets import QLabel, QVBoxLayout, QFrame, QSpacerItem, QSizePolicy, QPlainTextEdit
+
+from bulk.baseWindows import windowWithToolbar
+from utils.accessDatabaseUtils import *
 
 
 class employeeInfo(windowWithToolbar):
     def __init__(self, ID, parent=None):
         super().__init__(parent)
-        self.exitButton.disconnect() # removes any exit functions linked to button, so it doesn't close the entire program
+        self.exitButton.disconnect()  # removes any exit functions linked to button, so it doesn't close the entire program
         self.exitButton.clicked.connect(self.close)
         self.ID = ID
 
@@ -45,6 +47,7 @@ class employeeInfo(windowWithToolbar):
 
         frame.setLayout(layout)
         self.primaryGridLayout.addWidget(frame, 1, 0)
+        # TODO: implement a collapsible section for medical information
 
 
 app = QApplication(sys.argv)
