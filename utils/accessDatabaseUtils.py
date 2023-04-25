@@ -1,5 +1,5 @@
 import sqlite3
-from utils.variables import db
+from utils.filePaths import DB_PATH
 
 
 def dict_factory(cursor, row):
@@ -13,7 +13,7 @@ def getDepartmentData(depID):
     con = None
     data = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         cur.execute('SELECT * FROM Department WHERE depID = ?', (depID,))
@@ -30,7 +30,7 @@ def getEmployeeData(empID):
     con = None
     data = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         cur.execute('SELECT * FROM Employee WHERE empID = ?', (empID,))
@@ -47,7 +47,7 @@ def getEmployeeMedicalData(empID):
     con = None
     data = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         cur.execute('SELECT * FROM EmployeeMedical WHERE empID = ?', (empID,))
@@ -64,7 +64,7 @@ def getOriginData(originID):
     con = None
     data = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         cur.execute('SELECT * FROM Origin WHERE originID = ?', (originID,))
@@ -81,7 +81,7 @@ def getMissionData(missionID):
     con = None
     data = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         cur.execute('SELECT * FROM Mission WHERE missionID = ?', (missionID,))
@@ -98,7 +98,7 @@ def getSpecimenData(specimenID):
     con = None
     data = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         cur.execute('SELECT * FROM Specimen WHERE specimenID = ?', (specimenID,))
@@ -115,7 +115,7 @@ def getSpecimenMedicalData(specimenID):
     con = None
     data = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         cur.execute('SELECT * FROM SpecimenMedical WHERE specimenID = ?', (specimenID,))
@@ -132,7 +132,7 @@ def getSpecimenEmployees(specimenID):
     con = None
     data = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         cur.execute('SELECT empID FROM EmployeeSpecimen WHERE specimenID = ?', (specimenID,))
@@ -149,7 +149,7 @@ def getEmployeeSpecimens(empID):
     con = None
     data = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         cur.execute('SELECT specimenID FROM EmployeeSpecimen WHERE empID = ?', (empID,))

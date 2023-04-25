@@ -1,5 +1,5 @@
 import sqlite3
-from utils.variables import db
+from utils.dbInitVariables import db
 from utils.authUtils import generateEID, generateUsername, generatePWD, generateOID, generateMID, generateSID
 from utils.encryption import encrypt
 import traceback

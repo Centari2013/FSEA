@@ -1,5 +1,5 @@
 import sqlite3
-from utils.variables import db
+from utils.filePaths import DB_PATH
 
 def dict_factory(cursor, row):
     d = {}
@@ -12,7 +12,7 @@ def search(query):
     con = None
     results = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         results = [None, None, None]

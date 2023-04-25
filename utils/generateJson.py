@@ -2,7 +2,7 @@ import random
 import json
 import names
 from essential_generators import DocumentGenerator
-from utils.variables import *
+from utils.dbInitVariables import *
 gen = DocumentGenerator()
 
 data = {"department": [],
@@ -53,5 +53,3 @@ for i in range(300):
 
 with open('test_data.json', 'w', encoding='utf-8') as f:
     json.dump(data, f)
-
-from DB_Init import *

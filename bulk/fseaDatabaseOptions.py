@@ -7,8 +7,8 @@ from bulk.baseWindows import windowWithToolbar
 from bulk.colorPresets import colors
 from bulk.infoWindow import employeeInfo
 from utils.searchEngine import search
-from utils.variables import (employeeType, specimenType, originType,
-                             missionType, departmentType)
+from utils.dbInitVariables import (employeeType, specimenType, originType,
+                                   missionType, departmentType)
 
 
 class ElidedLabel(QLabel):
@@ -22,6 +22,7 @@ class ElidedLabel(QLabel):
             Added Methods:
                 n/a
     """
+
     def __init__(self, parent):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
@@ -44,6 +45,7 @@ class IdLabel(QLabel):
             Added Methods:
                 n/a
     """
+
     def __init__(self, parent, func, args: tuple = None):
         super().__init__(parent)
         self.setStyleSheet('border: 0px; padding: 0px;')
@@ -58,7 +60,6 @@ class IdLabel(QLabel):
                 self.function()
         else:
             pass
-
 
     def enterEvent(self, event):
         palette = self.palette()
@@ -95,7 +96,8 @@ class SearchResult(QFrame):
 
             *Note: If firstName is None, then only the lastName will show on the frame.
     """
-    def __init__(self, parent=None, ID: str=None, resultType=None, lastName=None, firstName=None, description=None):
+
+    def __init__(self, parent=None, ID: str = None, resultType=None, lastName=None, firstName=None, description=None):
         super(SearchResult, self).__init__(parent=None)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -119,7 +121,7 @@ class SearchResult(QFrame):
 
         # allows for entities with only one name to use this class
         if firstName is not None:
-            nameLabel = ElidedLabel('{},  {}'.format(self._lastName, self._firstName))
+            nameLabel = ElidedLabel(f'{self._lastName},  {self._firstName}')
         else:
             nameLabel = ElidedLabel(self._lastName)
 
@@ -152,6 +154,7 @@ class PanelButton(QPushButton):
         Methods:
             QPushButton methods.
     """
+
     def __init__(self, buttonText, flag):
         super().__init__(buttonText)
 
@@ -176,13 +179,15 @@ class PanelButton(QPushButton):
                                "background-color: %s;\n"
                                "border: none; }\n"
                                "QPushButton::pressed { background-color: %s; }" % (
-                                   colors["PUSH_BUTTON_TEXT_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
+                                   colors["PUSH_BUTTON_TEXT_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"],
+                                   colors["PUSH_BUTTON_PRESSED_COLOR"]))
         else:
             self.setStyleSheet("QPushButton { color: %s;\n"
                                "background-color: %s;\n"
                                "border: none; }\n"
                                "QPushButton::pressed { background-color: %s; }" % (
-                                   colors["PUSH_BUTTON_TEXT_COLOR"], colors["PUSH_BUTTON_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
+                                   colors["PUSH_BUTTON_TEXT_COLOR"], colors["PUSH_BUTTON_COLOR"],
+                                   colors["PUSH_BUTTON_PRESSED_COLOR"]))
 
 
 class database_options(windowWithToolbar):
@@ -213,8 +218,10 @@ class database_options(windowWithToolbar):
         self.scrollArea = QtWidgets.QScrollArea(self.searchFrame)
         self.scrollAreaContents = QtWidgets.QWidget()
         self.scrollAreaContentsFrame = QtWidgets.QFrame(self.scrollAreaContents)
-        self.scrollAreaVLayout = QtWidgets.QVBoxLayout(self.scrollAreaContents) # vertical layout for scrollAreaContentsFrame
-        self.searchResultsVLayout = QtWidgets.QVBoxLayout(self.scrollAreaContentsFrame) # vertical layout for search results
+        self.scrollAreaVLayout = QtWidgets.QVBoxLayout(
+            self.scrollAreaContents)  # vertical layout for scrollAreaContentsFrame
+        self.searchResultsVLayout = QtWidgets.QVBoxLayout(
+            self.scrollAreaContentsFrame)  # vertical layout for search results
         self._initSearchResultsArea()
 
         self.pageSelect = QLineEdit()
@@ -412,7 +419,6 @@ class database_options(windowWithToolbar):
 
         self.pageNavFrame.setLayout(self.pageNavLayout)
 
-
     def updateResults(self):
         def showNoResults():
             self.clearSearchResults()
@@ -425,8 +431,6 @@ class database_options(windowWithToolbar):
             self.populateSearchResults([noResults])
             self.pageSelect.setText("1")
             self.totalPagesLabel.setText("1")
-
-
 
         results = self.filterHelper()
         if results:
@@ -456,7 +460,6 @@ class database_options(windowWithToolbar):
         else:
             showNoResults()
 
-
     def clearSearchResults(self):
         """
            Removes the search results starting from last one
@@ -484,8 +487,8 @@ class database_options(windowWithToolbar):
                    Returns:
                        void
                 """
-        self.pageSelect.setText("1") # stops pages from being out of bounds on new queries
-                                        # and takes user to first page of results
+        self.pageSelect.setText("1")  # stops pages from being out of bounds on new queries
+        # and takes user to first page of results
 
         # text punctuation removed  here to avoid blank query (and any subsequent error resulting from it)
         query = str(self.searchBar.text()).translate(str.maketrans('', '', string.punctuation))
@@ -529,4 +532,3 @@ class database_options(windowWithToolbar):
             self.filterList.append(button.flag)
         else:
             self.filterList.remove(button.flag)
-

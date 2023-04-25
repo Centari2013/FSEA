@@ -74,7 +74,7 @@ originMissionLink()
 
 specimenData()
 
-con = sqlite3.connect(db)
+con = sqlite3.connect(DB_PATH)
 cur = con.cursor()
 
 # add test user

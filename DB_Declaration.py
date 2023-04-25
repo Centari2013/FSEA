@@ -1,8 +1,9 @@
 from utils.authUtils import *
-from utils.variables import *
+from utils.dbInitVariables import *
+from utils.filePaths import DB_PATH
 
 # create new db (or open if already exists)
-con = sqlite3.connect(db)
+con = sqlite3.connect(DB_PATH)
 
 # create cursor for statement execution
 cur = con.cursor()
