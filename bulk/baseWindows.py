@@ -2,8 +2,10 @@ import sys
 
 from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtCore import *
+from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import *
 from bulk.colorPresets import colors
+from utils.filePaths import icons
 
 
 class windowWithToolbar(QMainWindow):
@@ -46,21 +48,21 @@ class windowWithToolbar(QMainWindow):
         self.prevPos = None
         self.savedResults = None
 
-
         self.centralWidget.setLayout(self.primaryGridLayout)
         self.setCentralWidget(self.centralWidget)
 
-    def add_titlebar_button(self, button, click_function):
+    def add_titlebar_button(self, button, name, iconPath, click_function):
+        button.setObjectName(name)
         button.clicked.connect(click_function)
         button.setMinimumSize(QtCore.QSize(18, 18))
         button.setMaximumSize(QtCore.QSize(18, 18))
         button.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        button.setIcon(QIcon(iconPath))
         button.setStyleSheet("QPushButton { color: white;\n"
-                             "border-image: url(bulk/assets/%s.png);"
                              "background-color: %s;\n"
                              "border: none; }\n"
                              "QPushButton::pressed { background-color: %s; }" % (
-                                 button.objectName().lower(), colors["TITLEBAR_BUTTON_COLOR"],
+                                 colors["TITLEBAR_BUTTON_COLOR"],
                                  colors["PUSH_BUTTON_PRESSED_COLOR"]))
         self.titlebarLayout.addWidget(button)
 
@@ -83,16 +85,11 @@ class windowWithToolbar(QMainWindow):
                                            QtWidgets.QSizePolicy.Policy.Minimum)
         self.titlebarLayout.addItem(spacerItem)
 
-        self.minimizeButton.setObjectName("minimize")
-        self.restoreButton.setObjectName("restore")
-        self.exitButton.setObjectName("exit")
+        self.add_titlebar_button(self.minimizeButton, "minimize", icons['MINIMIZE_BUTTON'], self.showMinimized)
+        self.add_titlebar_button(self.restoreButton, "restore", icons['RESTORE_BUTTON'], self._minOrMax)
+        self.add_titlebar_button(self.exitButton, "exit", icons['EXIT_BUTTON'], sys.exit)
 
-        self.add_titlebar_button(self.minimizeButton, self.showMinimized)
-        self.add_titlebar_button(self.restoreButton, self._minOrMax)
-        self.add_titlebar_button(self.exitButton, sys.exit)
-
-        self.primaryGridLayout.addWidget(self.titlebarFrame, 0, 0, 1 ,2)
-
+        self.primaryGridLayout.addWidget(self.titlebarFrame, 0, 0, 1, 2)
 
     def initFooter(self, *widgetList):
         self.footerFrame.setMaximumSize(QtCore.QSize(16777215, 30))

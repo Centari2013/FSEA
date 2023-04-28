@@ -2,8 +2,8 @@ import sqlite3
 from random import randint
 import secrets
 import string
-from utils.variables import db
-from utils.encryption import encrypt, decrypt
+from utils.filePaths import DB_PATH
+from utils.encryption import encrypt
 
 
 def authenticate(user, pwd):
@@ -11,11 +11,10 @@ def authenticate(user, pwd):
     # encrypt username and password for comparison to encrypted database
     user = encrypt(user)
     pwd = encrypt(pwd)
-    print(user, user)
     con = None
     try:
         # connect to database
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
 
         cur = con.cursor()
         cur.execute('SELECT password FROM Credentials WHERE username = ? ;', [user])

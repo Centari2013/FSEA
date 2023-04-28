@@ -1,7 +1,7 @@
 # code borrowed from Karen Works, FSU Professor
 
+import base64
 from Cryptodome.Cipher import AES
-import string, base64
 
 
 class AESCipher(object):

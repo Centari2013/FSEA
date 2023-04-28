@@ -1,7 +1,5 @@
 import sqlite3
-import traceback
-
-from utils.variables import db
+from utils.filePaths import DB_PATH
 
 def dict_factory(cursor, row):
     d = {}
@@ -14,7 +12,7 @@ def search(query):
     con = None
     results = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
         results = [None, None, None]
@@ -36,7 +34,7 @@ def search(query):
                             WHERE Employee_fts MATCH ?
                             UNION ALL
                             SELECT 'S', specimenID, NULL, name, description, bm25(Specimen_fts)
-                            FROM Specimen_fts 
+                            FROM Specimen_fts
                             WHERE Specimen_fts MATCH ?
                             UNION ALL
                             SELECT 'O', originID, NULL, name, description, bm25(Origin_fts)
@@ -49,8 +47,8 @@ def search(query):
                             ''', (w+ '*', w + '*', w + '*', w + '*', w + '*'))
 
             cur.execute('''SELECT type,
-                            id, 
-                            firstName, 
+                            id,
+                            firstName,
                             lastName,
                             description
                             FROM search_results
@@ -66,8 +64,8 @@ def search(query):
                 results[1] = cur.fetchall()
 
                 cur.execute('''SELECT type,
-                                id, 
-                                firstName, 
+                                id,
+                                firstName,
                                 lastName,
                                 description
                                 FROM search_results
@@ -82,8 +80,8 @@ def search(query):
                 results[1].append(cur.fetchall())
 
                 cur.execute('''SELECT type,
-                                                id, 
-                                                firstName, 
+                                                id,
+                                                firstName,
                                                 lastName,
                                                 description
                                                 FROM search_results

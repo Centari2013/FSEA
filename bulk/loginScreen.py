@@ -1,6 +1,8 @@
-from PyQt6.QtWidgets import *
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
+from PyQt6.QtCore import QSize, Qt, QCoreApplication, QPoint
+from PyQt6.QtGui import QPixmap, QIcon
+from PyQt6.QtWidgets import QMainWindow, QLineEdit, QLabel, QPushButton, QGridLayout, QVBoxLayout, QWidget
+from bulk.colorPresets import colors
+from utils.filePaths import icons
 from utils.authUtils import authenticate as auth
 
 
@@ -21,14 +23,14 @@ class authenticate(QMainWindow):
     def __init__(self, unlock_this, *args):
         super().__init__()
         self.setFixedSize(QSize(300, 375))
-        self.setStyleSheet("background-color: #31353D;")
+        self.setStyleSheet("background-color: %s;" % (colors["FRAME_COLOR"]))
         self.setWindowTitle("F-SEA Authentication")
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.setWindowModality(Qt.WindowModality.WindowModal)
         self.prevPos = None
 
         # make window borderless
-        self.setWindowOpacity(0.85)
+        self.setWindowOpacity(0.9)
 
         class login_text_entry(QLineEdit):
             def __init__(self):
@@ -50,9 +52,10 @@ class authenticate(QMainWindow):
                 super().__init__()
                 self.setStyleSheet("color: white")
                 self.setText(name)
+
         # make error message label
         self.errorMsg = QLabel("Credentials not recognized.")
-        self.errorMsg.setStyleSheet("color: #E85D04;")
+        self.errorMsg.setStyleSheet("color: %s;" % colors["ERROR_MSG"])
         self.errorMsg.hide()
 
         def auth(user, pswd):
@@ -76,7 +79,7 @@ class authenticate(QMainWindow):
 
         # make label to hold logo
         self.logo_label = QLabel()
-        self.logo_pixmap = QPixmap('bulk/assets/FSEAlogo.png')
+        self.logo_pixmap = QPixmap(icons["FSEA_LOGO"])
         self.logo_label.setPixmap(self.logo_pixmap)
         self.logo_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -84,9 +87,9 @@ class authenticate(QMainWindow):
         self.exit_button = QPushButton()
         self.exit_button.clicked.connect(QCoreApplication.instance().quit)
         self.exit_button.setFixedSize(18, 18)
-        self.exit_button.setStyleSheet("QPushButton { border-image: url(bulk/assets/exit.png);"
-                                  "background-repeat: no-repeat; }"
-                                  "QPushButton::pressed { background-color: #242830; }")
+        self.exit_button.setIcon(QIcon(icons["EXIT_BUTTON"]))
+        self.exit_button.setStyleSheet("QPushButton { background-repeat: no-repeat; }"
+                                       "QPushButton::pressed { background-color: %s; }" % colors["PUSH_BUTTON_PRESSED_COLOR"])
         self.exit_button.setFlat(True)
 
         # make submit button
@@ -94,16 +97,17 @@ class authenticate(QMainWindow):
         self.submit_button.setFixedWidth(80)
         self.submit_button.setFixedHeight(25)
         self.submit_button.clicked.connect(lambda: auth(self.username.text(), self.password.text()))
-        self.submit_button.setStyleSheet("QPushButton { color: white;"
-                                    "background-color: #262829;"
-                                    "border: none; }"
-                                    "QPushButton::pressed { background-color: #111314; }")
+        self.submit_button.setStyleSheet("QPushButton { color: %s;"
+                                         "background-color: %s;"
+                                         "border: none; }"
+                                         "QPushButton::pressed { background-color: %s; }" % (colors["PUSH_BUTTON_TEXT_COLOR"], colors["PUSH_BUTTON_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
 
         # make main_layout grid container to hold other layouts
         self.main_layout = QGridLayout()
         # make exit button container and add exit button to upper right
         self.exit_container = QVBoxLayout()
-        self.exit_container.addWidget(self.exit_button, alignment=(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop))
+        self.exit_container.addWidget(self.exit_button,
+                                      alignment=(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop))
         # make form container to hold login widgets
         self.form_container = QVBoxLayout()
 
@@ -156,6 +160,3 @@ class authenticate(QMainWindow):
             delta = QPoint(event.globalPosition().toPoint() - self.prevPos)
             self.move(self.x() + delta.x(), self.y() + delta.y())
             self.prevPos = event.globalPosition().toPoint()
-
-
-
