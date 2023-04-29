@@ -18,7 +18,7 @@ def cleanQuery(query):
     query = [w for w in query if not w in stopwords.words('english')] # remove stopwords
     q_length = len(query)
     cleanQ = ''.join([(query[i] + '* AND ') if i != (q_length - 1) else (query[i] + '*') for i in range(q_length)])
-    print(cleanQ)
+
     return cleanQ
 
 
