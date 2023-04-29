@@ -50,7 +50,7 @@ class employeeInfo(windowWithToolbar):
         # TODO: implement a collapsible section for medical information
 
 
-app = QApplication(sys.argv)
+"""app = QApplication(sys.argv)
 w = employeeInfo("E0442115")
 w.show()
-app.exec()
+app.exec()"""

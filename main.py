@@ -10,5 +10,6 @@ options = database_options()
 # launch login window; options is passed as the window to unlock
 login = authenticate(options.show)
 login.show()
+login.username.setFocus()
 app.exec()
 

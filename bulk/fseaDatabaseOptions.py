@@ -1,4 +1,3 @@
-import string
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox, QLineEdit, QSpacerItem, QSizePolicy
@@ -209,6 +208,7 @@ class database_options(windowWithToolbar):
         self.searchGridLayout = QtWidgets.QGridLayout(self.searchFrame)
         self.searchButton = QtWidgets.QPushButton("Search")
         self.searchBar = QtWidgets.QLineEdit(self.searchFrame)
+        self.searchBar.setFocus()
         self.sortFrame = QFrame(self)
         self.sortGridLayout = QGridLayout(self.sortFrame)
         self.sortSelect = QtWidgets.QComboBox()
@@ -491,8 +491,7 @@ class database_options(windowWithToolbar):
         # and takes user to first page of results
 
         # text punctuation removed  here to avoid blank query (and any subsequent error resulting from it)
-        query = str(self.searchBar.text()).translate(str.maketrans('', '', string.punctuation))
-
+        query = str(self.searchBar.text())
         self.clearSearchResults()
         results = search(query)
         self.savedResults = results
