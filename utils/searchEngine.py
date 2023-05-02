@@ -15,7 +15,7 @@ def dict_factory(cursor, row):
 def cleanQuery(query):
     query = str(query).translate(str.maketrans('', '', string.punctuation))  # remove punctuation to avoid syntax error
     query = query.split()
-    query = [w for w in query if not w in stopwords.words('english')] # remove stopwords
+    query = [w for w in query if not w in stopwords.words('english')]  # remove stopwords
     q_length = len(query)
     cleanQ = ''.join([(query[i] + '* AND ') if i != (q_length - 1) else (query[i] + '*') for i in range(q_length)])
 
@@ -23,7 +23,6 @@ def cleanQuery(query):
 
 
 def search(query):
-
     con = None
     results = None
     try:
@@ -65,7 +64,6 @@ def search(query):
                         description
                         FROM search_results
                         ORDER BY rank;''')
-
 
         results[0] = cur.fetchall()
 
