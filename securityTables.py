@@ -8,6 +8,7 @@ def createClearanceTable(cur):
                         );''')
     print('Clearance table created\n')
 
+
 def dropClearanceTable(cur):
     # drop Clearance table from database if it exists
     try:
@@ -19,8 +20,30 @@ def dropClearanceTable(cur):
         print('Clearance table does not exist\n')
 
 
+def createContainmentStatusTable(cur):
+    # create ContainmentStatus table
+    cur.execute('''CREATE TABLE ContainmentStatus(
+                        statusID      INTEGER UNIQUE NOT NULL,
+                        name TEXT,
+                        description TEXT,
+                        PRIMARY KEY (statusID)
+                        );''')
+    print('ContainmentStatus table created\n')
+
+
+def dropContainmentStatusTable(cur):
+    # drop ContainmentStatus table from database if it exists
+    try:
+        cur.execute('''DROP TABLE ContainmentStatus''')
+
+        print('ContainmentStatus table dropped\n')
+
+    except:
+        print('ContainmentStatus table does not exist\n')
+
+
 def createEmployeeClearanceTable(cur):
-    # create Credentials table
+    # create EmployeeClearance table
     cur.execute('''CREATE TABLE EmployeeClearance(
                     empID           TEXT NOT NULL UNIQUE,
                     clearanceID      INTEGER,
@@ -40,6 +63,29 @@ def dropEmployeeClearanceTable(cur):
 
     except:
         print('EmployeeClearance table does not exist\n')
+
+
+def createSpecimenContainmentStatusTable(cur):
+    # create SpecimenContainmentStatus table
+    cur.execute('''CREATE TABLE SpecimenContainmentStatus(
+                    specimenID           TEXT NOT NULL UNIQUE,
+                    statusID      INTEGER,
+                    PRIMARY KEY (specimenID),
+                    CONSTRAINT SpecimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE,
+                    CONSTRAINT statusID FOREIGN KEY (statusID) REFERENCES ContainmentStatus(statusID) ON DELETE CASCADE
+                    );''')
+    print('SpecimenContainmentStatus table created\n')
+
+
+def dropSpecimenContainmentStatusTable(cur):
+    # drop SpecimeContainmentStatus table from database if it exists
+    try:
+        cur.execute('''DROP TABLE SpecimenContainmentStatus''')
+
+        print('SpecimenContainmentStatus table dropped\n')
+
+    except:
+        print('SpecimenContainmentStatus table does not exist\n')
 
 
 def createCredentialsTable(cur):

@@ -93,6 +93,8 @@ def createEmployeeTriggers(cur):
                         VALUES (new.empID); 
                         INSERT INTO Credentials (empID)
                         VALUES (new.empID);
+                        INSERT INTO EmployeeClearance (empID) 
+                        VALUES (new.empID);
                     END;''')
 
     cur.execute('''CREATE TRIGGER emp_deletes AFTER DELETE ON Employee
@@ -112,3 +114,5 @@ def createEmployeeTriggers(cur):
                             summary = new.summary
                         WHERE empID = old.empID;
                     END;''')
+
+
