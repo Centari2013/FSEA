@@ -26,7 +26,9 @@ con.commit()
 
 # drop all security-related tables
 dropClearanceTable(cur)
+dropContainmentStatusTable(cur)
 dropEmployeeClearanceTable(cur)
+dropSpecimenContainmentStatusTable(cur)
 dropCredentialsTable(cur)
 
 # drop all other linked tables
@@ -55,7 +57,9 @@ con.commit()
 # TODO: add other security tables here
 createCredentialsTable(cur)
 createClearanceTable(cur)
+createContainmentStatusTable(cur)
 createEmployeeClearanceTable(cur)
+createSpecimenContainmentStatusTable(cur)
 con.commit()
 
 createOriginTable(cur)

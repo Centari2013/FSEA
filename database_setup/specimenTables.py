@@ -86,6 +86,8 @@ def createSpecimenTriggers(cur):
                         VALUES (new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
                         INSERT INTO SpecimenMedical (specimenID)
                         VALUES (new.specimenID);
+                        INSERT INTO SpecimenContainmentStatus (specimenID)
+                        VALUES (new.specimenID);
                     END;''')
 
     cur.execute('''CREATE TRIGGER specimen_fts_delete AFTER DELETE ON Specimen
