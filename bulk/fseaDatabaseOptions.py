@@ -6,8 +6,8 @@ from bulk.baseWindows import windowWithToolbar
 from bulk.colorPresets import colors
 from bulk.infoWindow import employeeInfo
 from utils.searchEngine import search
-from utils.dbInitVariables import (employeeType, specimenType, originType,
-                                   missionType, departmentType)
+from utils.dbVariables import (employeeType, specimenType, originType,
+                               missionType, departmentType)
 
 
 class ElidedLabel(QLabel):

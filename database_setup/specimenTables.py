@@ -1,4 +1,4 @@
-from utils.dbInitVariables import bloodtypes, sex
+from utils.dbVariables import bloodtypes, sex
 
 
 def createSpecimenTable(cur):

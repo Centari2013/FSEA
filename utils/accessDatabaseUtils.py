@@ -26,6 +26,7 @@ def getDepartmentData(depID):
         return data
 
 
+# TODO: Add get employee clearance, and specimen containment status
 def getEmployeeData(empID):
     con = None
     data = None
@@ -160,4 +161,3 @@ def getEmployeeSpecimens(empID):
         if con is not None:
             con.close()
         return data
-

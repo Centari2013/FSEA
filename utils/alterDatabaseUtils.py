@@ -1,14 +1,16 @@
 import sqlite3
-from utils.dbInitVariables import db
+from utils.dbVariables import db
 from utils.authUtils import generateEID, generateUsername, generatePWD, generateOID, generateMID, generateSID
 from utils.encryption import encrypt
 import traceback
 
-
 '''''''''''''''''''''ALTER DATABASE'''''''''''''''''''''
+
+
 def print_sql(sql):
     print("Last executed SQL query: ", sql)
     return str
+
 
 def addDepartment(name, supervisorID=None, desc=None):
     ID = None
@@ -429,7 +431,8 @@ def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLeve
                     (ID, name, acquisitionDate))
         con.commit()
 
-        updateSpecimen(ID, originID=originID, missionID=missionID, threatLevel=threatLevel, notes=notes, description=description)
+        updateSpecimen(ID, originID=originID, missionID=missionID, threatLevel=threatLevel, notes=notes,
+                       description=description)
 
     except Exception as e:
         print(e)

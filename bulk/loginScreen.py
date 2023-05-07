@@ -45,7 +45,8 @@ class authenticate(QMainWindow):
                                    "border-bottom: 3px;"
                                    "border-color: white;"
                                    "border-style: outset;"
-                                   "background-color: white;}")
+                                   "background-color: white;"
+                                   "color: black;}")
 
         class login_text(QLabel):
             def __init__(self, name):
