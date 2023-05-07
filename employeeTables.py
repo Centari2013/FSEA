@@ -1,4 +1,4 @@
-from utils.dbInitVariables import designation, bloodtypes, sex
+from utils.dbVariables import designation, bloodtypes, sex
 
 
 def createEmployeeTable(cur):
