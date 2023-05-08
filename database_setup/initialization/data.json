@@ -1,0 +1,366 @@
+{
+  "department": [
+    {
+      "name": "Exploration",
+      "description": "The Exploration Department plans and executes missions to explore the universe. They identify target destinations, develop new technologies, and coordinate with other departments to ensure successful exploration.",
+      "designations": [["Mission Planner", "MP"],
+                     ["Project Manager", "PM"],
+                     ["Spacecraft Engineer", "SE"],
+                     ["Flight Director", "FD"],
+                     ["Astrobiologist", "AB"]]
+    },
+    {
+      "name": "Navigation",
+      "description": "The Navigation Department oversees the ship's route planning, ensuring it follows the best course to reach destinations identified by the Exploration Department. They maintain the ship's navigation systems and map out new routes when necessary.",
+      "designations": [["Navigation Officer", "NO"],
+                     ["Route Planner", "RP"],
+                     ["Astronomer", "AS"],
+                     ["Cartographer", "CA"],
+                     ["Geodesist", "GD"]]
+    },
+    {
+      "name": "Science",
+      "description": "The Science Department conducts research on the planets, stars, and other celestial bodies encountered during exploration missions. They analyze samples and data and work with other departments to ensure that all findings are properly documented.",
+      "designations": [["Planetary Scientist", "PS"],
+                     ["Astrophysicist", "AP"],
+                     ["Exobiologist", "EB"],
+                     ["Data Scientist", "DS"],
+                     ["Atmospheric Scientist", "AS"]
+                      ]
+    },
+    {
+      "name": "Communications",
+      "description": "The Communications Department establishes and maintains communication between F-SEA and other space-faring organizations. They monitor the ship's internal communication systems and manage F-SEA's public relations and media outreach.",
+      "designations": [["Communications Officer", "CO"],
+                     ["Public Affairs Officer", "PAO"],
+                     ["Media Relations Specialist", "MRS"],
+                     ["Outreach Coordinator", "OC"]
+                     ]
+    },
+    {
+      "name": "Engineering",
+      "description": "The Engineering Department designs and builds new technologies and systems to enable exploration. They maintain the ship's functionality, improve the ship's overall efficiency, conduct repairs, and upgrades as necessary.",
+      "designations": [["Chief Engineer", "CE"],
+                     ["Power Systems Engineer", "PSE"],
+                     ["Propulsion Engineer", "PE"],
+                     ["Materials Engineer", "ME"],
+                     ["Systems Engineer", "SE"]
+                      ]
+    },
+    {
+      "name": "Security",
+      "description": "The Security Department ensures the safety and security of the ship and its crew. They manage all security protocols and develop strategies to ensure the crew's safety when exploring potentially dangerous environments.",
+      "designations": [["Security Officer", "SO"],
+                      ["Safety Officer", "SAO"],
+                      ["Emergency Response Coordinator", " ERC"],
+                      ["Cybersecurity Specialist", "CS"],
+                      ["Threat Assessment Specialist", "TAS"]]
+    },
+    {
+      "name": "Human Resources",
+      "description": "The Human Resources Department manages F-SEA's personnel, including hiring, training, and retaining staff. They provide support for crew members' needs, such as healthcare and mental health.",
+      "designations": [["Human Resources Manager", "HRM"],
+                      ["Crew Services Coordinator", "CSC"],
+                      ["Training Coordinator", "TC"],
+                      ["Diversity and Inclusion Officer", "DIO"],
+                      ["Health and Wellness Coordinator", "HWC"]]
+    },
+    {
+      "name": "Supply and Logistics",
+      "description": "The Supply and Logistics Department manages F-SEA's resources, including food, water, fuel, and equipment. They ensure that the ship is stocked with everything necessary for successful exploration missions and coordinate with other departments to allocate resources properly.",
+      "designations": [["Logistic Officer", "LO"],
+                      ["Inventory Manager", "IM"],
+                      ["Procurement Officer", "PO"],
+                      ["Supply Chain Analyst", "SCA"],
+                      ["Equipment Specialist", "ES"]]
+    },
+    {
+      "name": "Legal",
+      "description": "The Legal Department manages F-SEA's legal affairs. They navigate interstellar laws and regulations and ensure that the organization operates within ethical and legal boundaries. They draft contracts and agreements with external partners and organizations.",
+      "designations": [["Legal Counsel", "LC"],
+                      ["Compliance Officer", "CO"],
+                      ["Contract Specialist", "CS"],
+                      ["Risk Management Specialist", "RMS"],
+                      ["Ethics Officer", "EO"]]
+    },
+    {
+      "name": "Medical",
+      "description": "This department is responsible for the health and wellbeing of the crew, including providing medical care, monitoring crew health, and developing programs to promote overall health and wellness.",
+      "designations": [["Chief Medical Officer", "CMO"],
+                      ["Medical Officer", "MO"],
+                      ["Registered Nurse", "RN"],
+                      ["Pharmacist", "PH"],
+                      ["Medical Laboratory Scientist", "MLS"]]
+    },
+    {
+      "name": "Executive",
+      "description": "The Executive Department oversees the overall strategic direction of the organization, manages budgets and resources, and communicates with external stakeholders, such as investors and regulatory bodies. This department plays a critical role in ensuring that the organization is functioning efficiently and achieving its goals.",
+      "designations": [["Chief Executive Officer", "CEO"],
+                      ["Chief Financial Officer", "CFO"],
+                      ["Chief Operating Officer", "COO"],
+                      ["Chief Information Officer", "CIO"],
+                      ["Department Supervisor", "DS"]]
+    },
+    {
+      "name": "Education",
+      "description": "The Education Department is responsible for providing educational opportunities for crew members, including developing curricula, providing access to educational resources, and overseeing the ship's library and archives.",
+      "designations": [["Curriculum Developer", "CD"],
+                      ["Instructor", "INS"],
+                      ["Educational Technologist", "ET"],
+                      ["Librarian", "LIB"],
+                      ["Academic Advisor", "AA"],
+                      ["Historical Archivist", "HA"]]
+    },
+    {
+      "name": "Cultural Affairs",
+      "description": "The Cultural Affairs Department is responsible for promoting and preserving cultural heritage and diversity on the ship. This includes organizing events and celebrations that highlight different cultures, providing resources for language and cultural learning, and ensuring that cultural artifacts and traditions are properly preserved.",
+      "designations": [["Cultural Events Coordinator", "CEC"],
+                      ["Heritage Preservation Specialist", "HPS"],
+                      ["Cultural Resource Manager", "CRM"],
+                      ["Diversity and Inclusion Officer", "DIO"],
+                      ["Linguist", "LIN"]]
+    },
+    {
+      "name": "Entertainment",
+      "description": "The Entertainment Department is responsible for providing recreational and entertainment opportunities for crew members, including organizing social events, managing the ship's recreational facilities, and providing access to movies, music, and other forms of entertainment.",
+      "designations": [["Event Coordinator", "EC"],
+                      ["Fitness Coordinator", "FC"],
+                      ["Audio-Visual Technician", "AVT"],
+                      ["Recreation Coordinator", "RC"],
+                      ["Social Media Manager", "SMM"]]
+    },
+    {
+      "name": "Special Operations",
+      "description": "The Special Operations Department is responsible for executing critical missions that require specialized skills and training, such as rescue operations, high-risk extractions, and covert operations. This department works closely with other departments to plan and execute missions safely and effectively, while minimizing risk to personnel and equipment.",
+      "designations": [["Intelligence Analyst", "IA"],
+                      ["Tactical Officer", "TO"],
+                      ["Communications Specialist", "CS"],
+                      ["Field Medic", "FM"],
+                      ["Special Operations Agent", "SOA"]]
+    },
+    {
+      "name": "Alien Relations",
+      "description": "Alien Relations is responsible for establishing and maintaining positive relationships with extraterrestrial life forms. The department works to foster communication and understanding between the crew and any alien species encountered during the ship's travels.",
+      "designations": [["First Contact Specialist", "FCS"],
+                      ["Alien Liaison Officer", "ALO"],
+                      ["Interspecies Psychologist", "IPS"],
+                      ["Alien Biologist", "AB"],
+                      ["Ethnologist", "E"]]
+    }
+  ],
+
+  "employee": [
+    {
+      "dep": "Special Operations",
+      "designation": "SOA",
+      "firstName": "Prisca",
+      "lastName": "Poteau",
+      "startDate": "2071-09-19",
+      "dob": "2052-10-15",
+      "bloodtype": "undefined",
+      "sex": "f",
+      "weight": 85.3,
+      "height": 177.8,
+      "notes": null,
+      "summary": ""
+    },
+    {
+      "dep": "Engineering",
+      "designation": "PSE",
+      "firstName": "Revy",
+      "lastName": "Sagan",
+      "startDate": "2072-06-30",
+      "dob": "2053-03-07",
+      "bloodtype": "V-",
+      "sex": "f",
+      "weight": 75.7,
+      "height": 158.75,
+      "notes": "monitoring hemochromia",
+      "summary": ""
+    },
+    {
+      "dep": "Medical",
+      "designation": "MLS",
+      "firstName": "Michael",
+      "lastName": "Lowe",
+      "startDate": "2056-07-25",
+      "dob": "2040-07-24",
+      "bloodtype": "B+",
+      "sex": "m",
+      "weight": 87.1,
+      "height": 182.88,
+      "notes": "8th regen cycle",
+      "summary": ""
+    },
+    {
+      "dep": "Engineering",
+      "designation": "CE",
+      "firstName": "Benjamin",
+      "lastName": "Colson",
+      "startDate": "2047-04-15",
+      "dob": "2019-09-22",
+      "bloodtype": "O+",
+      "sex": "inter",
+      "weight": 95.3,
+      "height": 177.8,
+      "notes": null,
+      "summary": ""
+    },
+    {
+      "dep": "Medical",
+      "designation": "CMO",
+      "firstName": "Mingmei",
+      "lastName": "Gao",
+      "startDate": "2061-12-03",
+      "dob": "2038-05-09",
+      "bloodtype": "AB+",
+      "sex": "f",
+      "weight": 59.9,
+      "height": 166.37,
+      "notes": "pregnant",
+      "summary": ""
+    },
+    {
+      "dep": "Science",
+      "designation": "Planetary Scientist",
+      "firstName": "Abdul",
+      "lastName": "Said",
+      "startDate": "2061-12-03",
+      "dob": "2041-05-09",
+      "bloodtype": "A+",
+      "sex": "m",
+      "weight": 78.5,
+      "height": 185.42,
+      "notes": null,
+      "summary": ""
+    },
+    {
+      "dep": "Exploration",
+      "designation": "Project Manager",
+      "firstName": "Historia",
+      "lastName": "Lowe",
+      "startDate": "2038-01-31",
+      "dob": "2024-12-25",
+      "bloodtype": "AB-",
+      "sex": "f",
+      "weight": 70.3,
+      "height": 170.18,
+      "notes": "3rd regen cycle",
+      "summary": ""
+    },
+    {
+      "dep": "Executive",
+      "designation": "COO",
+      "firstName": "Jurio",
+      "lastName": "Caldero",
+      "startDate": "2042-06-30",
+      "dob": "2022-09-01",
+      "bloodtype": "A-",
+      "sex": "m",
+      "weight": 88.5 ,
+      "height": 186.69,
+      "notes": "2nd regen cycle",
+      "summary": ""
+    },
+    {
+      "dep": "Special Operations",
+      "designation": "TO",
+      "firstName": "Joseph",
+      "lastName": "Smith",
+      "startDate": "2060-11-12",
+      "dob": "2042-05-15",
+      "bloodtype": "O-",
+      "sex": "m",
+      "weight": 90.7,
+      "height": 175.26,
+      "notes": null,
+      "summary": ""
+    },
+    {
+      "dep": "Executive",
+      "designation": "CEO",
+      "firstName": "Markus",
+      "lastName": "Belcost",
+      "startDate": "2067-06-08",
+      "dob": "2052-01-01",
+      "bloodtype": "undefined",
+      "sex": "m",
+      "weight": 72.1,
+      "height": 473.99,
+      "notes": "dormant massimonia",
+      "summary": ""
+    },
+    {
+      "dep": "Special Operations",
+      "designation": "Intelligence Analyst",
+      "firstName": "Aurelis",
+      "lastName": "Dreymond",
+      "startDate": "2075-12-13",
+      "dob": null,
+      "bloodtype": "undefined",
+      "sex": "f",
+      "weight": 81.6,
+      "height": 186.69,
+      "notes": null,
+      "summary": ""
+    },
+    {
+      "dep": "Special Operations",
+      "designation": "Field Medic",
+      "firstName": "Quani",
+      "lastName": "Dreymond",
+      "startDate": "2075-12-13",
+      "dob": null,
+      "bloodtype": "undefined",
+      "sex": "f",
+      "weight": 77.6,
+      "height": 177.8,
+      "notes": null,
+      "summary": ""
+    },
+    {
+      "dep": "Special Operations",
+      "designation": "Intelligence Analyst",
+      "firstName": "Daryl",
+      "lastName": "Belcost",
+      "startDate": "2071-03-16",
+      "dob": null,
+      "bloodtype": "BF",
+      "sex": "m",
+      "weight": 113.4,
+      "height": 180.34,
+      "notes": "has gained sentience",
+      "summary": ""
+    },
+    {
+      "dep": "Executive",
+      "designation": "Chief Information Officer",
+      "firstName": "Zaria",
+      "lastName": "Burton",
+      "startDate": "2022-06-24",
+      "dob": "2000-09-22",
+      "bloodtype": "B+",
+      "sex": "f",
+      "weight": 74.8,
+      "height": 162.6,
+      "notes": "founder",
+      "summary": ""
+    }],
+
+  "origin": [{
+      "name": "Lypso",
+      "description": "highly hazardous gaseous ice planet"
+    }],
+
+  "mission": [{
+    "name": "Dying Prophet",
+    "description": "recon for reports of glowing 'rosetta-stone-like' object"
+  }],
+
+  "specimen": [{
+    "name": "Massimo",
+    "acquisitionDate": "0000-00-00",
+    "notes": "member of department 0",
+    "summary": ""
+  }]
+}

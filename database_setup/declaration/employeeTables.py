@@ -1,20 +1,42 @@
 from utils.dbVariables import designation, bloodtypes, sex
 
+def createDesignationTable(cur):
+    # create Designation table in db
+    cur.execute('''CREATE TABLE Designation(
+                        designationID     INTEGER NOT NULL UNIQUE,
+                        name TEXT NOT NULL,
+                        abbreviation TEXT NOT NULL,
+                        PRIMARY KEY (designationID)
+                        );''')
+
+    print('Designation table created\n')
+
+def dropDesignationTable(cur):
+    # drop Designation table from database if it exists
+    try:
+        cur.execute('''DROP TABLE Designation''')
+
+        print('Designation table dropped\n')
+
+    except:
+        print('Designation table does not exist\n')
+
 
 def createEmployeeTable(cur):
     # create Employee table in db
     cur.execute('''CREATE TABLE Employee(
                     empDep          INTEGER NOT NULL,
                     empID           TEXT NOT NULL UNIQUE,
-                    designation     TEXT CHECK(designation IN {}) NOT NULL,
+                    designation     INTEGER DEFAULT NULL,
                     firstName       TEXT CHECK(LENGTH(firstName) <= 50) NOT NULL,
                     lastName        TEXT CHECK(LENGTH(lastName) <= 50)  NOT NULL,
                     startDate       TEXT NOT NULL,
                     endDate         TEXT DEFAULT NULL,
                     summary         TEXT DEFAULT '',
                     PRIMARY KEY (empID),
-                    FOREIGN KEY (empDep) REFERENCES Department(depId)
-                    );'''.format(designation))
+                    FOREIGN KEY (empDep) REFERENCES Department(depId),
+                    FOREIGN KEY (designation) REFERENCES Designation(designationID)
+                    );''')
 
     print('Employee table created\n')
 
