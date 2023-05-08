@@ -91,7 +91,7 @@ def createEmployeeDesignationTable(cur):
     cur.execute('''CREATE TABLE EmployeeDesignation(
                         empID TEXT NOT NULL,
                         designationID     INTEGER NOT NULL,
-                        PRIMARY KEY (empID, designationID),
+                        PRIMARY KEY (empID),
                         FOREIGN KEY (empID) REFERENCES Employee(empID),
                         FOREIGN KEY (designationID) REFERENCES Designation(designationID)
                         );''')
