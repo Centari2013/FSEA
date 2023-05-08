@@ -90,7 +90,7 @@ def deleteDepartment(depID):
             con.close()
         return success
 
-
+# TODO: Add set department mission, employee mission, set specimen mission, set employee clearance, set specimen containment status, and set employee designation
 def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
     ID = None
     con = None
