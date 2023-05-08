@@ -1,13 +1,13 @@
 import sqlite3
 from utils.filePaths import DB_PATH
-from securityTables import *
-from departmentTables import *
-from employeeTables import *
-from originTables import *
-from missionTables import *
-from specimenTables import *
-from bridgeTables import *
-from searchResultsTables import *
+from database_setup.declaration.securityTables import *
+from database_setup.declaration.departmentTables import *
+from database_setup.declaration.employeeTables import *
+from database_setup.declaration.originTables import *
+from database_setup.declaration.missionTables import *
+from database_setup.declaration.specimenTables import *
+from database_setup.declaration.bridgeTables import *
+from database_setup.declaration.searchResultsTables import *
 
 # create new db (or open if already exists)
 con = sqlite3.connect(DB_PATH)
@@ -41,6 +41,8 @@ dropOriginTable(cur)
 dropMissionTable(cur)
 dropSpecimenTable(cur)
 dropEmployeeMedicalTable(cur)
+dropEmployeeDesignationTable(cur)
+dropDesignationTable(cur)
 dropEmployeeTable(cur)
 dropDepartmentTable(cur)
 con.commit()
@@ -50,11 +52,12 @@ con.commit()
 createDepartmentTable(cur)
 con.commit()
 
+createDesignationTable(cur)
 createEmployeeTable(cur)
+createEmployeeDesignationTable(cur)
 createEmployeeMedicalTable(cur)
 con.commit()
 
-# TODO: add other security tables here
 createCredentialsTable(cur)
 createClearanceTable(cur)
 createContainmentStatusTable(cur)

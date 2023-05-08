@@ -47,5 +47,5 @@ for i in range(300):
         "summary": gen.paragraph()
     })
 
-with open('test_data.json', 'w', encoding='utf-8') as f:
+with open('../initialization/test_data.json', 'w', encoding='utf-8') as f:
     json.dump(data, f)

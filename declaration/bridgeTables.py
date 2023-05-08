@@ -84,3 +84,27 @@ def dropDepartmentMissionTable(cur):
 
     except:
         print('DepartmentMission table does not exist\n')
+
+
+def createEmployeeDesignationTable(cur):
+    # create EmployeeDesignation table in db
+    cur.execute('''CREATE TABLE EmployeeDesignation(
+                        empID TEXT NOT NULL,
+                        designationID     INTEGER NOT NULL,
+                        PRIMARY KEY (empID, designationID),
+                        FOREIGN KEY (empID) REFERENCES Employee(empID),
+                        FOREIGN KEY (designationID) REFERENCES Designation(designationID)
+                        );''')
+
+    print('Designation table created\n')
+
+
+def dropEmployeeDesignationTable(cur):
+    # drop EmployeeDesignation table from database if it exists
+    try:
+        cur.execute('''DROP TABLE EmployeeDesignation''')
+
+        print('EmployeeDesignation table dropped\n')
+
+    except:
+        print('EmployeeDesignation table does not exist\n')
