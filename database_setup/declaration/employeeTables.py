@@ -27,7 +27,7 @@ def createEmployeeTable(cur):
     cur.execute('''CREATE TABLE Employee(
                     empDep          INTEGER NOT NULL,
                     empID           TEXT NOT NULL UNIQUE,
-                    designation     INTEGER DEFAULT NULL,
+                    designation      INTEGER,
                     firstName       TEXT CHECK(LENGTH(firstName) <= 50) NOT NULL,
                     lastName        TEXT CHECK(LENGTH(lastName) <= 50)  NOT NULL,
                     startDate       TEXT NOT NULL,
@@ -35,7 +35,7 @@ def createEmployeeTable(cur):
                     summary         TEXT DEFAULT '',
                     PRIMARY KEY (empID),
                     FOREIGN KEY (empDep) REFERENCES Department(depId),
-                    FOREIGN KEY (designation) REFERENCES Designation(designationID)
+                    FOREIGN KEY (designation) REFERENCES EmployeeDesignation(designationID)
                     );''')
 
     print('Employee table created\n')
@@ -109,8 +109,11 @@ def dropEmployee_ftsTable(cur):
 def createEmployeeTriggers(cur):
     cur.execute('''CREATE TRIGGER emp_inserts AFTER INSERT ON Employee
                     BEGIN
-                        INSERT INTO Employee_fts (empID, empDep, designation, firstName, lastName, summary)
-                        VALUES (new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
+                        INSERT INTO Employee_fts (empID, empDep, firstName, lastName, summary)
+                        VALUES (new.empID, new.empDep, new.firstName, new.lastName, new.summary);
+                        UPDATE Employee_fts 
+                        SET designation = (SELECT name FROM Designation WHERE new.designation = Designation.designationID)
+                        WHERE empID = new.empID;
                         INSERT INTO EmployeeMedical(empID)
                         VALUES (new.empID); 
                         INSERT INTO Credentials (empID)
@@ -130,7 +133,7 @@ def createEmployeeTriggers(cur):
                         UPDATE Employee_fts
                         SET empID = new.empID,
                             empDep = new.empDep,
-                            designation = new.designation,
+                            designation = (SELECT name FROM Designation WHERE new.designation = Designation.designationID),
                             firstName = new.firstName,
                             lastName = new.lastName,
                             summary = new.summary

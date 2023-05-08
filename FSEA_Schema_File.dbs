@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Sqlite" id="Project-1482" database="Sqlite" >
+	<schema name="Default" >
+		<table name="Clearance" spec="" >
+			<column name="clearanceID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="name" type="TEXT" jt="-1" />
+			<column name="description" type="TEXT" jt="-1" />
+			<index name="unq_Clearance_clearanceID" unique="UNIQUE_KEY" >
+				<column name="clearanceID" />
+			</index>
+			<index name="pk_Clearance" unique="PRIMARY_KEY" >
+				<column name="clearanceID" />
+			</index>
+		</table>
+		<table name="ContainmentStatus" spec="" >
+			<column name="statusID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="name" type="TEXT" jt="-1" />
+			<column name="description" type="TEXT" jt="-1" />
+			<index name="unq_ContainmentStatus_statusID" unique="UNIQUE_KEY" >
+				<column name="statusID" />
+			</index>
+			<index name="pk_ContainmentStatus" unique="PRIMARY_KEY" >
+				<column name="statusID" />
+			</index>
+		</table>
+		<table name="Credentials" spec="" >
+			<column name="empID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="username" type="TEXT" jt="-1" />
+			<column name="password" type="TEXT" jt="-1" />
+			<column name="loginAttempts" type="INTEGER" jt="4" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<index name="unq_Credentials_empID" unique="UNIQUE_KEY" >
+				<column name="empID" />
+			</index>
+			<index name="pk_Credentials" unique="PRIMARY_KEY" >
+				<column name="empID" />
+			</index>
+			<fk name="employeeID" to_schema="Default" to_table="Employee" delete_action="cascade" options="" >
+				<fk_column name="empID" pk="empID" />
+			</fk>
+		</table>
+		<table name="Department" spec="" >
+			<column name="depID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="depName" type="TEXT" jt="-1" mandatory="y" />
+			<column name="supervisorID" type="TEXT" jt="-1" />
+			<column name="description" type="TEXT" jt="-1" >
+				<defo><![CDATA['']]></defo>
+			</column>
+			<index name="unq_Department_depID" unique="UNIQUE_KEY" >
+				<column name="depID" />
+			</index>
+			<index name="pk_Department" unique="PRIMARY_KEY" >
+				<column name="depID" />
+			</index>
+		</table>
+		<table name="DepartmentMission" spec="" >
+			<column name="depID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="missionID" type="TEXT" jt="-1" mandatory="y" />
+			<index name="pk_DepartmentMission" unique="PRIMARY_KEY" >
+				<column name="depID" />
+				<column name="missionID" />
+			</index>
+			<fk name="depID" to_schema="Default" to_table="Department" delete_action="cascade" options="" >
+				<fk_column name="depID" pk="depID" />
+			</fk>
+			<fk name="missionID" to_schema="Default" to_table="Mission" delete_action="cascade" options="" >
+				<fk_column name="missionID" pk="missionID" />
+			</fk>
+		</table>
+		<table name="Department_fts" />
+		<table name="Department_fts_config" >
+			<column name="k" type="VARCHAR" jt="12" mandatory="y" />
+			<index name="pk_Department_fts_config" unique="PRIMARY_KEY" >
+				<column name="k" />
+			</index>
+		</table>
+		<table name="Department_fts_content" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_Department_fts_content" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Department_fts_data" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="block" type="BLOB" jt="2004" />
+			<index name="pk_Department_fts_data" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Department_fts_docsize" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="sz" type="BLOB" jt="2004" />
+			<index name="pk_Department_fts_docsize" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Department_fts_idx" />
+		<table name="Designation" spec="" >
+			<column name="designationID" type="INTEGER" jt="4" mandatory="y" />
+			<column name="name" type="TEXT" jt="-1" mandatory="y" />
+			<column name="abbreviation" type="TEXT" jt="-1" mandatory="y" />
+			<index name="unq_Designation_designationID" unique="UNIQUE_KEY" >
+				<column name="designationID" />
+			</index>
+			<index name="pk_Designation" unique="PRIMARY_KEY" >
+				<column name="designationID" />
+			</index>
+		</table>
+		<table name="Employee" spec="" >
+			<column name="empDep" type="INTEGER" jt="4" mandatory="y" />
+			<column name="empID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="designation" type="INTEGER" jt="4" />
+			<column name="firstName" type="TEXT" jt="-1" mandatory="y" />
+			<column name="lastName" type="TEXT" jt="-1" mandatory="y" />
+			<column name="startDate" type="TEXT" jt="-1" mandatory="y" />
+			<column name="endDate" type="TEXT" jt="-1" />
+			<column name="summary" type="TEXT" jt="-1" >
+				<defo><![CDATA['']]></defo>
+			</column>
+			<index name="unq_Employee_empID" unique="UNIQUE_KEY" >
+				<column name="empID" />
+			</index>
+			<index name="pk_Employee" unique="PRIMARY_KEY" >
+				<column name="empID" />
+			</index>
+			<constraint name="Cns_Employee_firstName" >
+				<string><![CDATA[LENGTH(firstName) <= 50]]></string>
+			</constraint>
+			<constraint name="Cns_Employee_lastName" >
+				<string><![CDATA[LENGTH(lastName) <= 50]]></string>
+			</constraint>
+			<fk name="FK_Employee Department" to_schema="Default" to_table="Department" options="" >
+				<fk_column name="empDep" pk="depID" />
+			</fk>
+			<fk name="FK_Employee Designation" to_schema="Default" to_table="Designation" options="" >
+				<fk_column name="designation" pk="designationID" />
+			</fk>
+		</table>
+		<table name="EmployeeClearance" spec="" >
+			<column name="empID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="clearanceID" type="INTEGER" jt="4" />
+			<index name="unq_EmployeeClearance_empID" unique="UNIQUE_KEY" >
+				<column name="empID" />
+			</index>
+			<index name="pk_EmployeeClearance" unique="PRIMARY_KEY" >
+				<column name="empID" />
+			</index>
+			<fk name="employeeID" to_schema="Default" to_table="Employee" delete_action="cascade" options="" >
+				<fk_column name="empID" pk="empID" />
+			</fk>
+			<fk name="clearanceID" to_schema="Default" to_table="Clearance" delete_action="cascade" options="" >
+				<fk_column name="clearanceID" pk="clearanceID" />
+			</fk>
+		</table>
+		<table name="EmployeeDesignation" spec="" >
+			<column name="empID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="designationID" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_EmployeeDesignation" unique="PRIMARY_KEY" >
+				<column name="empID" />
+				<column name="designationID" />
+			</index>
+			<fk name="FK_EmployeeDesignation Employee" to_schema="Default" to_table="Employee" options="" >
+				<fk_column name="empID" pk="empID" />
+			</fk>
+			<fk name="FK_EmployeeDesignation Designation" to_schema="Default" to_table="Designation" options="" >
+				<fk_column name="designationID" pk="designationID" />
+			</fk>
+		</table>
+		<table name="EmployeeMedical" spec="" >
+			<column name="empID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="dob" type="TEXT" jt="-1" />
+			<column name="bloodtype" type="TEXT" jt="-1" />
+			<column name="sex" type="TEXT" jt="-1" />
+			<column name="kilograms" type="REAL" jt="8" />
+			<column name="height" type="REAL" jt="8" />
+			<column name="notes" type="TEXT" jt="-1" >
+				<defo><![CDATA['']]></defo>
+			</column>
+			<index name="unq_EmployeeMedical_empID" unique="UNIQUE_KEY" >
+				<column name="empID" />
+			</index>
+			<index name="pk_EmployeeMedical" unique="PRIMARY_KEY" >
+				<column name="empID" />
+			</index>
+			<constraint name="Cns_EmployeeMedical_bloodtype" >
+				<string><![CDATA[bloodtype IN ('A+',  'O+',  'B+',  'AB+',  'A-',  'O-',  'B-',  'AB-',  'V-',  'V+',  'BF',  'undefined')]]></string>
+			</constraint>
+			<constraint name="Cns_EmployeeMedical_sex" >
+				<string><![CDATA[sex IN ('m',  'f',  'inter',  'unknown',  'undefined')]]></string>
+			</constraint>
+			<fk name="empID" to_schema="Default" to_table="Employee" delete_action="cascade" options="" >
+				<fk_column name="empID" pk="empID" />
+			</fk>
+		</table>
+		<table name="EmployeeMission" spec="" >
+			<column name="empID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="missionID" type="TEXT" jt="-1" mandatory="y" />
+			<index name="pk_EmployeeMission" unique="PRIMARY_KEY" >
+				<column name="empID" />
+				<column name="missionID" />
+			</index>
+			<fk name="empID" to_schema="Default" to_table="Employee" delete_action="cascade" options="" >
+				<fk_column name="empID" pk="empID" />
+			</fk>
+			<fk name="missionID" to_schema="Default" to_table="Mission" delete_action="cascade" options="" >
+				<fk_column name="missionID" pk="missionID" />
+			</fk>
+		</table>
+		<table name="EmployeeSpecimen" spec="" >
+			<column name="empID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="specimenID" type="TEXT" jt="-1" mandatory="y" />
+			<index name="pk_EmployeeSpecimen" unique="PRIMARY_KEY" >
+				<column name="empID" />
+				<column name="specimenID" />
+			</index>
+			<fk name="employeeID" to_schema="Default" to_table="Employee" delete_action="cascade" options="" >
+				<fk_column name="empID" pk="empID" />
+			</fk>
+			<fk name="specimenID" to_schema="Default" to_table="Specimen" delete_action="cascade" options="" >
+				<fk_column name="specimenID" pk="specimenID" />
+			</fk>
+		</table>
+		<table name="Employee_fts" />
+		<table name="Employee_fts_config" >
+			<column name="k" type="VARCHAR" jt="12" mandatory="y" />
+			<index name="pk_Employee_fts_config" unique="PRIMARY_KEY" >
+				<column name="k" />
+			</index>
+		</table>
+		<table name="Employee_fts_content" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_Employee_fts_content" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Employee_fts_data" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="block" type="BLOB" jt="2004" />
+			<index name="pk_Employee_fts_data" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Employee_fts_docsize" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="sz" type="BLOB" jt="2004" />
+			<index name="pk_Employee_fts_docsize" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Employee_fts_idx" />
+		<table name="Mission" spec="" >
+			<column name="missionID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="name" type="TEXT" jt="-1" mandatory="y" />
+			<column name="originID" type="TEXT" jt="-1" >
+				<defo><![CDATA['ORIGIN-PENDING']]></defo>
+			</column>
+			<column name="startDate" type="TEXT" jt="-1" />
+			<column name="endDate" type="TEXT" jt="-1" />
+			<column name="commanderID" type="TEXT" jt="-1" />
+			<column name="supervisorID" type="TEXT" jt="-1" />
+			<column name="description" type="TEXT" jt="-1" mandatory="y" />
+			<index name="unq_Mission_missionID" unique="UNIQUE_KEY" >
+				<column name="missionID" />
+			</index>
+			<index name="pk_Mission" unique="PRIMARY_KEY" >
+				<column name="missionID" />
+			</index>
+			<fk name="FK_Mission Employee" to_schema="Default" to_table="Employee" options="" >
+				<fk_column name="commanderID" pk="empID" />
+			</fk>
+			<fk name="FK_Mission Employee_001" to_schema="Default" to_table="Employee" options="" >
+				<fk_column name="supervisorID" pk="empID" />
+			</fk>
+		</table>
+		<table name="Mission_fts" />
+		<table name="Mission_fts_config" >
+			<column name="k" type="VARCHAR" jt="12" mandatory="y" />
+			<index name="pk_Mission_fts_config" unique="PRIMARY_KEY" >
+				<column name="k" />
+			</index>
+		</table>
+		<table name="Mission_fts_content" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_Mission_fts_content" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Mission_fts_data" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="block" type="BLOB" jt="2004" />
+			<index name="pk_Mission_fts_data" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Mission_fts_docsize" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="sz" type="BLOB" jt="2004" />
+			<index name="pk_Mission_fts_docsize" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Mission_fts_idx" />
+		<table name="Origin" spec="" >
+			<column name="originID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="name" type="TEXT" jt="-1" mandatory="y" />
+			<column name="missionID" type="TEXT" jt="-1" >
+				<defo><![CDATA['MISSION-PENDING']]></defo>
+			</column>
+			<column name="description" type="TEXT" jt="-1" mandatory="y" />
+			<index name="unq_Origin_originID" unique="UNIQUE_KEY" >
+				<column name="originID" />
+			</index>
+			<index name="pk_Origin" unique="PRIMARY_KEY" >
+				<column name="originID" />
+			</index>
+		</table>
+		<table name="Origin_fts" />
+		<table name="Origin_fts_config" >
+			<column name="k" type="VARCHAR" jt="12" mandatory="y" />
+			<index name="pk_Origin_fts_config" unique="PRIMARY_KEY" >
+				<column name="k" />
+			</index>
+		</table>
+		<table name="Origin_fts_content" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_Origin_fts_content" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Origin_fts_data" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="block" type="BLOB" jt="2004" />
+			<index name="pk_Origin_fts_data" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Origin_fts_docsize" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="sz" type="BLOB" jt="2004" />
+			<index name="pk_Origin_fts_docsize" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Origin_fts_idx" />
+		<table name="Specimen" spec="" >
+			<column name="specimenID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="name" type="TEXT" jt="-1" mandatory="y" />
+			<column name="origin" type="TEXT" jt="-1" />
+			<column name="missionID" type="TEXT" jt="-1" />
+			<column name="threatLevel" type="REAL" jt="8" />
+			<column name="acquisitionDate" type="TEXT" jt="-1" mandatory="y" />
+			<column name="notes" type="TEXT" jt="-1" />
+			<column name="description" type="TEXT" jt="-1" >
+				<defo><![CDATA['']]></defo>
+			</column>
+			<index name="unq_Specimen_specimenID" unique="UNIQUE_KEY" >
+				<column name="specimenID" />
+			</index>
+			<index name="pk_Specimen" unique="PRIMARY_KEY" >
+				<column name="specimenID" />
+			</index>
+			<fk name="originID" to_schema="Default" to_table="Origin" delete_action="cascade" options="" >
+				<fk_column name="origin" pk="originID" />
+			</fk>
+			<fk name="missionID" to_schema="Default" to_table="Mission" delete_action="cascade" options="" >
+				<fk_column name="missionID" pk="missionID" />
+			</fk>
+		</table>
+		<table name="SpecimenContainmentStatus" spec="" >
+			<column name="specimenID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="statusID" type="INTEGER" jt="4" />
+			<index name="unq_SpecimenContainmentStatus_specimenID" unique="UNIQUE_KEY" >
+				<column name="specimenID" />
+			</index>
+			<index name="pk_SpecimenContainmentStatus" unique="PRIMARY_KEY" >
+				<column name="specimenID" />
+			</index>
+			<fk name="SpecimenID" to_schema="Default" to_table="Specimen" delete_action="cascade" options="" >
+				<fk_column name="specimenID" pk="specimenID" />
+			</fk>
+			<fk name="statusID" to_schema="Default" to_table="ContainmentStatus" delete_action="cascade" options="" >
+				<fk_column name="statusID" pk="statusID" />
+			</fk>
+		</table>
+		<table name="SpecimenMedical" spec="" >
+			<column name="specimenID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="bloodtype" type="TEXT" jt="-1" />
+			<column name="sex" type="TEXT" jt="-1" />
+			<column name="kilograms" type="REAL" jt="8" />
+			<column name="notes" type="TEXT" jt="-1" />
+			<index name="pk_SpecimenMedical" unique="PRIMARY_KEY" >
+				<column name="specimenID" />
+			</index>
+			<constraint name="Cns_SpecimenMedical_bloodtype" >
+				<string><![CDATA[bloodtype IN ('A+',  'O+',  'B+',  'AB+',  'A-',  'O-',  'B-',  'AB-',  'V-',  'V+',  'BF',  'undefined')]]></string>
+			</constraint>
+			<constraint name="Cns_SpecimenMedical_sex" >
+				<string><![CDATA[sex IN ('m',  'f',  'inter',  'unknown',  'undefined')]]></string>
+			</constraint>
+			<fk name="specimenID" to_schema="Default" to_table="Specimen" delete_action="cascade" options="" >
+				<fk_column name="specimenID" pk="specimenID" />
+			</fk>
+		</table>
+		<table name="SpecimenMission" spec="" >
+			<column name="specimenID" type="TEXT" jt="-1" mandatory="y" />
+			<column name="missionID" type="TEXT" jt="-1" mandatory="y" />
+			<index name="pk_SpecimenMission" unique="PRIMARY_KEY" >
+				<column name="specimenID" />
+				<column name="missionID" />
+			</index>
+			<fk name="specimenID" to_schema="Default" to_table="Specimen" delete_action="cascade" options="" >
+				<fk_column name="specimenID" pk="specimenID" />
+			</fk>
+			<fk name="missionID" to_schema="Default" to_table="Mission" delete_action="cascade" options="" >
+				<fk_column name="missionID" pk="missionID" />
+			</fk>
+		</table>
+		<table name="Specimen_fts" />
+		<table name="Specimen_fts_config" >
+			<column name="k" type="VARCHAR" jt="12" mandatory="y" />
+			<index name="pk_Specimen_fts_config" unique="PRIMARY_KEY" >
+				<column name="k" />
+			</index>
+		</table>
+		<table name="Specimen_fts_content" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<index name="pk_Specimen_fts_content" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Specimen_fts_data" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="block" type="BLOB" jt="2004" />
+			<index name="pk_Specimen_fts_data" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Specimen_fts_docsize" spec="" >
+			<column name="id" type="INTEGER" jt="4" mandatory="y" />
+			<column name="sz" type="BLOB" jt="2004" />
+			<index name="pk_Specimen_fts_docsize" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="Specimen_fts_idx" />
+		<table name="search_results" spec="" >
+			<column name="type" type="TEXT" jt="-1" />
+			<column name="id" type="TEXT" jt="-1" />
+			<column name="firstName" type="TEXT" jt="-1" />
+			<column name="lastName" type="TEXT" jt="-1" />
+			<column name="description" type="TEXT" jt="-1" />
+			<column name="rank" type="INTEGER" jt="4" />
+		</table>
+		<trigger name="department_fts_delete" table="Department" id="Trigger-12cf" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER department_fts_delete AFTER DELETE ON Department
+                    BEGIN
+                        DELETE FROM Department_fts 
+                        WHERE depID = old.depID;
+                    END]]></string>
+		</trigger>
+		<trigger name="department_fts_insert" table="Department" id="Trigger-2617" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER department_fts_insert AFTER INSERT ON Department
+                    BEGIN
+                        INSERT INTO Department_fts (depID, depName, supervisorID, description)
+                        VALUES (new.depID, new.depName, new.supervisorID, new.description);
+                    END]]></string>
+		</trigger>
+		<trigger name="department_fts_update" table="Department" id="Trigger-14b" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER department_fts_update AFTER UPDATE ON Department
+                    BEGIN
+                        UPDATE Department_fts
+                        SET depID = new.depID, 
+                            depName = new.depName, 
+                            supervisorID = new.supervisorID, 
+                            description = new.description
+                        WHERE depID = old.depID;
+                    END]]></string>
+		</trigger>
+		<trigger name="emp_deletes" table="Employee" id="Trigger-7ae" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER emp_deletes AFTER DELETE ON Employee
+                    BEGIN
+                        DELETE FROM Employee_fts 
+                        WHERE empID = old.empID;
+                    END]]></string>
+		</trigger>
+		<trigger name="emp_fts_update" table="Employee" id="Trigger-19e6" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER emp_fts_update AFTER UPDATE ON Employee
+                    BEGIN
+                        UPDATE Employee_fts
+                        SET empID = new.empID,
+                            empDep = new.empDep,
+                            designation = new.designation,
+                            firstName = new.firstName,
+                            lastName = new.lastName,
+                            summary = new.summary
+                        WHERE empID = old.empID;
+                    END]]></string>
+		</trigger>
+		<trigger name="emp_inserts" table="Employee" id="Trigger-b9e" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER emp_inserts AFTER INSERT ON Employee
+                    BEGIN
+                        INSERT INTO Employee_fts (empID, empDep, designation, firstName, lastName, summary)
+                        VALUES (new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
+                        INSERT INTO EmployeeMedical(empID)
+                        VALUES (new.empID); 
+                        INSERT INTO Credentials (empID)
+                        VALUES (new.empID);
+                        INSERT INTO EmployeeClearance (empID) 
+                        VALUES (new.empID);
+                    END]]></string>
+		</trigger>
+		<trigger name="mission_fts_delete" table="Mission" id="Trigger-25f0" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mission_fts_delete AFTER DELETE ON Mission
+                    BEGIN
+                        DELETE FROM Mission_fts
+                        WHERE missionID = old.missionID;
+                    END]]></string>
+		</trigger>
+		<trigger name="mission_fts_insert" table="Mission" id="Trigger-6d0" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mission_fts_insert AFTER INSERT ON Mission
+                    BEGIN
+                        INSERT INTO Mission_fts (missionID, name, originID, startDate, endDate, commanderID, supervisorID, description)
+                        VALUES (new.missionID, new.name, new.originID, new.startDate, new.endDate, new.commanderID, new.supervisorID, new.description);
+                    END]]></string>
+		</trigger>
+		<trigger name="mission_fts_update" table="Mission" id="Trigger-1104" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER mission_fts_update AFTER UPDATE ON Mission
+                    BEGIN
+                        UPDATE Mission_fts
+                        SET missionID = new.missionID,
+                            name = new.name,
+                            originID = new.originID,
+                            startDate = new.startDate,
+                            endDate = new.endDate, 
+                            commanderID = new.commanderID,
+                            supervisorID = new.supervisorID,
+                            description = new.description
+                        WHERE missionID = old.missionID;
+                    END]]></string>
+		</trigger>
+		<trigger name="origin_fts_delete" table="Origin" id="Trigger-118a" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER origin_fts_delete AFTER DELETE ON Origin
+                    BEGIN
+                        DELETE FROM Origin_fts 
+                        WHERE originID = old.originID;
+                    END]]></string>
+		</trigger>
+		<trigger name="origin_fts_insert" table="Origin" id="Trigger-144" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER origin_fts_insert AFTER INSERT ON Origin
+                    BEGIN
+                        INSERT INTO Origin_fts (originID, name, missionID, description)
+                        VALUES (new.originID, new.name, new.missionID, new.description);
+                    END]]></string>
+		</trigger>
+		<trigger name="origin_fts_update" table="Origin" id="Trigger-df4" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER origin_fts_update AFTER UPDATE ON Origin
+                    BEGIN
+                        UPDATE Origin_fts
+                        SET originID = new.originID,
+                            name = new.name,
+                            missionID = new.missionID,
+                            description = new.description
+                        WHERE originID = old.originID;
+                    END]]></string>
+		</trigger>
+		<trigger name="specimen_fts_delete" table="Specimen" id="Trigger-c18" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER specimen_fts_delete AFTER DELETE ON Specimen
+                    BEGIN
+                        DELETE FROM Specimen_fts
+                        WHERE specimenID = old.specimenID;
+                    END]]></string>
+		</trigger>
+		<trigger name="specimen_fts_update" table="Specimen" id="Trigger-1847" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER specimen_fts_update AFTER UPDATE ON Specimen
+                    BEGIN
+                        UPDATE Specimen_fts
+                        SET specimenID = new.specimenID,
+                            name = new.name,
+                            origin = new.origin,
+                            missionID = new.missionID,
+                            threatLevel = new.threatLevel,
+                            acquisitionDate = new.acquisitionDate,
+                            notes = new.notes,
+                            description = new.description
+                        WHERE specimenID = old.specimenID;
+                        UPDATE SpecimenMedical
+                        SET specimenID = new.specimenID
+                        WHERE specimenID = old.specimenID;
+                    END]]></string>
+		</trigger>
+		<trigger name="specimen_inserts" table="Specimen" id="Trigger-5ec" isSystem="false" >
+			<string><![CDATA[CREATE TRIGGER specimen_inserts AFTER INSERT ON Specimen
+                    BEGIN
+                        INSERT INTO Specimen_fts (specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
+                        VALUES (new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
+                        INSERT INTO SpecimenMedical (specimenID)
+                        VALUES (new.specimenID);
+                        INSERT INTO SpecimenContainmentStatus (specimenID)
+                        VALUES (new.specimenID);
+                    END]]></string>
+		</trigger>
+	</schema>
+	<connector name="Sqlite" database="Sqlite" driver_class="org.sqlite.JDBC" driver_jar="sqlite-jdbc-3.40.0.0.jar" driver_desc="Standard" host="localhost" port="7210" instance="F:/FSEA/FSEA.db" useSystemProxy="false" />
+	<layout name="Main Layout" id="Layout-1598" show_relation="columns" >
+		<entity schema="Default" name="Clearance" color="D1BEF4" x="1696" y="752" />
+		<entity schema="Default" name="ContainmentStatus" color="BEBEF4" x="3040" y="80" />
+		<entity schema="Default" name="Credentials" color="C7F4BE" x="48" y="752" />
+		<entity schema="Default" name="Department" color="BED3F4" x="336" y="752" />
+		<entity schema="Default" name="DepartmentMission" color="BED3F4" x="544" y="752" />
+		<entity schema="Default" name="Department_fts" color="BED3F4" x="336" y="960" />
+		<entity schema="Default" name="Department_fts_config" color="BED3F4" x="544" y="960" />
+		<entity schema="Default" name="Department_fts_content" color="BED3F4" x="784" y="960" />
+		<entity schema="Default" name="Department_fts_data" color="BED3F4" x="304" y="1104" />
+		<entity schema="Default" name="Department_fts_docsize" color="BED3F4" x="784" y="1120" />
+		<entity schema="Default" name="Department_fts_idx" color="BED3F4" x="544" y="1136" />
+		<entity schema="Default" name="Designation" color="F4DDBE" x="992" y="512" />
+		<entity schema="Default" name="Employee" color="F4DDBE" x="784" y="240" />
+		<entity schema="Default" name="EmployeeClearance" color="D1BEF4" x="1472" y="752" />
+		<entity schema="Default" name="EmployeeDesignation" color="F4DDBE" x="752" y="512" />
+		<entity schema="Default" name="EmployeeMedical" color="F4DDBE" x="560" y="256" />
+		<entity schema="Default" name="EmployeeMission" color="F4DDBE" x="992" y="240" />
+		<entity schema="Default" name="EmployeeSpecimen" color="D1BEF4" x="1248" y="752" />
+		<entity schema="Default" name="Employee_fts" color="F4DDBE" x="352" y="96" />
+		<entity schema="Default" name="Employee_fts_config" color="F4DDBE" x="544" y="80" />
+		<entity schema="Default" name="Employee_fts_content" color="F4DDBE" x="784" y="80" />
+		<entity schema="Default" name="Employee_fts_data" color="D1BEF4" x="1472" y="928" />
+		<entity schema="Default" name="Employee_fts_docsize" color="F4DDBE" x="304" y="240" />
+		<entity schema="Default" name="Employee_fts_idx" color="D1BEF4" x="1696" y="960" />
+		<entity schema="Default" name="Mission" color="C7F4BE" x="1248" y="80" />
+		<entity schema="Default" name="Mission_fts" color="C7F4BE" x="2336" y="512" />
+		<entity schema="Default" name="Mission_fts_config" color="C7F4BE" x="1472" y="352" />
+		<entity schema="Default" name="Mission_fts_content" color="C7F4BE" x="1696" y="352" />
+		<entity schema="Default" name="Mission_fts_data" color="C7F4BE" x="1920" y="512" />
+		<entity schema="Default" name="Mission_fts_docsize" color="C7F4BE" x="1696" y="512" />
+		<entity schema="Default" name="Mission_fts_idx" color="C7F4BE" x="2128" y="512" />
+		<entity schema="Default" name="Origin" color="BED3F4" x="3904" y="80" />
+		<entity schema="Default" name="Origin_fts" color="BED3F4" x="4528" y="416" />
+		<entity schema="Default" name="Origin_fts_config" color="BED3F4" x="4112" y="80" />
+		<entity schema="Default" name="Origin_fts_content" color="BED3F4" x="4320" y="80" />
+		<entity schema="Default" name="Origin_fts_data" color="BED3F4" x="4320" y="240" />
+		<entity schema="Default" name="Origin_fts_docsize" color="BED3F4" x="4528" y="240" />
+		<entity schema="Default" name="Origin_fts_idx" color="BED3F4" x="4320" y="416" />
+		<entity schema="Default" name="Specimen" color="BEBEF4" x="2528" y="80" />
+		<entity schema="Default" name="SpecimenContainmentStatus" color="BEBEF4" x="2752" y="80" />
+		<entity schema="Default" name="SpecimenMedical" color="C7F4BE" x="1680" y="80" />
+		<entity schema="Default" name="SpecimenMission" color="C7F4BE" x="1472" y="80" />
+		<entity schema="Default" name="Specimen_fts" color="BEBEF4" x="3664" y="512" />
+		<entity schema="Default" name="Specimen_fts_config" color="BEBEF4" x="2608" y="496" />
+		<entity schema="Default" name="Specimen_fts_content" color="BEBEF4" x="2992" y="352" />
+		<entity schema="Default" name="Specimen_fts_data" color="BEBEF4" x="3232" y="512" />
+		<entity schema="Default" name="Specimen_fts_docsize" color="BEBEF4" x="2992" y="512" />
+		<entity schema="Default" name="Specimen_fts_idx" color="BEBEF4" x="3456" y="512" />
+		<entity schema="Default" name="search_results" color="3986C1" x="3904" y="736" />
+		<group name="Credentials" color="EEF7EC" >
+			<entity schema="Default" name="Credentials" />
+		</group>
+		<group name="Origin" color="ECF0F7" >
+			<entity schema="Default" name="Origin" />
+			<entity schema="Default" name="Origin_fts_config" />
+			<entity schema="Default" name="Origin_fts_content" />
+			<entity schema="Default" name="Origin_fts_data" />
+			<entity schema="Default" name="Origin_fts_docsize" />
+			<entity schema="Default" name="Origin_fts" />
+			<entity schema="Default" name="Origin_fts_idx" />
+		</group>
+		<group name="Department" color="ECF0F7" >
+			<entity schema="Default" name="Department" />
+			<entity schema="Default" name="DepartmentMission" />
+			<entity schema="Default" name="Department_fts_config" />
+			<entity schema="Default" name="Department_fts_content" />
+			<entity schema="Default" name="Department_fts_docsize" />
+			<entity schema="Default" name="Department_fts" />
+			<entity schema="Default" name="Department_fts_data" />
+			<entity schema="Default" name="Department_fts_idx" />
+		</group>
+		<group name="EmployeeSpecimen" color="F0ECF7" >
+			<entity schema="Default" name="EmployeeSpecimen" />
+			<entity schema="Default" name="EmployeeClearance" />
+			<entity schema="Default" name="Clearance" />
+			<entity schema="Default" name="Employee_fts_data" />
+			<entity schema="Default" name="Employee_fts_idx" />
+		</group>
+		<group name="Mission" color="EEF7EC" >
+			<entity schema="Default" name="Mission" />
+			<entity schema="Default" name="SpecimenMission" />
+			<entity schema="Default" name="SpecimenMedical" />
+			<entity schema="Default" name="Mission_fts_config" />
+			<entity schema="Default" name="Mission_fts_content" />
+			<entity schema="Default" name="Mission_fts_docsize" />
+			<entity schema="Default" name="Mission_fts_data" />
+			<entity schema="Default" name="Mission_fts_idx" />
+			<entity schema="Default" name="Mission_fts" />
+		</group>
+		<group name="Specimen" color="ECECF7" >
+			<entity schema="Default" name="Specimen" />
+			<entity schema="Default" name="SpecimenContainmentStatus" />
+			<entity schema="Default" name="ContainmentStatus" />
+			<entity schema="Default" name="Specimen_fts_content" />
+			<entity schema="Default" name="Specimen_fts_docsize" />
+			<entity schema="Default" name="Specimen_fts_data" />
+			<entity schema="Default" name="Specimen_fts_idx" />
+			<entity schema="Default" name="Specimen_fts" />
+			<entity schema="Default" name="Specimen_fts_config" />
+		</group>
+		<group name="Employee" color="F7F2EC" >
+			<entity schema="Default" name="Employee" />
+			<entity schema="Default" name="EmployeeMission" />
+			<entity schema="Default" name="Designation" />
+			<entity schema="Default" name="EmployeeDesignation" />
+			<entity schema="Default" name="EmployeeMedical" />
+			<entity schema="Default" name="Employee_fts_config" />
+			<entity schema="Default" name="Employee_fts_content" />
+			<entity schema="Default" name="Employee_fts_docsize" />
+			<entity schema="Default" name="Employee_fts" />
+		</group>
+	</layout>
+	<layout name="~Layout with Sample Tools" id="Layout-d63" show_column_type="y" show_relation="columns" >
+		<entity schema="Default" name="Clearance" color="D1BEF4" x="1888" y="720" />
+		<entity schema="Default" name="ContainmentStatus" color="BEBEF4" x="3264" y="48" />
+		<entity schema="Default" name="Credentials" color="C7F4BE" x="48" y="720" />
+		<entity schema="Default" name="Department" color="BED3F4" x="352" y="720" />
+		<entity schema="Default" name="DepartmentMission" color="BED3F4" x="592" y="720" />
+		<entity schema="Default" name="Department_fts" color="BED3F4" x="352" y="928" />
+		<entity schema="Default" name="Department_fts_config" color="BED3F4" x="592" y="928" />
+		<entity schema="Default" name="Department_fts_content" color="BED3F4" x="832" y="928" />
+		<entity schema="Default" name="Department_fts_data" color="BED3F4" x="352" y="1072" />
+		<entity schema="Default" name="Department_fts_docsize" color="BED3F4" x="832" y="1088" />
+		<entity schema="Default" name="Department_fts_idx" color="BED3F4" x="592" y="1104" />
+		<entity schema="Default" name="Designation" color="F4DDBE" x="1088" y="480" />
+		<entity schema="Default" name="Employee" color="F4DDBE" x="832" y="208" />
+		<entity schema="Default" name="EmployeeClearance" color="D1BEF4" x="1632" y="720" />
+		<entity schema="Default" name="EmployeeDesignation" color="F4DDBE" x="816" y="480" />
+		<entity schema="Default" name="EmployeeMedical" color="F4DDBE" x="608" y="224" />
+		<entity schema="Default" name="EmployeeMission" color="F4DDBE" x="1088" y="208" />
+		<entity schema="Default" name="EmployeeSpecimen" color="D1BEF4" x="1392" y="720" />
+		<entity schema="Default" name="Employee_fts" color="F4DDBE" x="1088" y="64" />
+		<entity schema="Default" name="Employee_fts_config" color="F4DDBE" x="592" y="48" />
+		<entity schema="Default" name="Employee_fts_content" color="F4DDBE" x="832" y="48" />
+		<entity schema="Default" name="Employee_fts_data" color="D1BEF4" x="1632" y="896" />
+		<entity schema="Default" name="Employee_fts_docsize" color="F4DDBE" x="352" y="208" />
+		<entity schema="Default" name="Employee_fts_idx" color="D1BEF4" x="1856" y="928" />
+		<entity schema="Default" name="Mission" color="C7F4BE" x="1392" y="48" />
+		<entity schema="Default" name="Mission_fts" color="C7F4BE" x="2512" y="480" />
+		<entity schema="Default" name="Mission_fts_config" color="C7F4BE" x="1648" y="320" />
+		<entity schema="Default" name="Mission_fts_content" color="C7F4BE" x="1872" y="320" />
+		<entity schema="Default" name="Mission_fts_data" color="C7F4BE" x="2096" y="480" />
+		<entity schema="Default" name="Mission_fts_docsize" color="C7F4BE" x="1872" y="480" />
+		<entity schema="Default" name="Mission_fts_idx" color="C7F4BE" x="2304" y="480" />
+		<entity schema="Default" name="Origin" color="BED3F4" x="4112" y="48" />
+		<entity schema="Default" name="Origin_fts" color="BED3F4" x="4752" y="384" />
+		<entity schema="Default" name="Origin_fts_config" color="BED3F4" x="4336" y="48" />
+		<entity schema="Default" name="Origin_fts_content" color="BED3F4" x="4544" y="48" />
+		<entity schema="Default" name="Origin_fts_data" color="BED3F4" x="4544" y="208" />
+		<entity schema="Default" name="Origin_fts_docsize" color="BED3F4" x="4752" y="208" />
+		<entity schema="Default" name="Origin_fts_idx" color="BED3F4" x="4544" y="384" />
+		<entity schema="Default" name="Specimen" color="BEBEF4" x="2720" y="48" />
+		<entity schema="Default" name="SpecimenContainmentStatus" color="BEBEF4" x="2976" y="48" />
+		<entity schema="Default" name="SpecimenMedical" color="C7F4BE" x="1888" y="48" />
+		<entity schema="Default" name="SpecimenMission" color="C7F4BE" x="1648" y="48" />
+		<entity schema="Default" name="Specimen_fts" color="BEBEF4" x="3888" y="480" />
+		<entity schema="Default" name="Specimen_fts_config" color="BEBEF4" x="2976" y="320" />
+		<entity schema="Default" name="Specimen_fts_content" color="BEBEF4" x="3216" y="320" />
+		<entity schema="Default" name="Specimen_fts_data" color="BEBEF4" x="3456" y="480" />
+		<entity schema="Default" name="Specimen_fts_docsize" color="BEBEF4" x="3216" y="480" />
+		<entity schema="Default" name="Specimen_fts_idx" color="BEBEF4" x="3680" y="480" />
+		<entity schema="Default" name="search_results" color="3986C1" x="4112" y="704" />
+		<script name="SQL Editor" id="Editor-20cc" language="SQL" >
+			<string><![CDATA[SELECT
+	empDep, empID, designation, firstName, lastName, startDate, endDate, summary
+FROM
+	Employee e;]]></string>
+		</script>
+		<browser id="Browse-10c2" name="Relational Data Explorer" confirm_updates="y" >
+			<browse_table schema="Default" entity="Employee" x="20" y="20" width="400" height="300" >
+				<browse_table schema="Default" entity="Credentials" fk="employeeID" x="440" y="20" width="500" height="350" />
+			</browse_table>
+		</browser>
+		<query id="Query-2121" name="Query Builder" >
+			<query_table schema="Default" name="Employee" alias="e" x="48" y="48" >
+				<column name="empDep" />
+				<column name="empID" />
+				<column name="designation" />
+				<column name="firstName" />
+				<column name="lastName" />
+				<column name="startDate" />
+				<column name="endDate" />
+				<column name="summary" />
+				<query_table schema="Default" name="Credentials" alias="c" x="256" y="48" fk="employeeID" type="Inner Join" >
+					<column name="empID" />
+					<column name="username" />
+					<column name="password" />
+					<column name="loginAttempts" />
+				</query_table>
+			</query_table>
+		</query>
+		<form name="Report" id="Report-209e" template="Page" css="container-fluid" view="frame" >
+			<var name="samplePageNumber" type="4" value="0" mandatory="n" />
+			<var name="sampleRecordsPerPage" type="4" value="100" mandatory="n" />
+			<body name="Body" template="Grid" pos="0,0,0,0,f,f" layout="{{-2,-2,-2,-2,-1},{-2,-2,-2,-2}}" scroll="n" html="n" >
+				<cell type="label" name="Employee Data" template="H3" pos="0,0,1,0,l,c" />
+				<cell type="chart" name="Pie" template="Pie" pos="0,1,4,1,l,c" max_records="20" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="empDep" type="4" />
+						<var name="empID" type="-1" />
+						<var name="designation" type="4" />
+						<var name="firstName" type="-1" />
+						<var name="lastName" type="-1" />
+						<var name="startDate" type="-1" />
+						<var name="endDate" type="-1" />
+						<var name="summary" type="-1" />
+						<script ><![CDATA[SELECT * FROM Employee]]></script>
+					</form_script>
+					<param name="i0" value="startDate" />
+					<param name="width" value="100%" />
+					<param name="v0" value="empDep" />
+					<param name="title" value="Sample Chart" />
+					<param name="height" value="400px" />
+				</cell>
+				<tableview name="sample" template="Table" css="table table-striped table-sm table-hover" pos="0,2,4,2,f,f" layout="{{-2,-2,-2,-2,-2,-2,-2},{-2,-2}}" scroll="n" html="n" header_rows="1" >
+					<form_script type="DataSource" language="SQL" >
+						<var name="empDep" type="4" />
+						<var name="empID" type="-1" />
+						<var name="designation" type="4" />
+						<var name="firstName" type="-1" />
+						<var name="lastName" type="-1" />
+						<var name="startDate" type="-1" />
+						<var name="endDate" type="-1" />
+						<var name="summary" type="-1" />
+						<script ><![CDATA[SELECT * FROM Employee]]></script>
+					</form_script>
+					<cell type="label" name="empDep" pos="0,0,0,0,c,c" />
+					<cell type="label" name="empID" pos="1,0,1,0,c,c" />
+					<cell type="label" name="designation" pos="2,0,2,0,c,c" />
+					<cell type="label" name="firstName" pos="3,0,3,0,c,c" />
+					<cell type="label" name="lastName" pos="4,0,4,0,c,c" />
+					<cell type="label" name="startDate" pos="5,0,5,0,c,c" />
+					<cell type="label" name="Button can open other pages." pos="6,0,6,0,c,c" />
+					<cell type="label" name="${empDep}" template="Plain" pos="0,1,0,1,l,c" />
+					<cell type="label" name="${empID}" template="Plain" pos="1,1,1,1,l,c" />
+					<cell type="label" name="${designation}" template="Plain" pos="2,1,2,1,l,c" />
+					<cell type="label" name="${firstName}" template="Plain" pos="3,1,3,1,l,c" />
+					<cell type="label" name="${lastName}" template="Plain" pos="4,1,4,1,l,c" />
+					<cell type="label" name="${startDate}" template="Plain" pos="5,1,5,1,l,c" />
+					<cell type="button" name="More" template="Plain" css="btn btn-sm btn-secondary" pos="6,1,6,1,c,c" ref_id="Report-209e" />
+				</tableview>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="0,3,0,3,l,c" glyph="bi-chevron_double_left" ref_id="Report-209e" >
+					<var name="samplePageNumber" value="0" />
+				</cell>
+				<cell type="href" name="" disabled="${samplePageNumber&lt;1}" pos="1,3,1,3,l,c" glyph="bi-chevron_left" ref_id="Report-209e" >
+					<var name="samplePageNumber" value="${Math.max(0,samplePageNumber-1)}" />
+				</cell>
+				<cell type="label" name="Page ${samplePageNumber+1}" pos="2,3,2,3,l,c" />
+				<cell type="href" name="" disabled="${!sampleHasNextPage}" pos="3,3,3,3,l,c" glyph="bi-chevron_right" ref_id="Report-209e" >
+					<var name="samplePageNumber" value="${( samplePageNumber+1 )}" />
+				</cell>
+			</body>
+		</form>
+	</layout>
+</project>

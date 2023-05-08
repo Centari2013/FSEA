@@ -26,7 +26,7 @@ def getDepartmentData(depID):
         return data
 
 
-# TODO: Add get employee clearance, and specimen containment status
+# TODO: Add get department mission, employee mission, get specimen mission, get employee clearance, get specimen containment status, and get employee designation
 def getEmployeeData(empID):
     con = None
     data = None
@@ -34,7 +34,8 @@ def getEmployeeData(empID):
         con = sqlite3.connect(DB_PATH)
         con.row_factory = dict_factory
         cur = con.cursor()
-        cur.execute('SELECT * FROM Employee WHERE empID = ?', (empID,))
+
+        cur.execute('''SELECT * FROM Employee WHERE empID = ?''', (empID,))
         data = cur.fetchone()
     except Exception as e:
         print(e)
