@@ -23,7 +23,8 @@ def dropEmployeeSpecimenTable(cur):
 def createEmployeeMissionTable(cur):
     cur.execute('''CREATE TABLE EmployeeMission(
                     empID  TEXT NOT NULL,
-                    missionID TEXT NOT NULL, 
+                    missionID TEXT NOT NULL,
+                    involvementSummary TEXT DEFAULT NULL,
                     PRIMARY KEY (empID, missionID),
                     CONSTRAINT empID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE,
                     CONSTRAINT missionID FOREIGN KEY (missionID) REFERENCES Mission(missionID) ON DELETE CASCADE 
@@ -45,7 +46,8 @@ def dropEmployeeMissionTable(cur):
 def createSpecimenMission(cur):
     cur.execute('''CREATE TABLE SpecimenMission(
                     specimenID  TEXT NOT NULL,
-                    missionID TEXT NOT NULL, 
+                    missionID TEXT NOT NULL,
+                    involvementSummary TEXT DEFAULT NULL,
                     PRIMARY KEY (specimenID, missionID),
                     CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE,
                     CONSTRAINT missionID FOREIGN KEY (missionID) REFERENCES Mission(missionID) ON DELETE CASCADE 
