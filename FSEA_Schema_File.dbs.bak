@@ -133,7 +133,7 @@
 			<fk name="FK_Employee Department" to_schema="Default" to_table="Department" options="" >
 				<fk_column name="empDep" pk="depID" />
 			</fk>
-			<fk name="FK_Employee EmployeeDesignation" to_schema="Default" to_table="EmployeeDesignation" options="" >
+			<fk name="FK_Employee Designation" to_schema="Default" to_table="Designation" options="" >
 				<fk_column name="designation" pk="designationID" />
 			</fk>
 		</table>
@@ -158,6 +158,7 @@
 			<column name="designationID" type="INTEGER" jt="4" mandatory="y" />
 			<index name="pk_EmployeeDesignation" unique="PRIMARY_KEY" >
 				<column name="empID" />
+				<column name="designationID" />
 			</index>
 			<fk name="FK_EmployeeDesignation Employee" to_schema="Default" to_table="Employee" options="" >
 				<fk_column name="empID" pk="empID" />
@@ -451,21 +452,21 @@
 			<column name="description" type="TEXT" jt="-1" />
 			<column name="rank" type="INTEGER" jt="4" />
 		</table>
-		<trigger name="department_fts_delete" table="Department" id="Trigger-1582" isSystem="false" >
+		<trigger name="department_fts_delete" table="Department" id="Trigger-12cf" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER department_fts_delete AFTER DELETE ON Department
                     BEGIN
                         DELETE FROM Department_fts 
                         WHERE depID = old.depID;
                     END]]></string>
 		</trigger>
-		<trigger name="department_fts_insert" table="Department" id="Trigger-18f9" isSystem="false" >
+		<trigger name="department_fts_insert" table="Department" id="Trigger-2617" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER department_fts_insert AFTER INSERT ON Department
                     BEGIN
                         INSERT INTO Department_fts (depID, depName, supervisorID, description)
                         VALUES (new.depID, new.depName, new.supervisorID, new.description);
                     END]]></string>
 		</trigger>
-		<trigger name="department_fts_update" table="Department" id="Trigger-430" isSystem="false" >
+		<trigger name="department_fts_update" table="Department" id="Trigger-14b" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER department_fts_update AFTER UPDATE ON Department
                     BEGIN
                         UPDATE Department_fts
@@ -476,34 +477,31 @@
                         WHERE depID = old.depID;
                     END]]></string>
 		</trigger>
-		<trigger name="emp_deletes" table="Employee" id="Trigger-1aae" isSystem="false" >
+		<trigger name="emp_deletes" table="Employee" id="Trigger-7ae" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER emp_deletes AFTER DELETE ON Employee
                     BEGIN
                         DELETE FROM Employee_fts 
                         WHERE empID = old.empID;
                     END]]></string>
 		</trigger>
-		<trigger name="emp_fts_update" table="Employee" id="Trigger-259a" isSystem="false" >
+		<trigger name="emp_fts_update" table="Employee" id="Trigger-19e6" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER emp_fts_update AFTER UPDATE ON Employee
                     BEGIN
                         UPDATE Employee_fts
                         SET empID = new.empID,
                             empDep = new.empDep,
-                            designation = (SELECT name FROM Designation WHERE new.designation = Designation.designationID),
+                            designation = new.designation,
                             firstName = new.firstName,
                             lastName = new.lastName,
                             summary = new.summary
                         WHERE empID = old.empID;
                     END]]></string>
 		</trigger>
-		<trigger name="emp_inserts" table="Employee" id="Trigger-1efe" isSystem="false" >
+		<trigger name="emp_inserts" table="Employee" id="Trigger-b9e" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER emp_inserts AFTER INSERT ON Employee
                     BEGIN
-                        INSERT INTO Employee_fts (empID, empDep, firstName, lastName, summary)
-                        VALUES (new.empID, new.empDep, new.firstName, new.lastName, new.summary);
-                        UPDATE Employee_fts 
-                        SET designation = (SELECT name FROM Designation WHERE new.designation = Designation.designationID)
-                        WHERE empID = new.empID;
+                        INSERT INTO Employee_fts (empID, empDep, designation, firstName, lastName, summary)
+                        VALUES (new.empID, new.empDep, new.designation, new.firstName, new.lastName, new.summary);
                         INSERT INTO EmployeeMedical(empID)
                         VALUES (new.empID); 
                         INSERT INTO Credentials (empID)
@@ -512,21 +510,21 @@
                         VALUES (new.empID);
                     END]]></string>
 		</trigger>
-		<trigger name="mission_fts_delete" table="Mission" id="Trigger-e30" isSystem="false" >
+		<trigger name="mission_fts_delete" table="Mission" id="Trigger-25f0" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER mission_fts_delete AFTER DELETE ON Mission
                     BEGIN
                         DELETE FROM Mission_fts
                         WHERE missionID = old.missionID;
                     END]]></string>
 		</trigger>
-		<trigger name="mission_fts_insert" table="Mission" id="Trigger-25c9" isSystem="false" >
+		<trigger name="mission_fts_insert" table="Mission" id="Trigger-6d0" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER mission_fts_insert AFTER INSERT ON Mission
                     BEGIN
                         INSERT INTO Mission_fts (missionID, name, originID, startDate, endDate, commanderID, supervisorID, description)
                         VALUES (new.missionID, new.name, new.originID, new.startDate, new.endDate, new.commanderID, new.supervisorID, new.description);
                     END]]></string>
 		</trigger>
-		<trigger name="mission_fts_update" table="Mission" id="Trigger-69d" isSystem="false" >
+		<trigger name="mission_fts_update" table="Mission" id="Trigger-1104" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER mission_fts_update AFTER UPDATE ON Mission
                     BEGIN
                         UPDATE Mission_fts
@@ -541,21 +539,21 @@
                         WHERE missionID = old.missionID;
                     END]]></string>
 		</trigger>
-		<trigger name="origin_fts_delete" table="Origin" id="Trigger-1d99" isSystem="false" >
+		<trigger name="origin_fts_delete" table="Origin" id="Trigger-118a" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER origin_fts_delete AFTER DELETE ON Origin
                     BEGIN
                         DELETE FROM Origin_fts 
                         WHERE originID = old.originID;
                     END]]></string>
 		</trigger>
-		<trigger name="origin_fts_insert" table="Origin" id="Trigger-19d3" isSystem="false" >
+		<trigger name="origin_fts_insert" table="Origin" id="Trigger-144" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER origin_fts_insert AFTER INSERT ON Origin
                     BEGIN
                         INSERT INTO Origin_fts (originID, name, missionID, description)
                         VALUES (new.originID, new.name, new.missionID, new.description);
                     END]]></string>
 		</trigger>
-		<trigger name="origin_fts_update" table="Origin" id="Trigger-1d0a" isSystem="false" >
+		<trigger name="origin_fts_update" table="Origin" id="Trigger-df4" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER origin_fts_update AFTER UPDATE ON Origin
                     BEGIN
                         UPDATE Origin_fts
@@ -566,14 +564,14 @@
                         WHERE originID = old.originID;
                     END]]></string>
 		</trigger>
-		<trigger name="specimen_fts_delete" table="Specimen" id="Trigger-5c9" isSystem="false" >
+		<trigger name="specimen_fts_delete" table="Specimen" id="Trigger-c18" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER specimen_fts_delete AFTER DELETE ON Specimen
                     BEGIN
                         DELETE FROM Specimen_fts
                         WHERE specimenID = old.specimenID;
                     END]]></string>
 		</trigger>
-		<trigger name="specimen_fts_update" table="Specimen" id="Trigger-48d" isSystem="false" >
+		<trigger name="specimen_fts_update" table="Specimen" id="Trigger-1847" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER specimen_fts_update AFTER UPDATE ON Specimen
                     BEGIN
                         UPDATE Specimen_fts
@@ -591,7 +589,7 @@
                         WHERE specimenID = old.specimenID;
                     END]]></string>
 		</trigger>
-		<trigger name="specimen_inserts" table="Specimen" id="Trigger-2702" isSystem="false" >
+		<trigger name="specimen_inserts" table="Specimen" id="Trigger-5ec" isSystem="false" >
 			<string><![CDATA[CREATE TRIGGER specimen_inserts AFTER INSERT ON Specimen
                     BEGIN
                         INSERT INTO Specimen_fts (specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
@@ -767,7 +765,7 @@
 		<entity schema="Default" name="Specimen_fts_docsize" color="BEBEF4" x="3216" y="480" />
 		<entity schema="Default" name="Specimen_fts_idx" color="BEBEF4" x="3680" y="480" />
 		<entity schema="Default" name="search_results" color="3986C1" x="4112" y="704" />
-		<script name="SQL Editor" id="Editor-21ee" language="SQL" >
+		<script name="SQL Editor" id="Editor-20cc" language="SQL" >
 			<string><![CDATA[SELECT
 	empDep, empID, designation, firstName, lastName, startDate, endDate, summary
 FROM
@@ -782,6 +780,7 @@ FROM
 			<query_table schema="Default" name="Employee" alias="e" x="48" y="48" >
 				<column name="empDep" />
 				<column name="empID" />
+				<column name="designation" />
 				<column name="firstName" />
 				<column name="lastName" />
 				<column name="startDate" />

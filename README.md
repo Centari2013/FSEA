@@ -20,9 +20,8 @@ The left-hand buttons filter search results.
 ![image](https://user-images.githubusercontent.com/60724207/205428048-928f1f39-fbd7-4424-8207-099c84633f5a.gif)
 
 ### Primary TODO
-- [ ] **add threading for smoother experience**
 - [ ] **code cleanup**
-- [ ] implement basic GUI for search result info page
+- [x] implement basic GUI for search result info page
 - [x] implement simple search filters
 - [x] implement full database search engine
 - [x] implement basic database search page GUI
