@@ -43,6 +43,7 @@ def getSpecimenContainmentStatusData(specimenID) -> list:
             con.close()
         return data
 
+
 def getContainmentStatusData(statusID) -> list:
     # TODO: test
     con = None
@@ -60,13 +61,14 @@ def getContainmentStatusData(statusID) -> list:
             con.close()
         return data
 
+
 def getDepartmentMissionData(depID) -> list:
     # TODO: test
     con = None
     data = None
     try:
         con = sqlite3.connect(DB_PATH)
-        con.row_factory = lambda cursor, row: row[0] # returns ids as list
+        con.row_factory = lambda cursor, row: row[0]  # returns ids as list
         cur = con.cursor()
         cur.execute('SELECT missionID FROM DepartmentMission WHERE depID = ?', (depID,))
         data = cur.fetchone()
@@ -77,13 +79,14 @@ def getDepartmentMissionData(depID) -> list:
             con.close()
         return data
 
+
 def getEmployeeMissionData(empID) -> list:
     # TODO: test
     con = None
     data = None
     try:
         con = sqlite3.connect(DB_PATH)
-        con.row_factory = lambda cursor, row: row[0] # returns ids as list
+        con.row_factory = lambda cursor, row: row[0]  # returns ids as list
         cur = con.cursor()
         cur.execute('SELECT missionID FROM EmployeeMission WHERE empID = ?', (empID,))
         data = cur.fetchone()
@@ -101,7 +104,7 @@ def getSpecimenMissionData(specimenID) -> list:
     data = None
     try:
         con = sqlite3.connect(DB_PATH)
-        con.row_factory = lambda cursor, row: row[0] # returns ids as list
+        con.row_factory = lambda cursor, row: row[0]  # returns ids as list
         cur = con.cursor()
         cur.execute('SELECT missionID FROM SpecimenMission WHERE specimenID = ?', (specimenID,))
         data = cur.fetchone()
@@ -130,6 +133,7 @@ def getEmployeeDesignationData(empID) -> list:
             con.close()
         return data
 
+
 def getDesignationData(designationID) -> list:
     # TODO: test
     con = None
@@ -146,6 +150,7 @@ def getDesignationData(designationID) -> list:
         if con is not None:
             con.close()
         return data
+
 
 def getEmployeeData(empID):
     con = None
@@ -170,7 +175,7 @@ def getEmployeeClearanceData(empID):
     data = None
     try:
         con = sqlite3.connect(DB_PATH)
-        con.row_factory = lambda cursor, row: row[0] # returns ids as list
+        con.row_factory = lambda cursor, row: row[0]  # returns ids as list
         cur = con.cursor()
 
         cur.execute('''SELECT clearanceID FROM EmployeeClearance WHERE empID = ?''', (empID,))
@@ -181,6 +186,7 @@ def getEmployeeClearanceData(empID):
         if con is not None:
             con.close()
         return data
+
 
 def getClearanceData(clearanceID):
     con = None
@@ -198,6 +204,7 @@ def getClearanceData(clearanceID):
         if con is not None:
             con.close()
         return data
+
 
 def getEmployeeMedicalData(empID):
     con = None

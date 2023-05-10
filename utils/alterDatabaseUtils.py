@@ -1,5 +1,5 @@
 import sqlite3
-from utils.dbVariables import db
+from utils.filePaths import DB_PATH
 from utils.authUtils import generateEID, generateUsername, generatePWD, generateOID, generateMID, generateSID
 from utils.encryption import encrypt
 import traceback
@@ -12,13 +12,91 @@ def print_sql(sql):
     return str
 
 
+def addDesignation(name, abbreviation):
+    ID = None
+    con = None
+
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute('INSERT INTO Designation(name, abbreviation) VALUES(?,?);', (name, abbreviation))
+        con.commit()
+        row = cur.lastrowid
+        cur.execute('SELECT designationID FROM Designation WHERE rowid = ?', (row,))
+        ID = cur.fetchone()[0]
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        if ID is not None:
+            return ID
+
+
+def updateDesignation(designationID, name=None, abbreviation=None):
+    con = None
+    success = False
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        args = [[name, 'name'], [abbreviation, 'abbreviation']]
+        for a in args:
+            if a[0] is not None:
+                cur.execute(f'''UPDATE Designation SET {a[1]} = ? WHERE designationID = ?''', (a[0], designationID))
+        con.commit()
+        success = True
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        return success
+
+
+def deleteDesignation(designationID):
+    con = None
+    success = False
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute('DELETE FROM Designation WHERE designationID = ?', (designationID,))
+        con.commit()
+        success = True
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        return success
+
+
 def addDepartment(name, supervisorID=None, desc=None):
     ID = None
     con = None
 
     try:
         # connect to database
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -45,8 +123,8 @@ def updateDepartment(depID, name=None, supervisorID=None, desc=None):
     success = False
     try:
         # connect to database
-        con = sqlite3.connect(db)
-        con.text_factory = print_sql
+        con = sqlite3.connect(DB_PATH)
+
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -72,7 +150,7 @@ def deleteDepartment(depID):
     success = False
     try:
         # connect to database
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
 
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
@@ -90,13 +168,15 @@ def deleteDepartment(depID):
             con.close()
         return success
 
-# TODO: Add set department mission, employee mission, set specimen mission, set employee clearance, set specimen containment status, and set employee designation
+
+# TODO: Add set department mission, employee mission, set specimen mission, set employee clearance, set specimen
+#  containment status, and set employee designation
 def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
     ID = None
     con = None
     try:
         # connect to database
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
 
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
@@ -139,7 +219,7 @@ def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, st
 
     try:
         # connect to database
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
 
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
@@ -172,7 +252,7 @@ def deleteEmployee(empID):
 
     try:
         # connect to database
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
 
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
@@ -197,7 +277,7 @@ def updateEmployeeMedical(empID, dob=None, bloodtype=None, sex=None, kg=None, he
     success = False
     try:
         # connect to database
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
 
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
@@ -229,7 +309,7 @@ def updateCredentials(empID, username=None, pwd=None, loginAttempts=None):
     success = False
     try:
         # connect to database
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -257,7 +337,7 @@ def addOrigin(name, desc, missionID=None):
     con = None
     ID = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -289,7 +369,7 @@ def updateOrigin(ID, name=None, missionID=None, desc=None):
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -314,7 +394,7 @@ def deleteOrigin(originID):
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -335,7 +415,7 @@ def addMission(name, desc, originID=None, startDate=None, endDate=None, captainI
     ID = None
     con = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -366,7 +446,7 @@ def updateMission(missionID, name=None, desc=None, originID=None, startDate=None
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -392,7 +472,7 @@ def deleteMission(missionID):
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -413,7 +493,7 @@ def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLeve
     con = None
     ID = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -448,7 +528,7 @@ def updateSpecimen(ID, name=None, acquisitionDate=None, originID=None, missionID
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -474,7 +554,7 @@ def deleteSpecimen(specimenID):
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -492,7 +572,7 @@ def addEmployeeSpecimen(empID, specimenID):
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -512,7 +592,7 @@ def updateSpecimenSupervisor(empID, specimenID, newEmployeeID):
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -534,7 +614,7 @@ def updateSupervisorSpecimen(empID, specimenID, newSpecimenID):
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -556,7 +636,7 @@ def deleteEmployeeSpecimen(empID, specimenID):
     con = None
     success = False
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
@@ -576,7 +656,7 @@ def updateSpecimenMedical(ID, name=None, acquisitionDate=None, bloodtype=None, s
     success = False
     try:
         # connect to database
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
