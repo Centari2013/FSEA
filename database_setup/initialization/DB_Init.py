@@ -57,21 +57,44 @@ def getRandomBSEDates():
 
     return birthDate, startDate, endDate
 
+def designationData():
+    for dep in data["department"]:
+        for des in dep["designations"]:
+            # append designationID to list of designations
+            des.append(addDesignation(des[0], des[1]))
+
 
 def departmentData():
+    depSupervisorDesID = None
+    for dep in data["department"]:
+        if dep["name"] == "Executive":
+            for des in dep["designations"]:
+                if des[1] == "DS":
+                    depSupervisorDesID = des[2]
+                    break
     # add generated depID to each department dict
     for d in data["department"]:
-        d["depID"] = addDepartment(name=d["name"], desc=d["description"])
+        d["depID"] = depID = addDepartment(name=d["name"], desc=d["description"])
+        sup = d["supervisor"]
+        fn = sup["firstName"]
+        ln = sup["lastName"]
+        start = sup["startDate"]
+        summ = sup["summary"]
+        birth = sup["dob"]
+        bt = sup["bloodtype"]
+        sex = sup["sex"]
+        kg = sup["weight"]
+        height = sup["height"]
+        notes = sup["notes"]
+        # add department supervisors
+        d["supervisor"] = ID = addEmployee(fn, ln, depID, start, summary=summ)
+        addEmployeeDesignation(ID, depSupervisorDesID)
+        updateEmployee(ID, endDate=None)
+        updateEmployeeMedical(ID, birth, bt, sex, kg, height, notes)
 
 
-def designationData():
-    with data["department"]["designations"] as des:
-        for d in des:
-            # append designationID to list of designations
-            d.append(addDesignation(d[0], d[1]))
 
-
-# TODO: feed list of possible designations to ChatGPT and ask it to generate a JSON of 100 employess with relevant
+# TODO: feed list of possible designations and their depIDS to ChatGPT and ask it to generate a JSON of 100 employess with relevant
 #  attributes
 def employeeData():
     for e in data["employee"]:
@@ -83,41 +106,22 @@ def employeeData():
                     if des[1] == e["designation"]:
                         e["designation"] = des[2]
 
-        e["empID"] = ID = addEmployee(e["firstName"], e["lastName"], e["dep"], e["designation"], e["startDate"],
+        e["empID"] = ID = addEmployee(e["firstName"], e["lastName"], e["dep"], e["startDate"],
                                       e["summary"])
+        addEmployeeDesignation(ID, e["designation"])
         updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"], e["notes"])
 
         if e["firstName"] == "Zaria":
             updateCredentials(ID, 'test', 'test')
 
-    # add department supervisors
-    executiveDepID = None
-    depSupervisorDesID = None
-    for dep in data["department"]:
-        if dep["name"] == "Executive":
-            executiveDepID = dep["depID"]
-            for des in dep["designations"]:
-                if des[1] == "DS":
-                    depSupervisorDesID = des[2]
-                    break
-
-    for d in data["department"]:
-
-        # The Exploration department already has a supervisor in data.json
-        if d["name"] != "Exploration":
-            fn = names.get_first_name()
-            ln = names.get_last_name()
-            birth, start, end = getRandomBSEDates()
-            d["supervisor"] = ID = addEmployee(fn, ln, executiveDepID, depSupervisorDesID, start, summary=None)
-            updateEmployee(ID, endDate=end)
-            updateEmployeeMedical(ID, birth)
 
 
+designationData()
 departmentData()
 employeeData()
 
 with open("complete_data.json", "w") as output:
-    json.dump(data, output)
+    json.dump(data, output, indent=4)
 
 con = sqlite3.connect(DB_PATH)
 cur = con.cursor()
@@ -133,6 +137,16 @@ con.commit()"""
 '''''''''''''''''''''''''''PRINT TABLES'''''''''''''''''''''''''''
 print('Department Table')
 for row in cur.execute('SELECT * FROM Department;'):
+    print(row)
+print('\n')
+
+print('Designation Table')
+for row in cur.execute('SELECT * FROM Designation;'):
+    print(row)
+print('\n')
+
+print('EmployeeDesignation Table')
+for row in cur.execute('SELECT * FROM EmployeeDesignation;'):
     print(row)
 print('\n')
 

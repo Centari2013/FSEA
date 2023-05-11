@@ -171,7 +171,7 @@ def deleteDepartment(depID):
 
 # TODO: Add set department mission, employee mission, set specimen mission, set employee clearance, set specimen
 #  containment status, and set employee designation
-def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
+def addEmployee(firstName, lastName, dep, startDate, summary=None):
     ID = None
     con = None
     try:
@@ -195,12 +195,12 @@ def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
             cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (ID,))
             r2 = cur.fetchone()
 
-        cur.execute('''INSERT INTO Employee(empDep, empID, designation, firstName, lastName, startDate) 
-                        VALUES(?,?,?,?,?,?)''', (dep, ID, role, firstName, lastName, startDate))
+        cur.execute('''INSERT INTO Employee(empDep, empID,firstName, lastName, startDate) 
+                        VALUES(?,?,?,?,?)''', (dep, ID, firstName, lastName, startDate))
         con.commit()
 
         updateEmployee(ID, summary=summary)
-        updateCredentials(ID, username=generateUsername(firstName, lastName, role), pwd=generatePWD())
+        updateCredentials(ID, username=generateUsername(firstName, lastName, dep), pwd=generatePWD())
 
     except Exception as e:
         print(e)
@@ -211,6 +211,29 @@ def addEmployee(firstName, lastName, dep, role, startDate, summary=None):
             con.close()
         return ID
 
+
+def addEmployeeDesignation(empID, designationID):
+    ID = None
+    con = None
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute('''INSERT INTO EmployeeDesignation(empID, designationID) 
+                        VALUES(?,?)''', (empID, designationID))
+        con.commit()
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        return ID
 
 def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None,
                    summary=None):

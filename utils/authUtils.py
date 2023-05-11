@@ -74,7 +74,7 @@ def generateMID():
     return 'M' + mid
 
 
-def generateUsername(firstName, lastName, designation):
+def generateUsername(firstName, lastName, dep):
     def firstNLetters(s, n):
         new_s = ""
         if len(s) >= n:
@@ -86,7 +86,7 @@ def generateUsername(firstName, lastName, designation):
 
         return new_s
 
-    username = (firstName[0] + firstNLetters(lastName, 8)).lower() + '_' + designation.upper()
+    username = (firstName[0] + firstNLetters(lastName, 8)).lower() + '_' + str(dep)
 
     return encrypt(username)
 
