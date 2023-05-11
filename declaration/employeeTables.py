@@ -27,15 +27,13 @@ def createEmployeeTable(cur):
     cur.execute('''CREATE TABLE Employee(
                     empDep          INTEGER NOT NULL,
                     empID           TEXT NOT NULL UNIQUE,
-                    designation      INTEGER,
                     firstName       TEXT CHECK(LENGTH(firstName) <= 50) NOT NULL,
                     lastName        TEXT CHECK(LENGTH(lastName) <= 50)  NOT NULL,
                     startDate       TEXT NOT NULL,
                     endDate         TEXT DEFAULT NULL,
                     summary         TEXT DEFAULT '',
                     PRIMARY KEY (empID),
-                    FOREIGN KEY (empDep) REFERENCES Department(depId),
-                    FOREIGN KEY (designation) REFERENCES EmployeeDesignation(designationID)
+                    FOREIGN KEY (empDep) REFERENCES Department(depId)
                     );''')
 
     print('Employee table created\n')
@@ -112,8 +110,10 @@ def createEmployeeTriggers(cur):
                         INSERT INTO Employee_fts (empID, empDep, firstName, lastName, summary)
                         VALUES (new.empID, new.empDep, new.firstName, new.lastName, new.summary);
                         UPDATE Employee_fts 
-                        SET designation = (SELECT name FROM Designation WHERE new.designation = Designation.designationID)
-                        WHERE empID = new.empID;
+                        SET designation = (SELECT name FROM Designation 
+                                            WHERE designationID IN (SELECT designationID 
+                                                                    FROM EmployeeDesignation
+                                                                    WHERE EmployeeDesignation.empID = new.empID));
                         INSERT INTO EmployeeMedical(empID)
                         VALUES (new.empID); 
                         INSERT INTO Credentials (empID)
@@ -133,7 +133,10 @@ def createEmployeeTriggers(cur):
                         UPDATE Employee_fts
                         SET empID = new.empID,
                             empDep = new.empDep,
-                            designation = (SELECT name FROM Designation WHERE new.designation = Designation.designationID),
+                            designation = (SELECT name FROM Designation 
+                                            WHERE designationID IN (SELECT designationID 
+                                                                    FROM EmployeeDesignation
+                                                                    WHERE EmployeeDesignation.empID = new.empID)),
                             firstName = new.firstName,
                             lastName = new.lastName,
                             summary = new.summary

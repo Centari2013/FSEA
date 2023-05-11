@@ -7,7 +7,22 @@
                      ["Project Manager", "PM"],
                      ["Spacecraft Engineer", "SE"],
                      ["Flight Director", "FD"],
-                     ["Astrobiologist", "AB"]]
+                     ["Astrobiologist", "AB"]],
+      "supervisor": {
+    "dep": "Exploration",
+    "designation": "Director of Exploration",
+    "firstName": "Nina",
+    "lastName": "Lee",
+    "startDate": "2018-05-01",
+    "dob": "1990-08-12",
+    "bloodtype": "A+",
+    "sex": "f",
+    "weight": 65,
+    "height": 170,
+    "notes": "The employee is in good health and has no significant medical conditions.",
+    "summary": "Nina Lee has been a valued member of the F-SEA team since joining in 2018. As Director of Exploration, she has overseen numerous successful missions and has been instrumental in expanding our knowledge of the universe beyond our own planet. Her leadership and expertise have been crucial in ensuring the safety and success of our exploration missions."
+}
+
     },
     {
       "name": "Navigation",
@@ -16,7 +31,22 @@
                      ["Route Planner", "RP"],
                      ["Astronomer", "AS"],
                      ["Cartographer", "CA"],
-                     ["Geodesist", "GD"]]
+                     ["Geodesist", "GD"]],
+      "supervisor": {
+    "dep": "Navigation",
+    "designation": "Director",
+    "firstName": "Kaitlyn",
+    "lastName": "Nguyen",
+    "startDate": "2016-06-15",
+    "dob": "1990-02-28",
+    "bloodtype": "O+",
+    "sex": "f",
+    "weight": 65,
+    "height": 170,
+    "notes": "No significant medical issues to report.",
+    "summary": "Kaitlyn Nguyen has been with F-SEA for over five years and has consistently demonstrated exceptional leadership qualities. She has a thorough understanding of the Navigation department and has led numerous successful missions during her tenure. Under her guidance, the Navigation department has significantly increased efficiency and accuracy in the plotting of F-SEA's course through deep space."
+}
+
     },
     {
       "name": "Science",
@@ -26,7 +56,22 @@
                      ["Exobiologist", "EB"],
                      ["Data Scientist", "DS"],
                      ["Atmospheric Scientist", "AS"]
-                      ]
+                      ],
+      "supervisor": {
+  "dep": "Science",
+  "designation": "Chief Scientist",
+  "firstName": "Lena",
+  "lastName": "Nguyen",
+  "startDate": "2018-06-05",
+  "dob": "1995-12-23",
+  "bloodtype": "AB+",
+  "sex": "f",
+  "weight": 59,
+  "height": 162,
+  "notes": "Ms. Nguyen has a history of mild allergies and occasional migraines, but both conditions are well-managed with medication. She has no other significant medical issues.",
+  "summary": "Ms. Nguyen has been with F-SEA since its inception and has been instrumental in designing and implementing numerous experiments and research projects. Her team's work has led to several groundbreaking discoveries in the fields of astrobiology and exoplanet research."
+}
+
     },
     {
       "name": "Communications",
@@ -35,7 +80,22 @@
                      ["Public Affairs Officer", "PAO"],
                      ["Media Relations Specialist", "MRS"],
                      ["Outreach Coordinator", "OC"]
-                     ]
+                     ],
+      "supervisor": {
+    "dep": "Communications",
+    "designation": "Communications Director",
+    "firstName": "Sophia",
+    "lastName": "Garcia",
+    "startDate": "2028-05-02",
+    "dob": "2000-08-12",
+    "bloodtype": "O+",
+    "sex": "f",
+    "weight": 70,
+    "height": 175,
+    "notes": "Ms. Garcia has a history of mild seasonal allergies and should avoid prolonged exposure to pollen and other airborne allergens.",
+    "summary": "Ms. Garcia has been a valuable asset to the F-SEA team since joining in 2028. She has led the Communications department in implementing state-of-the-art communication technologies and has been instrumental in maintaining consistent communication with Earth as well as other F-SEA teams stationed throughout the galaxy."
+}
+
     },
     {
       "name": "Engineering",
@@ -45,7 +105,21 @@
                      ["Propulsion Engineer", "PE"],
                      ["Materials Engineer", "ME"],
                      ["Systems Engineer", "SE"]
-                      ]
+                      ],
+      "supervisor": {
+      "dep": "Engineering",
+      "designation": "Chief Engineer",
+      "firstName": "Aiden",
+      "lastName": "Wong",
+      "startDate": "2016-04-15",
+      "dob": "1991-07-02",
+      "bloodtype": "A+",
+      "sex": "m",
+      "weight": 85,
+      "height": 182,
+      "notes": "Employee has a history of hypertension but it is well-managed with medication.",
+      "summary": "Mr. Wong has been an integral part of F-SEA's engineering team for the past 5 years. He has successfully overseen the construction of several complex systems aboard our vessels, ensuring that they are efficient and meet all necessary safety standards. He has also been instrumental in developing new, more sustainable technologies for use in our ships. Under his leadership, the engineering department has consistently met or exceeded all of its targets and goals."
+    }
     },
     {
       "name": "Security",
@@ -54,8 +128,22 @@
                       ["Safety Officer", "SAO"],
                       ["Emergency Response Coordinator", " ERC"],
                       ["Cybersecurity Specialist", "CS"],
-                      ["Threat Assessment Specialist", "TAS"]]
-    },
+                      ["Threat Assessment Specialist", "TAS"]],
+  "supervisor": {
+    "dep": "Security",
+    "designation": "Chief of Security",
+    "firstName": "Makayla",
+    "lastName": "Santos",
+    "startDate": "2040-05-25",
+    "dob": "2014-10-12",
+    "bloodtype": "O+",
+    "sex": "f",
+    "weight": 75,
+    "height": 178,
+    "notes": "Subject has a history of anxiety and is prescribed medication for it. Otherwise, no major health concerns.",
+    "summary": "Makayla Santos is a seasoned security professional with over 15 years of experience in the field. She joined F-SEA Security in 2060 and has been an integral part of the team ever since. During her time here, she has implemented new security protocols and training programs that have significantly improved the overall safety and security of the F-SEA crew and facilities. She takes her responsibilities very seriously and ensures that all security personnel under her command are trained to the highest standards."
+  }
+},
     {
       "name": "Human Resources",
       "description": "The Human Resources Department manages F-SEA's personnel, including hiring, training, and retaining staff. They provide support for crew members' needs, such as healthcare and mental health.",
@@ -63,7 +151,22 @@
                       ["Crew Services Coordinator", "CSC"],
                       ["Training Coordinator", "TC"],
                       ["Diversity and Inclusion Officer", "DIO"],
-                      ["Health and Wellness Coordinator", "HWC"]]
+                      ["Health and Wellness Coordinator", "HWC"]],
+      "supervisor": {
+    "dep": "Human Resources",
+    "designation": "Director",
+    "firstName": "Amelia",
+    "lastName": "Harrington",
+    "startDate": "2017-06-01",
+    "dob": "1990-02-13",
+    "bloodtype": "O+",
+    "sex": "f",
+    "weight": 68,
+    "height": 175,
+    "notes": "Amelia has a history of asthma, but her condition has been stable for several years. She is advised to keep her inhaler with her at all times in case of an emergency.",
+    "summary": "Amelia joined F-SEA as an HR specialist and quickly proved herself to be an invaluable asset. She was promoted to HR Manager in 2020, and Director of Human Resources in 2022. Under her leadership, F-SEA has implemented several initiatives to improve employee retention and satisfaction. Amelia is known for her exceptional interpersonal skills and her ability to handle difficult situations with tact and diplomacy."
+}
+
     },
     {
       "name": "Supply and Logistics",
@@ -72,7 +175,22 @@
                       ["Inventory Manager", "IM"],
                       ["Procurement Officer", "PO"],
                       ["Supply Chain Analyst", "SCA"],
-                      ["Equipment Specialist", "ES"]]
+                      ["Equipment Specialist", "ES"]],
+      "supervisor": {
+  "dep": "Supply and Logistics",
+  "designation": "Logistics Manager",
+  "firstName": "Roxanne",
+  "lastName": "Lopez",
+  "startDate": "2024-03-15",
+  "dob": "2001-05-10",
+  "bloodtype": "O+",
+  "sex": "f",
+  "weight": 68,
+  "height": 167,
+  "notes": "Ms. Lopez has a history of seasonal allergies. She carries an EpiPen with her at all times in case of anaphylaxis. Other than that, she is in good health.",
+  "summary": "Ms. Lopez joined the F-SEA team in 2024, bringing with her 5 years of experience in logistics and supply chain management. She has been instrumental in ensuring that the F-SEA crew have the necessary supplies and equipment to carry out their mission. Ms. Lopez is known for her attention to detail and her ability to anticipate the needs of the crew. Under her leadership, the Supply and Logistics department has been able to operate smoothly and efficiently, despite the challenges of working in space."
+}
+
     },
     {
       "name": "Legal",
@@ -81,8 +199,23 @@
                       ["Compliance Officer", "CO"],
                       ["Contract Specialist", "CS"],
                       ["Risk Management Specialist", "RMS"],
-                      ["Ethics Officer", "EO"]]
-    },
+                      ["Ethics Officer", "EO"]],
+
+  "supervisor": {
+    "dep": "Legal",
+    "designation": "Legal Department Head",
+    "firstName": "Harper",
+    "lastName": "Jones",
+    "startDate": "2023-06-23",
+    "dob": "1996-02-10",
+    "bloodtype": "A+",
+    "sex": "f",
+    "weight": 62,
+    "height": 174,
+    "notes": "Ms. Jones is generally healthy and has no history of any major illness or chronic condition.",
+    "summary": "Ms. Jones is a seasoned lawyer who has worked on several high-profile cases before joining F-SEA. She is an expert in space law and has been instrumental in developing the legal framework for F-SEA's activities."
+  }
+},
     {
       "name": "Medical",
       "description": "This department is responsible for the health and wellbeing of the crew, including providing medical care, monitoring crew health, and developing programs to promote overall health and wellness.",
@@ -90,7 +223,22 @@
                       ["Medical Officer", "MO"],
                       ["Registered Nurse", "RN"],
                       ["Pharmacist", "PH"],
-                      ["Medical Laboratory Scientist", "MLS"]]
+                      ["Medical Laboratory Scientist", "MLS"]],
+      "supervisor": {
+    "dep": "Medical",
+    "designation": "Medical Director",
+    "firstName": "Caroline",
+    "lastName": "Nguyen",
+    "startDate": "2028-06-01",
+    "dob": "2003-02-15",
+    "bloodtype": "O+",
+    "sex": "f",
+    "weight": 60,
+    "height": 165,
+    "notes": "Ms. Nguyen is in good health. She has a history of asthma, for which she carries an inhaler. She has no other notable medical issues.",
+    "summary": "Ms. Nguyen has been a dedicated member of F-SEA since joining the Medical Department in 2031. During her tenure, she has been instrumental in developing and implementing health and safety protocols across the entire facility. She has also worked closely with the Engineering Department to develop medical equipment and facilities that meet the unique challenges of space travel."
+}
+
     },
     {
       "name": "Executive",
@@ -99,7 +247,21 @@
                       ["Chief Financial Officer", "CFO"],
                       ["Chief Operating Officer", "COO"],
                       ["Chief Information Officer", "CIO"],
-                      ["Department Supervisor", "DS"]]
+                      ["Department Supervisor", "DS"]],
+      "supervisor": {
+"dep": "Executive",
+"designation": "Founder and CEO",
+"firstName": "Alex",
+"lastName": "Cognac",
+"startDate": "2038-01-01",
+"dob": "1980-05-15",
+"bloodtype": "AB+",
+"sex": "m",
+"weight": 70,
+"height": 180,
+"notes": "Mr. Johnson is a healthy individual with no major medical issues.",
+"summary": "Mr. Cognac is the founder and CEO of F-SEA. He has worked closely with NASA and was instrumental in the creation of F-SEA as a project to allow the earth's wealthier inhabitants to live on planets other than earth. He is an experienced leader with a strong business acumen. After the inevitable impact event (IDME) in 2048, Mr. Johnson led the effort to gather the remaining lifeforms that once inhabited the earth and transport them to safety aboard F-SEA. He continues to guide the vessel and its crew on their journey to find a new home for humanity."
+}
     },
     {
       "name": "Education",
@@ -109,7 +271,22 @@
                       ["Educational Technologist", "ET"],
                       ["Librarian", "LIB"],
                       ["Academic Advisor", "AA"],
-                      ["Historical Archivist", "HA"]]
+                      ["Historical Archivist", "HA"]],
+      "supervisor": {
+    "dep": "Education",
+    "designation": "Head of Education",
+    "firstName": "Sarah",
+    "lastName": "Nguyen",
+    "startDate": "2018-07-01",
+    "dob": "1997-02-15",
+    "bloodtype": "AB+",
+    "sex": "f",
+    "weight": 60,
+    "height": 170,
+    "notes": "Sarah has been a valued member of the F-SEA team for over 5 years now, and has proven to be an invaluable asset to the Education department. She has a passion for education and has been able to develop and implement a comprehensive education program for the crew. Her dedication to the crew's well-being and education has made her a well-respected member of the team.",
+    "summary": "Sarah has led the development and implementation of the Education program on board the F-SEA vessel. Under her guidance, the crew has gained a better understanding of the objectives of the mission and the skills they will need to complete it. She has been instrumental in ensuring the continued success of the mission, and her leadership and dedication to the crew have been an inspiration to all."
+}
+
     },
     {
       "name": "Cultural Affairs",
@@ -118,7 +295,21 @@
                       ["Heritage Preservation Specialist", "HPS"],
                       ["Cultural Resource Manager", "CRM"],
                       ["Diversity and Inclusion Officer", "DIO"],
-                      ["Linguist", "LIN"]]
+                      ["Linguist", "LIN"]],
+      "supervisor": {
+        "dep": "Cultural Affairs",
+        "designation": "Director",
+        "firstName": "Anjali",
+        "lastName": "Kumar",
+        "startDate": "2033-05-01",
+        "dob": "2001-12-10",
+        "bloodtype": "B+",
+        "sex": "f",
+        "weight": 62,
+        "height": 170,
+        "notes": "The employee has no major health concerns. However, she has reported experiencing occasional migraines, for which she has been prescribed medication. The medication does not interfere with her ability to perform her duties effectively.",
+        "summary": "Anjali Kumar is a highly skilled cultural anthropologist with over a decade of experience in conducting research and organizing exhibitions and events related to cultural heritage and diversity. Prior to joining F-SEA, she was a curator at the Smithsonian National Museum of Natural History in Washington, D.C., where she played a key role in the development of several major exhibits. Since joining F-SEA in 2030, she has successfully organized a series of cultural exchange programs between the crew members and the alien species they have encountered, helping to foster greater understanding and mutual respect between different cultures."
+    }
     },
     {
       "name": "Entertainment",
@@ -127,8 +318,24 @@
                       ["Fitness Coordinator", "FC"],
                       ["Audio-Visual Technician", "AVT"],
                       ["Recreation Coordinator", "RC"],
-                      ["Social Media Manager", "SMM"]]
-    },
+                      ["Social Media Manager", "SMM"]],
+
+    "supervisor": {
+        "dep": "Entertainment",
+        "designation": "Entertainment Manager",
+        "firstName": "Hannah",
+        "lastName": "Lee",
+        "startDate": "2027-02-15",
+        "dob": "1999-08-06",
+        "bloodtype": "O+",
+        "sex": "f",
+        "weight": 60,
+        "height": 170,
+        "notes": "Employee has a history of anxiety and is on medication. Medication has been adjusted and is currently stable. Employee is advised to take regular breaks.",
+        "summary": "Hannah Lee has been with F-SEA for five years, and in that time, she has transformed the entertainment department. She has increased the variety of activities and events available to the crew, and has worked tirelessly to ensure that everyone's needs are met. She has organized numerous successful performances, ranging from musical concerts to comedy shows. Her creativity and innovation have been an asset to the team, and she has received multiple commendations for her work."
+
+}},
+
     {
       "name": "Special Operations",
       "description": "The Special Operations Department is responsible for executing critical missions that require specialized skills and training, such as rescue operations, high-risk extractions, and covert operations. This department works closely with other departments to plan and execute missions safely and effectively, while minimizing risk to personnel and equipment.",
@@ -136,7 +343,24 @@
                       ["Tactical Officer", "TO"],
                       ["Communications Specialist", "CS"],
                       ["Field Medic", "FM"],
-                      ["Special Operations Agent", "SOA"]]
+                      ["Special Operations Agent", "SOA"]],
+
+  "supervisor": {
+    "dep": "Special Operations",
+    "designation": "Director",
+    "firstName": "Kai",
+    "lastName": "Nakamura",
+    "startDate": "2024-06-01",
+    "dob": "1999-08-05",
+    "bloodtype": "AB+",
+    "sex": "m",
+    "weight": 82,
+    "height": 187,
+    "notes": "No significant health issues.",
+    "summary": "Kai Nakamura has been with F-SEA since its inception and is a highly experienced director in the Special Operations field. He has received numerous accolades for his exceptional leadership skills and strategic planning abilities. Under his leadership, the Special Operations department has consistently exceeded its targets and contributed to the success of F-SEA's missions. Nakamura is known for his unwavering dedication to F-SEA's mission and his ability to motivate his team to achieve exceptional results."
+  }
+
+
     },
     {
       "name": "Alien Relations",
@@ -145,11 +369,25 @@
                       ["Alien Liaison Officer", "ALO"],
                       ["Interspecies Psychologist", "IPS"],
                       ["Alien Biologist", "AB"],
-                      ["Ethnologist", "E"]]
-    }
-  ],
+                    ["Ethnologist", "E"]],
+      "supervisor": {
+    "dep": "Alien Relations",
+    "designation": "Chief Alien Relations Officer",
+    "firstName": "Natalie",
+    "lastName": "Chen",
+    "startDate": "2050-05-25",
+    "dob": "2030-08-01",
+    "bloodtype": "A+",
+    "sex": "f",
+    "weight": 65,
+    "height": 172,
+    "notes": "N/A",
+    "summary": "Natalie Chen is a young and ambitious officer with a passion for exploring alien cultures and fostering positive inter-species relationships. Despite her lack of experience with alien lifeforms, she is a quick learner and has a natural talent for communicating with other species. She is excited to be a part of the new Alien Relations department and looks forward to contributing to F-SEA's mission in this important area."
 
-  "employee": [
+    }}],
+
+
+    "employee": [
     {
       "dep": "Special Operations",
       "designation": "SOA",
@@ -222,7 +460,7 @@
     },
     {
       "dep": "Science",
-      "designation": "Planetary Scientist",
+      "designation": "PS",
       "firstName": "Abdul",
       "lastName": "Said",
       "startDate": "2061-12-03",
@@ -236,7 +474,7 @@
     },
     {
       "dep": "Exploration",
-      "designation": "Project Manager",
+      "designation": "PM",
       "firstName": "Historia",
       "lastName": "Lowe",
       "startDate": "2038-01-31",
@@ -292,7 +530,7 @@
     },
     {
       "dep": "Special Operations",
-      "designation": "Intelligence Analyst",
+      "designation": "IA",
       "firstName": "Aurelis",
       "lastName": "Dreymond",
       "startDate": "2075-12-13",
@@ -306,7 +544,7 @@
     },
     {
       "dep": "Special Operations",
-      "designation": "Field Medic",
+      "designation": "FM",
       "firstName": "Quani",
       "lastName": "Dreymond",
       "startDate": "2075-12-13",
@@ -320,7 +558,7 @@
     },
     {
       "dep": "Special Operations",
-      "designation": "Intelligence Analyst",
+      "designation": "IA",
       "firstName": "Daryl",
       "lastName": "Belcost",
       "startDate": "2071-03-16",
@@ -334,7 +572,7 @@
     },
     {
       "dep": "Executive",
-      "designation": "Chief Information Officer",
+      "designation": "CIO",
       "firstName": "Zaria",
       "lastName": "Burton",
       "startDate": "2022-06-24",
