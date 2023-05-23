@@ -1,61 +1,24 @@
 import json
-import random
-import names
-import numpy.random
-from datetime import date, timedelta
-from dateutil.relativedelta import relativedelta
 
 from utils.alterDatabaseUtils import *
 from database_setup.declaration.DB_Declaration import *
+
+
+
 
 '''
 IMPORTANT!!!!
 Run DB_Declaration.py EVERYTIME before running this script.
 '''
-
+with open('department_data.json') as d:
+    depData = json.load(d)
 with open('data.json') as d:
     data = json.load(d)
 with open('test_data.json') as d:
     test_data = json.load(d)
 
 
-def generateDateList(startDate, endDate):
-    generatedDates = [startDate]
 
-    # loop to get each date till end date
-    while startDate != endDate:
-        startDate += timedelta(days=1)
-        generatedDates.append(startDate)
-
-    return generatedDates
-
-
-birthdate_ranges = [generateDateList(date(1995, 1, 1), date(2020, 1, 1)),
-                    generateDateList(date(2021, 1, 1), date(2045, 1, 1)),
-                    generateDateList(date(2046, 1, 1), date(2057, 1, 1))]
-
-
-def getRandomBSEDates():
-    current_year = 2075
-
-    chosen_range_list = birthdate_ranges[numpy.random.choice(numpy.arange(3), p=[0.1, 0.4, 0.5])]
-
-    birthDate = random.choice(chosen_range_list)
-    hire_age = random.randint(18, 35)
-    days_to_add = random.randint(180)
-
-    startDate = birthDate + relativedelta(years=hire_age, days=days_to_add)
-
-    endDate = None
-
-    if current_year - birthDate.year > 65:
-        endDate = birthDate + relativedelta(years=65, days=random.randint(30))
-
-    birthDate = birthDate.strftime("%Y-%m-%d")
-    startDate = startDate.strftime("%Y-%m-%d")
-    endDate = endDate.strftime("%Y-%m-%d")
-
-    return birthDate, startDate, endDate
 
 def designationData():
     for dep in data["department"]:
@@ -93,10 +56,8 @@ def departmentData():
         updateEmployeeMedical(ID, birth, bt, sex, kg, height, notes)
 
 
+def EmployeeData():
 
-# TODO: feed list of possible designations and their depIDS to ChatGPT and ask it to generate a JSON of 100 employess with relevant
-#  attributes
-def employeeData():
     for e in data["employee"]:
         for d in data["department"]:
             if d["name"] == e["dep"]:
@@ -116,78 +77,75 @@ def employeeData():
 
 
 
-designationData()
-departmentData()
-employeeData()
 
-with open("complete_data.json", "w") as output:
-    json.dump(data, output, indent=4)
+def saveData():
+    depData = {"department": []}
+    for dep in data["department"]:
+        depData["department"].append({"name": dep["name"], "id": dep["depID"], "designations": dep["designations"]})
 
-con = sqlite3.connect(DB_PATH)
-cur = con.cursor()
+    with open("base_data.json", "w") as output:
+        json.dump(data, output, indent=4)
 
-# add test user
-"""cur.execute('''UPDATE Credentials
-                SET username = ?, password = ?
-                WHERE empID = (SELECT empID
-                                FROM Employee
-                                WHERE firstName = 'Zaria');''', (encrypt('test'), encrypt('test')))
-con.commit()"""
+    with open("department_data.json","w") as output:
+        json.dump(depData, output, indent=4)
 
 '''''''''''''''''''''''''''PRINT TABLES'''''''''''''''''''''''''''
-print('Department Table')
-for row in cur.execute('SELECT * FROM Department;'):
-    print(row)
-print('\n')
+def printTables():
+    con = sqlite3.connect(DB_PATH)
+    cur = con.cursor()
+    print('Department Table')
+    for row in cur.execute('SELECT * FROM Department;'):
+        print(row)
+    print('\n')
 
-print('Designation Table')
-for row in cur.execute('SELECT * FROM Designation;'):
-    print(row)
-print('\n')
+    print('Designation Table')
+    for row in cur.execute('SELECT * FROM Designation;'):
+        print(row)
+    print('\n')
 
-print('EmployeeDesignation Table')
-for row in cur.execute('SELECT * FROM EmployeeDesignation;'):
-    print(row)
-print('\n')
+    print('EmployeeDesignation Table')
+    for row in cur.execute('SELECT * FROM EmployeeDesignation;'):
+        print(row)
+    print('\n')
 
-print('Employee Table')
-for row in cur.execute('SELECT * FROM Employee;'):
-    print(row)
-print('\n')
+    print('Employee Table')
+    for row in cur.execute('SELECT * FROM Employee;'):
+        print(row)
+    print('\n')
 
-print('EmployeeMedical Table')
-for row in cur.execute('SELECT * FROM EmployeeMedical;'):
-    print(row)
-print('\n')
+    print('EmployeeMedical Table')
+    for row in cur.execute('SELECT * FROM EmployeeMedical;'):
+        print(row)
+    print('\n')
 
-print('Credentials Table')
-for row in cur.execute('SELECT * FROM Credentials;'):
-    print(row)
-print('\n')
+    print('Credentials Table')
+    for row in cur.execute('SELECT * FROM Credentials;'):
+        print(row)
+    print('\n')
 
-print('Origin Table')
-for row in cur.execute('SELECT * FROM Origin;'):
-    row = list(row)
-    print(row)
-print('\n')
+    print('Origin Table')
+    for row in cur.execute('SELECT * FROM Origin;'):
+        row = list(row)
+        print(row)
+    print('\n')
 
-print('Mission Table')
-for row in cur.execute('SELECT * FROM Mission;'):
-    row = list(row)
-    print(row)
-print('\n')
+    print('Mission Table')
+    for row in cur.execute('SELECT * FROM Mission;'):
+        row = list(row)
+        print(row)
+    print('\n')
 
-print('Specimen Table')
-for row in cur.execute('SELECT * FROM Specimen;'):
-    row = list(row)
-    print(row)
-print('\n')
+    print('Specimen Table')
+    for row in cur.execute('SELECT * FROM Specimen;'):
+        row = list(row)
+        print(row)
+    print('\n')
 
-print('SpecimenMedical Table')
-for row in cur.execute('SELECT * FROM SpecimenMedical;'):
-    row = list(row)
-    print(row)
-print('\n')
+    print('SpecimenMedical Table')
+    for row in cur.execute('SELECT * FROM SpecimenMedical;'):
+        row = list(row)
+        print(row)
+    print('\n')
 
-con.close()
-print('Database connection closed.')
+    con.close()
+    print('Database connection closed.')
