@@ -1,5 +1,4 @@
-from generateJson import EmployeeCreation
+from generateJson import OriginCreation as o
 
-for i in range(10):
-    print("Run #", i)
-    EmployeeCreation()
+o()
+

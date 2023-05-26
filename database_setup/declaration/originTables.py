@@ -3,7 +3,7 @@ def createOriginTable(cur):
     cur.execute('''CREATE TABLE Origin(
                     originID    TEXT NOT NULL UNIQUE,
                     name        TEXT NOT NULL,
-                    missionID   TEXT DEFAULT 'MISSION-PENDING',
+                    discoveryDate   TEXT NOT NULL,
                     description TEXT NOT NULL,
                     PRIMARY KEY (originID)
                     );''')

@@ -5,7 +5,7 @@ from openai_config import OPENAI_API_KEY
 import openai
 import random
 import numpy.random
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from dateutil.relativedelta import relativedelta
 import ast
 
@@ -59,6 +59,15 @@ def getRandomBSEDates():
     return birthDate, startDate, endDate
 
 
+def cleanTextForList(t):
+    t = re.sub(r'^[^\[]*', '', t)
+
+    t = t.strip()
+    t = re.sub(r'(?<=\})\s*(?=\])|(?<=\])\s*(?=\})', '', t)
+
+    return t
+
+
 def EmployeeCreation():
     with open('department_data.json') as d:
         depData = json.load(d)
@@ -66,13 +75,12 @@ def EmployeeCreation():
     with open("ai_data.json") as output:
         aiData = json.load(output)
 
-    aiData = aiData["employee"]
-    print("Number of Generated Employees: ",len(aiData))
+    print("Number of Generated Employees: ", len(aiData["employee"]))
 
     dictList = []
     messageList = []
     try:
-        for i in range(50):
+        for i in range(10):
             for j in range(3):
                 b, s, e = getRandomBSEDates()
                 dep = random.choice(depData["department"])
@@ -81,7 +89,7 @@ def EmployeeCreation():
                 depName = dep["name"]
                 desig = random.choice(dep["designations"])[0]
                 dictList.append({"dep": depName,
-                                "designation": desig,
+                                 "designation": desig,
                                  "firstName": None,
                                  "lastName": None,
                                  "startDate": s,
@@ -93,7 +101,6 @@ def EmployeeCreation():
                                  "height": None,
                                  "notes": None,
                                  "summary": None})
-
 
             message = {"role": "user", "content":
                 '''Given the following list of python dictionaries, I want you to generate data for the attributes
@@ -138,7 +145,6 @@ def EmployeeCreation():
         In summary, F-SEA is a pioneering organization that combines technological innovation, human exploration, and scientific research to expand our knowledge of the universe, establish sustainable colonies beyond Earth, and pave the way for humanity's future in space."""
             }
 
-
             messageList.append(fsea)
             messageList.append(message)
 
@@ -151,27 +157,25 @@ def EmployeeCreation():
             for d in completion["choices"]:
                 messageList.clear()
                 try:
-                    emp = re.sub(r".*?(?=\[)", '', d["message"]["content"])
-                    emp = emp.strip()
-                    if emp[len(emp) - 1] != ']':
-                        emp = re.sub(r'\{[^{]*$', ']', emp)
+                    emp = cleanTextForList(d["message"]["content"])
 
                     employeeList = ast.literal_eval(emp)
                     messageList.append(
                         {"role": "system", "content": f"""This is the last generated employee list: {employeeList}
                         You do not need to generate anything for this employee. Just keep this employee's data in mind
                         while you fill in the data for the next employee."""})
-                    aiData = aiData + employeeList
+                    aiData["employee"] = aiData["employee"] + employeeList
                     print("Success!: ", emp)
-                    print("Total Employees: ", len(aiData))
+                    print("Total Employees: ", len(aiData["employee"]))
                     with open("ai_data.json", "w") as output:
-                        json.dump({"employee": aiData}, output, indent=4)
+                        json.dump(aiData, output, indent=4)
 
                 except Exception as e:
                     print(d["message"]["content"])
                     print("literal_eval() Exception")
                     print(e)
-                    messageList.append({"role": "user", "content": "You either added unnecessary text or formatted incorrectly. Do not do that with the next generation."})
+                    messageList.append({"role": "user",
+                                        "content": "You either added unnecessary text or formatted incorrectly. Do not do that with the next generation."})
                     pass
 
     except Exception as e:
@@ -179,3 +183,222 @@ def EmployeeCreation():
         print(e)
         pass
 
+
+activeDates = generateDateList(date(2038, 6, 7), date(2075, 11, 20))
+
+
+def generateMissionDuration(dDate):
+    startDate = random.choice(generateDateList(dDate, date(2075, 11, 20)))
+    endDate = startDate + relativedelta(years=random.randint(0, 2), days=random.randint(0, 180))
+    startDate = startDate.strftime('%Y-%m-%d')
+    endDate = endDate.strftime('%Y-%m-%d')
+
+    return startDate, endDate
+
+
+def OriginCreation():
+    with open('base_data.json') as d:
+        depData = json.load(d)["department"]
+
+    deps = []
+    for d in depData:
+        if d["name"] not in ["Navigation", "Communications",
+                             "Security", "Human Resources",
+                             "Legal", "Education",
+                             "Entertainment"]:
+            deps.append(d)
+
+    with open("ai_data.json") as output:
+        aiData = json.load(output)
+
+    print("Number of Generated Origins: ", len(aiData["origin"]))
+
+    messageList = []
+    try:
+        for i in range(20):
+            for j in range(2):
+                dDate = random.choice(activeDates)
+                dateRanges = []
+                for k in range(random.randint(1, 5)):
+                    s, e = generateMissionDuration(dDate)
+                    dateRanges.append((s, e))
+
+                message = {"role": "user", "content":
+                    '''I want you to generate a list of python dictionaries given the following example and given what you know about F-SEA:
+                    example:
+                    [{
+                      "name": "Lypso",
+                      "description": "A highly hazardous gaseous ice planet",
+                      "discoveryDate": "yyyy-mm-dd",
+                      "depID": 0,
+                      "missions": [
+                        {
+                          "name": "Dying Prophet",
+                          "startDate": "yyyy-mm-dd",
+                          "endDate": "yyyy-mm-dd",
+                          "description": "Recon mission to investigate reports of a glowing 'rosetta-stone-like' object"
+                        },
+                        {
+                          "name": "Gaseous Depths",
+                          "startDate": "yyyy-mm-dd",
+                          "endDate": "yyyy-mm-dd",
+                          "description": "Exploratory mission to study the atmospheric composition and behavior of gaseous pockets"
+                        }
+                      ]
+                        }]
+                        
+                    Important:
+                    This is the discovery date to use: %s
+                    These are the departments to choose from: %s
+                    These are the mission startDate-endDate pairs to choose from: %s
+                    The depID should match the depID of the department that headed the mission.
+                    Each origin discoveryDate must be before any of the mission dates.
+                    Each origin should have a number of missions that matches the amount of mission duration pairs.
+                    Do not use the origin name given in the example.
+                    Each mission must have startDate within this range: 2038-06-06 to 2075-11-22
+                    Not every mission must have an end date, if it makes sense within the context of the mission. It is your choice. If it does not have an endDate, mark the endDate as None.
+                    Every mission duration must make sense given the nature and purpose of the mission.
+                    Missions can range from very dangerous/lethal to harmless.
+
+                    
+                    The produced data should be in the format of a python list of python dictionaries. 
+                Blank attributes should be marked with the keyword None as found in python. Do NOT mark them null.
+                Return the list of python dicts as is. I will be using the ast.literal_eval() function to process the data,
+                so make sure your response is in a usable format.
+    
+    
+                ''' % (dDate, deps, dateRanges)}
+                fsea = {
+                    "role": "system",
+                    "content": """The Frontier Space Exploration Agency, is at the forefront of space exploration and colonization endeavors. With a mission to push the boundaries of human knowledge and find a new home after the destruction of Earth, F-SEA undertakes ambitious projects and scientific missions to explore uncharted frontiers beyond our solar system.
+            F-SEA's primary focus revolves around three key areas: space exploration, colonization, and scientific research. F-SEA ventures into space to gather valuable data, study celestial bodies, and unlock the mysteries of the universe. Their missions include manned and unmanned expeditions to distant planets, moons, and other celestial objects.
+            F-SEA envisions a future where humans establish sustainable colonies beyond the mothership. Their dedicated teams of scientists and researchers conduct studies on various disciplines, including astrophysics, planetary geology, astrobiology, and more. By unraveling the secrets of the cosmos, F-SEA contributes to our understanding of the universe, potentially leading to breakthroughs in fields such as cosmology, exoplanet exploration, and the search for extraterrestrial life.
+            In summary, F-SEA is a pioneering organization that combines technological innovation, human exploration, and scientific research to expand our knowledge of the universe, establish sustainable colonies beyond Earth, and pave the way for humanity's future in space.
+            F-SEA also works to contain and experiment on discovered extraterrestrial lifeforms"""
+                }
+
+                messageList.append(fsea)
+                messageList.append(message)
+
+                completion = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=messageList,
+                    n=1,
+                    temperature=1
+                )
+                for d in completion["choices"]:
+                    messageList.clear()
+                    o = cleanTextForList(d["message"]["content"])
+                    try:
+                        originList = ast.literal_eval(o)
+                        messageList.append(
+                            {"role": "system", "content": f"""This is the last generated origin list: {originList}
+                            You do not need to generate anything for this origin. Just keep this origin's data in mind
+                            while you fill in the data for the next origin."""})
+                        aiData["origin"] = aiData["origin"] + originList
+                        print("Success!: ", o)
+                        print("Total Origins: ", len(aiData["origin"]))
+                        with open("ai_data.json", "w") as output:
+                            json.dump(aiData, output, indent=4)
+
+                    except Exception as e:
+                        print(o)
+                        print("literal_eval() Exception")
+                        print(e)
+                        messageList.append({"role": "user",
+                                            "content": "You either added unnecessary text or formatted incorrectly. Do not do that with the next generation."})
+                        pass
+
+    except Exception as e:
+        print(e)
+        pass
+
+
+def SpecimenCreation():
+
+    with open("ai_data.json") as output:
+        aiData = json.load(output)
+
+    print("Number of Generated Specimens: ", len(aiData["specimen"]))
+
+    messageList = []
+    try:
+        for i in range(20):
+            for j in range(2):
+                oDict = random.choice(aiData["origin"])
+                message = {"role": "user", "content":
+                    '''I want you to generate a short python list of python dictionaries given the following example and given what you know about F-SEA:
+                    example:
+                    [{
+                        "name": "SpecimenName",
+                        "mission": "Name of mission",
+                        "threatLevel": 5.4,
+                        "acquisitionDate": "yyyy-mm-dd",
+                        "notes": "notes detailing any fun or important facts about the specimen",
+                        "description": "detailed description"
+                }]
+
+                    Important:
+                    The threatLevel should be a float from 0.0 to 10.0. The closer to 0, the less dangerous, the higher the more dangerous.
+                    The acquisition date should correlate to a date between the startDate and endDate (inclusive) of one of the missions provided in the dictionary below:
+                    %s
+                   
+                   The specimens are mostly alien or anomalous in nature.
+                   Notes should detail any fun or important facts about the specimen or what anything odd about the specimen.
+                   The description should thoroughly detail each specimen's habits, appearance, and it should correspond to their threatLevel.
+
+
+                    The produced data should be in the format of a python list of python dictionaries. 
+                Blank attributes should be marked with the keyword None as found in python. Do NOT mark them null.
+                Return the list of python dicts as is. I will be using the ast.literal_eval() function to process the data,
+                so make sure your response is in a usable format.
+
+
+                ''' % (oDict)}
+                fsea = {
+                    "role": "system",
+                    "content": """The Frontier Space Exploration Agency, is at the forefront of space exploration and colonization endeavors. With a mission to push the boundaries of human knowledge and find a new home after the destruction of Earth, F-SEA undertakes ambitious projects and scientific missions to explore uncharted frontiers beyond our solar system.
+            F-SEA's primary focus revolves around three key areas: space exploration, colonization, and scientific research. F-SEA ventures into space to gather valuable data, study celestial bodies, and unlock the mysteries of the universe. Their missions include manned and unmanned expeditions to distant planets, moons, and other celestial objects.
+            F-SEA envisions a future where humans establish sustainable colonies beyond the mothership. Their dedicated teams of scientists and researchers conduct studies on various disciplines, including astrophysics, planetary geology, astrobiology, and more. By unraveling the secrets of the cosmos, F-SEA contributes to our understanding of the universe, potentially leading to breakthroughs in fields such as cosmology, exoplanet exploration, and the search for extraterrestrial life.
+            In summary, F-SEA is a pioneering organization that combines technological innovation, human exploration, and scientific research to expand our knowledge of the universe, establish sustainable colonies beyond Earth, and pave the way for humanity's future in space.
+            F-SEA also works to contain and experiment on discovered extraterrestrial lifeforms"""
+                }
+
+                messageList.append(fsea)
+                messageList.append(message)
+
+                completion = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=messageList,
+                    n=1,
+                    temperature=1
+                )
+                for d in completion["choices"]:
+                    messageList.clear()
+                    o = cleanTextForList(d["message"]["content"])
+                    try:
+                        originList = ast.literal_eval(o)
+                        messageList.append(
+                            {"role": "system", "content": f"""This is the last generated specimen list: {originList}
+                            You do not need to generate anything for this origin. Just keep this origin's data in mind
+                            while you fill in the data for the next origin."""})
+
+                        for ori in aiData["origin"]
+
+                        aiData["origin"] = aiData["origin"] + originList
+                        print("Success!: ", o)
+                        print("Total Origins: ", len(aiData["origin"]))
+                        with open("ai_data.json", "w") as output:
+                            json.dump(aiData, output, indent=4)
+
+                    except Exception as e:
+                        print(o)
+                        print("literal_eval() Exception")
+                        print(e)
+                        messageList.append({"role": "user",
+                                            "content": "You either added unnecessary text or formatted incorrectly. Do not do that with the next generation."})
+                        pass
+
+    except Exception as e:
+        print(e)
+        pass

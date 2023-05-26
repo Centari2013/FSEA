@@ -23,10 +23,10 @@ def dropClearanceTable(cur):
 def createContainmentStatusTable(cur):
     # create ContainmentStatus table
     cur.execute('''CREATE TABLE ContainmentStatus(
-                        statusID      INTEGER UNIQUE NOT NULL,
+                        containmentStatusID      INTEGER UNIQUE NOT NULL,
                         name TEXT,
                         description TEXT,
-                        PRIMARY KEY (statusID)
+                        PRIMARY KEY (containmentStatusID)
                         );''')
     print('ContainmentStatus table created\n')
 
@@ -69,10 +69,10 @@ def createSpecimenContainmentStatusTable(cur):
     # create SpecimenContainmentStatus table
     cur.execute('''CREATE TABLE SpecimenContainmentStatus(
                     specimenID           TEXT NOT NULL UNIQUE,
-                    statusID      INTEGER,
+                    containmentStatusID     INTEGER,
                     PRIMARY KEY (specimenID),
                     CONSTRAINT SpecimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE,
-                    CONSTRAINT statusID FOREIGN KEY (statusID) REFERENCES ContainmentStatus(statusID) ON DELETE CASCADE
+                    CONSTRAINT statusID FOREIGN KEY (containmentStatusID) REFERENCES ContainmentStatus(containmentStatusID) ON DELETE CASCADE
                     );''')
     print('SpecimenContainmentStatus table created\n')
 
