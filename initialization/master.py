@@ -1,4 +1,3 @@
-from generateJson import OriginCreation as o
-
-o()
+from generateJson import SpecimenCreation as s
+s()
 
