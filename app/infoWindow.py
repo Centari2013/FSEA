@@ -4,7 +4,7 @@ from PyQt6.QtGui import QPalette
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QFrame, QSpacerItem, QSizePolicy, QPlainTextEdit
 
-from bulk.baseWindows import windowWithToolbar
+from app.baseWindows import windowWithToolbar
 from utils.accessDatabaseUtils import *
 
 

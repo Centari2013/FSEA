@@ -3,28 +3,31 @@ import json
 from utils.alterDatabaseUtils import *
 from database_setup.declaration.DB_Declaration import *
 
-
-
-
 '''
 IMPORTANT!!!!
 Run DB_Declaration.py EVERYTIME before running this script.
+(unless that import statement is still up there)
 '''
-with open('department_data.json') as d:
-    depData = json.load(d)
-with open('data.json') as d:
+
+with open('complete_data.json') as d:
     data = json.load(d)
-with open('test_data.json') as d:
-    test_data = json.load(d)
-
-
 
 
 def designationData():
     for dep in data["department"]:
         for des in dep["designations"]:
             # append designationID to list of designations
-            des.append(addDesignation(des[0], des[1]))
+            addDesignation(des[0], des[1])
+
+
+def clearanceData():
+    for c in data["clearanceLevel"]:
+        addClearance(c["name"], c["description"])
+
+
+def containmentStatus():
+    for s in data["containmentStatus"]:
+        addContainmentStatus(s["name"], s["description"])
 
 
 def departmentData():
@@ -51,13 +54,13 @@ def departmentData():
         notes = sup["notes"]
         # add department supervisors
         d["supervisor"] = ID = addEmployee(fn, ln, depID, start, summary=summ)
+        updateDepartment(depID, supervisorID=ID)
         addEmployeeDesignation(ID, depSupervisorDesID)
         updateEmployee(ID, endDate=None)
         updateEmployeeMedical(ID, birth, bt, sex, kg, height, notes)
 
 
 def EmployeeData():
-
     for e in data["employee"]:
         for d in data["department"]:
             if d["name"] == e["dep"]:
@@ -72,24 +75,23 @@ def EmployeeData():
         addEmployeeDesignation(ID, e["designation"])
         updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"], e["notes"])
 
+        if "endDate" in e:
+            updateEmployee(endDate=e["endDate"])
+
+        addEmployeeClearance(ID, e["clearance"])
+
         if e["firstName"] == "Zaria":
             updateCredentials(ID, 'test', 'test')
 
 
-
-
 def saveData():
-    depData = {"department": []}
-    for dep in data["department"]:
-        depData["department"].append({"name": dep["name"], "id": dep["depID"], "designations": dep["designations"]})
-
-    with open("base_data.json", "w") as output:
+    with open("complete_db.json", "w") as output:
         json.dump(data, output, indent=4)
 
-    with open("department_data.json","w") as output:
-        json.dump(depData, output, indent=4)
 
 '''''''''''''''''''''''''''PRINT TABLES'''''''''''''''''''''''''''
+
+
 def printTables():
     con = sqlite3.connect(DB_PATH)
     cur = con.cursor()

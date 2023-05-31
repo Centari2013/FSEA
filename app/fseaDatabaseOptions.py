@@ -2,9 +2,9 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox, QLineEdit, QSpacerItem, QSizePolicy
 
-from bulk.baseWindows import windowWithToolbar
-from bulk.colorPresets import colors
-from bulk.infoWindow import employeeInfo
+from app.baseWindows import windowWithToolbar
+from app.colorPresets import colors
+from app.infoWindow import employeeInfo
 from utils.searchEngine import search
 from utils.dbVariables import (employeeType, specimenType, originType,
                                missionType, departmentType)

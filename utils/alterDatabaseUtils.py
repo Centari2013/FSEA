@@ -12,6 +12,254 @@ def print_sql(sql):
     return str
 
 
+
+def addContainmentStatus(name, desc):
+    ID = None
+    con = None
+
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute('INSERT INTO ContainmentStatus(name, description) VALUES(?,?);', (name, desc))
+        con.commit()
+        row = cur.lastrowid
+        cur.execute('SELECT containmentStatusID FROM ContainmentStatus WHERE rowid = ?', (row,))
+        ID = cur.fetchone()[0]
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        if ID is not None:
+            return ID
+
+
+def updateContainmentStatus(containmentStatusID, name=None, desc=None):
+    con = None
+    success = False
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        args = [[name, 'name'], [desc, 'desc']]
+        for a in args:
+            if a[0] is not None:
+                cur.execute(f'''UPDATE ContainmentStatus SET {a[1]} = ? WHERE containmentStatusID = ?''', (a[0], containmentStatusID))
+        con.commit()
+        success = True
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        return success
+
+
+def deleteContainmentStatus(containmentStatusID):
+    con = None
+    success = False
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute('DELETE FROM ContainmentStatus WHERE containmentStatusID = ?', (containmentStatusID,))
+        con.commit()
+        success = True
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        return success
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def addClearance(name, desc):
+    ID = None
+    con = None
+
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute('INSERT INTO Clearance(name, description) VALUES(?,?);', (name, desc))
+        con.commit()
+        row = cur.lastrowid
+        cur.execute('SELECT clearanceID FROM Clearance WHERE rowid = ?', (row,))
+        ID = cur.fetchone()[0]
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        if ID is not None:
+            return ID
+
+
+def updateClearance(clearanceID, name=None, desc=None):
+    con = None
+    success = False
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        args = [[name, 'name'], [desc, 'desc']]
+        for a in args:
+            if a[0] is not None:
+                cur.execute(f'''UPDATE Clearance SET {a[1]} = ? WHERE clearanceID = ?''', (a[0], clearanceID))
+        con.commit()
+        success = True
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        return success
+
+
+def deleteClearance(clearanceID):
+    con = None
+    success = False
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute('DELETE FROM Clearance WHERE clearanceID = ?', (clearanceID,))
+        con.commit()
+        success = True
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        return success
+
+
+def addEmployeeClearance(empID, cleranceID):
+    ID = None
+    con = None
+
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute('INSERT INTO EmployeeClearance(empID, clearanceID) VALUES(?,?);', (empID, cleranceID))
+        con.commit()
+        row = cur.lastrowid
+        cur.execute('SELECT empID, clearanceID FROM EmployeeClearance WHERE rowid = ?', (row,))
+        ID = cur.fetchone()[0]
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        if ID is not None:
+            return ID
+
+
+def updateEmployeeClearance(empID, clearanceID, newClearanceID):
+    con = None
+    success = False
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute(f'''UPDATE EmployeeClearance SET clearanceID = ? WHERE empID = ? AND clearanceID = ?''',
+                    (empID, clearanceID, newClearanceID))
+        con.commit()
+        success = True
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        return success
+
+
+def deleteEmployeeClearance(empID, clearanceID):
+    con = None
+    success = False
+    try:
+        # connect to database
+        con = sqlite3.connect(DB_PATH)
+
+        cur = con.cursor()
+        cur.execute("PRAGMA foreign_keys = ON;")
+
+        cur.execute('DELETE FROM EmployeeClearance WHERE empID = ? AND clearanceID = ?', (empID, clearanceID,))
+        con.commit()
+        success = True
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        # close connection and return
+        if con is not None:
+            con.close()
+        return success
+
+
 def addDesignation(name, abbreviation):
     ID = None
     con = None
@@ -169,8 +417,6 @@ def deleteDepartment(depID):
         return success
 
 
-# TODO: Add set department mission, employee mission, set specimen mission, set employee clearance, set specimen
-#  containment status, and set employee designation
 def addEmployee(firstName, lastName, dep, startDate, summary=None):
     ID = None
     con = None
@@ -234,6 +480,7 @@ def addEmployeeDesignation(empID, designationID):
         if con is not None:
             con.close()
         return ID
+
 
 def updateEmployee(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None,
                    summary=None):
