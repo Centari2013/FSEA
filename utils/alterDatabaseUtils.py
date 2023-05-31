@@ -603,7 +603,7 @@ def updateCredentials(empID, username=None, pwd=None, loginAttempts=None):
         return success
 
 
-def addOrigin(name, desc, missionID=None):
+def addOrigin(name, discoveryDate,desc):
     con = None
     ID = None
     try:
@@ -621,10 +621,10 @@ def addOrigin(name, desc, missionID=None):
             cur.execute('SELECT originID FROM Origin WHERE originID = ?', (ID,))
             r = cur.fetchone()
 
-        cur.execute('INSERT INTO Origin(originID, name, description) VALUES (?,?,?)', (ID, name, desc))
+        cur.execute('INSERT INTO Origin(originID, name, description, discoveryDate) VALUES (?,?,?,?)', (ID, name, desc, discoveryDate))
         con.commit()
 
-        updateOrigin(ID, missionID=missionID)
+
     except Exception as e:
         print(e)
 
@@ -635,7 +635,7 @@ def addOrigin(name, desc, missionID=None):
         return ID
 
 
-def updateOrigin(ID, name=None, missionID=None, desc=None):
+def updateOrigin(ID, name=None, desc=None, discoveryDate=None):
     con = None
     success = False
     try:
@@ -643,7 +643,7 @@ def updateOrigin(ID, name=None, missionID=None, desc=None):
         cur = con.cursor()
         cur.execute("PRAGMA foreign_keys = ON;")
 
-        args = [[name, 'name'], [missionID, 'missionID'], [desc, 'description']]
+        args = [[name, 'name'], [discoveryDate, 'discoveryDate'], [desc, 'description']]
 
         for a in args:
             if a[0] is not None:
