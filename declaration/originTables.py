@@ -25,7 +25,7 @@ def createOrigin_ftsTable(cur):
     cur.execute('''CREATE VIRTUAL TABLE Origin_fts USING fts5(
                     originID,
                     name,
-                    missionID,
+                    discoveryDate,
                     description,
                     tokenize="porter"  
                 )''')
@@ -46,8 +46,8 @@ def dropOrigin_ftsTable(cur):
 def createOriginTriggers(cur):
     cur.execute('''CREATE TRIGGER origin_fts_insert AFTER INSERT ON Origin
                     BEGIN
-                        INSERT INTO Origin_fts (originID, name, missionID, description)
-                        VALUES (new.originID, new.name, new.missionID, new.description);
+                        INSERT INTO Origin_fts (originID, name, discoveryDate, description)
+                        VALUES (new.originID, new.name, new.discoveryDate, new.description);
                     END;''')
 
     cur.execute('''CREATE TRIGGER origin_fts_delete AFTER DELETE ON Origin
@@ -61,7 +61,7 @@ def createOriginTriggers(cur):
                         UPDATE Origin_fts
                         SET originID = new.originID,
                             name = new.name,
-                            missionID = new.missionID,
+                            discoveryDate = new.discoveryDate,
                             description = new.description
                         WHERE originID = old.originID;
                     END;''')
