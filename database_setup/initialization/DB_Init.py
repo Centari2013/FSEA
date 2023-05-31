@@ -1,6 +1,6 @@
 import json
 
-from utils.alterDatabaseUtils import *
+from utils.databaseUtils import *
 from database_setup.declaration.DB_Declaration import *
 
 '''
