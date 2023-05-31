@@ -1,23 +1,23 @@
-def createEmployeeSpecimenTable(cur):
-    cur.execute('''CREATE TABLE EmployeeSpecimen(
+def createResearcherSpecimenTable(cur):
+    cur.execute('''CREATE TABLE ResearcherSpecimen(
                     empID       TEXT NOT NULL,
                     specimenID  TEXT NOT NULL,
                    PRIMARY KEY (empID, specimenID),
                    CONSTRAINT employeeID FOREIGN KEY (empID) REFERENCES Employee(empID) ON DELETE CASCADE, 
                    CONSTRAINT specimenID FOREIGN KEY (specimenID) REFERENCES Specimen(specimenID) ON DELETE CASCADE
                    );''')
-    print('EmployeeSpecimen table created\n')
+    print('ResearcherSpecimen table created\n')
 
 
-def dropEmployeeSpecimenTable(cur):
+def dropResearcherSpecimenTable(cur):
     # drop EmployeeSpecimen table from database if it exists
     try:
-        cur.execute('''DROP TABLE EmployeeSpecimen''')
+        cur.execute('''DROP TABLE ResearcherSpecimen''')
 
-        print('EmployeeSpecimen table dropped\n')
+        print('ResearcherSpecimen table dropped\n')
 
     except:
-        print('EmployeeSpecimen table does not exist\n')
+        print('ResearcherSpecimen table does not exist\n')
 
 
 def createEmployeeMissionTable(cur):
