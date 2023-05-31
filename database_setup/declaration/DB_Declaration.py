@@ -33,7 +33,7 @@ dropCredentialsTable(cur)
 
 # drop all other linked tables
 dropDepartmentMissionTable(cur)
-dropEmployeeSpecimenTable(cur)
+dropResearcherSpecimenTable(cur)
 dropEmployeeMissionTable(cur)
 dropSpecimenMissionTable(cur)
 dropSpecimenMedicalTable(cur)
@@ -77,7 +77,7 @@ con.commit()
 
 
 # create bridge tables
-createEmployeeSpecimenTable(cur)
+createResearcherSpecimenTable(cur)
 createEmployeeMissionTable(cur)
 createSpecimenMission(cur)
 createDepartmentMissionTable(cur)

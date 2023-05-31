@@ -5,14 +5,14 @@ def createSpecimenTable(cur):
     cur.execute('''CREATE TABLE Specimen(
                     specimenID              TEXT NOT NULL UNIQUE,
                     name                    TEXT NOT NULL,
-                    origin                  TEXT DEFAULT NULL,
+                    originID                  TEXT DEFAULT NULL,
                     missionID               TEXT DEFAULT NULL,
                     threatLevel             REAL DEFAULT NULL,
                     acquisitionDate         TEXT NOT NULL,
                     notes                   TEXT DEFAULT NULL,
                     description             TEXT DEFAULT '',
                    PRIMARY KEY (specimenID),
-                   CONSTRAINT originID FOREIGN KEY (origin) REFERENCES Origin(originID) ON DELETE CASCADE,
+                   CONSTRAINT originID FOREIGN KEY (originID) REFERENCES Origin(originID) ON DELETE CASCADE,
                    CONSTRAINT missionID FOREIGN KEY (missionID) REFERENCES Mission(missionID) ON DELETE CASCADE
                    );''')
     print('Specimen table created\n')

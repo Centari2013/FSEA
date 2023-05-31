@@ -1,25 +1,22 @@
 import json
 
-with open('department_data.json') as d:
-    depData = json.load(d)
+with open('base_data.json') as b:
+    bData = json.load(b)
 
 with open("ai_data.json") as output:
-    aiData = json.load(output)["employee"]
+    aiData = json.load(output)
 
-
-for e in aiData:
+for e in aiData["employee"]:
     department = None
-    for dep in depData["department"]:
+    for dep in bData["department"]:
         if dep["name"] == e["dep"]:
             department = dep
-
 
     if department is None:
         print(e)
         raise ValueError("Department is None!")
 
-    #print(department)
-    depID = department["id"]
+    depID = department["depID"]
     if depID is not None:
         e['dep'] = depID
     else:
@@ -33,20 +30,22 @@ for e in aiData:
     if e["summary"].lower() == "none":
         e["summary"] = None
 
-    print(e["designation"])
-    print(e)
-    print('\n')
+
     for d in department["designations"]:
 
         if e["designation"] == d[0]:
             e["designation"] = d[2]
-        
 
     print(e["designation"])
     print(e)
     print('\n')
 
 
-empData = {"employee": aiData}
-with open("clean_ai_data.json", "w") as output:
-    json.dump(empData, output, indent=4)
+# complete data
+with open('complete_data.json', 'w') as c:
+    json.dump({"department": bData["department"],
+               "employee": bData["employee"] + aiData["employee"],
+               "clearanceLevel": aiData["ClearanceLevel"],
+               "containmentStatus": aiData["ContainmentStatus"],
+               "origin": aiData["origin"]}, c, indent=4)
+
