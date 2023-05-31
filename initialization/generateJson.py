@@ -66,119 +66,82 @@ def cleanTextForList(t):
 
 
 def EmployeeCreation():
-    with open('department_data.json') as d:
+    def get_last_integer(string):
+        pattern = r'\d+'  # Matches one or more digits
+        integers = re.findall(pattern, string)
+        if integers:
+            return int(integers[-1])
+        else:
+            return None
+
+
+    with open('base_data.json') as d:
         depData = json.load(d)
 
     with open("ai_data.json") as output:
         aiData = json.load(output)
 
-    print("Number of Generated Employees: ", len(aiData["employee"]))
-
-    dictList = []
-    messageList = []
+    empWClea = 0
+    amtEmp = len(aiData["employee"])
     try:
-        for i in range(10):
-            for j in range(3):
-                b, s, e = getRandomBSEDates()
-                dep = random.choice(depData["department"])
-                while dep["name"] == "Executive":
-                    dep = random.choice(depData["department"])
-                depName = dep["name"]
-                desig = random.choice(dep["designations"])[0]
-                dictList.append({"dep": depName,
-                                 "designation": desig,
-                                 "firstName": None,
-                                 "lastName": None,
-                                 "startDate": s,
-                                 "endDate": e,
-                                 "dob": b,
-                                 "bloodtype": None,
-                                 "sex": None,
-                                 "weight": None,
-                                 "height": None,
-                                 "notes": None,
-                                 "summary": None})
+        clearances = aiData["ClearanceLevel"]
+        for e in aiData["employee"]:
+            if "clearance" in e:
+                empWClea += 1
+            if "clearance" not in e:
+                for dep in depData["department"]:
+                    if dep["name"] == e["dep"]:
 
-            message = {"role": "user", "content":
-                '''Given the following list of python dictionaries, I want you to generate data for the attributes
-                marked "None".
-                Important: 
-                The "notes" section should refer to any medical illness or allergies or disabilities the individual may have. 
-                It is not necessary for them to have any. 
-                The "summary" section might detail the individual's achievements with relation
-                to F-SEA, the organization they work for, and with relation to their designation. It should be enclosed in double quotes.
-                If they do have notes, enclose the notes in double quotes. e.g. "notes": "blah blah blah...". Do the same for the summary.
-                The weight should be either an integer or float number in kg.
-                The height should be an integer in cm.
-                Names should be varied as this is an international organization.
-        
-                %s
-        
-                The produced data should be in the format of a python list of python dictionaries. 
-                Blank attributes should be marked with the keyword None as found in python. Do NOT mark them null.
-                Return the list of python dicts as is. I will be using the ast.literal_eval() function to process the data,
-                so make sure your response is in a usable format.
-                
-                example:
-                [{"dep": depName,
-                                "designation": "worker",
-                                 "firstName": "Zaria",
-                                 "lastName": "Burton",
-                                 "startDate": "2023-05-15",
-                                 "endDate": "2023-05-15",
-                                 "dob": "2000-09-22",
-                                 "bloodtype": "B+",
-                                 "sex": "f",
-                                 "weight": 73.2,
-                                 "height": 155,
-                                 "notes": "space allergies",
-                                 "summary": "founder of fsea"},]
-            ''' % dictList}
-            fsea = {
-                "role": "system",
-                "content": """The Frontier Space Exploration Agency, is at the forefront of space exploration and colonization endeavors. With a mission to push the boundaries of human knowledge and find a new home after the destruction of Earth, F-SEA undertakes ambitious projects and scientific missions to explore uncharted frontiers beyond our solar system.
-        F-SEA's primary focus revolves around three key areas: space exploration, colonization, and scientific research. F-SEA ventures into space to gather valuable data, study celestial bodies, and unlock the mysteries of the universe. Their missions include manned and unmanned expeditions to distant planets, moons, and other celestial objects.
-        F-SEA envisions a future where humans establish sustainable colonies beyond the mothership. Their dedicated teams of scientists and researchers conduct studies on various disciplines, including astrophysics, planetary geology, astrobiology, and more. By unraveling the secrets of the cosmos, F-SEA contributes to our understanding of the universe, potentially leading to breakthroughs in fields such as cosmology, exoplanet exploration, and the search for extraterrestrial life.
-        In summary, F-SEA is a pioneering organization that combines technological innovation, human exploration, and scientific research to expand our knowledge of the universe, establish sustainable colonies beyond Earth, and pave the way for humanity's future in space."""
-            }
+                        completion = openai.ChatCompletion.create(
+                            model="gpt-3.5-turbo",
+                            messages=[{
+                                "role": "system",
+                                "content": """The Frontier Space Exploration Agency, is at the forefront of space exploration and colonization endeavors. With a mission to push the boundaries of human knowledge and find a new home after the destruction of Earth, F-SEA undertakes ambitious projects and scientific missions to explore uncharted frontiers beyond our solar system.
+                                    F-SEA's primary focus revolves around three key areas: space exploration, colonization, and scientific research. F-SEA ventures into space to gather valuable data, study celestial bodies, and unlock the mysteries of the universe. Their missions include manned and unmanned expeditions to distant planets, moons, and other celestial objects.
+                                    F-SEA envisions a future where humans establish sustainable colonies beyond the mothership. Their dedicated teams of scientists and researchers conduct studies on various disciplines, including astrophysics, planetary geology, astrobiology, and more. By unraveling the secrets of the cosmos, F-SEA contributes to our understanding of the universe, potentially leading to breakthroughs in fields such as cosmology, exoplanet exploration, and the search for extraterrestrial life.
+                                    In summary, F-SEA is a pioneering organization that combines technological innovation, human exploration, and scientific research to expand our knowledge of the universe, establish sustainable colonies beyond Earth, and pave the way for humanity's future in space."""
+                            },
+                                {"role": "assistant", "content":
+                                    '''Here is the employee clearance levels list:
+                                     %s
+                                     I want you to select a clearance level for the following employee based on their information, 
+                                     the department information, and based on what you know about F-SEA.
+    
+                                     Employee: %s
+    
+                                     Department: %s
+                                     
+                                     If you cannot find a suitable clearance level to match the employee, assume general access level.
+                                     Format your response as a single number without any extracurricular text.
+                                     Do not explain your answer. Do not respond with anything other than just an integer.
+                                    
+                                ''' % (e, clearances, dep)}
+                            ],
+                            n=1,
+                            temperature=0
+                        )
+                        for d in completion["choices"]:
+                            try:
+                                mess = d["message"]["content"]
+                                print(mess)
+                                c = get_last_integer(mess)
+                                e["clearance"] = c
 
-            messageList.append(fsea)
-            messageList.append(message)
+                                print("Success!: ", e["clearance"])
+                                with open("ai_data.json", "w") as output:
+                                    json.dump(aiData, output, indent=4)
 
-            completion = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=messageList,
-                n=1,
-                temperature=1
-            )
-            for d in completion["choices"]:
-                messageList.clear()
-                try:
-                    emp = cleanTextForList(d["message"]["content"])
-
-                    employeeList = ast.literal_eval(emp)
-                    messageList.append(
-                        {"role": "system", "content": f"""This is the last generated employee list: {employeeList}
-                        You do not need to generate anything for this employee. Just keep this employee's data in mind
-                        while you fill in the data for the next employee."""})
-                    aiData["employee"] = aiData["employee"] + employeeList
-                    print("Success!: ", emp)
-                    print("Total Employees: ", len(aiData["employee"]))
-                    with open("ai_data.json", "w") as output:
-                        json.dump(aiData, output, indent=4)
-
-                except Exception as e:
-                    print(d["message"]["content"])
-                    print("literal_eval() Exception")
-                    print(e)
-                    messageList.append({"role": "user",
-                                        "content": "You either added unnecessary text or formatted incorrectly. Do not do that with the next generation."})
-                    pass
+                            except Exception as e:
+                                print(e)
+                                pass
+                            break
 
     except Exception as e:
         print("GPT Exception")
         print(e)
         pass
+
+    print(empWClea, '/', amtEmp, " clearances generated")
 
 
 activeDates = generateDateList(date(2038, 6, 7), date(2075, 11, 20))
@@ -410,3 +373,5 @@ def SpecimenCreation():
     except Exception as e:
         print(e)
         pass
+
+
