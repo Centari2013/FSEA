@@ -6,6 +6,16 @@ with open('base_data.json') as b:
 with open("ai_data.json") as output:
     aiData = json.load(output)
 
+for o in aiData["origin"]:
+        for m in o["missions"]:
+            for s in m["specimens"]:
+                if s["medical"]["sex"] is not None:
+                    s["medical"]["sex"] = s["medical"]["sex"].strip()[0].lower()
+                bt = s["medical"]["bloodtype"]
+                if bt is not None and (bt.lower() == 'none' or bt.lower() == 'n/a'):
+                    s["medical"]["bloodtype"] = None
+
+
 for e in aiData["employee"]:
     department = None
     for dep in bData["department"]:

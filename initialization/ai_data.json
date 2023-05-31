@@ -10054,7 +10054,13 @@
                             "threatLevel": 7.6,
                             "acquisitionDate": "2050-10-01",
                             "notes": "Feeds on radioactive minerals.",
-                            "description": "The Ashen Locust is a large insectoid creature with a metallic exoskeleton. It is highly territorial and will aggressively defend its radioactive food sources. It can fly great distances and is easily provoked. Additionally, its carapace is highly resistant to most physical damage."
+                            "description": "The Ashen Locust is a large insectoid creature with a metallic exoskeleton. It is highly territorial and will aggressively defend its radioactive food sources. It can fly great distances and is easily provoked. Additionally, its carapace is highly resistant to most physical damage.",
+                            "medical": {
+                                "bloodtype": "L+",
+                                "sex": "F",
+                                "kilograms": 2.3,
+                                "notes": "The Ashen Locust has been evaluated and found to have a benign radiation emission. However, it possesses acute sensitivity to sound inducing discomfort and possible forced migration may alter colony growth for flourishing territories."
+                            }
                         }
                     ]
                 },
@@ -10073,7 +10079,13 @@
                             "threatLevel": 9.9,
                             "acquisitionDate": "2073-01-05",
                             "notes": "Capable of producing a toxic gas cloud upon death.",
-                            "description": "The Crimson Squid is a massive, blood-red cephalopod with numerous tentacles. It is highly aggressive and attacks any perceived threats on sight. It has a keen sense of smell and can detect prey from miles away. Upon death, it releases a highly toxic gas cloud."
+                            "description": "The Crimson Squid is a massive, blood-red cephalopod with numerous tentacles. It is highly aggressive and attacks any perceived threats on sight. It has a keen sense of smell and can detect prey from miles away. Upon death, it releases a highly toxic gas cloud.",
+                            "medical": {
+                                "bloodtype": "S+",
+                                "sex": "F",
+                                "kilograms": 155.5,
+                                "notes": "The Crimson Squid exhibits signs of extreme aggression and a potentially fatal toxic gas cloud, posing a significant threat to personnel. All necessary precautions should be taken during handling or experimentation."
+                            }
                         }
                     ]
                 },
@@ -10092,7 +10104,13 @@
                             "threatLevel": 7.3,
                             "acquisitionDate": "2073-05-01",
                             "notes": "Lures victims with sonic manipulation.",
-                            "description": "The Amber Siren is a beautiful and deadly creature that uses sonic manipulation to lure in unsuspecting prey. It resembles a large jellyfish with pulsating, iridescent tentacles. Once it has its prey in range, it uses a powerful electric shock to immobilize and kill them. It is highly adaptable and can thrive in a variety of environments."
+                            "description": "The Amber Siren is a beautiful and deadly creature that uses sonic manipulation to lure in unsuspecting prey. It resembles a large jellyfish with pulsating, iridescent tentacles. Once it has its prey in range, it uses a powerful electric shock to immobilize and kill them. It is highly adaptable and can thrive in a variety of environments.",
+                            "medical": {
+                                "bloodtype": "AS+",
+                                "sex": "F",
+                                "kilograms": 75.6,
+                                "notes": "The Amber Siren specimen is currently in a stable condition after receiving medical attention for minor injuries sustained during capture. It is being closely monitored for any signs of distress or illness."
+                            }
                         }
                     ]
                 },
@@ -10111,7 +10129,13 @@
                             "threatLevel": 8.2,
                             "acquisitionDate": "2061-06-15",
                             "notes": "Capable of phasing in and out of reality.",
-                            "description": "The Phantom Viper is a snake-like creature that has the ability to phase in and out of reality, making it nearly impossible to detect. It has powerful venom that can cause hallucinations and severe pain. Its bite has been known to cause paralysis, making it a dangerous adversary."
+                            "description": "The Phantom Viper is a snake-like creature that has the ability to phase in and out of reality, making it nearly impossible to detect. It has powerful venom that can cause hallucinations and severe pain. Its bite has been known to cause paralysis, making it a dangerous adversary.",
+                            "medical": {
+                                "bloodtype": "V+",
+                                "sex": "F",
+                                "kilograms": 17.8,
+                                "notes": "The Phantom Viper is a highly aggressive specimen with venom that is lethal to most forms of life. Additional precautions should be taken when handling or transporting."
+                            }
                         }
                     ]
                 },
@@ -10130,7 +10154,13 @@
                             "threatLevel": 9.8,
                             "acquisitionDate": "2060-08-15",
                             "notes": "Can possess and control the minds of weaker life forms.",
-                            "description": "The Shadow Demon is a dark entity that can possess and control the minds of weaker life forms. It has a dark, misty appearance and can move through solid objects. It can manipulate reality and create illusions that can drive its prey to insanity. It is highly intelligent and has been observed communicating with other Shadow Demons via an unknown method."
+                            "description": "The Shadow Demon is a dark entity that can possess and control the minds of weaker life forms. It has a dark, misty appearance and can move through solid objects. It can manipulate reality and create illusions that can drive its prey to insanity. It is highly intelligent and has been observed communicating with other Shadow Demons via an unknown method.",
+                            "medical": {
+                                "bloodtype": "AB-",
+                                "sex": "F",
+                                "kilograms": 70.5,
+                                "notes": "The Shadow Demon has been observed to be highly resistant to traditional medical protocols. Further research is required to identify treatments effective on the specimen."
+                            }
                         }
                     ]
                 }
@@ -10300,7 +10330,13 @@
                             "threatLevel": 7.8,
                             "acquisitionDate": "2045-07-03",
                             "notes": "Extremely hostile and dangerous. Has acidic blood.",
-                            "description": "The Xenomorph is a highly aggressive and intelligent creature that exhibits a hive mind mentality. Its appearance includes elongated head, sharp-tipped tail, exoskeleton, and double-jointed legs."
+                            "description": "The Xenomorph is a highly aggressive and intelligent creature that exhibits a hive mind mentality. Its appearance includes elongated head, sharp-tipped tail, exoskeleton, and double-jointed legs.",
+                            "medical": {
+                                "bloodtype": "X-",
+                                "sex": "F",
+                                "kilograms": 120.5,
+                                "notes": "Specimen identified as Xenomorph from Mission Bog Beast. Extreme caution needed. Acidic blood poses significant threat to handlers. Specimen to be contained and studied in secure facility."
+                            }
                         }
                     ]
                 },
@@ -10317,7 +10353,13 @@
                             "threatLevel": 2.1,
                             "acquisitionDate": "2060-01-15",
                             "notes": "Invisible to the naked eye.",
-                            "description": "Small, harmless looking snails; each with long tendrils and a spectral shell. They are difficult to see and have been known to cause mild hallucinations with exposure."
+                            "description": "Small, harmless looking snails; each with long tendrils and a spectral shell. They are difficult to see and have been known to cause mild hallucinations with exposure.",
+                            "medical": {
+                                "bloodtype": "N/A",
+                                "sex": "N",
+                                "kilograms": 0.1,
+                                "notes": "The Spectral Snail appears to be harmless to human health, but exposure to it may cause mild hallucinations. Further medical research is necessary to determine if it poses any potential risks to terrestrial life forms."
+                            }
                         }
                     ]
                 },
@@ -10334,7 +10376,13 @@
                             "threatLevel": 5.5,
                             "acquisitionDate": "2066-02-03",
                             "notes": "Exhibits corrosive properties.",
-                            "description": "A small, agile creature that walks on 6 spindly legs. Has the ability to secretes a highly corrosive acid through its skin which quickly melts through most known materials. Its appearance includes a rounded head, sharp mandibles, and multiple eyes."
+                            "description": "A small, agile creature that walks on 6 spindly legs. Has the ability to secretes a highly corrosive acid through its skin which quickly melts through most known materials. Its appearance includes a rounded head, sharp mandibles, and multiple eyes.",
+                            "medical": {
+                                "bloodtype": "D-",
+                                "sex": "M",
+                                "kilograms": 0.5,
+                                "notes": "Specimen exhibits highly corrosive properties, requires Level 4 biohazard precautions and must be handled with care."
+                            }
                         }
                     ]
                 }
@@ -10780,7 +10828,13 @@
                             "threatLevel": 4.1,
                             "acquisitionDate": "2039-06-15",
                             "notes": "This creature has a massive maw lined with razor-sharp teeth and can consume prey several times its own size",
-                            "description": "The Drifting Leviathan is an enormous aquatic creature that can grow to lengths of up to 50 meters. Its skin is covered in tough, leathery armor, and it has a massive maw lined with razor-sharp teeth that it uses to consume prey several times its own size. Despite its fearsome appearance, the Drifting Leviathan is relatively docile and poses little threat to humanoid life forms. However, its immense size and strength make it difficult to contain and study."
+                            "description": "The Drifting Leviathan is an enormous aquatic creature that can grow to lengths of up to 50 meters. Its skin is covered in tough, leathery armor, and it has a massive maw lined with razor-sharp teeth that it uses to consume prey several times its own size. Despite its fearsome appearance, the Drifting Leviathan is relatively docile and poses little threat to humanoid life forms. However, its immense size and strength make it difficult to contain and study.",
+                            "medical": {
+                                "bloodtype": "G+",
+                                "sex": "F",
+                                "kilograms": 3500.0,
+                                "notes": "The Drifting Leviathan is in good health and is adjusting well to its captivity. It is consuming an average of 60 kilograms of sustenance per day and is exhibiting signs of typical aquatic behavior."
+                            }
                         }
                     ]
                 },
@@ -10798,7 +10852,13 @@
                             "threatLevel": 9.2,
                             "acquisitionDate": "2042-06-26",
                             "notes": "This creature has retractable thorn-like appendages that it uses to attack prey and protect itself",
-                            "description": "The Thorned Stalker is a highly aggressive predator that primarily feeds on small rodents, insects, and other creatures. It measures approximately 2 meters in length, has a stout, muscular body, and four powerful legs that allow it to move quickly and gracefully through its environment. Its skin is covered in tough, spiky armor, and it has retractable thorn-like appendages on its legs and tail that it uses to attack prey or defend itself against predators. The creature poses an extreme threat to humanoid life forms and must be contained in a specially designed facility."
+                            "description": "The Thorned Stalker is a highly aggressive predator that primarily feeds on small rodents, insects, and other creatures. It measures approximately 2 meters in length, has a stout, muscular body, and four powerful legs that allow it to move quickly and gracefully through its environment. Its skin is covered in tough, spiky armor, and it has retractable thorn-like appendages on its legs and tail that it uses to attack prey or defend itself against predators. The creature poses an extreme threat to humanoid life forms and must be contained in a specially designed facility.",
+                            "medical": {
+                                "bloodtype": "AB+",
+                                "sex": "M",
+                                "kilograms": 105.7,
+                                "notes": "The Thorned Stalker is in good health overall, showing no signs of disease or infection. However, caution should be taken when handling the specimen due to its extremely aggressive nature and powerful thorn-like appendages."
+                            }
                         }
                     ]
                 }
@@ -11296,7 +11356,13 @@
                             "threatLevel": 8.3,
                             "acquisitionDate": "2068-04-21",
                             "notes": "Can regenerate its legs if severed.",
-                            "description": "The Kraken Spider is a large, arachnid-like creature that can grow up to 5 meters in length. It has multiple legs that it can use to skitter across various surfaces, and it is capable of regenerating any lost limbs. The Kraken Spider has a powerful set of mandibles that it uses to crush and consume its prey. It is a solitary creature that tends to dwell in dark, damp areas and is typically aggressive when disturbed."
+                            "description": "The Kraken Spider is a large, arachnid-like creature that can grow up to 5 meters in length. It has multiple legs that it can use to skitter across various surfaces, and it is capable of regenerating any lost limbs. The Kraken Spider has a powerful set of mandibles that it uses to crush and consume its prey. It is a solitary creature that tends to dwell in dark, damp areas and is typically aggressive when disturbed.",
+                            "medical": {
+                                "bloodtype": "T+",
+                                "sex": "F",
+                                "kilograms": 82.9,
+                                "notes": "The Kraken Spider appears to be in good health and there are no signs of abnormalities in its blood work. However, it is important to note its intimidating size and the danger it poses. It should be handled with caution and only by experienced professionals."
+                            }
                         },
                         {
                             "name": "Janus Jungle Plant",
@@ -11305,7 +11371,13 @@
                             "threatLevel": 9.9,
                             "acquisitionDate": "2068-05-01",
                             "notes": "Can release a toxic gas that paralyzes those who inhale it.",
-                            "description": "The Janus Jungle Plant is a large, carnivorous plant that can grow up to 10 meters in height. It has multiple thick, vine-like arms that it uses to ensnare and consume its prey. The Janus Jungle Plant is capable of releasing a toxic gas that can paralyze those who inhale it, making it a significant threat to any nearby organisms. It is a highly aggressive and territorial plant that is difficult to contain."
+                            "description": "The Janus Jungle Plant is a large, carnivorous plant that can grow up to 10 meters in height. It has multiple thick, vine-like arms that it uses to ensnare and consume its prey. The Janus Jungle Plant is capable of releasing a toxic gas that can paralyze those who inhale it, making it a significant threat to any nearby organisms. It is a highly aggressive and territorial plant that is difficult to contain.",
+                            "medical": {
+                                "bloodtype": "O+",
+                                "sex": "M",
+                                "kilograms": 78.3,
+                                "notes": "The Janus Jungle Plant specimen exhibits signs of aggression and a high threat level due to its ability to release a toxic gas. Extreme caution should be exercised when handling the specimen."
+                            }
                         }
                     ]
                 },
@@ -11322,7 +11394,13 @@
                             "threatLevel": 2.1,
                             "acquisitionDate": "2071-12-15",
                             "notes": "Energetic hopper with a brightly colored carapace.",
-                            "description": "The Plasma Hopper is a small, energetic creature with a brightly colored carapace. It navigates its environment primarily by hopping, and it feeds on small insects and plant matter. The Plasma Hopper is a relatively harmless creature that does not pose a significant threat to humans. Its primary defense mechanism is to release a burst of plasma from its rear end that it uses to confuse or temporarily blind predators."
+                            "description": "The Plasma Hopper is a small, energetic creature with a brightly colored carapace. It navigates its environment primarily by hopping, and it feeds on small insects and plant matter. The Plasma Hopper is a relatively harmless creature that does not pose a significant threat to humans. Its primary defense mechanism is to release a burst of plasma from its rear end that it uses to confuse or temporarily blind predators.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": 0.2,
+                                "notes": "The Plasma Hopper appears to be in good health and does not show any signs of disease."
+                            }
                         },
                         {
                             "name": "Void Ray",
@@ -11331,7 +11409,13 @@
                             "threatLevel": 7.6,
                             "acquisitionDate": "2072-02-10",
                             "notes": "Feeds on cosmic rays and emits a highly concentrated beam of energy.",
-                            "description": "The Void Ray is a sleek, fish-like creature that feeds on cosmic rays and can emit a highly concentrated beam of energy from its mouth. It can use this beam as both a defense mechanism and a tool for hunting. The Void Ray is an elusive and somewhat mysterious creature, with a tendency to dwell in the dark, uncharted regions of space. It is relatively rare, but its destructive capabilities make it a dangerous specimen to encounter."
+                            "description": "The Void Ray is a sleek, fish-like creature that feeds on cosmic rays and can emit a highly concentrated beam of energy from its mouth. It can use this beam as both a defense mechanism and a tool for hunting. The Void Ray is an elusive and somewhat mysterious creature, with a tendency to dwell in the dark, uncharted regions of space. It is relatively rare, but its destructive capabilities make it a dangerous specimen to encounter.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "The Void Ray is a dangerous specimen to work with due to its destructive capabilities. Caution is advised when handling or approaching. Additionally, it is recommended to use sensors and other non-invasive means to collect data to minimize the risk of injury or damage to equipment."
+                            }
                         },
                         {
                             "name": "Vortex Beetle",
@@ -11340,7 +11424,13 @@
                             "threatLevel": 6.7,
                             "acquisitionDate": "2072-01-05",
                             "notes": "Disrupts nearby electromagnetic fields and generates electrical currents.",
-                            "description": "The Vortex Beetle is a small, beetle-like creature with a hard, metallic exoskeleton. It is capable of disrupting nearby electromagnetic fields and generating electrical currents, which it uses to both defend itself and hunt small prey. The Vortex Beetle is a relatively aggressive and territorial creature that can be difficult to contain, due to its small size and ability to blend in with its surroundings."
+                            "description": "The Vortex Beetle is a small, beetle-like creature with a hard, metallic exoskeleton. It is capable of disrupting nearby electromagnetic fields and generating electrical currents, which it uses to both defend itself and hunt small prey. The Vortex Beetle is a relatively aggressive and territorial creature that can be difficult to contain, due to its small size and ability to blend in with its surroundings.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "During their 'Weather Watch' mission on January 05 2072, F-SEA came into contact with the Vortex Beetle. This dangerous specimen has a threat level of 6.7 and is aggressive and territorial. It is also capable of disrupting nearby electromagnetic fields and generating electrical currents, making it difficult to contain. F-SEA has conducted extensive research on the Vortex Beetle and will continue to do so in order to better understand its behavior and potential threats it presents."
+                            }
                         }
                     ]
                 }
@@ -11876,7 +11966,13 @@
                             "threatLevel": 6.9,
                             "acquisitionDate": "2062-04-15",
                             "notes": "Has bioluminescent properties that emit a bright yellow light.",
-                            "description": "The Luminescent Crawler is a long, serpentine creature with a bright yellow bioluminescent glow. It uses its vibrant glow to attract prey and to deter would-be predators. The Luminescent Crawler is highly aggressive and will actively pursue any potential food sources. Its sharp, jagged teeth are capable of chewing through most forms of plant and animal matter. The creature is capable of spitting a toxic venom that can quickly incapacitate prey or predators alike. The venom is highly corrosive, and any exposed skin or tissue can quickly dissolve upon contact."
+                            "description": "The Luminescent Crawler is a long, serpentine creature with a bright yellow bioluminescent glow. It uses its vibrant glow to attract prey and to deter would-be predators. The Luminescent Crawler is highly aggressive and will actively pursue any potential food sources. Its sharp, jagged teeth are capable of chewing through most forms of plant and animal matter. The creature is capable of spitting a toxic venom that can quickly incapacitate prey or predators alike. The venom is highly corrosive, and any exposed skin or tissue can quickly dissolve upon contact.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "The Luminescent Crawler, acquired during the Volcanic Survey mission on 2062-04-15, is a highly aggressive creature with bioluminescent properties. Its spit contains a corrosive, toxic venom that can dissolve exposed skin or tissues almost immediately. The creature poses a significant threat to the crew's safety, and caution should be exercised when handling it."
+                            }
                         },
                         {
                             "name": "Barbed Eruptor",
@@ -11885,7 +11981,13 @@
                             "threatLevel": 7.8,
                             "acquisitionDate": "2062-04-29",
                             "notes": "Produces a powerful explosive reaction when exposed to oxygen.",
-                            "description": "The Barbed Eruptor is a small, bulbous organism that is covered in sharp, spiky barbs. It produces a powerful explosive reaction when exposed to oxygen, making it incredibly dangerous to handle or transport. The Barbed Eruptor is highly aggressive and will actively attack any potential threats. Its barbs are sharp enough to pierce through most forms of protective gear, making it a significant hazard to anyone who comes into contact with it. The organism is capable of rapidly reproducing and can quickly overtake an area if left unchecked."
+                            "description": "The Barbed Eruptor is a small, bulbous organism that is covered in sharp, spiky barbs. It produces a powerful explosive reaction when exposed to oxygen, making it incredibly dangerous to handle or transport. The Barbed Eruptor is highly aggressive and will actively attack any potential threats. Its barbs are sharp enough to pierce through most forms of protective gear, making it a significant hazard to anyone who comes into contact with it. The organism is capable of rapidly reproducing and can quickly overtake an area if left unchecked.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "The Barbed Eruptor is not considered medically significant due to its aggressive and dangerous nature. If encountered, it should be approached with extreme caution and handled by trained professionals."
+                            }
                         },
                         {
                             "name": "Burrowing Tendril",
@@ -11894,7 +11996,13 @@
                             "threatLevel": 4.2,
                             "acquisitionDate": "2062-04-10",
                             "notes": "Produces a foul odor that repels potential predators.",
-                            "description": "The Burrowing Tendril is a plant-like organism with long, sinewy tendrils that it uses to anchor itself to the ground and access nearby sources of nutrients. It produces a foul odor that repels potential predators, making it a less immediate threat than other specimens found on the mission. The Burrowing Tendril is highly adaptable and can quickly adjust to changes in its environment by modifying the length and thickness of its tendrils or by switching to a different source of nutrients altogether. The organism is relatively harmless to humans and other large creatures, unless provoked. However, it can pose a risk to smaller organisms that it perceives as potential food sources."
+                            "description": "The Burrowing Tendril is a plant-like organism with long, sinewy tendrils that it uses to anchor itself to the ground and access nearby sources of nutrients. It produces a foul odor that repels potential predators, making it a less immediate threat than other specimens found on the mission. The Burrowing Tendril is highly adaptable and can quickly adjust to changes in its environment by modifying the length and thickness of its tendrils or by switching to a different source of nutrients altogether. The organism is relatively harmless to humans and other large creatures, unless provoked. However, it can pose a risk to smaller organisms that it perceives as potential food sources.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "N",
+                                "kilograms": null,
+                                "notes": "The Burrowing Tendril is a relatively harmless organism unless provoked. Its adaptive capabilities make it an interesting specimen for study. Produces a foul odor that repels larger predators and poses a risk only to smaller organisms. "
+                            }
                         },
                         {
                             "name": "Amber Hive",
@@ -11903,7 +12011,13 @@
                             "threatLevel": 2.7,
                             "acquisitionDate": "2062-04-01",
                             "notes": "Produces a sweet, sticky substance that has various medicinal properties.",
-                            "description": "The Amber Hive is a hive-like organism that is composed of a series of interconnected chambers and tunnels. It produces a sweet, sticky substance that has been shown to have various medicinal properties, including antibiotic and anti-inflammatory effects. The Amber Hive is relatively benign and poses no significant threat to human health, although the sticky substance it produces can be challenging to remove from clothing or skin. Despite its relatively low threat level, the Amber Hive is still considered valuable due to the potential medical benefits associated with its byproducts."
+                            "description": "The Amber Hive is a hive-like organism that is composed of a series of interconnected chambers and tunnels. It produces a sweet, sticky substance that has been shown to have various medicinal properties, including antibiotic and anti-inflammatory effects. The Amber Hive is relatively benign and poses no significant threat to human health, although the sticky substance it produces can be challenging to remove from clothing or skin. Despite its relatively low threat level, the Amber Hive is still considered valuable due to the potential medical benefits associated with its byproducts.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "N",
+                                "kilograms": null,
+                                "notes": "The Amber Hive specimen produces a sweet, sticky substance that has various medicinal properties. As a result, it is considered valuable for scientific research. However, it poses no significant threat to human health, and its low threat level means that it is relatively benign compared to other specimens that have been acquired during F-SEA missions."
+                            }
                         },
                         {
                             "name": "Plasma Elemental",
@@ -11912,7 +12026,13 @@
                             "threatLevel": 9.6,
                             "acquisitionDate": "2062-05-05",
                             "notes": "Capable of generating and controlling intense heat and radiation.",
-                            "description": "The Plasma Elemental is a humanoid creature made entirely of superheated plasma. It is capable of generating and controlling intense heat and radiation, making it one of the most dangerous specimens discovered on the mission. The Plasma Elemental appears to be highly intelligent and may possess some form of telepathic ability, allowing it to communicate with other plasma-based life forms. The creature is incredibly aggressive and will actively seek out potential threats to attack and eliminate. Its plasma form makes it resistant to most forms of conventional weaponry, making it an extremely challenging specimen to contain or study."
+                            "description": "The Plasma Elemental is a humanoid creature made entirely of superheated plasma. It is capable of generating and controlling intense heat and radiation, making it one of the most dangerous specimens discovered on the mission. The Plasma Elemental appears to be highly intelligent and may possess some form of telepathic ability, allowing it to communicate with other plasma-based life forms. The creature is incredibly aggressive and will actively seek out potential threats to attack and eliminate. Its plasma form makes it resistant to most forms of conventional weaponry, making it an extremely challenging specimen to contain or study.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "The Plasma Elemental is a highly dangerous specimen due to its ability to generate and control intense heat and radiation. It should be contained in an area with extreme caution."
+                            }
                         }
                     ]
                 }
@@ -12018,7 +12138,13 @@
                             "threatLevel": 9.5,
                             "acquisitionDate": "2064-05-01",
                             "notes": "This creature seems to be able to phase in and out of reality at will",
-                            "description": "The Void Crawler is a vicious creature that dwells in the vacuum of space. Its body is elongated and appears almost serpentine, measuring approximately 8 meters in length. It is capable of phasing in and out of reality, making it incredibly difficult to track. When attacking, it uses its long, razor-sharp limbs to ensnare its prey and drag them into the void. The creature poses an extreme threat to humanoid life forms and is classified as uncontainable."
+                            "description": "The Void Crawler is a vicious creature that dwells in the vacuum of space. Its body is elongated and appears almost serpentine, measuring approximately 8 meters in length. It is capable of phasing in and out of reality, making it incredibly difficult to track. When attacking, it uses its long, razor-sharp limbs to ensnare its prey and drag them into the void. The creature poses an extreme threat to humanoid life forms and is classified as uncontainable.",
+                            "medical": {
+                                "bloodtype": "A-",
+                                "sex": "M",
+                                "kilograms": 175.5,
+                                "notes": "The Void Crawler exhibits unusually high levels of radiation. Extreme precautions should be taken when handling or examining the specimen."
+                            }
                         }
                     ]
                 },
@@ -12035,7 +12161,13 @@
                             "threatLevel": 8.2,
                             "acquisitionDate": "2069-09-23",
                             "notes": "This creature is capable of short bursts of supersonic speed",
-                            "description": "The Dragonfly Beast is approximately 3 meters in length and has an iridescent exoskeleton that refracts light in beautiful patterns. It is a highly aggressive predator, capable of reaching short bursts of supersonic speed to catch its prey. Its wingspan is over 4 meters, and it has four powerful limbs that are capable of gripping its prey with great force. Its behavior poses a significant threat to humanoid life forms, and it is classified as requiring maximum security."
+                            "description": "The Dragonfly Beast is approximately 3 meters in length and has an iridescent exoskeleton that refracts light in beautiful patterns. It is a highly aggressive predator, capable of reaching short bursts of supersonic speed to catch its prey. Its wingspan is over 4 meters, and it has four powerful limbs that are capable of gripping its prey with great force. Its behavior poses a significant threat to humanoid life forms, and it is classified as requiring maximum security.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": "U",
+                                "kilograms": 127.28,
+                                "notes": "The Dragonfly Beast has a highly aggressive behavior and poses a significant threat which requires maximum security during all sorts of travels. It is also capable of short bursts of supersonic speed and can cause sudden blood pressure changes in humans."
+                            }
                         },
                         {
                             "name": "Prismatic Jellyfish",
@@ -12044,7 +12176,13 @@
                             "threatLevel": 3.6,
                             "acquisitionDate": "2068-08-05",
                             "notes": "This jellyfish-like creature has a bioluminescent glow that illuminates the surrounding area",
-                            "description": "The Prismatic Jellyfish is a slow-moving creature that resembles a terrestrial jellyfish. Its body is made up of multiple translucent layers, giving it a prismatic quality that reflects and refracts light in beautiful patterns. When disturbed, the jellyfish emits a bioluminescent glow that illuminates the surrounding area. Its behavior is relatively docile, and it poses little threat to humanoid life forms. However, it should be treated with caution when handling due to its delicate and easily damaged body."
+                            "description": "The Prismatic Jellyfish is a slow-moving creature that resembles a terrestrial jellyfish. Its body is made up of multiple translucent layers, giving it a prismatic quality that reflects and refracts light in beautiful patterns. When disturbed, the jellyfish emits a bioluminescent glow that illuminates the surrounding area. Its behavior is relatively docile, and it poses little threat to humanoid life forms. However, it should be treated with caution when handling due to its delicate and easily damaged body.",
+                            "medical": {
+                                "bloodtype": "J-",
+                                "sex": "U",
+                                "kilograms": 2.3,
+                                "notes": "Healthy specimen, with no observable signs of disease or injury during initial assessment."
+                            }
                         }
                     ]
                 },
@@ -12061,7 +12199,13 @@
                             "threatLevel": 6.9,
                             "acquisitionDate": "2070-05-01",
                             "notes": "This eel-like creature is capable of emitting bright flashes of light that temporarily blind prey",
-                            "description": "The Spectral Eel is a long, sinuous creature with a shimmering, translucent body. It is approximately 2 meters in length and has large, glowing eyes that enhance its night vision. When threatened, it can emit a bright flash of light that temporarily blinds its prey, allowing it to evade capture. Its nervous system is extremely sensitive to touch, making it highly sensitive to any form of physical contact. The creature is highly adaptable and can survive in a wide range of environments, making it a significant biohazard risk that must be isolated."
+                            "description": "The Spectral Eel is a long, sinuous creature with a shimmering, translucent body. It is approximately 2 meters in length and has large, glowing eyes that enhance its night vision. When threatened, it can emit a bright flash of light that temporarily blinds its prey, allowing it to evade capture. Its nervous system is extremely sensitive to touch, making it highly sensitive to any form of physical contact. The creature is highly adaptable and can survive in a wide range of environments, making it a significant biohazard risk that must be isolated.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "Unknown",
+                                "kilograms": null,
+                                "notes": "Due to its biohazard risk and sensitivity to physical touch, direct medical examination was not possible. Genetic testing, environmental scans and behavioral observations were conducted to acquire specimen's description. Caution is advised when interacting with the specimen."
+                            }
                         }
                     ]
                 }
@@ -12577,7 +12721,13 @@
                             "threatLevel": 9.6,
                             "acquisitionDate": "2040-04-07",
                             "notes": "Capable of flight through space using tentacles.",
-                            "description": "The Krakenaur is a highly aggressive and dangerous creature resembling a large octopus. It has the ability to use its numerous tentacles to fly through the vacuum of space and it can rapidly change direction and speed. It uses its sharp beak to shred through most materials and has been known to attack ships."
+                            "description": "The Krakenaur is a highly aggressive and dangerous creature resembling a large octopus. It has the ability to use its numerous tentacles to fly through the vacuum of space and it can rapidly change direction and speed. It uses its sharp beak to shred through most materials and has been known to attack ships.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": 320.0,
+                                "notes": "Specimen is highly aggressive and dangerous. Extreme caution must be taken when handling. Shows signs of advanced intelligence and problem-solving abilities. Further experimentation and study required to understand its abilities and threats posed to F-SEA missions."
+                            }
                         }
                     ]
                 },
@@ -12595,7 +12745,13 @@
                             "threatLevel": 2.5,
                             "acquisitionDate": "2055-08-20",
                             "notes": "Invisible to the naked eye and harmless.",
-                            "description": "Small segmented worms that are difficult to detect due to their translucent bodies. They possess bioluminescent glands that make them faintly visible under UV light. They are harmless, but have caused equipment malfunctions in the past."
+                            "description": "Small segmented worms that are difficult to detect due to their translucent bodies. They possess bioluminescent glands that make them faintly visible under UV light. They are harmless, but have caused equipment malfunctions in the past.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "None",
+                                "kilograms": null,
+                                "notes": "The specimen shows no visible signs of harm or medical abnormalities, but must be handled with extreme care due to its potential to cause equipment malfunctions. Additional study is required to determine any possible side effects of long term exposure to the bioluminescent glands."
+                            }
                         },
                         {
                             "name": "Void Stalker",
@@ -12604,7 +12760,13 @@
                             "threatLevel": 8.2,
                             "acquisitionDate": "2049-12-25",
                             "notes": "Can phase in and out of visible spectrum.",
-                            "description": "A black, shadowy figure that has the ability to phase in and out of the visible spectrum, making it difficult to track. It has large, sharp claws and its attacks have been known to cause severe damage. Its presence also causes significant interference with communications equipment."
+                            "description": "A black, shadowy figure that has the ability to phase in and out of the visible spectrum, making it difficult to track. It has large, sharp claws and its attacks have been known to cause severe damage. Its presence also causes significant interference with communications equipment.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "Specimen is considered highly dangerous with the ability to phase in and out of the visible spectrum. Extreme caution must be exercised when handling. Recommend holding in stasis until further research is conducted."
+                            }
                         }
                     ]
                 }
@@ -12925,7 +13087,13 @@
                             "threatLevel": 8.6,
                             "acquisitionDate": "2069-02-03",
                             "notes": "The worm feeds off dark matter, making it nearly impossible to track and contain.",
-                            "description": "This worm-like creature is approximately ten meters long and has a leathery black skin that absorbs light. It feeds off dark matter and can move through space completely undetected. When threatened, it emits a high-pitched screech that can cause internal damage to nearby organisms. The creature is highly dangerous and should only be approached under controlled conditions."
+                            "description": "This worm-like creature is approximately ten meters long and has a leathery black skin that absorbs light. It feeds off dark matter and can move through space completely undetected. When threatened, it emits a high-pitched screech that can cause internal damage to nearby organisms. The creature is highly dangerous and should only be approached under controlled conditions.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "u",
+                                "kilograms": null,
+                                "notes": "Due to extreme danger of the Void Worm, it is impossible to conduct necessary medical examinations."
+                            }
                         },
                         {
                             "name": "Sentient Plant",
@@ -12934,7 +13102,13 @@
                             "threatLevel": 4.2,
                             "acquisitionDate": "2069-01-12",
                             "notes": "The plant seems to exhibit a primitive form of sentience, capable of manipulating and reacting to its surroundings.",
-                            "description": "This plant is unique in that it exhibits a form of primitive sentience. It is capable of manipulating and reacting to its surroundings, exhibiting behavior that seems to indicate an understanding of its environment. The plant has a thick, green stalk with numerous branches covered in sharp, razor-like thorns. The thorns contain a potent poison lethal to most organic life forms. While not necessarily an immediate danger, this specimen requires controlled access and monitoring due to its unpredictable behavior."
+                            "description": "This plant is unique in that it exhibits a form of primitive sentience. It is capable of manipulating and reacting to its surroundings, exhibiting behavior that seems to indicate an understanding of its environment. The plant has a thick, green stalk with numerous branches covered in sharp, razor-like thorns. The thorns contain a potent poison lethal to most organic life forms. While not necessarily an immediate danger, this specimen requires controlled access and monitoring due to its unpredictable behavior.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "This specimen requires controlled access and monitoring due to its unpredictable behavior and potent poison that is lethal to most organic life forms."
+                            }
                         }
                     ]
                 },
@@ -12951,7 +13125,13 @@
                             "threatLevel": 9.2,
                             "acquisitionDate": "2050-11-14",
                             "notes": "The parasite attaches itself to a host and feeds off their thoughts, capable of controlling the host if left unchecked.",
-                            "description": "This parasitic organism has a flat, circular body with an appendage that latches onto the heads of potential hosts. Once attached, it taps into the host\u2019s nervous system and feeds off their thoughts while also taking control of their movements. The parasite is highly intelligent and able to communicate telepathically with its host and other nearby organisms. It poses a severe risk to humanoid life forms and must be approached with the utmost caution."
+                            "description": "This parasitic organism has a flat, circular body with an appendage that latches onto the heads of potential hosts. Once attached, it taps into the host\u2019s nervous system and feeds off their thoughts while also taking control of their movements. The parasite is highly intelligent and able to communicate telepathically with its host and other nearby organisms. It poses a severe risk to humanoid life forms and must be approached with the utmost caution.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "u",
+                                "kilograms": 0.5,
+                                "notes": "Specimen is contained and under observation in a maximum security laboratory due to its highly dangerous nature. Limited medical information available."
+                            }
                         },
                         {
                             "name": "Crystalized Virus",
@@ -12960,7 +13140,13 @@
                             "threatLevel": 9.8,
                             "acquisitionDate": "2050-12-28",
                             "notes": "The virus is highly contagious and can crystallize organic matter, rendering it useless.",
-                            "description": "This virus is highly contagious and can have devastating effects on organic life. When exposed, the virus crystallizes the organic matter, rendering it completely useless. The virus can spread through contact with infected organic matter, making it extremely difficult to contain. Due to the extreme risk it poses, this specimen must be kept under maximum security at all times."
+                            "description": "This virus is highly contagious and can have devastating effects on organic life. When exposed, the virus crystallizes the organic matter, rendering it completely useless. The virus can spread through contact with infected organic matter, making it extremely difficult to contain. Due to the extreme risk it poses, this specimen must be kept under maximum security at all times.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "The virus is highly contagious and can crystallize organic matter, rendering it useless."
+                            }
                         }
                     ]
                 }
@@ -13051,7 +13237,13 @@
                             "threatLevel": 9.8,
                             "acquisitionDate": "2076-12-01",
                             "notes": "Can extend up to 100 meters in length and has acidic venom.",
-                            "description": "The Astraeus Tendril is a long, snake-like creature with a segmented body that can extend up to 100 meters in length. It has multiple bio-luminescent eyes along its length and can inject acidic venom into its prey to incapacitate them. The Astraeus Tendril is highly aggressive and can perform impressive feats of strength, making it a difficult creature to contain."
+                            "description": "The Astraeus Tendril is a long, snake-like creature with a segmented body that can extend up to 100 meters in length. It has multiple bio-luminescent eyes along its length and can inject acidic venom into its prey to incapacitate them. The Astraeus Tendril is highly aggressive and can perform impressive feats of strength, making it a difficult creature to contain.",
+                            "medical": {
+                                "bloodtype": "F+",
+                                "sex": "U",
+                                "kilograms": 520.4,
+                                "notes": "The specimen's acidic venom poses a significant threat to personnel. Extreme caution is recommended when attempting to study or experiment on this specimen."
+                            }
                         },
                         {
                             "name": "Mindbreaker Beetle",
@@ -13060,7 +13252,13 @@
                             "threatLevel": 7.2,
                             "acquisitionDate": "2079-07-01",
                             "notes": "Can telepathically manipulate its prey and control their movements.",
-                            "description": "The Mindbreaker Beetle is a beetle like creature with two large antennae on its head that allow it to telepathically manipulate its prey and control their movements. It typically preys on insects, but its abilities make it a danger to any nearby humans or creatures. It has small, sharp teeth and can bite with a force of up to 20,000 newtons, making its bites capable of penetrating metal."
+                            "description": "The Mindbreaker Beetle is a beetle like creature with two large antennae on its head that allow it to telepathically manipulate its prey and control their movements. It typically preys on insects, but its abilities make it a danger to any nearby humans or creatures. It has small, sharp teeth and can bite with a force of up to 20,000 newtons, making its bites capable of penetrating metal.",
+                            "medical": {
+                                "bloodtype": "C+",
+                                "sex": "Unknown",
+                                "kilograms": 0.45,
+                                "notes": "Specimen exhibiting signs of extreme distress and aggression. Handles with caution. Blood pressure and heart rate irregularities observed. Further monitoring needed."
+                            }
                         },
                         {
                             "name": "Void Weaver",
@@ -13069,7 +13267,13 @@
                             "threatLevel": 9.3,
                             "acquisitionDate": "2076-06-20",
                             "notes": "Weaves strong webs of cosmic radiation.",
-                            "description": "The Void Weaver is a spider-like creature that weaves strong webs of cosmic radiation. It can manipulate the radiation to create barriers or traps that can entangle prey or repel attackers. It has several eyes that can detect even the slightest movements, and its legs are tipped with razor-sharp claws. The Void Weaver is highly territorial and will actively defend its web and nearby areas."
+                            "description": "The Void Weaver is a spider-like creature that weaves strong webs of cosmic radiation. It can manipulate the radiation to create barriers or traps that can entangle prey or repel attackers. It has several eyes that can detect even the slightest movements, and its legs are tipped with razor-sharp claws. The Void Weaver is highly territorial and will actively defend its web and nearby areas.",
+                            "medical": {
+                                "bloodtype": "J-",
+                                "sex": "u",
+                                "kilograms": 122.5,
+                                "notes": "Due to the dangerous nature of the Void Weaver, little is known about its medical status. Interactions with the specimen should be approached with extreme caution."
+                            }
                         },
                         {
                             "name": "Solar Eel",
@@ -13078,7 +13282,13 @@
                             "threatLevel": 7.8,
                             "acquisitionDate": "2077-12-10",
                             "notes": "Can discharge electric shocks and is attracted to bright light sources.",
-                            "description": "The Solar Eel is a long, fish-like creature that is attracted to bright light sources, and can generate electric shocks to repel attackers or stun prey. It has several small, sharp teeth and can swallow prey whole. The Solar Eel is a relatively common find and is mostly harmless, though it can pose a danger to unprepared or careless explorers."
+                            "description": "The Solar Eel is a long, fish-like creature that is attracted to bright light sources, and can generate electric shocks to repel attackers or stun prey. It has several small, sharp teeth and can swallow prey whole. The Solar Eel is a relatively common find and is mostly harmless, though it can pose a danger to unprepared or careless explorers.",
+                            "medical": {
+                                "bloodtype": "N/A",
+                                "sex": "unknown",
+                                "kilograms": 2.5,
+                                "notes": "The Solar Eel poses a moderate danger with a high-threat level of 7.8 and its ability to discharge electric shocks. Care should be taken when approaching or capturing the specimen. No information was obtained regarding the specimen's blood or reproductive status."
+                            }
                         }
                     ]
                 },
@@ -13095,7 +13305,13 @@
                             "threatLevel": 8.7,
                             "acquisitionDate": "2061-04-03",
                             "notes": "Has an electrical charge and can discharge electricity from its body.",
-                            "description": "The Plasma Crawler is a small, vermin-like creature that can generate and store large amounts of electrical energy within its body. It typically feeds on plant matter, but when threatened, it can discharge electricity from its body to fend off attackers. It has a hard exoskeleton that can withstand physical damage and is adept at hiding in small crevices or nooks."
+                            "description": "The Plasma Crawler is a small, vermin-like creature that can generate and store large amounts of electrical energy within its body. It typically feeds on plant matter, but when threatened, it can discharge electricity from its body to fend off attackers. It has a hard exoskeleton that can withstand physical damage and is adept at hiding in small crevices or nooks.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "u",
+                                "kilograms": 0.5,
+                                "notes": "Specimen's electric discharge poses a threat to physical safety, caution must be exercised during handling at all times."
+                            }
                         },
                         {
                             "name": "Gamma Fly",
@@ -13104,7 +13320,13 @@
                             "threatLevel": 4.6,
                             "acquisitionDate": "2061-09-22",
                             "notes": "Can emit bioluminescence and is attracted to light sources.",
-                            "description": "The Gamma Fly is a small, insect-like creature that emits a bioluminescent glow and is attracted to light sources. It feeds on nectar and small insects and is relatively harmless to humans, though it can be a nuisance if it gathers in large swarms. It has small, delicate wings that can beat at high speeds, allowing it to fly long distances."
+                            "description": "The Gamma Fly is a small, insect-like creature that emits a bioluminescent glow and is attracted to light sources. It feeds on nectar and small insects and is relatively harmless to humans, though it can be a nuisance if it gathers in large swarms. It has small, delicate wings that can beat at high speeds, allowing it to fly long distances.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": 0.06,
+                                "notes": "The specimen is currently healthy."
+                            }
                         }
                     ]
                 }
@@ -13151,7 +13373,13 @@
                             "threatLevel": 7.5,
                             "acquisitionDate": "2062-06-01",
                             "notes": "Releases an acidic mist that destroys nearby vegetation.",
-                            "description": "The Volatile Flora is a type of plant with broad, spiky leaves and a vibrant purple hue. It releases a potent acidic mist that can quickly destroy nearby vegetation, making it a significant threat to any non-resistant organisms in the area. The Volatile Flora is somewhat territorial and will actively defend its space if threatened, using its mist as a weapon to fend off would-be attackers. It is capable of rapid growth and can quickly overtake large areas if left unchecked."
+                            "description": "The Volatile Flora is a type of plant with broad, spiky leaves and a vibrant purple hue. It releases a potent acidic mist that can quickly destroy nearby vegetation, making it a significant threat to any non-resistant organisms in the area. The Volatile Flora is somewhat territorial and will actively defend its space if threatened, using its mist as a weapon to fend off would-be attackers. It is capable of rapid growth and can quickly overtake large areas if left unchecked.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": "u",
+                                "kilograms": null,
+                                "notes": "Due to the extreme danger posed by the Volatile Flora, assessment of its medical status was not possible."
+                            }
                         },
                         {
                             "name": "Thorned Invader",
@@ -13160,7 +13388,13 @@
                             "threatLevel": 4.2,
                             "acquisitionDate": "2062-02-10",
                             "notes": "Has a symbiotic relationship with local insects.",
-                            "description": "The Thorned Invader is a plant-like organism with long, thorny appendages that it uses to anchor itself to the ground and fend off predators. It has a symbiotic relationship with local insects, which it uses for pollination and additional protection. The Thorned Invader is relatively harmless to humans, unless provoked, but it can pose a significant risk to local flora and fauna if left unchecked. It tends to thrive in areas with a high concentration of other plant life."
+                            "description": "The Thorned Invader is a plant-like organism with long, thorny appendages that it uses to anchor itself to the ground and fend off predators. It has a symbiotic relationship with local insects, which it uses for pollination and additional protection. The Thorned Invader is relatively harmless to humans, unless provoked, but it can pose a significant risk to local flora and fauna if left unchecked. It tends to thrive in areas with a high concentration of other plant life.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": 12.5,
+                                "notes": "The Thorned Invader poses a significant threat to local flora and fauna if left unchecked."
+                            }
                         },
                         {
                             "name": "Oozing Sponge",
@@ -13169,7 +13403,13 @@
                             "threatLevel": 8.6,
                             "acquisitionDate": "2062-05-15",
                             "notes": "Capable of rapidly absorbing liquid.",
-                            "description": "The Oozing Sponge is a sponge-like organism that is capable of rapidly absorbing any surrounding liquid. Its texture is slimy and unpleasant to the touch, and it secretes a potent digestive enzyme that can quickly dissolve any organic material it comes into contact with. The Oozing Sponge is incredibly durable and is resistant to most forms of physical damage and conventional weapons. It is a highly aggressive organism that will actively pursue and attack potential food sources."
+                            "description": "The Oozing Sponge is a sponge-like organism that is capable of rapidly absorbing any surrounding liquid. Its texture is slimy and unpleasant to the touch, and it secretes a potent digestive enzyme that can quickly dissolve any organic material it comes into contact with. The Oozing Sponge is incredibly durable and is resistant to most forms of physical damage and conventional weapons. It is a highly aggressive organism that will actively pursue and attack potential food sources.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": "u",
+                                "kilograms": null,
+                                "notes": "The Oozing Sponge is extremely dangerous and should only be handled with specialized equipment and procedures. Any individuals exposed to the sponge should seek immediate medical attention, as the digestive enzyme it secretes can cause serious harm to living tissue. Further analysis of the specimen's physical attributes was impossible due to its aggressive behavior and resistance to physical damage."
+                            }
                         }
                     ]
                 },
@@ -13186,7 +13426,13 @@
                             "threatLevel": 1.8,
                             "acquisitionDate": "2068-04-21",
                             "notes": "Feeds on gases in the planet\u2019s atmosphere.",
-                            "description": "The Energetic Skimmer is a small, oval-shaped creature with a light blue hue and two small wings. It feeds on gases in the planet\u2019s atmosphere and is capable of hovering for extended periods. The Energetic Skimmer is relatively harmless to humans and poses no significant threat. Its wings contain small organs that can produce a vibrant light show in certain atmospheric conditions, making it a popular sight among locals."
+                            "description": "The Energetic Skimmer is a small, oval-shaped creature with a light blue hue and two small wings. It feeds on gases in the planet\u2019s atmosphere and is capable of hovering for extended periods. The Energetic Skimmer is relatively harmless to humans and poses no significant threat. Its wings contain small organs that can produce a vibrant light show in certain atmospheric conditions, making it a popular sight among locals.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "Specimen poses a threat level of 1.8 and should only be handled by experienced professionals. It is recommended to keep a safe distance from the specimen if encountered."
+                            }
                         },
                         {
                             "name": "Charged Rock",
@@ -13195,7 +13441,13 @@
                             "threatLevel": 6.2,
                             "acquisitionDate": "2068-05-31",
                             "notes": "Emits strong electrical currents when threatened or disturbed.",
-                            "description": "The Charged Rock is a hard, mineral-like organism that accumulates electrical charges over time. It emits strong electrical currents when threatened or disturbed, making it a dangerous specimen to approach without proper equipment or precautions. The Charged Rock is relatively slow-moving and does not pose a significant threat unless provoked. Its primary defense mechanism is to emit a burst of electrical energy if it senses a potential threat."
+                            "description": "The Charged Rock is a hard, mineral-like organism that accumulates electrical charges over time. It emits strong electrical currents when threatened or disturbed, making it a dangerous specimen to approach without proper equipment or precautions. The Charged Rock is relatively slow-moving and does not pose a significant threat unless provoked. Its primary defense mechanism is to emit a burst of electrical energy if it senses a potential threat.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "This specimen should only be handled with proper equipment and precautions to avoid electrical shocks. It should be kept in a secure container away from other organisms."
+                            }
                         }
                     ]
                 }
@@ -13396,7 +13648,13 @@
                             "threatLevel": 8.3,
                             "acquisitionDate": "2060-02-12",
                             "notes": "Emits a toxic gas from its pincers that can be deadly if inhaled",
-                            "description": "This crustacean-like creature has sharp pincers that can cut through most materials, including the suits of F-SEA personnel. The creature is highly aggressive and emits a toxic gas from its pincers that can be deadly if inhaled. It also has the ability to camouflage itself, making it difficult to detect. It should be approached with caution and requires a specially designed facility."
+                            "description": "This crustacean-like creature has sharp pincers that can cut through most materials, including the suits of F-SEA personnel. The creature is highly aggressive and emits a toxic gas from its pincers that can be deadly if inhaled. It also has the ability to camouflage itself, making it difficult to detect. It should be approached with caution and requires a specially designed facility.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "The Venomous Gas Crab emits a toxic gas from its pincers that can be deadly if inhaled. Approach with caution and requires a specially designed facility."
+                            }
                         },
                         {
                             "name": "Temporal Manipulator",
@@ -13405,7 +13663,13 @@
                             "threatLevel": 9.9,
                             "acquisitionDate": "2061-04-30",
                             "notes": "Capable of creating temporal anomalies and has shown hostility towards F-SEA personnel",
-                            "description": "This humanoid-shaped creature has the ability to manipulate time and space. It has been observed creating temporal anomalies and exhibiting hostile behavior towards F-SEA personnel. It is considered extremely dangerous and requires extensive security measures to prevent escape or interaction. It should only be approached by designated personnel with appropriate equipment."
+                            "description": "This humanoid-shaped creature has the ability to manipulate time and space. It has been observed creating temporal anomalies and exhibiting hostile behavior towards F-SEA personnel. It is considered extremely dangerous and requires extensive security measures to prevent escape or interaction. It should only be approached by designated personnel with appropriate equipment.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "Unknown",
+                                "kilograms": null,
+                                "notes": "Due to the extreme danger posed by this specimen, it has not been possible to conduct a thorough medical examination."
+                            }
                         }
                     ]
                 },
@@ -13422,7 +13686,13 @@
                             "threatLevel": 6.8,
                             "acquisitionDate": "2063-03-01",
                             "notes": "Capable of communicating telepathically with other specimens",
-                            "description": "This crystal-like creature has a humanoid shape and is composed of a translucent, crystalline material. It is highly intelligent and can communicate telepathically with other specimens. It is not aggressive towards F-SEA personnel, but it does exhibit territorial behavior and will defend its territory from those it perceives as a threat. It is considered potentially hazardous and requires controlled access and monitoring."
+                            "description": "This crystal-like creature has a humanoid shape and is composed of a translucent, crystalline material. It is highly intelligent and can communicate telepathically with other specimens. It is not aggressive towards F-SEA personnel, but it does exhibit territorial behavior and will defend its territory from those it perceives as a threat. It is considered potentially hazardous and requires controlled access and monitoring.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": "Unknown",
+                                "kilograms": null,
+                                "notes": "Potentially hazardous crystal creature, requires controlled access and monitoring."
+                            }
                         },
                         {
                             "name": "Psychic Leech",
@@ -13431,7 +13701,13 @@
                             "threatLevel": 4.5,
                             "acquisitionDate": "2063-05-04",
                             "notes": "Capable of draining the mental energy of living organisms and using it for sustenance",
-                            "description": "This worm-like creature has a translucent body and is approximately 30 cm in length. It has the ability to drain the mental energy of living organisms and use it for sustenance. It is not aggressive towards F-SEA personnel but should be handled with care to prevent accidental exposure. It is considered hazardous and must be constantly monitored by trained personnel."
+                            "description": "This worm-like creature has a translucent body and is approximately 30 cm in length. It has the ability to drain the mental energy of living organisms and use it for sustenance. It is not aggressive towards F-SEA personnel but should be handled with care to prevent accidental exposure. It is considered hazardous and must be constantly monitored by trained personnel.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "u",
+                                "kilograms": null,
+                                "notes": "Due to the nature of this specimen and its ability to drain the mental energy of living organisms, it is advised that any exposure is kept to a minimum. Personnel should utilize full protective gear and keep the specimen contained at all times. Any handling of the specimen should be done by trained personnel only."
+                            }
                         }
                     ]
                 }
@@ -14109,7 +14385,13 @@
                             "threatLevel": 5.8,
                             "acquisitionDate": "2040-01-15",
                             "notes": "This worm can drill through solid rock at high speeds",
-                            "description": "This worm-like creature is approximately 2 meters long and has a leathery grey skin. It is capable of drilling through solid rock at high speeds using its sharp teeth and powerful mandibles. The creature is primarily a solitary hunter but can also work in groups to take down larger prey. It poses a moderate risk to humanoid life forms."
+                            "description": "This worm-like creature is approximately 2 meters long and has a leathery grey skin. It is capable of drilling through solid rock at high speeds using its sharp teeth and powerful mandibles. The creature is primarily a solitary hunter but can also work in groups to take down larger prey. It poses a moderate risk to humanoid life forms.",
+                            "medical": {
+                                "bloodtype": "A-",
+                                "sex": "u",
+                                "kilograms": 20.5,
+                                "notes": "The Rock Worm is dangerous and should not be approached without proper equipment and training."
+                            }
                         },
                         {
                             "name": "Crystal Mole",
@@ -14118,7 +14400,13 @@
                             "threatLevel": 6.7,
                             "acquisitionDate": "2040-08-19",
                             "notes": "This mole can produce razor-sharp crystal spikes from its back",
-                            "description": "The Crystal Mole is approximately 1.5 meters in length and has a hard, rough skin. What sets this creature apart are the crystalline spikes that protrude from its back, which it can produce and retract at will. These spikes are razor-sharp and can be fired at predators or prey alike. The creature is a solitary hunter, and its aggressive nature poses a moderate risk to humanoid life forms."
+                            "description": "The Crystal Mole is approximately 1.5 meters in length and has a hard, rough skin. What sets this creature apart are the crystalline spikes that protrude from its back, which it can produce and retract at will. These spikes are razor-sharp and can be fired at predators or prey alike. The creature is a solitary hunter, and its aggressive nature poses a moderate risk to humanoid life forms.",
+                            "medical": {
+                                "bloodtype": "A+",
+                                "sex": "u",
+                                "kilograms": 56.3,
+                                "notes": "The Crystal Mole's physiology makes it difficult to determine its biological characteristics. It is not advised to handle the creature without protective gear due to the sharp, retractable crystal spikes on its back."
+                            }
                         }
                     ]
                 },
@@ -14135,7 +14423,13 @@
                             "threatLevel": 9.2,
                             "acquisitionDate": "2046-04-03",
                             "notes": "The snail secretes a powerful narcotic that can put humans into a deep sleep",
-                            "description": "The Hypnos Snail is a dark, slimy creature approximately 40 centimeters in length. It produces a powerful narcotic that it can secrete from its skin when threatened. The narcotic induces a deep sleep state in most species, including humans. The snail is a herbivore, and its behavior is relatively docile until provoked. However, its ability to incapacitate potential threats makes it highly dangerous, and it poses a severe risk to humanoid life forms."
+                            "description": "The Hypnos Snail is a dark, slimy creature approximately 40 centimeters in length. It produces a powerful narcotic that it can secrete from its skin when threatened. The narcotic induces a deep sleep state in most species, including humans. The snail is a herbivore, and its behavior is relatively docile until provoked. However, its ability to incapacitate potential threats makes it highly dangerous, and it poses a severe risk to humanoid life forms.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "u",
+                                "kilograms": 0.5,
+                                "notes": "The Hypnos Snail is a highly dangerous creature due to its ability to secrete a powerful narcotic that induces a deep sleep state in most species, including humans. Extreme caution must be taken when studying and containing the specimen."
+                            }
                         },
                         {
                             "name": "Phantom Squid",
@@ -14144,7 +14438,13 @@
                             "threatLevel": 8.4,
                             "acquisitionDate": "2045-12-28",
                             "notes": "This squid can turn invisible and emit a high-pitched scream that can cause temporary deafness",
-                            "description": "The Phantom Squid is a semi-transparent creature approximately 3 meters in length when fully grown. It has a unique ability to turn invisible at will, making it difficult to track. When threatened, the squid emits a piercing scream that can temporarily deafen those nearby. The creature is primarily a solitary hunter, and its predatory behavior poses a severe risk to humanoid life forms."
+                            "description": "The Phantom Squid is a semi-transparent creature approximately 3 meters in length when fully grown. It has a unique ability to turn invisible at will, making it difficult to track. When threatened, the squid emits a piercing scream that can temporarily deafen those nearby. The creature is primarily a solitary hunter, and its predatory behavior poses a severe risk to humanoid life forms.",
+                            "medical": {
+                                "bloodtype": "P-",
+                                "sex": "Unknown",
+                                "kilograms": 32.0,
+                                "notes": "Due to the creature's dangerous and unpredictable nature, no further medical evaluations were conducted."
+                            }
                         }
                     ]
                 }
@@ -14191,7 +14491,13 @@
                             "threatLevel": 9.2,
                             "acquisitionDate": "2067-11-02",
                             "notes": "Can emit a high-pitched scream deadly to ears",
-                            "description": "The Ferbalian stands at two meters tall on its hind legs and possesses a lanky, humanoid body structure. It has elongated fingers with sharp claws and a mouth lined with razor-sharp teeth. Of greatest concern is its ability to emit a high-pitched scream capable of rendering a human incapacitated and even fatally damaging the ears. The Ferbalian is incredibly territorial and highly aggressive to those it perceives as a threat. It is recommended to avoid contact if possible and to equip sound-cancelling gear if physical confrontation is deemed unavoidable."
+                            "description": "The Ferbalian stands at two meters tall on its hind legs and possesses a lanky, humanoid body structure. It has elongated fingers with sharp claws and a mouth lined with razor-sharp teeth. Of greatest concern is its ability to emit a high-pitched scream capable of rendering a human incapacitated and even fatally damaging the ears. The Ferbalian is incredibly territorial and highly aggressive to those it perceives as a threat. It is recommended to avoid contact if possible and to equip sound-cancelling gear if physical confrontation is deemed unavoidable.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "u",
+                                "kilograms": null,
+                                "notes": "Due to the extreme threat level and danger that the Ferbalian presents, further medical examinations were not possible. It is unknown whether or not the specimen has a bloodstream or the capacity for oxygen transfer."
+                            }
                         },
                         {
                             "name": "Balicra",
@@ -14200,7 +14506,13 @@
                             "threatLevel": 6.2,
                             "acquisitionDate": "2066-04-19",
                             "notes": "Breathes toxic sludge",
-                            "description": "The Balicra is a strange, yet intriguing creature that resembles a giant, crab-like insect. Its body is covered in a tough, metallic exoskeleton that is almost impervious to damage from blunt objects. The Balicra, however, is capable of spraying a caustic, toxic sludge from its mouth. F-SEA personnel should take precautions not to get caught in the spray. Though it may appear intimidating, the Balicra is not inherently hostile and should not pose an immediate threat to personnel."
+                            "description": "The Balicra is a strange, yet intriguing creature that resembles a giant, crab-like insect. Its body is covered in a tough, metallic exoskeleton that is almost impervious to damage from blunt objects. The Balicra, however, is capable of spraying a caustic, toxic sludge from its mouth. F-SEA personnel should take precautions not to get caught in the spray. Though it may appear intimidating, the Balicra is not inherently hostile and should not pose an immediate threat to personnel.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": "unknown",
+                                "kilograms": null,
+                                "notes": "The Balicra's breath can be highly toxic and has the potential to cause harm to personnel who are not properly equipped to handle it. Proper protective gear should be worn when working closely with this specimen."
+                            }
                         }
                     ]
                 },
@@ -14217,7 +14529,13 @@
                             "threatLevel": 4.8,
                             "acquisitionDate": "2047-02-15",
                             "notes": "Feeds off electromagnetic radiation",
-                            "description": "This parasitic creature is about the size of a golf ball and is able to take on the appearance of any object or lifeform it latches onto. The Zenithian is unique in that it feeds off of electromagnetic radiation emitted by stars and other celestial bodies. It is not aggressive towards F-SEA personnel, but care should be taken with any exploration equipment that may be harboring the parasite."
+                            "description": "This parasitic creature is about the size of a golf ball and is able to take on the appearance of any object or lifeform it latches onto. The Zenithian is unique in that it feeds off of electromagnetic radiation emitted by stars and other celestial bodies. It is not aggressive towards F-SEA personnel, but care should be taken with any exploration equipment that may be harboring the parasite.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "Specimen appears to be in good health, but should be handled with care due to potential danger posed by the Zenithian Parasite."
+                            }
                         },
                         {
                             "name": "Salamanderoid",
@@ -14226,7 +14544,13 @@
                             "threatLevel": 1.5,
                             "acquisitionDate": "2047-12-30",
                             "notes": "Enjoys sunbathing",
-                            "description": "This docile, lizard-like creature appears to serve no other purpose than to bask in the sun's rays. Its scaled skin is a deep, earthy orange color with splotches of ochre and umber. While it may startle at the sound of sudden movement, the Salamanderoid is content basking and has been observed to allow F-SEA personnel to come quite close to it without fleeing."
+                            "description": "This docile, lizard-like creature appears to serve no other purpose than to bask in the sun's rays. Its scaled skin is a deep, earthy orange color with splotches of ochre and umber. While it may startle at the sound of sudden movement, the Salamanderoid is content basking and has been observed to allow F-SEA personnel to come quite close to it without fleeing.",
+                            "medical": {
+                                "bloodtype": "A+",
+                                "sex": "u",
+                                "kilograms": 2.5,
+                                "notes": "No medical issues observed during capture and transportation."
+                            }
                         }
                     ]
                 }
@@ -14529,7 +14853,13 @@
                             "threatLevel": 7.9,
                             "acquisitionDate": "2075-09-01",
                             "notes": "The specimen seems to be able to regenerate tentacles when severed.",
-                            "description": "This specimen is a hostile creature with large tentacles it uses to ensnare prey. The creature is extremely aggressive and indiscriminate when hunting for food. It has a tough, leathery skin which can sustain a great deal of damage. It has multiple rows of sharp teeth and emits a loud, high-pitched screech when threatened or hunting."
+                            "description": "This specimen is a hostile creature with large tentacles it uses to ensnare prey. The creature is extremely aggressive and indiscriminate when hunting for food. It has a tough, leathery skin which can sustain a great deal of damage. It has multiple rows of sharp teeth and emits a loud, high-pitched screech when threatened or hunting.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "None",
+                                "kilograms": null,
+                                "notes": "Specimen poses an extreme threat to human life and should only be handled by trained professionals wearing appropriate protective gear."
+                            }
                         },
                         {
                             "name": "Anomalous Crystal",
@@ -14538,7 +14868,13 @@
                             "threatLevel": 9.8,
                             "acquisitionDate": "2074-12-02",
                             "notes": "The crystal emits a strange, otherworldly energy that interferes with electronic equipment.",
-                            "description": "This specimen is a large, anomalous crystal that seems to possess strange and unpredictable powers. It is highly dangerous and should be approached with extreme caution. The crystal emits a bright, pulsating light and seems to warp the space around it. It has been known to cause headaches, dizziness, and other adverse effects on nearby personnel."
+                            "description": "This specimen is a large, anomalous crystal that seems to possess strange and unpredictable powers. It is highly dangerous and should be approached with extreme caution. The crystal emits a bright, pulsating light and seems to warp the space around it. It has been known to cause headaches, dizziness, and other adverse effects on nearby personnel.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "Due to the highly unpredictable properties of the crystal, studying the specimen's physical attributes was deemed too dangerous. No information regarding the specimen's medical status is available."
+                            }
                         }
                     ]
                 },
@@ -14555,7 +14891,13 @@
                             "threatLevel": 2.5,
                             "acquisitionDate": "2062-02-28",
                             "notes": "The specimen emits a faint, soothing hum.",
-                            "description": "This specimen is a cloud of glowing spores that float through the air. It is relatively harmless, though may cause respiratory distress to certain individuals. The spores emit a pleasant, calming aroma which can cause drowsiness in larger quantities."
+                            "description": "This specimen is a cloud of glowing spores that float through the air. It is relatively harmless, though may cause respiratory distress to certain individuals. The spores emit a pleasant, calming aroma which can cause drowsiness in larger quantities.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "The specimen poses a moderate respiratory threat to certain individuals, and may cause drowsiness in others."
+                            }
                         }
                     ]
                 },
@@ -14572,7 +14914,13 @@
                             "threatLevel": 5.2,
                             "acquisitionDate": "2055-12-18",
                             "notes": "The specimen seems to be able to refract light through its body.",
-                            "description": "This specimen is a small lizard-like creature with crystalline scales. It is relatively docile, but can be aggressive if provoked. The creature is able to jump great distances due to its low weight and strong legs. Its scales are razor sharp and the creature can use them as a defensive mechanism when threatened."
+                            "description": "This specimen is a small lizard-like creature with crystalline scales. It is relatively docile, but can be aggressive if provoked. The creature is able to jump great distances due to its low weight and strong legs. Its scales are razor sharp and the creature can use them as a defensive mechanism when threatened.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": "unknown",
+                                "kilograms": null,
+                                "notes": "Due to the specimen's high threat level and aggression, medical examination was not possible."
+                            }
                         }
                     ]
                 }
@@ -14847,7 +15195,13 @@
                             "threatLevel": 8.2,
                             "acquisitionDate": "2058-07-22",
                             "notes": "Releases a toxic cloud when threatened",
-                            "description": "This plant-like organism has a thallus body and uses photosynthesis to produce energy. It is highly aggressive and attacks any nearby creatures, using tendrils to grapple and suffocate them. It releases a toxic cloud when threatened, which can cause hallucinations and sudden loss of consciousness. It is deemed too dangerous for normal containment and requires a specially designed facility."
+                            "description": "This plant-like organism has a thallus body and uses photosynthesis to produce energy. It is highly aggressive and attacks any nearby creatures, using tendrils to grapple and suffocate them. It releases a toxic cloud when threatened, which can cause hallucinations and sudden loss of consciousness. It is deemed too dangerous for normal containment and requires a specially designed facility.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "Highly aggressive plant-like organism with a toxic cloud-release defense mechanism. Requires a specially designed facility for safe containment. It is deemed too dangerous for normal containment."
+                            }
                         },
                         {
                             "name": "Electric Jellyfish",
@@ -14856,7 +15210,13 @@
                             "threatLevel": 5.8,
                             "acquisitionDate": "2058-05-03",
                             "notes": "Can emit electrical discharges up to 20 volts",
-                            "description": "This translucent jellyfish-like creature has a bell-shaped body and long tentacles. It is attracted to electric fields and can generate electrical discharges up to 20 volts. It can use these discharges to stun its prey or defend against predators. It is considered volatile and requires controlled access and monitoring."
+                            "description": "This translucent jellyfish-like creature has a bell-shaped body and long tentacles. It is attracted to electric fields and can generate electrical discharges up to 20 volts. It can use these discharges to stun its prey or defend against predators. It is considered volatile and requires controlled access and monitoring.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": "u",
+                                "kilograms": null,
+                                "notes": "Dangerous specimen with electrical discharges up to 20 volts. Requires controlled access and monitoring."
+                            }
                         },
                         {
                             "name": "Toxic Gas Cloud",
@@ -14865,7 +15225,13 @@
                             "threatLevel": 9.9,
                             "acquisitionDate": "2058-09-01",
                             "notes": "Highly corrosive and can disintigrate most materials.",
-                            "description": "This gaseous lifeform is a cloud of corrosive gas that can disintegrate most materials on contact. It can move quickly and unpredictably, making it difficult to contain. It is considered highly dangerous and requires extensive security measures to prevent escape or interaction."
+                            "description": "This gaseous lifeform is a cloud of corrosive gas that can disintegrate most materials on contact. It can move quickly and unpredictably, making it difficult to contain. It is considered highly dangerous and requires extensive security measures to prevent escape or interaction.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "Due to the extremely hazardous nature of this specimen, it was not possible to perform any medical examinations or gather any biological data."
+                            }
                         }
                     ]
                 },
@@ -14882,7 +15248,13 @@
                             "threatLevel": 9.5,
                             "acquisitionDate": "2070-06-01",
                             "notes": "Can assume the shape of any object or organism it has observed, including human beings",
-                            "description": "This highly intelligent lifeform has amorphous, gelatinous body with no distinct features. It can alter its shape and mimic any organism or object it has encountered. It can use this ability to infiltrate human societies and gain access to sensitive information. It is considered extremely hostile and poses an extreme threat to containment."
+                            "description": "This highly intelligent lifeform has amorphous, gelatinous body with no distinct features. It can alter its shape and mimic any organism or object it has encountered. It can use this ability to infiltrate human societies and gain access to sensitive information. It is considered extremely hostile and poses an extreme threat to containment.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "Specimen is extremely dangerous and must be contained with extreme caution. Exercise maximum security measures when handling. It is essential to keep the specimen isolated from any living organism to prevent the likelihood of it mimicking them. Any personnel with information regarding unusual infiltration or suspicious manoeuvres in laboratories should immediately report to the higher authorities."
+                            }
                         },
                         {
                             "name": "Crystal Spider",
@@ -14891,7 +15263,13 @@
                             "threatLevel": 3.7,
                             "acquisitionDate": "2069-03-14",
                             "notes": "Can camoflauge with its surroundings using its crystalline body",
-                            "description": "This spider-like creature has a crystalline exoskeleton that refracts light, allowing it to blend in with its surroundings. It is not very aggressive and feeds on small insects. It is considered safe and can be freely accessed within designated areas."
+                            "description": "This spider-like creature has a crystalline exoskeleton that refracts light, allowing it to blend in with its surroundings. It is not very aggressive and feeds on small insects. It is considered safe and can be freely accessed within designated areas.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "Specimen is safe and considered low threat. Can camouflage with surroundings using crystalline exoskeleton."
+                            }
                         },
                         {
                             "name": "Sonic Screecher",
@@ -14900,7 +15278,13 @@
                             "threatLevel": 6.4,
                             "acquisitionDate": "2069-01-06",
                             "notes": "Capable of emitting sonic waves that can cause temporary deafness and dizziness",
-                            "description": "This bird-like creature has a wingspan of approximately 2 meters, and feathers that are a bluish-green iridescent color. It feeds mostly on small insects, and can emit a loud, piercing screech that can cause temporary deafness and dizziness in those within close proximity. It is considered hazardous and must be constantly monitored by trained personnel."
+                            "description": "This bird-like creature has a wingspan of approximately 2 meters, and feathers that are a bluish-green iridescent color. It feeds mostly on small insects, and can emit a loud, piercing screech that can cause temporary deafness and dizziness in those within close proximity. It is considered hazardous and must be constantly monitored by trained personnel.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "u",
+                                "kilograms": null,
+                                "notes": "The Sonic Screecher is a hazardous species and must be handled with care. Those within proximity of the bird-like creature should wear protective ear gear to avoid complications caused by the piercing screech."
+                            }
                         }
                     ]
                 }
@@ -15406,7 +15790,13 @@
                             "threatLevel": 7.9,
                             "acquisitionDate": "2067-05-01",
                             "notes": "Can extend its tentacles over a distance equivalent to 5 times its body length.",
-                            "description": "It is a large, semi-transparent creature with tendrils that can reach a great distance. The creature is attracted to electricity and is capable of generating an electrical charge of up to 50 volts."
+                            "description": "It is a large, semi-transparent creature with tendrils that can reach a great distance. The creature is attracted to electricity and is capable of generating an electrical charge of up to 50 volts.",
+                            "medical": {
+                                "bloodtype": "U",
+                                "sex": null,
+                                "kilograms": 7.5,
+                                "notes": "Due to the specimen's high danger rating, a thorough examination was not possible."
+                            }
                         },
                         {
                             "name": "Volatile Gas Blob",
@@ -15415,7 +15805,13 @@
                             "threatLevel": 6.2,
                             "acquisitionDate": "2066-06-10",
                             "notes": "Explosive when exposed to extreme heat.",
-                            "description": "This gaseous lifeform appears as a yellow blob with a fiery orange center. It is highly volatile and can combust with even the slightest exposure to heat. The gaseous composition of the specimen is currently unknown."
+                            "description": "This gaseous lifeform appears as a yellow blob with a fiery orange center. It is highly volatile and can combust with even the slightest exposure to heat. The gaseous composition of the specimen is currently unknown.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": null,
+                                "notes": "The Volatile Gas Blob is highly dangerous as it can combust with a slight exposure to heat. Caution is advised when studying or handling this specimen."
+                            }
                         },
                         {
                             "name": "Thunderbolt Kraken",
@@ -15424,7 +15820,13 @@
                             "threatLevel": 10.0,
                             "acquisitionDate": "2067-02-20",
                             "notes": "Can summon bolts of lightning and produce EMP waves.",
-                            "description": "The Thunderbolt Kraken is a massive, cephalopod-like creature capable of summoning bolts of lightning from the sky and producing EMP waves that can fry electronic equipment within a hundred-yard radius. It uses its powerful tentacles to crush and manipulate its prey and can breathe underwater using a specialized gill system. The Thunderbolt Kraken is a highly dangerous creature that requires maximum security containment."
+                            "description": "The Thunderbolt Kraken is a massive, cephalopod-like creature capable of summoning bolts of lightning from the sky and producing EMP waves that can fry electronic equipment within a hundred-yard radius. It uses its powerful tentacles to crush and manipulate its prey and can breathe underwater using a specialized gill system. The Thunderbolt Kraken is a highly dangerous creature that requires maximum security containment.",
+                            "medical": {
+                                "bloodtype": "None",
+                                "sex": "u",
+                                "kilograms": null,
+                                "notes": "Due to its extreme danger and lack of cooperation, physical and medical examinations were unable to be conducted on this specimen. Extreme caution must be taken when dealing with this creature."
+                            }
                         }
                     ]
                 },
@@ -15442,7 +15844,13 @@
                             "threatLevel": 2.6,
                             "acquisitionDate": "2071-01-20",
                             "notes": "Can hide itself by appearing as a crystal when dormant.",
-                            "description": "This armored beetle has a hard, crystalline shell that reflects light in a beautiful array of colors. When threatened, this beetle can quickly burrow into the ground, but when dormant, it appears as an ordinary crystal. The beetle is not known to be very aggressive, but has a powerful jaw capable of crushing rocks."
+                            "description": "This armored beetle has a hard, crystalline shell that reflects light in a beautiful array of colors. When threatened, this beetle can quickly burrow into the ground, but when dormant, it appears as an ordinary crystal. The beetle is not known to be very aggressive, but has a powerful jaw capable of crushing rocks.",
+                            "medical": {
+                                "bloodtype": null,
+                                "sex": null,
+                                "kilograms": 2.4,
+                                "notes": "Specimen appears to be in good health. Care should be taken when handling due to its hard, crystalline exoskeleton."
+                            }
                         }
                     ]
                 }

@@ -74,7 +74,6 @@ def EmployeeCreation():
         else:
             return None
 
-
     with open('base_data.json') as d:
         depData = json.load(d)
 
@@ -274,104 +273,78 @@ def OriginCreation():
         pass
 
 
-def SpecimenCreation():
-
+def SpecimenMedicalDataCreation():
     with open("ai_data.json") as output:
         aiData = json.load(output)
 
-    print("Number of Generated Specimens: ", len(aiData["specimen"]))
-
-    messageList = []
     try:
-        for i in range(20):
-            for j in range(2):
-                oDict = random.choice(aiData["origin"])
-                statusList = aiData["ContainmentStatus"]
-                message = {"role": "user", "content":
-                    '''I want you to generate a short python list of python dictionaries given the following example and given what you know about F-SEA:
-                    example:
-                    [{
-                        "name": "SpecimenName",
-                        "statusID": 1,
-                        "mission": "Name of mission",
-                        "threatLevel": 5.4,
-                        "acquisitionDate": "yyyy-mm-dd",
-                        "notes": "notes detailing any fun or important facts about the specimen",
-                        "description": "detailed description"
-                }]
+        for m in aiData["origin"]:
+            for m in m["missions"]:
+                for s in m["specimens"]:
+                    if "medical" not in s:
 
-                    Important:
-                    The threatLevel should be a float from 0.0 to 10.0. The closer to 0, the less dangerous, the higher the more dangerous.
-                    The threatLevel should be based on aggressiveness and hostility and how much of a danger the specimen poses to humans and other specimens.
-                    The statusID should match the containmentStatusID whose description best matches the specimen's threat. Choose from the follwoing:
-                    %s
-                    
-                    The acquisition date should correlate to a date between the startDate and endDate (inclusive) of one of the missions provided in the dictionary below:
-                    %s
-                   
-                   The specimens are mostly alien or anomalous in nature.
-                   Notes should detail any fun or important facts about the specimen or what anything odd about the specimen.
-                   The description should thoroughly detail each specimen's habits, appearance, and it should correspond to their threatLevel.
-                   The mission name should match the mission the specimen was discovered on in the provided dict.
+                        completion = openai.ChatCompletion.create(
+                            model="gpt-3.5-turbo",
+                            messages=[{
+                            "role": "system",
+                            "content": """The Frontier Space Exploration Agency, is at the forefront of space exploration and colonization endeavors. With a mission to push the boundaries of human knowledge and find a new home after the destruction of Earth, F-SEA undertakes ambitious projects and scientific missions to explore uncharted frontiers beyond our solar system.
+                    F-SEA's primary focus revolves around three key areas: space exploration, colonization, and scientific research. F-SEA ventures into space to gather valuable data, study celestial bodies, and unlock the mysteries of the universe. Their missions include manned and unmanned expeditions to distant planets, moons, and other celestial objects.
+                    F-SEA envisions a future where humans establish sustainable colonies beyond the mothership. Their dedicated teams of scientists and researchers conduct studies on various disciplines, including astrophysics, planetary geology, astrobiology, and more. By unraveling the secrets of the cosmos, F-SEA contributes to our understanding of the universe, potentially leading to breakthroughs in fields such as cosmology, exoplanet exploration, and the search for extraterrestrial life.
+                    In summary, F-SEA is a pioneering organization that combines technological innovation, human exploration, and scientific research to expand our knowledge of the universe, establish sustainable colonies beyond Earth, and pave the way for humanity's future in space.
+                    F-SEA also works to contain and experiment on discovered extraterrestrial lifeforms"""
+                        },
+                                {"role": "assistant", "content":
+                            '''I want you to generate a singular python dictionary given what you know about the specimen and given what you know about F-SEA:
+                            Specimen:
+                            %s
+                            
+                            format:
+                            {
+                                "bloodtype": ,
+                                "sex": ,
+                                "kilograms": ,
+                                "notes": 
+                            }
+        
+                            Important:
+                            The bloodtype may be one of the human blood types, animal blood types, or may be completely made up. 
+                            The bloodtype should be in the format of one uppercase letter and a plus or minus sign, e.g. B+
+            
+                            If the specimen cannot possible have a blood type, then mark it the python None type.
+                             
+                            The sex must be one character: m for male, f, for female, i for intersex, u for unknown.
+                            
+                            kilograms should be a float number.
+                            Notes should detail the specimen's medical status.
+                            
+                            For any attribute that was unable to be studied due to the specimen's danger or due to extenuating 
+                            circumstances, mark that attribute with the python None type.
+                           
+    
+    
+                        ''' % s}],
+                            n=1,
+                            temperature=1.2
+                        )
+                        for d in completion["choices"]:
 
-                    The produced data should be in the format of a python list of python dictionaries. 
-                Blank attributes should be marked with the keyword None as found in python. Do NOT mark them null.
-                Return the list of python dicts as is. DO NOT PUT ANY TEXT BEFORE OR AFTER THE LIST.
+                            mess = d["message"]["content"]
+                            m = mess[mess.find('{'):mess.rfind('}') + 1]
+                            try:
+                                m = ast.literal_eval(m)
+                                s["medical"] = m
+                                print("Success!: ", m)
+                                with open("ai_data.json", "w") as output:
+                                    json.dump(aiData, output, indent=4)
 
-
-                ''' % (statusList, oDict)}
-                fsea = {
-                    "role": "system",
-                    "content": """The Frontier Space Exploration Agency, is at the forefront of space exploration and colonization endeavors. With a mission to push the boundaries of human knowledge and find a new home after the destruction of Earth, F-SEA undertakes ambitious projects and scientific missions to explore uncharted frontiers beyond our solar system.
-            F-SEA's primary focus revolves around three key areas: space exploration, colonization, and scientific research. F-SEA ventures into space to gather valuable data, study celestial bodies, and unlock the mysteries of the universe. Their missions include manned and unmanned expeditions to distant planets, moons, and other celestial objects.
-            F-SEA envisions a future where humans establish sustainable colonies beyond the mothership. Their dedicated teams of scientists and researchers conduct studies on various disciplines, including astrophysics, planetary geology, astrobiology, and more. By unraveling the secrets of the cosmos, F-SEA contributes to our understanding of the universe, potentially leading to breakthroughs in fields such as cosmology, exoplanet exploration, and the search for extraterrestrial life.
-            In summary, F-SEA is a pioneering organization that combines technological innovation, human exploration, and scientific research to expand our knowledge of the universe, establish sustainable colonies beyond Earth, and pave the way for humanity's future in space.
-            F-SEA also works to contain and experiment on discovered extraterrestrial lifeforms"""
-                }
-
-                messageList.append(fsea)
-                messageList.append(message)
-
-                completion = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
-                    messages=messageList,
-                    n=1,
-                    temperature=1
-                )
-                for d in completion["choices"]:
-                    messageList.clear()
-                    mess = d["message"]["content"]
-                    o = mess[mess.find('['):mess.rfind(']')+1]
-                    try:
-                        originList = ast.literal_eval(o)
-                        messageList.append(
-                            {"role": "system", "content": f"""This is the last generated specimen list: {originList}
-                            You do not need to generate anything for this origin. Just keep this origin's data in mind
-                            while you fill in the data for the next origin."""})
-
-                        for ori in aiData["origin"]:
-                            if oDict == ori:
-                                for m in ori["missions"]:
-                                    for ol in originList:
-                                        if m["name"] == ol["mission"]:
-                                            m["specimens"].append(ol)
-
-                                print('Booyah!')
-
-                        print("Success!: ", o)
-                        with open("ai_data.json", "w") as output:
-                            json.dump(aiData, output, indent=4)
-
-                    except Exception as e:
-                        print(o)
-                        print("literal_eval() Exception")
-                        print(e)
-                        messageList.append({"role": "user",
-                                            "content": "You either added unnecessary text or formatted incorrectly. Do not do that with the next generation."})
-                        pass
+                            except Exception as e:
+                                print(m)
+                                print("literal_eval() Exception")
+                                print(e)
+                                pass
 
     except Exception as e:
         print(e)
         pass
 
-
+SpecimenMedicalDataCreation()
