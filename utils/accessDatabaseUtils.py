@@ -2,11 +2,6 @@ import sqlite3
 from utils.filePaths import DB_PATH
 
 
-def dict_factory(cursor, row):
-    d = {}
-    for idx, col in enumerate(cursor.description):
-        d[col[0]] = row[idx]
-    return d
 
 
 def getDepartmentData(depID):
