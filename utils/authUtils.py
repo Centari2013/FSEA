@@ -28,6 +28,9 @@ def authenticate(user, pwd):
             if pwd == p:  # user authenticated
                 return_val = True
             else:  # password does not match user
+
+                # todo: IMPLEMENT USER LOCKOUT ONCE PWD ATTEMPTS == 3
+
                 cur.execute('''UPDATE Credentials
                                 SET loginAttempts = loginAttempts + 1
                                 WHERE username = ?''', [user])
