@@ -129,7 +129,8 @@ class manageContainmentStatus(DatabaseManager):
 
     @staticmethod
     def get(containmentStatusID):
-        return DatabaseManager._execute_with_return('SELECT * FROM ContainmentStatus WHERE containmentStatusID = ?', (containmentStatusID,))
+        return DatabaseManager._execute_with_return('SELECT * FROM ContainmentStatus WHERE containmentStatusID = ?',
+                                                    (containmentStatusID,))
 
 
 class manageClearance(DatabaseManager):
@@ -165,7 +166,7 @@ class manageEmployeeClearance(DatabaseManager):
     def add(empID, clearanceID):
         success, rowid = DatabaseManager._execute('INSERT INTO EmployeeClearance(empID, clearanceID) VALUES(?,?);',
                                                   (empID, clearanceID))
-        return DatabaseManager._get_id_from_row(rowid, 'EmployeeClearance', 'empID', 'clearanceID') if success else None
+        return success
 
     @staticmethod
     def update(empID, oldClearanceID, newClearanceID):
@@ -186,7 +187,8 @@ class manageEmployeeClearance(DatabaseManager):
 
     @staticmethod
     def getByClearance(clearanceID):
-        return DatabaseManager._execute_with_return('SELECT * FROM EmployeeClearance where clearanceID = ?', (clearanceID,))
+        return DatabaseManager._execute_with_return('SELECT * FROM EmployeeClearance where clearanceID = ?',
+                                                    (clearanceID,))
 
 
 class manageDesignation(DatabaseManager):
@@ -215,7 +217,8 @@ class manageDesignation(DatabaseManager):
 
     @staticmethod
     def get(designationID):
-        return DatabaseManager._execute_with_return('SELECT * FROM Designation WHERE designationID = ?', (designationID,))
+        return DatabaseManager._execute_with_return('SELECT * FROM Designation WHERE designationID = ?',
+                                                    (designationID,))
 
 
 class manageDepartment(DatabaseManager):
@@ -244,26 +247,37 @@ class manageDepartment(DatabaseManager):
 
     @staticmethod
     def get(depID):
-        return DatabaseManager._execute_with_return('SELECT * FROM Department WHERE depID = ?',(depID,))
+        return DatabaseManager._execute_with_return('SELECT * FROM Department WHERE depID = ?', (depID,))
 
 
 class manageEmployee(DatabaseManager):
     @staticmethod
     def add(firstName, lastName, dep, startDate, summary=None):
         ID = generateEID()
-        result = DatabaseManager._execute_with_return('SELECT empID FROM Employee WHERE empID = ?', (ID,))
 
-        while result is not None:
+        while manageEmployee._check_employee_exists(ID):
             ID = generateEID()
-            result = DatabaseManager._execute_with_return('SELECT empID FROM Employee WHERE empID = ?', (ID,))
 
         success, rowid = DatabaseManager._execute('''INSERT INTO Employee(empDep, empID,firstName, lastName, startDate) 
                                 VALUES(?,?,?,?,?)''', (dep, ID, firstName, lastName, startDate))
 
-        manageEmployee.update(ID, summary=summary)
-        manageEmployee.updateCredentials(ID, username=generateUsername(firstName, lastName, dep), pwd=generatePWD())
+        if not success:
+            return success
+
+        success = manageEmployee.update(ID, summary=summary)
+
+        if not success:
+            return success
+
+        success = manageEmployee.updateCredentials(ID, username=generateUsername(firstName, lastName, dep),
+                                                   pwd=generatePWD())
 
         return ID if success else None
+
+    @staticmethod
+    def _check_employee_exists(empID):
+        result = DatabaseManager._execute_with_return('SELECT empID FROM Employee WHERE empID = ?', (empID,))
+        return result is not None
 
     @staticmethod
     def update(empID, dep=None, role=None, firstName=None, lastName=None, startDate=None, endDate=None,
@@ -288,7 +302,7 @@ class manageEmployee(DatabaseManager):
 
     @staticmethod
     def get(empID):
-        return DatabaseManager._execute_with_return('SELECT * FROM Employee WHERE empID = ?',(empID,))
+        return DatabaseManager._execute_with_return('SELECT * FROM Employee WHERE empID = ?', (empID,))
 
     @staticmethod
     def getMedical(empID):
@@ -349,228 +363,150 @@ class manageEmployeeDesignation(DatabaseManager):
 
     @staticmethod
     def getByDesignation(designationID):
-        return DatabaseManager._execute_with_return('SELECT * FROM EmployeeDesignation WHERE designationID = ?', (designationID,))
+        return DatabaseManager._execute_with_return('SELECT * FROM EmployeeDesignation WHERE designationID = ?',
+                                                    (designationID,))
 
 
 class manageOrigin(DatabaseManager):
     @staticmethod
     def add(name, discoveryDate, desc):
         ID = generateOID()
-        result = DatabaseManager._execute_with_return('SELECT originID FROM Origin WHERE originID = ?', (ID,))
 
-        while result is not None:
+        while manageOrigin._check_origin_exists(ID):
             ID = generateOID()
-            result = DatabaseManager._execute_with_return('SELECT originID FROM Origin WHERE originID = ?', (ID,))
 
         success, rowid = DatabaseManager._execute('INSERT INTO Origin(originID, name, description, discoveryDate) '
                                                   'VALUES (?,?,?,?)',
                                                   (ID, name, desc, discoveryDate))
+
         return ID if success else None
 
+    @staticmethod
+    def _check_origin_exists(originID):
+        result = DatabaseManager._execute_with_return('SELECT originID FROM Origin WHERE originID = ?', (originID,))
+        return result is not None
 
-
-
-def updateOrigin(ID, name=None, desc=None, discoveryDate=None):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
-
+    @staticmethod
+    def update(ID, name=None, desc=None, discoveryDate=None):
+        success = True
         args = [[name, 'name'], [discoveryDate, 'discoveryDate'], [desc, 'description']]
 
         for a in args:
             if a[0] is not None:
-                cur.execute(f'UPDATE Origin SET {a[1]} = ? WHERE originID = ?', (a[0], ID))
+                success, rowid = DatabaseManager._execute(f'UPDATE Origin SET {a[1]} = ? WHERE originID = ?',
+                                                          (a[0], ID))
+                if not success:
+                    break
 
-        con.commit()
-        success = True
-    except Exception as e:
-        print(e)
-
-    finally:
-        if con is not None:
-            con.close()
         return success
 
-
-def deleteOrigin(originID):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
-
-        cur.execute('DELETE FROM Origin WHERE originID = ?', (originID,))
-        con.commit()
-        success = True
-
-    except Exception as e:
-        print(e)
-
-    finally:
-        if con is not None:
-            con.close()
+    @staticmethod
+    def delete(originID):
+        success, rowid = DatabaseManager._execute('DELETE FROM Origin WHERE originID = ?', (originID,))
         return success
 
+    @staticmethod
+    def get(originID):
+        return DatabaseManager._execute_with_return('SELECT * FROM Origin WHERE originID = ?', (originID,))
 
-def addMission(name, desc, originID=None, startDate=None, endDate=None, captainID=None, supervisorID=None):
-    ID = None
-    con = None
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
 
+class manageMission(DatabaseManager):
+    @staticmethod
+    def add(name, desc, startDate=None, endDate=None, commanderID=None, supervisorID=None, originID=None):
         ID = generateMID()
 
-        cur.execute('SELECT missionID FROM Mission WHERE missionID = ?', (ID,))
-        r = cur.fetchone()
-
-        while r is not None:
+        while manageMission._check_mission_exists(ID):
             ID = generateMID()
-            cur.execute('SELECT missionID FROM Mission WHERE missionID = ?', (ID,))
-            r = cur.fetchone()
 
-        cur.execute('INSERT INTO Mission(missionID, name, description) VALUES (?,?,?)', (ID, name, desc))
-        con.commit()
+        success, rowid = DatabaseManager._execute('INSERT INTO Mission(missionID, name, description) VALUES (?,?,?)',
+                                                  (ID, name, desc))
+        if not success:
+            return success
 
-        updateMission(ID, name, originID, startDate, endDate, captainID, supervisorID)
-    except Exception as e:
-        print(e)
-    finally:
-        if con is not None:
-            con.close()
-        return ID
+        success = manageMission.update(ID, name, startDate, endDate, commanderID, supervisorID, originID)
 
+        return ID if success else None
 
-def updateMission(missionID, name=None, desc=None, originID=None, startDate=None, endDate=None, captainID=None,
-                  supervisorID=None):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
+    @staticmethod
+    def _check_mission_exists(missionID):
+        result = DatabaseManager._execute_with_return('SELECT missionID FROM Mission WHERE missionID = ?', (missionID,))
+        return result is not None
 
-        args = [[name, 'name'], [desc, 'description'], [originID, 'originID'], [startDate, 'startDate'],
-                [endDate, 'endDate'], [captainID, 'captainID'], [supervisorID, 'supervisorID']]
+    @staticmethod
+    def update(missionID, name=None, desc=None, startDate=None, endDate=None, commanderID=None,
+               supervisorID=None, originID=None):
+        args = [[name, 'name'], [desc, 'description'], [startDate, 'startDate'], [originID, 'originID']
+        [endDate, 'endDate'], [commanderID, 'commanderID'], [supervisorID, 'supervisorID']]
+
+        success = True
 
         for a in args:
             if a[0] is not None:
-                cur.execute('UPDATE Mission SET {} = ? WHERE missionID = ?'.format(a[1]), (a[0], missionID))
+                success, rowid = DatabaseManager._execute('UPDATE Mission SET {} = ? WHERE missionID = ?'.format(a[1]),
+                                                          (a[0], missionID))
+                if not success:
+                    break
 
-        con.commit()
-        success = True
-    except Exception as e:
-        print(e)
-
-    finally:
-        if con is not None:
-            con.close()
         return success
 
-
-def deleteMission(missionID):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
-
-        cur.execute('DELETE FROM Mission WHERE missionID = ?', (missionID,))
-        con.commit()
-        success = True
-
-    except Exception as e:
-        print(e)
-
-    finally:
-        if con is not None:
-            con.close()
+    @staticmethod
+    def delete(missionID):
+        success, rowid = DatabaseManager._execute('DELETE FROM Mission WHERE missionID = ?', (missionID,))
         return success
 
+    @staticmethod
+    def get(missionID):
+        return DatabaseManager._execute_with_return('SELECT * FROM Mission WHERE missionID = ?', (missionID,))
 
-def addSpecimen(name, acquisitionDate, originID=None, missionID=None, threatLevel=None, notes=None, description=None):
-    con = None
-    ID = None
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
 
+class manageSpecimen(DatabaseManager):
+    @staticmethod
+    def add(name, acquisitionDate, originID=None, missionID=None, threatLevel=None, notes=None, description=None):
         ID = generateSID()
-        # check for repeat ID
-        cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (ID,))
-        r = cur.fetchone()
 
-        while r is not None:
+        while manageSpecimen._check_specimen_exists(ID):
             ID = generateSID()
-            cur.execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (ID,))
-            r = cur.fetchone()
 
-        cur.execute('INSERT INTO Specimen(specimenID, name, acquisitionDate) VALUES (?,?,?)',
-                    (ID, name, acquisitionDate))
-        con.commit()
+        success, rowid = DatabaseManager._execute(
+            'INSERT INTO Specimen(specimenID, name, acquisitionDate) VALUES (?,?,?)',
+            (ID, name, acquisitionDate))
 
-        updateSpecimen(ID, originID=originID, missionID=missionID, threatLevel=threatLevel, notes=notes,
-                       description=description)
+        if not success:
+            return success
 
-    except Exception as e:
-        print(e)
-        traceback.print_exc()
-    finally:
-        if con is not None:
-            con.close()
-        return ID
+        success = manageSpecimen.update(ID, originID=originID, missionID=missionID, threatLevel=threatLevel,
+                                        notes=notes,
+                                        description=description)
 
+        return ID if success else None
 
-def updateSpecimen(ID, name=None, acquisitionDate=None, originID=None, missionID=None, threatLevel=None, notes=None,
-                   description=None):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
+    @staticmethod
+    def _check_specimen_exists(specimenID):
+        result = DatabaseManager._execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (specimenID,))
+        return result is not None
 
+    @staticmethod
+    def update(ID, name=None, acquisitionDate=None, originID=None, missionID=None, threatLevel=None, notes=None,
+               description=None):
         args = [[name, 'name'], [acquisitionDate, 'acquisitionDate'], [originID, 'originID'],
                 [missionID, 'missionID'], [threatLevel, 'threatLevel'], [notes, 'notes'], [description, 'description']]
-
+        success = True
         for a in args:
             if a[0] is not None:
-                cur.execute(f'UPDATE Specimen SET {a[1]} = ? WHERE specimenID = ?', (a[0], ID))
-
-        con.commit()
-        success = True
-    except Exception as e:
-        print(e)
-        traceback.print_exc()
-    finally:
-        if con is not None:
-            con.close()
+                success, rowid = DatabaseManager._execute(f'UPDATE Specimen SET {a[1]} = ? WHERE specimenID = ?', (a[0], ID))
+                if not success:
+                    break
         return success
 
+    @staticmethod
+    def delete(specimenID):
+        success, rowid = DatabaseManager._execute('DELETE FROM Specimen WHERE specimenID = ?', (specimenID,))
+        return success
 
-def deleteSpecimen(specimenID):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
+    @staticmethod
+    def get(specimenID):
+        return DatabaseManager._execute_with_return('SELECT * FROM Specimen WHERE specimenID = ?', (specimenID,))
 
-        cur.execute('DELETE FROM Specimen WHERE specimenID = ?', (specimenID,))
-        con.commit()
-    except Exception as e:
-        print(e)
-    finally:
-        if con is not None:
-            con.close()
-        return False
 
 
 def addResearcherSpecimen(empID, specimenID):
