@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QApplication
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QFrame, QSpacerItem, QSizePolicy, QPlainTextEdit
 
 from app.baseWindows import windowWithToolbar
-from utils.accessDatabaseUtils import *
+from utils.databaseUtils import *
 
 
 class employeeInfo(windowWithToolbar):
@@ -15,12 +15,12 @@ class employeeInfo(windowWithToolbar):
         self.exitButton.clicked.connect(self.close)
         self.ID = ID
 
-        self._medicalData = getEmployeeMedicalData(ID)
+        self._medicalData = manageEmployee.getMedical(ID)
         self.initEmployeeData()
         self.initFooter()
 
     def initEmployeeData(self):
-        empData = getEmployeeData(self.ID)
+        empData = manageEmployee.get(self.ID)
         layout = QVBoxLayout()
         frame = QFrame()
         nameLabel = QLabel(f"{empData['firstName']} {empData['lastName']}")

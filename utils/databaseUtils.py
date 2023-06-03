@@ -436,7 +436,7 @@ class manageMission(DatabaseManager):
     def update(missionID, name=None, desc=None, startDate=None, endDate=None, commanderID=None,
                supervisorID=None, originID=None):
         args = [[name, 'name'], [desc, 'description'], [startDate, 'startDate'], [originID, 'originID']
-        [endDate, 'endDate'], [commanderID, 'commanderID'], [supervisorID, 'supervisorID']]
+                [endDate, 'endDate'], [commanderID, 'commanderID'], [supervisorID, 'supervisorID']]
 
         success = True
 
@@ -493,7 +493,24 @@ class manageSpecimen(DatabaseManager):
         success = True
         for a in args:
             if a[0] is not None:
-                success, rowid = DatabaseManager._execute(f'UPDATE Specimen SET {a[1]} = ? WHERE specimenID = ?', (a[0], ID))
+                success, rowid = DatabaseManager._execute(f'UPDATE Specimen SET {a[1]} = ? WHERE specimenID = ?',
+                                                          (a[0], ID))
+                if not success:
+                    break
+        return success
+
+    @staticmethod
+    def updateSpecimenMedical(ID, name=None, bloodtype=None, sex=None, kg=None, notes=None):
+
+        args = [[name, 'name'], [bloodtype, 'bloodtype'], [sex, 'sex'],
+                [kg, 'kilograms'], [notes, 'notes']]
+
+        success = True
+
+        for a in args:
+            if a[0] is not None:
+                success, rowid = DatabaseManager._execute(
+                    'UPDATE SpecimenMedical SET {} = ? WHERE specimenID = ?'.format(a[1]), (a[0], ID))
                 if not success:
                     break
         return success
@@ -508,114 +525,31 @@ class manageSpecimen(DatabaseManager):
         return DatabaseManager._execute_with_return('SELECT * FROM Specimen WHERE specimenID = ?', (specimenID,))
 
 
-
-def addResearcherSpecimen(empID, specimenID):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
-
-        cur.execute('INSERT INTO ResearcherSpecimen(empID, specimenID) VALUES(?,?)', (empID, specimenID))
-        con.commit()
-        success = True
-    except Exception as e:
-        print(e)
-
-    finally:
-        if con is not None:
-            con.close()
+class manageResearcherSpecimen(DatabaseManager):
+    @staticmethod
+    def add(empID, specimenID):
+        success, rowid = DatabaseManager._execute('INSERT INTO ResearcherSpecimen(empID, specimenID) VALUES(?,?)',
+                                                  (empID, specimenID))
         return success
 
-
-def updateSpecimenSupervisor(empID, specimenID, newEmployeeID):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
-
-        cur.execute('''UPDATE ResearcherSpecimen
+    @staticmethod
+    def update(oldEmpID, specimenID, newEmployeeID):
+        success, rowid = DatabaseManager._execute('''UPDATE ResearcherSpecimen
                         SET empID = ?
-                        WHERE empID = ? AND specimenID = ?''', (newEmployeeID, empID, specimenID))
-        con.commit()
-        success = True
-    except Exception as e:
-        print(e)
-
-    finally:
-        if con is not None:
-            con.close()
+                        WHERE empID = ? AND specimenID = ?''', (newEmployeeID, oldEmpID, specimenID))
         return success
 
-
-def updateSupervisorSpecimen(empID, specimenID, newSpecimenID):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
-
-        cur.execute('''UPDATE ResearcherSpecimen
-                            SET specimenID = ?
-                            WHERE empID = ? AND specimenID = ?''', (newSpecimenID, empID, specimenID))
-        con.commit()
-        success = True
-    except Exception as e:
-        print(e)
-
-    finally:
-        if con is not None:
-            con.close()
+    @staticmethod
+    def delete(empID, specimenID):
+        success, rowid = DatabaseManager._execute('DELETE FROM ResearcherSpecimen WHERE empID = ? AND specimenID = ?',
+                                                  (empID, specimenID))
         return success
 
+    @staticmethod
+    def get(empID):
+        return DatabaseManager._execute_with_return('SELECT * FROM ResearcherSpecimen WHERE empID = ?', (empID,))
 
-def deleteResearcherSpecimen(empID, specimenID):
-    con = None
-    success = False
-    try:
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
-
-        cur.execute('DELETE FROM ResearcherSpecimen WHERE empID = ? AND specimenID = ?', (empID, specimenID))
-        con.commit()
-        success = True
-    except Exception as e:
-        print(e)
-    finally:
-        if con is not None:
-            con.close()
-        return success
-
-
-def updateSpecimenMedical(ID, name=None, acquisitionDate=None, bloodtype=None, sex=None, kg=None, notes=None):
-    con = None
-    success = False
-    try:
-        # connect to database
-        con = sqlite3.connect(DB_PATH)
-        cur = con.cursor()
-        cur.execute("PRAGMA foreign_keys = ON;")
-
-        args = [[name, 'name'], [acquisitionDate, 'acquisitionDate'], [bloodtype, 'bloodtype'], [sex, 'sex'],
-                [kg, 'kilograms'], [notes, 'notes']]
-
-        for a in args:
-            if a[0] is not None:
-                cur.execute('UPDATE SpecimenMedical SET {} = ? WHERE specimenID = ?'.format(a[1]), (a[0], ID))
-
-        con.commit()
-        success = True
-
-    except Exception as e:
-        print(e)
-
-    finally:
-        # close connection and return
-        if con is not None:
-            con.close()
-        return success
+    @staticmethod
+    def getBySpecimen(specimenID):
+        return DatabaseManager._execute_with_return('SELECT * FROM ResearcherSpecimen WHERE specimenID = ?',
+                                                    (specimenID,))
