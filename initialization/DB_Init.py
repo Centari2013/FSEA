@@ -16,17 +16,17 @@ with open('complete_data.json') as d:
 def designationData():
     for dep in data["department"]:
         for des in dep["designations"]:
-            addDesignation(des[0], des[1])
+            manageDesignation.add(des[0], des[1])
 
 
 def clearanceData():
     for c in data["clearanceLevel"]:
-        addClearance(c["name"], c["description"])
+        manageClearance.add(c["name"], c["description"])
 
 
 def containmentStatus():
     for s in data["containmentStatus"]:
-        addContainmentStatus(s["name"], s["description"])
+        manageContainmentStatus.add(s["name"], s["description"])
 
 
 def departmentData():
@@ -39,7 +39,7 @@ def departmentData():
                     break
     # add generated depID to each department dict
     for d in data["department"]:
-        d["depID"] = depID = addDepartment(name=d["name"], desc=d["description"])
+        d["depID"] = depID = manageDepartment.add(name=d["name"], desc=d["description"])
         sup = d.pop("supervisor")
         fn = sup["firstName"]
         ln = sup["lastName"]
@@ -52,11 +52,11 @@ def departmentData():
         height = sup["height"]
         notes = sup["notes"]
         # add department supervisors
-        d["supervisor"] = ID = addEmployee(fn, ln, depID, start, summary=summ)
-        updateDepartment(depID, supervisorID=ID)
-        addEmployeeDesignation(ID, depSupervisorDesID)
-        updateEmployee(ID, endDate=None)
-        updateEmployeeMedical(ID, birth, bt, sex, kg, height, notes)
+        d["supervisor"] = ID = manageEmployee.add(fn, ln, depID, start, summary=summ)
+        manageDepartment.update(depID, supervisorID=ID)
+        manageEmployeeDesignation.add(ID, depSupervisorDesID)
+        manageEmployee.update(ID, endDate=None)
+        manageEmployee.updateEmployeeMedical(ID, birth, bt, sex, kg, height, notes)
 
         data["employee"].append({
             "dep": depID,
@@ -96,10 +96,10 @@ def EmployeeData():
         kg = e.pop("weight")
         height = e.pop("height")
         notes = e.pop("notes")
-        e["empID"] = ID = addEmployee(fn, ln, e["dep"], start,
+        e["empID"] = ID = manageEmployee.add(fn, ln, e["dep"], start,
                                      summ)
-        addEmployeeDesignation(ID, e["designation"])
-        updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"], e["notes"])
+        manageEmployeeDesignation.add(ID, e["designation"])
+        manageEmployee.updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"], e["notes"])
         e["medical"] = {"dob": birth,
                         "bloodtype": bt,
                         "sex": sex,
@@ -108,21 +108,21 @@ def EmployeeData():
                         "notes": notes}
 
         if "endDate" in e:
-            updateEmployee(endDate=e["endDate"])
+            manageEmployee.update(endDate=e["endDate"])
         else:
             e["endDate"] = None
 
-        addEmployeeClearance(ID, e["clearance"])
+        manageEmployeeClearance.add(ID, e["clearance"])
 
         if e["firstName"] == "Zaria":
-            updateCredentials(ID, 'test', 'test')
+            manageEmployee.updateCredentials(ID, 'test', 'test')
 
 
 def originMissionSpecimen():
     for o in data["origin"]:
-        oID = addOrigin(o["name"], o["discoveryDate"], o["description"])
+        oID = manageOrigin.add(o["name"], o["discoveryDate"], o["description"])
         for m in o["missions"]:
-            mID = addMission(m["name"], m["description"], oID, m["startDate"], m["endDate"],
+            mID = manageMission.add(m["name"], m["description"], oID, m["startDate"], m["endDate"],
                              )
 
 
