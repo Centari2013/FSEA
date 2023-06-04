@@ -59,7 +59,7 @@ def departmentData():
         manageEmployeeDesignation.add(ID, depSupervisorDesID)
         manageEmployee.update(ID, endDate=None)
         manageEmployee.updateEmployeeMedical(ID, birth, bt, sex, kg, height, notes)
-
+        manageEmployee.updateEmployeeClearance(ID, 9)
         data["employee"].append({
             "dep": depID,
             "designation": depSupervisorDesID,
@@ -74,7 +74,8 @@ def departmentData():
             "height": height,
             "notes": notes,
             "summary": summ,
-            "empID": ID
+            "empID": ID,
+            "clearance": 9
         })
 
 
@@ -115,7 +116,7 @@ def EmployeeData():
         else:
             e["endDate"] = None
 
-        manageEmployeeClearance.add(ID, e["clearance"])
+        manageEmployee.updateEmployeeClearance(ID, e["clearance"])
 
         if e["firstName"] == "Zaria":
             manageEmployee.updateCredentials(ID, 'test', 'test')
