@@ -751,7 +751,8 @@
             "height": 177.8,
             "notes": null,
             "summary": "",
-            "empID": "E3753233"
+            "empID": "E3753233",
+            "clearance": 8
         },
         {
             "dep": 5,
@@ -766,7 +767,8 @@
             "height": 158.75,
             "notes": "monitoring hemochromia",
             "summary": "",
-            "empID": "E8758820"
+            "empID": "E8758820",
+            "clearance": 4
         },
         {
             "dep": 10,
@@ -781,7 +783,8 @@
             "height": 182.88,
             "notes": "8th regen cycle",
             "summary": "",
-            "empID": "E2728638"
+            "empID": "E2728638",
+            "clearance": 9
         },
         {
             "dep": 5,
@@ -796,7 +799,8 @@
             "height": 177.8,
             "notes": null,
             "summary": "",
-            "empID": "E9987755"
+            "empID": "E9987755",
+            "clearance": 4
         },
         {
             "dep": 10,
@@ -811,7 +815,8 @@
             "height": 166.37,
             "notes": "pregnant",
             "summary": "",
-            "empID": "E8579968"
+            "empID": "E8579968",
+            "clearance": 4
         },
         {
             "dep": 3,
@@ -826,7 +831,8 @@
             "height": 185.42,
             "notes": null,
             "summary": "",
-            "empID": "E6161317"
+            "empID": "E6161317",
+            "clearance": 4
         },
         {
             "dep": 1,
@@ -841,7 +847,8 @@
             "height": 170.18,
             "notes": "3rd regen cycle",
             "summary": "",
-            "empID": "E4132325"
+            "empID": "E4132325",
+            "clearance": 8
         },
         {
             "dep": 11,
@@ -856,7 +863,8 @@
             "height": 186.69,
             "notes": "2nd regen cycle",
             "summary": "",
-            "empID": "E4098830"
+            "empID": "E4098830",
+            "clearance": 10
         },
         {
             "dep": 15,
@@ -871,7 +879,8 @@
             "height": 175.26,
             "notes": null,
             "summary": "",
-            "empID": "E3916726"
+            "empID": "E3916726",
+            "clearance": 6
         },
         {
             "dep": 11,
@@ -886,7 +895,8 @@
             "height": 473.99,
             "notes": "dormant massimonia",
             "summary": "",
-            "empID": "E7130446"
+            "empID": "E7130446",
+            "clearance": 9
         },
         {
             "dep": 15,
@@ -901,7 +911,8 @@
             "height": 186.69,
             "notes": null,
             "summary": "",
-            "empID": "E7754786"
+            "empID": "E7754786",
+            "clearance": 8
         },
         {
             "dep": 15,
@@ -916,7 +927,8 @@
             "height": 177.8,
             "notes": null,
             "summary": "",
-            "empID": "E6643284"
+            "empID": "E6643284",
+            "clearance": 8
         },
         {
             "dep": 15,
@@ -931,7 +943,8 @@
             "height": 180.34,
             "notes": "has gained sentience",
             "summary": "",
-            "empID": "E0403988"
+            "empID": "E0403988",
+            "clearance": 9
         },
         {
             "dep": 11,
@@ -944,9 +957,10 @@
             "sex": "f",
             "weight": 74.8,
             "height": 162.6,
-            "notes": "founder",
+            "notes": "hehe xd",
             "summary": "",
-            "empID": "E9825260"
+            "empID": "E9825260",
+            "clearance": 10
         },
         {
             "dep": 12,
@@ -962,7 +976,7 @@
             "height": 170,
             "notes": null,
             "summary": "Sophia Kim is a distinguished academician with over 20 years of experience in higher education. She has a proven track record of providing sound guidance and mentorship to students and faculty alike, helping them achieve their academic and professional goals. At F-SEA, Sophia plays a vital role in shaping the education and training programs that prepare the next generation of space explorers and scientists. Her expertise in curriculum development, assessment, and instructional design has been instrumental in ensuring the success of F-SEA's academic initiatives. Sophia is a passionate advocate for lifelong learning and a dedicated member of the F-SEA community.",
-            "clearance": null
+            "clearance": 1
         },
         {
             "dep": 5,

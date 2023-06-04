@@ -161,34 +161,7 @@ class manageClearance(DatabaseManager):
         return DatabaseManager._execute_with_return('SELECT * FROM Clearance WHERE clearanceID = ?', (clearanceID,))
 
 
-class manageEmployeeClearance(DatabaseManager):
-    @staticmethod
-    def add(empID, clearanceID):
-        success, rowid = DatabaseManager._execute('INSERT INTO EmployeeClearance(empID, clearanceID) VALUES(?,?);',
-                                                  (empID, clearanceID))
-        return success
 
-    @staticmethod
-    def update(empID, oldClearanceID, newClearanceID):
-        success, rowid = DatabaseManager._execute(
-            f'''UPDATE EmployeeClearance SET clearanceID = ? WHERE empID = ? AND clearanceID = ?''',
-            (empID, oldClearanceID, newClearanceID))
-        return success
-
-    @staticmethod
-    def delete(empID, clearanceID):
-        success, rowid = DatabaseManager._execute('DELETE FROM EmployeeClearance WHERE empID = ? AND clearanceID = ?',
-                                                  (empID, clearanceID,))
-        return success
-
-    @staticmethod
-    def get(empID):
-        return DatabaseManager._execute_with_return('SELECT * FROM EmployeeClearance where empID = ?', (empID,))
-
-    @staticmethod
-    def getByClearance(clearanceID):
-        return DatabaseManager._execute_with_return('SELECT * FROM EmployeeClearance where clearanceID = ?',
-                                                    (clearanceID,))
 
 
 class manageDesignation(DatabaseManager):
@@ -335,6 +308,23 @@ class manageEmployee(DatabaseManager):
                     break
 
         return success
+
+    @staticmethod
+    def updateEmployeeClearance(empID, newClearanceID):
+        success, rowid = DatabaseManager._execute(
+            f'''UPDATE EmployeeClearance SET clearanceID = ? WHERE empID = ?''',
+            (newClearanceID, empID))
+        return success
+
+
+    @staticmethod
+    def getEmployeeClearance(empID):
+        return DatabaseManager._execute_with_return('SELECT * FROM EmployeeClearance where empID = ?', (empID,))
+
+    @staticmethod
+    def getByClearance(clearanceID):
+        return DatabaseManager._execute_with_return('SELECT * FROM EmployeeClearance where clearanceID = ?',
+                                                    (clearanceID,))
 
 
 class manageEmployeeDesignation(DatabaseManager):
@@ -500,9 +490,9 @@ class manageSpecimen(DatabaseManager):
         return success
 
     @staticmethod
-    def updateSpecimenMedical(ID, name=None, bloodtype=None, sex=None, kg=None, notes=None):
+    def updateSpecimenMedical(ID, bloodtype=None, sex=None, kg=None, notes=None):
 
-        args = [[name, 'name'], [bloodtype, 'bloodtype'], [sex, 'sex'],
+        args = [[bloodtype, 'bloodtype'], [sex, 'sex'],
                 [kg, 'kilograms'], [notes, 'notes']]
 
         success = True
@@ -514,6 +504,17 @@ class manageSpecimen(DatabaseManager):
                 if not success:
                     break
         return success
+
+    @staticmethod
+    def getContainmentStatus(specimenID):
+        return DatabaseManager._execute_with_return('SELECT * FROM SpecimenContainmentStatus WHERE specimenID = ?', (specimenID,))
+
+    @staticmethod
+    def updateSpecimenContainmentStatus(specimenID, newContainmentStatus):
+        success, rowid = DatabaseManager._execute(
+            'UPDATE SpecimenContainmentStatus SET containmentStatusID = ? WHERE specimenID = ?''', (newContainmentStatus, specimenID))
+        return success
+
 
     @staticmethod
     def delete(specimenID):
