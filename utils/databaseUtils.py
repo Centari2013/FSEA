@@ -163,7 +163,6 @@ class manageClearance(DatabaseManager):
 
 
 
-
 class manageDesignation(DatabaseManager):
     @staticmethod
     def add(name, abbreviation):
@@ -221,6 +220,26 @@ class manageDepartment(DatabaseManager):
     @staticmethod
     def get(depID):
         return DatabaseManager._execute_with_return('SELECT * FROM Department WHERE depID = ?', (depID,))
+
+    @staticmethod
+    def addMission(depID, missionID):
+        success, rowid = DatabaseManager._execute('INSERT INTO DepartmentMission (depID, missionID) VALUES '
+                                                  '(?,?)', (depID, missionID))
+        return success
+
+    @staticmethod
+    def updateMissionID(depID, oldMissionID, newMissionID):
+        success, rowid = DatabaseManager._execute('UPDATE DepartmentMission SET missionID = ? '
+                                                  'WHERE depID = ? AND missionID = ?',
+                                                  (newMissionID, depID, oldMissionID))
+        return success
+
+    @staticmethod
+    def deleteMissionID(depID, missionID):
+        success, rowid = DatabaseManager._execute('DELETE FROM DepartmentMission WHERE depID = ? AND missionID = ?',
+                                                  (depID, missionID))
+        return success
+
 
 
 class manageEmployee(DatabaseManager):
@@ -326,6 +345,8 @@ class manageEmployee(DatabaseManager):
         return DatabaseManager._execute_with_return('SELECT * FROM EmployeeClearance where clearanceID = ?',
                                                     (clearanceID,))
 
+
+    #todo: add employeemission
 
 class manageEmployeeDesignation(DatabaseManager):
     @staticmethod

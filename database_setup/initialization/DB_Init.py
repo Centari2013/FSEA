@@ -125,6 +125,10 @@ def EmployeeData():
 special_agents = [e for e in data["employee"] if ((e["firstName"] != 'Prisca') and (e["designation"] == 75))]
 project_managers = [e for e in data["employee"] if e["designation"] == 2]
 
+def getAgents(missionStartDate):
+    agents = [a for a in special_agents if datetime.strptime(a["startDate"]) <=
+              datetime.strptime(missionStartDate)]
+    return random.choices(agents, k=random.randint(2,6))
 
 def originMissionSpecimen():
     for o in data["origin"]:
@@ -135,7 +139,11 @@ def originMissionSpecimen():
             supervisor = random.choice(project_managers)["empID"]
             mID = manageMission.add(m["name"], m["description"], oID, m["startDate"], m["endDate"],
                                     commander, supervisor, oID)
+
+            manageDepartment.addMission(o["depID"], mID)
+
             m["missionID"] = mID
+            # todo: set up employeeMisison
             for s in m["specimens"]:
                 sID = manageSpecimen.add(s["name"], s["aquisitionDate"], oID, mID, s["threatLevel"], s["notes"], s["description"])
                 s["specimenID"] = sID
