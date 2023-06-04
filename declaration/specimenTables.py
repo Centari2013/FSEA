@@ -57,7 +57,7 @@ def createSpecimen_ftsTable(cur):
     cur.execute('''CREATE VIRTUAL TABLE Specimen_fts USING fts5(
                     specimenID, 
                     name,
-                    origin,
+                    originID,
                     missionID, 
                     threatLevel,
                     acquisitionDate,
@@ -82,8 +82,8 @@ def dropSpecimen_ftsTable(cur):
 def createSpecimenTriggers(cur):
     cur.execute('''CREATE TRIGGER specimen_inserts AFTER INSERT ON Specimen
                     BEGIN
-                        INSERT INTO Specimen_fts (specimenID, name, origin, missionID, threatLevel, acquisitionDate, notes, description)
-                        VALUES (new.specimenID, new.name, new.origin, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
+                        INSERT INTO Specimen_fts (specimenID, name, originID, missionID, threatLevel, acquisitionDate, notes, description)
+                        VALUES (new.specimenID, new.name, new.originID, new.missionID, new.threatLevel, new.acquisitionDate, new.notes, new.description);
                         INSERT INTO SpecimenMedical (specimenID)
                         VALUES (new.specimenID);
                         INSERT INTO SpecimenContainmentStatus (specimenID)
@@ -94,6 +94,8 @@ def createSpecimenTriggers(cur):
                     BEGIN
                         DELETE FROM Specimen_fts
                         WHERE specimenID = old.specimenID;
+                        DELETE FROM SpecimenContainmentStatus
+                        WHERE specimenID = old.specimenID;
                     END;''')
 
     cur.execute('''CREATE TRIGGER specimen_fts_update AFTER UPDATE ON Specimen
@@ -101,7 +103,7 @@ def createSpecimenTriggers(cur):
                         UPDATE Specimen_fts
                         SET specimenID = new.specimenID,
                             name = new.name,
-                            origin = new.origin,
+                            origin = new.originID,
                             missionID = new.missionID,
                             threatLevel = new.threatLevel,
                             acquisitionDate = new.acquisitionDate,

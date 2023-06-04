@@ -1,7 +1,9 @@
 import json
+import random
 
 from utils.databaseUtils import *
 from database_setup.declaration.DB_Declaration import *
+from datetime import datetime
 
 '''
 IMPORTANT!!!!
@@ -97,9 +99,10 @@ def EmployeeData():
         height = e.pop("height")
         notes = e.pop("notes")
         e["empID"] = ID = manageEmployee.add(fn, ln, e["dep"], start,
-                                     summ)
+                                             summ)
         manageEmployeeDesignation.add(ID, e["designation"])
-        manageEmployee.updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"], e["notes"])
+        manageEmployee.updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"],
+                                             e["notes"])
         e["medical"] = {"dob": birth,
                         "bloodtype": bt,
                         "sex": sex,
@@ -118,12 +121,27 @@ def EmployeeData():
             manageEmployee.updateCredentials(ID, 'test', 'test')
 
 
+special_agents = [e for e in data["employee"] if ((e["firstName"] != 'Prisca') and (e["designation"] == 75))]
+project_managers = [e for e in data["employee"] if e["designation"] == 2]
+
+
 def originMissionSpecimen():
     for o in data["origin"]:
         oID = manageOrigin.add(o["name"], o["discoveryDate"], o["description"])
+        o["originID"] = oID
         for m in o["missions"]:
+            commander = random.choice(special_agents)["empID"]
+            supervisor = random.choice(project_managers)["empID"]
             mID = manageMission.add(m["name"], m["description"], oID, m["startDate"], m["endDate"],
-                             )
+                                    commander, supervisor, oID)
+            m["missionID"] = mID
+            for s in m["specimens"]:
+                sID = manageSpecimen.add(s["name"], s["aquisitionDate"], oID, mID, s["threatLevel"], s["notes"], s["description"])
+                s["specimenID"] = sID
+                sm = s["medical"]
+                manageSpecimen.updateSpecimenMedical(sID, sm["bloodtype"], sm["sex"], sm["kilograms"], sm["notes"])
+                manageSpecimen.updateSpecimenContainmentStatus(sID, s["statusID"])
+
 
 
 def saveData():
