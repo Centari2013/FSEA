@@ -1,9 +1,9 @@
 import json
 import random
-
-from utils.databaseUtils import *
 from database_setup.declaration.DB_Declaration import *
 from datetime import datetime
+from utils.encryption import encrypt
+from utils.databaseUtils import *
 
 '''
 IMPORTANT!!!!
@@ -31,14 +31,10 @@ def containmentStatus():
         manageContainmentStatus.add(s["name"], s["description"])
 
 
+depHeads = []
+
+
 def departmentData():
-    depSupervisorDesID = None
-    for dep in data["department"]:
-        if dep["name"] == "Executive":
-            for des in dep["designations"]:
-                if des[1] == "DS":
-                    depSupervisorDesID = des[2]
-                    break
     # add generated depID to each department dict
     for d in data["department"]:
         d["depID"] = depID = manageDepartment.add(name=d["name"], desc=d["description"])
@@ -56,13 +52,13 @@ def departmentData():
         # add department supervisors
         d["supervisor"] = ID = manageEmployee.add(fn, ln, depID, start, summary=summ)
         manageDepartment.update(depID, supervisorID=ID)
-        manageEmployeeDesignation.add(ID, depSupervisorDesID)
+        manageEmployeeDesignation.add(ID, 54)
         manageEmployee.update(ID, endDate=None)
         manageEmployee.updateEmployeeMedical(ID, birth, bt, sex, kg, height, notes)
         manageEmployee.updateEmployeeClearance(ID, 9)
-        data["employee"].append({
+        depHeads.append({
             "dep": depID,
-            "designation": depSupervisorDesID,
+            "designation": 54,
             "firstName": fn,
             "lastName": ln,
             "startDate": start,
@@ -93,12 +89,12 @@ def EmployeeData():
         ln = e["lastName"]
         start = e["startDate"]
         summ = e["summary"]
-        birth = e.pop("dob")
-        bt = e.pop("bloodtype")
-        sex = e.pop("sex")
-        kg = e.pop("weight")
-        height = e.pop("height")
-        notes = e.pop("notes")
+        birth = e["dob"]
+        bt = e["bloodtype"]
+        sex = e["sex"]
+        kg = e["weight"]
+        height = e["height"]
+        notes = e["notes"]
         e["empID"] = ID = manageEmployee.add(fn, ln, e["dep"], start,
                                              summ)
         manageEmployeeDesignation.add(ID, e["designation"])
@@ -112,45 +108,65 @@ def EmployeeData():
                         "notes": notes}
 
         if "endDate" in e:
-            manageEmployee.update(endDate=e["endDate"])
+            manageEmployee.update(ID, endDate=e["endDate"])
         else:
             e["endDate"] = None
 
         manageEmployee.updateEmployeeClearance(ID, e["clearance"])
 
         if e["firstName"] == "Zaria":
-            manageEmployee.updateCredentials(ID, 'test', 'test')
+            manageEmployee.updateCredentials(ID, encrypt('test'), encrypt('test'))
+    data["employee"] = data["employee"] + depHeads
 
 
 special_agents = [e for e in data["employee"] if ((e["firstName"] != 'Prisca') and (e["designation"] == 75))]
 project_managers = [e for e in data["employee"] if e["designation"] == 2]
+researchers = [e["empID"] for e in data["employee"] if e["designation"] == 79]
+
 
 def getAgents(missionStartDate):
-    agents = [a for a in special_agents if datetime.strptime(a["startDate"]) <=
-              datetime.strptime(missionStartDate)]
-    return random.choices(agents, k=random.randint(2,6))
+    formt = '%Y-%m-%d'
+    agents = [a["empID"] for a in special_agents if (datetime.strptime(a["startDate"], formt) <=
+              datetime.strptime(missionStartDate, formt))]
+    return random.choices(agents, k=random.randint(2, 3))
+
 
 def originMissionSpecimen():
     for o in data["origin"]:
         oID = manageOrigin.add(o["name"], o["discoveryDate"], o["description"])
         o["originID"] = oID
         for m in o["missions"]:
-            commander = random.choice(special_agents)["empID"]
+            agents = getAgents(m["startDate"])
+            print('Agents: ', agents)
+            commander = agents[0]
             supervisor = random.choice(project_managers)["empID"]
-            mID = manageMission.add(m["name"], m["description"], oID, m["startDate"], m["endDate"],
+            mID = manageMission.add(m["name"], m["description"], m["startDate"], m["endDate"],
                                     commander, supervisor, oID)
 
+            print('mid: ', mID)
+            print(m)
             manageDepartment.addMission(o["depID"], mID)
 
             m["missionID"] = mID
-            # todo: set up employeeMisison
+
+            m["agents"] = agents
+
+            for a in agents:
+                manageMission.addEmployeeToMission(a, mID)
+
             for s in m["specimens"]:
-                sID = manageSpecimen.add(s["name"], s["aquisitionDate"], oID, mID, s["threatLevel"], s["notes"], s["description"])
+                sID = manageSpecimen.add(s["name"], s["acquisitionDate"], oID, mID, s["threatLevel"], s["notes"],
+                                         s["description"])
                 s["specimenID"] = sID
                 sm = s["medical"]
+
+                spec_researcher = random.choices(researchers, k=random.randint(1, 3))
+                s["researchers"] = spec_researcher
+                for r in spec_researcher:
+                    manageResearcherSpecimen.add(r, sID)
+
                 manageSpecimen.updateSpecimenMedical(sID, sm["bloodtype"], sm["sex"], sm["kilograms"], sm["notes"])
                 manageSpecimen.updateSpecimenContainmentStatus(sID, s["statusID"])
-
 
 
 def saveData():
@@ -158,65 +174,11 @@ def saveData():
         json.dump(data, output, indent=4)
 
 
-'''''''''''''''''''''''''''PRINT TABLES'''''''''''''''''''''''''''
-
-
-def printTables():
-    con = sqlite3.connect(DB_PATH)
-    cur = con.cursor()
-    print('Department Table')
-    for row in cur.execute('SELECT * FROM Department;'):
-        print(row)
-    print('\n')
-
-    print('Designation Table')
-    for row in cur.execute('SELECT * FROM Designation;'):
-        print(row)
-    print('\n')
-
-    print('EmployeeDesignation Table')
-    for row in cur.execute('SELECT * FROM EmployeeDesignation;'):
-        print(row)
-    print('\n')
-
-    print('Employee Table')
-    for row in cur.execute('SELECT * FROM Employee;'):
-        print(row)
-    print('\n')
-
-    print('EmployeeMedical Table')
-    for row in cur.execute('SELECT * FROM EmployeeMedical;'):
-        print(row)
-    print('\n')
-
-    print('Credentials Table')
-    for row in cur.execute('SELECT * FROM Credentials;'):
-        print(row)
-    print('\n')
-
-    print('Origin Table')
-    for row in cur.execute('SELECT * FROM Origin;'):
-        row = list(row)
-        print(row)
-    print('\n')
-
-    print('Mission Table')
-    for row in cur.execute('SELECT * FROM Mission;'):
-        row = list(row)
-        print(row)
-    print('\n')
-
-    print('Specimen Table')
-    for row in cur.execute('SELECT * FROM Specimen;'):
-        row = list(row)
-        print(row)
-    print('\n')
-
-    print('SpecimenMedical Table')
-    for row in cur.execute('SELECT * FROM SpecimenMedical;'):
-        row = list(row)
-        print(row)
-    print('\n')
-
-    con.close()
-    print('Database connection closed.')
+'''''''''''''''''''''''''''RUN FUNCTIONS'''''''''''''''''''''''''''
+designationData()
+clearanceData()
+containmentStatus()
+departmentData()
+EmployeeData()
+originMissionSpecimen()
+saveData()
