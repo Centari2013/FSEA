@@ -76,6 +76,35 @@ def departmentData():
 
 
 def EmployeeData():
+    for e in data["commander"]:
+        department = None
+        for dep in data["department"]:
+            if dep["name"] == e["dep"]:
+                department = dep
+
+
+        depID = department["depID"]
+        if depID is not None:
+            e['dep'] = depID
+        else:
+            raise ValueError("Department cannot be none!")
+
+        e["sex"] = e["sex"].strip()[0].lower()
+
+        if e["notes"] is not None and e["notes"].lower() == "none":
+            e["notes"] = None
+
+        if e["summary"].lower() == "none":
+            e["summary"] = None
+
+        for d in department["designations"]:
+
+            if e["designation"] == d[0]:
+                e["designation"] = d[2]
+
+    c = data.pop("commander")
+    print(c)
+    data["employee"] = data["employee"] + c
     for e in data["employee"]:
         for d in data["department"]:
             if d["name"] == e["dep"]:
@@ -119,59 +148,13 @@ def EmployeeData():
     data["employee"] = data["employee"] + depHeads
 
 
-special_agents = [e for e in data["employee"] if ((e["firstName"] != 'Prisca') and (e["designation"] == 75))]
-project_managers = [e for e in data["employee"] if e["designation"] == 2]
-researchers = [e["empID"] for e in data["employee"] if e["designation"] == 79]
 
-
-def getAgents(missionStartDate):
-    formt = '%Y-%m-%d'
-    agents = [a["empID"] for a in special_agents if (datetime.strptime(a["startDate"], formt) <=
-              datetime.strptime(missionStartDate, formt))]
-    return random.choices(agents, k=random.randint(2, 3))
-
-
-def originMissionSpecimen():
-    for o in data["origin"]:
-        oID = manageOrigin.add(o["name"], o["discoveryDate"], o["description"])
-        o["originID"] = oID
-        for m in o["missions"]:
-            agents = getAgents(m["startDate"])
-            print('Agents: ', agents)
-            commander = agents[0]
-            supervisor = random.choice(project_managers)["empID"]
-            mID = manageMission.add(m["name"], m["description"], m["startDate"], m["endDate"],
-                                    commander, supervisor, oID)
-
-            print('mid: ', mID)
-            print(m)
-            manageDepartment.addMission(o["depID"], mID)
-
-            m["missionID"] = mID
-
-            m["agents"] = agents
-
-            for a in agents:
-                manageMission.addEmployeeToMission(a, mID)
-
-            for s in m["specimens"]:
-                sID = manageSpecimen.add(s["name"], s["acquisitionDate"], oID, mID, s["threatLevel"], s["notes"],
-                                         s["description"])
-                s["specimenID"] = sID
-                sm = s["medical"]
-
-                spec_researcher = random.choices(researchers, k=random.randint(1, 3))
-                s["researchers"] = spec_researcher
-                for r in spec_researcher:
-                    manageResearcherSpecimen.add(r, sID)
-
-                manageSpecimen.updateSpecimenMedical(sID, sm["bloodtype"], sm["sex"], sm["kilograms"], sm["notes"])
-                manageSpecimen.updateSpecimenContainmentStatus(sID, s["statusID"])
 
 
 def saveData():
     with open("complete_db.json", "w") as output:
         json.dump(data, output, indent=4)
+
 
 
 '''''''''''''''''''''''''''RUN FUNCTIONS'''''''''''''''''''''''''''
@@ -180,5 +163,5 @@ clearanceData()
 containmentStatus()
 departmentData()
 EmployeeData()
-originMissionSpecimen()
+
 saveData()
