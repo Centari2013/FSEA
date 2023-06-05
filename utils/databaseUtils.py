@@ -54,7 +54,7 @@ class DatabaseManager(ABC):
         finally:
             if con is not None:
                 con.close()
-        return False
+        return False, None
 
     @staticmethod
     def _execute_with_return(query, params=None):
@@ -90,7 +90,7 @@ class DatabaseManager(ABC):
             cur.execute("PRAGMA foreign_keys = ON;")
             cur.execute(query, (rowid,))
             result = cur.fetchone()
-            return result if result else None
+            return result[0] if result else None
         except Exception as e:
             print(e)
             traceback.print_exc()
@@ -198,7 +198,7 @@ class manageDepartment(DatabaseManager):
     @staticmethod
     def add(name, supervisorID=None, desc=None):
         success, rowid = DatabaseManager._execute('INSERT INTO Department(depName) VALUES(?);', (name,))
-        return DatabaseManager._get_id_from_row(rowid, 'Department', ) if success else None
+        return DatabaseManager._get_id_from_row(rowid, 'Department', 'depID') if success else None
 
     @staticmethod
     def update(depID, name=None, supervisorID=None, desc=None):
@@ -346,7 +346,7 @@ class manageEmployee(DatabaseManager):
                                                     (clearanceID,))
 
 
-    #todo: add employeemission
+
 
 class manageEmployeeDesignation(DatabaseManager):
     @staticmethod
@@ -434,7 +434,11 @@ class manageMission(DatabaseManager):
         if not success:
             return success
 
-        success = manageMission.update(ID, name, startDate, endDate, commanderID, supervisorID, originID)
+        success = manageMission.update(ID, startDate=startDate,
+                                       endDate=endDate,
+                                       commanderID=commanderID,
+                                       supervisorID=supervisorID,
+                                       originID=originID)
 
         return ID if success else None
 
@@ -446,7 +450,7 @@ class manageMission(DatabaseManager):
     @staticmethod
     def update(missionID, name=None, desc=None, startDate=None, endDate=None, commanderID=None,
                supervisorID=None, originID=None):
-        args = [[name, 'name'], [desc, 'description'], [startDate, 'startDate'], [originID, 'originID']
+        args = [[name, 'name'], [desc, 'description'], [startDate, 'startDate'], [originID, 'originID'],
                 [endDate, 'endDate'], [commanderID, 'commanderID'], [supervisorID, 'supervisorID']]
 
         success = True
@@ -468,6 +472,29 @@ class manageMission(DatabaseManager):
     @staticmethod
     def get(missionID):
         return DatabaseManager._execute_with_return('SELECT * FROM Mission WHERE missionID = ?', (missionID,))
+
+    @staticmethod
+    def getMissionByEmpID(empID):
+        return DatabaseManager._execute_with_return('SELECT * FROM Mission WHERE missionID ='
+                                                    '(SELECT missionID FROM EmployeeMission WHERE empID = ?)', (empID,))
+
+    @staticmethod
+    def getEmployeeByMission(missionID):
+        return DatabaseManager._execute_with_return('SELECT * FROM Employee WHERE empID ='
+                                                    '(SELECT empID FROM EmployeeMission WHERE missionID = ?)', (missionID,))
+
+    @staticmethod
+    def addEmployeeToMission(empID, missionID):
+        success, rowid = DatabaseManager._execute('INSERT INTO EmployeeMission(empID, missionID)'
+                                                  'VALUES (?,?)', (empID, missionID))
+        return success
+
+    @staticmethod
+    def deleteEmployeeFromMission(empID, missionID):
+        success, rowid = DatabaseManager._execute(
+            'DELETE FROM EmployeeMission WHERE empID = ? AND missionID = ?'.format,
+            (empID, missionID))
+        return success
 
 
 class manageSpecimen(DatabaseManager):
@@ -493,7 +520,7 @@ class manageSpecimen(DatabaseManager):
 
     @staticmethod
     def _check_specimen_exists(specimenID):
-        result = DatabaseManager._execute('SELECT specimenID FROM Specimen WHERE specimenID = ?', (specimenID,))
+        result = DatabaseManager._execute_with_return('SELECT specimenID FROM Specimen WHERE specimenID = ?', (specimenID,))
         return result is not None
 
     @staticmethod

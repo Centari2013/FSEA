@@ -17,24 +17,24 @@ def authenticate(user, pwd):
         con = sqlite3.connect(DB_PATH)
 
         cur = con.cursor()
-        cur.execute('SELECT password FROM Credentials WHERE username = ? ;', [user])
+        cur.execute('SELECT password, loginAttempts FROM Credentials WHERE username = ? ;', [user])
 
-        # get tuple containing singular password
-        p = cur.fetchone()
-        if p is not None:
-            # convert tuple to list and extract string by indexing
-            p = list(p)[0]
+        # get tuple containing password and login attempts
+        result = cur.fetchone()
+        if result is not None:
+            p = result[0]  # password
+            loginAttempts = result[1]  # login attempts
 
             if pwd == p:  # user authenticated
                 return_val = True
             else:  # password does not match user
-
-                # todo: IMPLEMENT USER LOCKOUT ONCE PWD ATTEMPTS == 3
-
-                cur.execute('''UPDATE Credentials
-                                SET loginAttempts = loginAttempts + 1
-                                WHERE username = ?''', [user])
-                return_val = False
+                if loginAttempts == 3:
+                    return_val = "Too many login attempts. Your account is locked."
+                else:
+                    cur.execute('''UPDATE Credentials
+                                    SET loginAttempts = loginAttempts + 1
+                                    WHERE username = ?''', (user,))
+                    return_val = False
         else:  # user does not exist
             return_val = False
     except Exception as e:
@@ -45,6 +45,7 @@ def authenticate(user, pwd):
             con.close()
 
         return return_val
+
 
 
 def generateEID():

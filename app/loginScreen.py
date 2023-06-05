@@ -3,23 +3,10 @@ from PyQt6.QtGui import QPixmap, QIcon
 from PyQt6.QtWidgets import QMainWindow, QLineEdit, QLabel, QPushButton, QGridLayout, QVBoxLayout, QWidget
 from app.colorPresets import colors
 from utils.filePaths import icons
-from utils.authUtils import authenticate as auth
+from utils.authUtils import authenticate
 
 
-def authentication(username, password):
-    try:
-        if auth(username, password):
-            print("AUTHENTICATION SUCCESSFUL")
-            return True
-        else:
-            print("AUTHENTICATION UNSUCCESSFUL")
-            return False
-
-    except:
-        return False
-
-
-class authenticate(QMainWindow):
+class authWindow(QMainWindow):
     def __init__(self, unlock_this, *args):
         super().__init__()
         self.setFixedSize(QSize(300, 375))
@@ -59,13 +46,22 @@ class authenticate(QMainWindow):
         self.errorMsg.setStyleSheet("color: %s;" % colors["ERROR_MSG"])
         self.errorMsg.hide()
 
+        self.lockoutMsg = QLabel("Account locked. Please contact IT.")
+        self.lockoutMsg.setStyleSheet("color: %s;" % colors["ERROR_MSG"])
+        self.lockoutMsg.hide()
+
         def auth(user, pswd):
-            good = authentication(user, pswd)
-            if not good:
-                self.errorMsg.show()
-            else:
+            val = authWindow(user, pswd)
+            if val == True:
                 self.close()
                 unlock_this(*args)
+
+            elif val == False:
+                self.lockoutMsg.hide()
+                self.errorMsg.show()
+            else:
+                self.errorMsg.hide()
+                self.lockoutMsg.show()
 
         # make text entry for username and password / add functionality
         self.username = login_text_entry()
@@ -135,6 +131,7 @@ class authenticate(QMainWindow):
         self.form_container.addSpacing(2)
         self.form_container.addWidget(self.password)
         self.form_container.addSpacing(2)
+        self.form_container.addWidget(self.lockoutMsg, alignment=Qt.AlignmentFlag.AlignCenter)
         self.form_container.addWidget(self.errorMsg, alignment=Qt.AlignmentFlag.AlignCenter)
         self.form_container.addWidget(self.submit_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
