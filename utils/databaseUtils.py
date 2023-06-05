@@ -43,8 +43,6 @@ class DatabaseManager(ABC):
             cur = con.cursor()
             cur.execute("PRAGMA foreign_keys = ON;")
             if params:
-                print('Query: ', query)
-                print('Params: ', params)
                 cur.execute(query, params)
             else:
                 cur.execute(query)
@@ -52,6 +50,8 @@ class DatabaseManager(ABC):
             return True, cur.lastrowid
         except Exception as e:
             print(e)
+            print(query)
+            print(params)
             traceback.print_exc()
         finally:
             if con is not None:

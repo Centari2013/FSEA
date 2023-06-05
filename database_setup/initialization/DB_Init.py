@@ -76,65 +76,17 @@ def departmentData():
 
 
 def EmployeeData():
-    for e in data["commander"]:
-        department = None
-        for dep in data["department"]:
-            if dep["name"] == e["dep"]:
-                department = dep
 
-
-        depID = department["depID"]
-        if depID is not None:
-            e['dep'] = depID
-        else:
-            raise ValueError("Department cannot be none!")
-
-        e["sex"] = e["sex"].strip()[0].lower()
-
-        if e["notes"] is not None and e["notes"].lower() == "none":
-            e["notes"] = None
-
-        if e["summary"].lower() == "none":
-            e["summary"] = None
-
-        for d in department["designations"]:
-
-            if e["designation"] == d[0]:
-                e["designation"] = d[2]
-
-    c = data.pop("commander")
-    print(c)
-    data["employee"] = data["employee"] + c
     for e in data["employee"]:
-        for d in data["department"]:
-            if d["name"] == e["dep"]:
-                e["dep"] = d["depID"]
-
-                for des in d["designations"]:
-                    if des[1] == e["designation"]:
-                        e["designation"] = des[2]
-
         fn = e["firstName"]
         ln = e["lastName"]
         start = e["startDate"]
         summ = e["summary"]
-        birth = e["dob"]
-        bt = e["bloodtype"]
-        sex = e["sex"]
-        kg = e["weight"]
-        height = e["height"]
-        notes = e["notes"]
         e["empID"] = ID = manageEmployee.add(fn, ln, e["dep"], start,
                                              summ)
         manageEmployeeDesignation.add(ID, e["designation"])
         manageEmployee.updateEmployeeMedical(ID, e["dob"], e["bloodtype"], e["sex"], e["weight"], e["height"],
                                              e["notes"])
-        e["medical"] = {"dob": birth,
-                        "bloodtype": bt,
-                        "sex": sex,
-                        "weight": kg,
-                        "height": height,
-                        "notes": notes}
 
         if "endDate" in e:
             manageEmployee.update(ID, endDate=e["endDate"])
@@ -148,7 +100,47 @@ def EmployeeData():
     data["employee"] = data["employee"] + depHeads
 
 
+def originMissionSpecimen():
+    special_agents = [e for e in data["employee"] if ((e["firstName"] != 'Prisca') and (e["designation"] == 75))]
+    project_managers = [e for e in data["employee"] if e["designation"] == 2]
+    researchers = [e["empID"] for e in data["employee"] if e["designation"] == 79]
 
+    def getAgents(missionStartDate):
+        formt = '%Y-%m-%d'
+        ag = [age["empID"] for age in special_agents if
+                  (datetime.strptime(age["startDate"], formt) <= datetime.strptime(missionStartDate, formt))]
+        return list(set(random.choices(ag, k=random.randint(2, 6))))
+
+    for o in data["origin"]:
+        oID = manageOrigin.add(o["name"], o["discoveryDate"], o["description"])
+        o["originID"] = oID
+        for m in o["missions"]:
+            agents = getAgents(m["startDate"])
+            commander = agents[0]
+            supervisor = random.choice(project_managers)["empID"]
+            mID = manageMission.add(m["name"], m["description"], m["startDate"], m["endDate"],
+                                    commander, supervisor, oID)
+
+            manageDepartment.addMission(o["depID"], mID)
+
+            m["missionID"] = mID
+            m["agents"] = agents
+            for a in agents:
+                manageMission.addEmployeeToMission(a, mID)
+
+            for s in m["specimens"]:
+                sID = manageSpecimen.add(s["name"], s["acquisitionDate"], oID, mID, s["threatLevel"], s["notes"],
+                                         s["description"])
+                s["specimenID"] = sID
+                sm = s["medical"]
+                print('S: ', sID)
+                spec_researcher = list(set(random.choices(researchers, k=random.randint(1, 3))))
+                s["researchers"] = spec_researcher
+                for r in spec_researcher:
+                    manageResearcherSpecimen.add(r, sID)
+
+                manageSpecimen.updateSpecimenMedical(sID, sm["bloodtype"], sm["sex"], sm["kilograms"], sm["notes"])
+                manageSpecimen.updateSpecimenContainmentStatus(sID, s["statusID"])
 
 
 def saveData():
@@ -163,5 +155,5 @@ clearanceData()
 containmentStatus()
 departmentData()
 EmployeeData()
-
+originMissionSpecimen()
 saveData()

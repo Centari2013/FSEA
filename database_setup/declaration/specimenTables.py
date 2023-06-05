@@ -32,8 +32,8 @@ def dropSpecimenTable(cur):
 def createSpecimenMedicalTable(cur):
     cur.execute('''CREATE TABLE SpecimenMedical(
                     specimenID  TEXT NOT NULL,
-                    bloodtype   TEXT CHECK(bloodtype IN {}) DEFAULT NULL,
-                    sex         TEXT CHECK(sex IN {}) DEFAULT NULL,
+                    bloodtype   TEXT DEFAULT NULL,
+                    sex         TEXT DEFAULT NULL,
                     kilograms   REAL DEFAULT NULL,
                     notes       TEXT DEFAULT NULL,
                     PRIMARY KEY (specimenID),
@@ -103,7 +103,7 @@ def createSpecimenTriggers(cur):
                         UPDATE Specimen_fts
                         SET specimenID = new.specimenID,
                             name = new.name,
-                            origin = new.originID,
+                            originID = new.originID,
                             missionID = new.missionID,
                             threatLevel = new.threatLevel,
                             acquisitionDate = new.acquisitionDate,
