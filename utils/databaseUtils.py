@@ -72,7 +72,12 @@ class DatabaseManager(ABC):
                 cur.execute(query)
             con.commit()
             result = cur.fetchall()
-            return result if result else None
+
+            if len(result) == 1:
+                return result[0]  # Return the dictionary directly
+            elif len(result) > 1:
+                return result  # Return the list of dictionaries
+
         except Exception as e:
             print(e)
             traceback.print_exc()

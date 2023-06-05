@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox,
 from app.baseWindows import windowWithToolbar
 from app.colorPresets import colors
 from app.infoWindow import employeeInfo
-from utils.searchEngine import search
+from utils.searchEngine import searchEngine
 from utils.dbVariables import (employeeType, specimenType, originType,
                                missionType, departmentType)
 
@@ -192,6 +192,8 @@ class PanelButton(QPushButton):
 class database_options(windowWithToolbar):
     def __init__(self):
         super(database_options, self).__init__(None)
+
+        self.sEngine = searchEngine()
 
         self.sidePanelFrame = QtWidgets.QFrame(self.centralWidget)
         self.sidePanelVLayout = QtWidgets.QVBoxLayout(self.sidePanelFrame)
@@ -422,7 +424,6 @@ class database_options(windowWithToolbar):
     def updateResults(self):
         def showNoResults():
             self.clearSearchResults()
-            self.savedResults.clear()
             noResults = {'id': '',
                          'lastName': 'No Results',
                          'firstName': None,
@@ -493,7 +494,7 @@ class database_options(windowWithToolbar):
         # text punctuation removed  here to avoid blank query (and any subsequent error resulting from it)
         query = str(self.searchBar.text())
         self.clearSearchResults()
-        results = search(query)
+        results = self.sEngine.search(query)
         self.savedResults = results
         self.updateResults()
 

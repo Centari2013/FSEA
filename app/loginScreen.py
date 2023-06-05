@@ -46,12 +46,13 @@ class authWindow(QMainWindow):
         self.errorMsg.setStyleSheet("color: %s;" % colors["ERROR_MSG"])
         self.errorMsg.hide()
 
-        self.lockoutMsg = QLabel("Account locked. Please contact IT.")
+        self.lockoutMsg = QLabel("Account locked.")
         self.lockoutMsg.setStyleSheet("color: %s;" % colors["ERROR_MSG"])
         self.lockoutMsg.hide()
 
         def auth(user, pswd):
-            val = authWindow(user, pswd)
+            val = authenticate(user, pswd)
+
             if val == True:
                 self.close()
                 unlock_this(*args)

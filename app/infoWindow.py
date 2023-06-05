@@ -16,6 +16,9 @@ class employeeInfo(windowWithToolbar):
         self.ID = ID
 
         self._medicalData = manageEmployee.getMedical(ID)
+        dID = manageEmployeeDesignation.get(self.ID)['designationID']
+        self._designationData = manageDesignation.get(dID)
+
         self.initEmployeeData()
         self.initFooter()
 
@@ -25,7 +28,11 @@ class employeeInfo(windowWithToolbar):
         frame = QFrame()
         nameLabel = QLabel(f"{empData['firstName']} {empData['lastName']}")
         idLabel = QLabel(f"Employee ID: {self.ID}")
-        designationLabel = QLabel(f"Designation: {empData['designation']}")
+
+
+
+
+        designationLabel = QLabel(f"Designation: {self._designationData['name']}")
         startDateLabel = QLabel(f"Start Date: {empData['startDate']}")
         endDateLabel = QLabel(f"End Date: {empData['endDate']}")
         summaryLabel = QLabel("Summary:")

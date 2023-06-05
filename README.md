@@ -21,6 +21,9 @@ The left-hand buttons filter search results.
 
 ### Primary TODO
 - [ ] **code cleanup**
+- [ ] **GUI for entity pages**
+- [ ] implement employee access levels
+- [ ] Export Page to PDF
 - [x] implement basic GUI for search result info page
 - [x] implement simple search filters
 - [x] implement full database search engine

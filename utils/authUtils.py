@@ -1,41 +1,41 @@
-import sqlite3
-from random import randint
 import secrets
+import sqlite3
 import string
+from random import randint
 from utils.filePaths import DB_PATH
 from utils.encryption import encrypt
 
 
 def authenticate(user, pwd):
     return_val = None
-    # encrypt username and password for comparison to encrypted database
     user = encrypt(user)
     pwd = encrypt(pwd)
     con = None
     try:
-        # connect to database
         con = sqlite3.connect(DB_PATH)
-
         cur = con.cursor()
         cur.execute('SELECT password, loginAttempts FROM Credentials WHERE username = ? ;', [user])
-
-        # get tuple containing password and login attempts
         result = cur.fetchone()
         if result is not None:
-            p = result[0]  # password
-            loginAttempts = result[1]  # login attempts
-
-            if pwd == p:  # user authenticated
+            p = result[0]
+            loginAttempts = result[1]
+            if (pwd == p) and loginAttempts < 3:
+                if loginAttempts != 0:
+                    cur.execute('''UPDATE Credentials
+                                    SET loginAttempts = 0
+                                    WHERE username = ?''', (user,))
+                    con.commit()
                 return_val = True
-            else:  # password does not match user
+            else:
                 if loginAttempts == 3:
                     return_val = "Too many login attempts. Your account is locked."
                 else:
                     cur.execute('''UPDATE Credentials
                                     SET loginAttempts = loginAttempts + 1
                                     WHERE username = ?''', (user,))
+                    con.commit()
                     return_val = False
-        else:  # user does not exist
+        else:
             return_val = False
     except Exception as e:
         print(e)
@@ -43,38 +43,26 @@ def authenticate(user, pwd):
     finally:
         if con is not None:
             con.close()
-
         return return_val
 
 
-
 def generateEID():
-    uid = randint(0, 9999999)
-    uid = str(uid)
-
-    uid = uid.zfill(7)
+    uid = str(randint(0, 9999999)).zfill(7)
     return 'E' + uid
 
-def generateSID():
-    oid = randint(0, 9999999)
-    oid = str(oid)
 
-    oid = oid.zfill(7)
+def generateSID():
+    oid = str(randint(0, 9999999)).zfill(7)
     return 'S' + oid
 
-def generateOID():
-    oid = randint(0, 9999999)
-    oid = str(oid)
 
-    oid = oid.zfill(7)
+def generateOID():
+    oid = str(randint(0, 9999999)).zfill(7)
     return 'O' + oid
 
 
 def generateMID():
-    mid = randint(0, 9999999)
-    mid = str(mid)
-
-    mid = mid.zfill(7)
+    mid = str(randint(0, 9999999)).zfill(7)
     return 'M' + mid
 
 
@@ -82,20 +70,16 @@ def generateUsername(firstName, lastName, dep):
     def firstNLetters(s, n):
         new_s = ""
         if len(s) >= n:
-            for i in range(0, n):
-                new_s = new_s + s[i]
+            new_s = s[:n]
         else:
-            for i in range(0, len(s)):
-                new_s = new_s + s[i]
-
+            new_s = s
         return new_s
 
     username = (firstName[0] + firstNLetters(lastName, 8)).lower() + '_' + str(dep)
-
     return encrypt(username)
 
 
-def generatePWD():  # generate random temp password for new users
+def generatePWD():
     alphabet = string.ascii_letters + string.digits
     password = ''.join(secrets.choice(alphabet) for _ in range(8))
     password = password + '-'
