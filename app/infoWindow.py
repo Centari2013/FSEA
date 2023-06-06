@@ -1,25 +1,19 @@
 import sys
-
-from PyQt6 import QtWidgets, QtCore
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPalette
-from PyQt6.QtWidgets import QApplication, QGridLayout, QScrollArea, QWidget
-from PyQt6.QtWidgets import QLabel, QVBoxLayout, QFrame, QSpacerItem, QSizePolicy, QPlainTextEdit
-
+from PyQt6.QtWidgets import QApplication, QVBoxLayout, QScrollArea, QWidget, QLabel, QFrame, QSpacerItem
 from app.baseWindows import windowWithToolbar
-from app.customQWidgets import CollapsibleSection, ElidedLabel, IdLabel
+from app.customQWidgets import CollapsibleSection
 from utils.databaseUtils import *
-from utils.dbVariables import employeeType
-
-
-
+from app.stylePresets import stylesheets
 
 
 class infoWindowBase(windowWithToolbar):
     def __init__(self, ID, parent=None):
         super().__init__(parent)
         self.scrollArea = QScrollArea()
-        self.scrollArea.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        bar = self.scrollArea.verticalScrollBar()
+        bar.setStyleSheet(stylesheets["SCROLL_BAR"])
+        self.scrollArea.setFrameShape(QFrame.Shape.NoFrame)
         self.scrollArea.setWidgetResizable(True)
 
         self.layout = QVBoxLayout()
@@ -29,14 +23,20 @@ class infoWindowBase(windowWithToolbar):
         self.scrollWidget.setLayout(self.layout)
         self.scrollArea.setWidget(self.scrollWidget)
 
-        self.exitButton.disconnect()  # removes any exit functions linked to button, so it doesn't close the entire program
-        self.exitButton.clicked.connect(self.close) # connects the widget's close function to the exit button instead
+        self.exitButton.disconnect()
+        self.exitButton.clicked.connect(self.close)
         self.ID = ID
 
         qargs = [QLabel("hi!") for _ in range(10)]
         self.collapsibleSection = CollapsibleSection('Collapsible', *qargs, parent=self)
 
-        self.primaryGridLayout.addWidget(self.scrollArea, 1, 0)
+        comfyLayout = QVBoxLayout()
+        comfyLayout.setContentsMargins(0, 10, 0, 10)
+        comfyLayout.addWidget(self.scrollArea)
+        comfyFrame = QFrame()
+        comfyFrame.setLayout(comfyLayout)
+
+        self.primaryGridLayout.addWidget(comfyFrame, 1, 0)
         self.initFooter()
 
 
@@ -56,7 +56,6 @@ class employeeInfo(infoWindowBase):
         frame = QFrame()
         nameLabel = QLabel(f"{empData['firstName']} {empData['lastName']}")
         idLabel = QLabel(f"Employee ID: {self.ID}")
-
         designationLabel = QLabel(f"Designation: {self._designationData['name']}")
         startDateLabel = QLabel(f"Start Date: {empData['startDate']}")
         endDateLabel = QLabel(f"End Date: {empData['endDate']}")
@@ -70,11 +69,6 @@ class employeeInfo(infoWindowBase):
 
         self.layout.addSpacerItem(QSpacerItem(1, 20))
         self.layout.addWidget(self.collapsibleSection)
-
-        frame.setLayout(self.layout)
-        self.primaryGridLayout.addWidget(frame, 1, 0)
-
-        # TODO: implement a collapsible section for medical information
 
 
 app = QApplication(sys.argv)

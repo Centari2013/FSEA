@@ -3,7 +3,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox, QLineEdit, QSpacerItem, QSizePolicy
 
 from app.baseWindows import windowWithToolbar
-from app.colorPresets import colors
+from app.stylePresets import colors, stylesheets
 from app.customQWidgets import PanelButton, ElidedLabel, IdLabel
 from app.infoWindow import employeeInfo
 from utils.searchEngine import searchEngine
@@ -146,6 +146,8 @@ class database_options(windowWithToolbar):
 
     def _initSearchResultsArea(self):
         self.scrollArea.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        bar = self.scrollArea.verticalScrollBar()
+        bar.setStyleSheet(stylesheets["SCROLL_BAR"])
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")

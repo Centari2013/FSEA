@@ -1,7 +1,8 @@
 from PyQt6 import QtGui, QtWidgets, QtCore
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy
-from app.colorPresets import colors
+from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy, QScrollBar, \
+    QScrollArea
+from app.stylePresets import colors
 
 
 
@@ -145,7 +146,7 @@ class CollapsibleSection(QFrame):
         layout = QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
-        self.setStyleSheet("background-color: blue}")
+
         self.arrowButton.setCheckable(True)
         self.arrowButton.setFlat(True)
         self.arrowButton.setStyleSheet("""
@@ -179,14 +180,14 @@ class CollapsibleSection(QFrame):
         self.contentFrame.setLayout(contentFrameLayout)
 
         for w in content:
-            w.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+            w.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
             contentFrameLayout.addWidget(w)
 
 
         layout.addWidget(self.titleFrame)
         layout.addWidget(self.contentFrame)
 
-        self.contentFrame.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        #self.contentFrame.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.setLayout(layout)
 
@@ -200,3 +201,8 @@ class CollapsibleSection(QFrame):
             arrow = "▼"
             self.contentFrame.show()
         self.arrowButton.setText(arrow)
+
+
+
+
+
