@@ -1,6 +1,6 @@
 from PyQt6 import QtGui, QtWidgets, QtCore
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QLabel, QGridLayout, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy
+from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy
 from app.colorPresets import colors
 
 
@@ -145,7 +145,7 @@ class CollapsibleSection(QFrame):
         layout = QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
-
+        self.setStyleSheet("background-color: blue}")
         self.arrowButton.setCheckable(True)
         self.arrowButton.setFlat(True)
         self.arrowButton.setStyleSheet("""
