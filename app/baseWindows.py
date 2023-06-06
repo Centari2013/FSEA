@@ -11,13 +11,12 @@ from utils.filePaths import icons
 class windowWithToolbar(QMainWindow):
     def __init__(self, parent):
         super().__init__(parent)
-        self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
-        self.setWindowModality(Qt.WindowModality.NonModal)
-        self.prevPos = None
+        self.setWindowFlag(Qt.WindowType.FramelessWindowHint) # allows for custom title bar
+        self.setWindowModality(Qt.WindowModality.NonModal) # window does not take priority above all else
+        self.prevPos = None # used to define draggable window behavior
 
-        self.setMinimumSize(QtCore.QSize(550, 400))
+        self.setMinimumSize(QtCore.QSize(550, 430))
         self.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.setAutoFillBackground(False)
 
         self.centralWidget = QtWidgets.QWidget(self)
         self.centralWidget.setEnabled(True)
@@ -80,7 +79,7 @@ class windowWithToolbar(QMainWindow):
         self.title.setObjectName("title")
         self.titlebarLayout.addWidget(self.title)
 
-        # separates buttons from QLabel
+        # separates buttons from title QLabel
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding,
                                            QtWidgets.QSizePolicy.Policy.Minimum)
         self.titlebarLayout.addItem(spacerItem)
@@ -91,7 +90,13 @@ class windowWithToolbar(QMainWindow):
 
         self.primaryGridLayout.addWidget(self.titlebarFrame, 0, 0, 1, 2)
 
-    def initFooter(self, *widgetList):
+    def initFooter(self, *widgetList: QWidget):
+        """
+        Must be called to make window resizable.
+
+        *widgetList: list of QWidgets to add to footer
+        returns None
+        """
         self.footerFrame.setMaximumSize(QtCore.QSize(16777215, 30))
         self.footerFrame.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.footerFrame.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
@@ -100,22 +105,33 @@ class windowWithToolbar(QMainWindow):
         self.footerLayout.setContentsMargins(0, 0, 0, 0)
         self.footerLayout.setObjectName("footerLayout")
 
+        # automatically insert widgets into separate columns
         col = 0
         for w in widgetList:
             self.footerLayout.addWidget(w, 0, col, Qt.AlignmentFlag.AlignCenter)
             col += 1
 
+        # make window resizable by inserting QSizeGrip to bottom right
         self.footerLayout.addWidget(QSizeGrip(self), 0, col, Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignRight)
 
         self.primaryGridLayout.addWidget(self.footerFrame, 3, 1)
 
     def _minOrMax(self):
+        """
+        defines restore and minimize button functionality
+        :return: None
+        """
         if self.isMaximized():
             self.showNormal()
         else:
             self.showMaximized()
 
-    def _toolbarClick(self, event):
+    def _toolbarClick(self, event: QWidget.mousePressEvent):
+        """"
+        sets self.pos to coordinates of click event
+        """
+
+        # ignore buttons when moving toolbar
         if self.exitButton.underMouse():
             pass
         elif self.minimizeButton.underMouse():
@@ -123,10 +139,23 @@ class windowWithToolbar(QMainWindow):
         elif self.restoreButton.underMouse():
             pass
         else:
+            # set prevPos to where the click occurred
             self.prevPos = event.globalPosition().toPoint()
 
-    def _toolbarMove(self, event):
+    def _toolbarMove(self, event: QWidget.mouseMoveEvent):
+        """
+    Move the toolbar based on the mouse movement.
 
+    Parameters:
+    - event (QMouseEvent): The mouse move event that triggered the toolbar movement.
+
+    Description:
+    - This method is called when the toolbar is being dragged by the user.
+    - It calculates the movement delta based on the difference between the current mouse position and the previous position.
+    - If the mouse is not over any of the toolbar buttons (exitButton, minimizeButton, restoreButton), the toolbar is moved accordingly.
+    - If the window is maximized, it restores the window to its normal size and moves it by a fraction of its width and height to give a smooth movement effect.
+    - Finally, it updates the previous position with the current mouse position for the next movement calculation.
+    """
         # ignore buttons when moving toolbar
         if self.exitButton.underMouse():
             pass

@@ -4,189 +4,11 @@ from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox,
 
 from app.baseWindows import windowWithToolbar
 from app.colorPresets import colors
-from app.infoWindow import employeeInfo
+from app.customQWidgets import SearchResult, PanelButton
 from utils.searchEngine import searchEngine
 from utils.dbVariables import (employeeType, specimenType, originType,
                                missionType, departmentType)
 
-
-class ElidedLabel(QLabel):
-    """
-            A label class inherited from QLabel that allows for long text to appear elided
-            and when the label is expanded, more elided text is shown.
-
-            Added Attributes:
-                n/a
-
-            Added Methods:
-                n/a
-    """
-
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.setStyleSheet('border: 0px; padding: 0px;')
-
-    def paintEvent(self, event):
-        painter = QtGui.QPainter(self)
-        metrics = QtGui.QFontMetrics(self.font())
-        elided = metrics.elidedText(self.text(), Qt.TextElideMode.ElideRight, self.width())
-        painter.drawText(self.rect(), self.alignment(), elided)
-
-
-class IdLabel(QLabel):
-    """
-            A label class inherited from QLabel that emulates a hyperlink when hovered over.
-
-            Added Attributes:
-                function (function): The function to be run after clicking the label.
-                args (tuple): The arguments to pass to function
-
-            Added Methods:
-                n/a
-    """
-
-    def __init__(self, parent, func, args: tuple = None):
-        super().__init__(parent)
-        self.setStyleSheet('border: 0px; padding: 0px;')
-        self.function = func
-        self.args = args
-
-    def mouseReleaseEvent(self, event):
-        if self.rect().contains(event.pos()):
-            if self.args is not None:
-                self.function(*self.args)
-            else:
-                self.function()
-        else:
-            pass
-
-    def enterEvent(self, event):
-        palette = self.palette()
-        palette.setColor(self.backgroundRole(), QtGui.QColor('blue'))
-        palette.setColor(self.foregroundRole(), QtGui.QColor('blue'))
-        self.setPalette(palette)
-
-        f = QtGui.QFont()
-        f.setUnderline(True)
-        self.setFont(f)
-
-    def leaveEvent(self, event):
-        palette = self.palette()
-        palette.setColor(self.backgroundRole(), QtGui.QColor('black'))
-        palette.setColor(self.foregroundRole(), QtGui.QColor('black'))
-        self.setPalette(palette)
-
-        f = QtGui.QFont()
-        f.setUnderline(False)
-        self.setFont(f)
-
-
-class SearchResult(QFrame):
-    """
-            A frame inherited from QFrame that is used to populate
-            search results
-
-            Added Attributes:
-                idLabel (IdLabel): The clickable QLabel
-                id (str): The ID you want to show in the idLabel.
-
-            Added Methods:
-                openInfoWindow(): opens window with more info on the search results
-
-            *Note: If firstName is None, then only the lastName will show on the frame.
-    """
-
-    def __init__(self, parent=None, ID: str = None, resultType=None, lastName=None, firstName=None, description=None):
-        super(SearchResult, self).__init__(parent=None)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
-        self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QtCore.QSize(0, 90))
-        self.setMaximumSize(QtCore.QSize(16777215, 100))
-        self.setAutoFillBackground(False)
-        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-        self.setObjectName("search_label")
-        self.setStyleSheet("border: 1px solid gray; padding: 6;")
-
-        self._gridLayout = QGridLayout(parent)
-
-        self.id = ID
-        self._lastName = lastName
-        self._firstName = firstName
-        self._description = description
-        self._type = resultType
-
-        # allows for entities with only one name to use this class
-        if firstName is not None:
-            nameLabel = ElidedLabel(f'{self._lastName},  {self._firstName}')
-        else:
-            nameLabel = ElidedLabel(self._lastName)
-
-        self.idLabel = IdLabel(self.id, self.openInfoWindow)
-
-        self._gridLayout.addWidget(self.idLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self._gridLayout.addWidget(nameLabel, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self._gridLayout.addWidget(ElidedLabel(self._description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
-
-        self._gridLayout.setColumnStretch(0, 1)
-        self._gridLayout.setColumnStretch(1, 20)
-        self._gridLayout.setColumnStretch(2, 0)
-
-        self.setLayout(self._gridLayout)
-        self._window = None
-
-    def openInfoWindow(self):
-        if self._type == employeeType:
-            self._window = employeeInfo(self.id)
-            self._window.show()
-
-
-class PanelButton(QPushButton):
-    """
-        A button class inherited from QPushButton.
-
-        Added Attributes:
-            flag (str): The type of panel button set by developer.
-
-        Methods:
-            QPushButton methods.
-    """
-
-    def __init__(self, buttonText, flag):
-        super().__init__(buttonText)
-
-        self.flag = flag
-        self.setCheckable(True)
-        self.clicked.connect(self._changeButtonColor)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
-        self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QtCore.QSize(100, 65))
-        self.setStyleSheet("QPushButton { color: white;\n"
-                           "background-color: %s;\n"
-                           "border: none; }\n"
-                           "QPushButton::pressed { background-color: %s; }" % (
-                               colors["PUSH_BUTTON_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"]))
-
-    def _changeButtonColor(self):
-        if self.isChecked():
-            self.setStyleSheet("QPushButton { color: %s;\n"
-                               "background-color: %s;\n"
-                               "border: none; }\n"
-                               "QPushButton::pressed { background-color: %s; }" % (
-                                   colors["PUSH_BUTTON_TEXT_COLOR"], colors["PUSH_BUTTON_PRESSED_COLOR"],
-                                   colors["PUSH_BUTTON_PRESSED_COLOR"]))
-        else:
-            self.setStyleSheet("QPushButton { color: %s;\n"
-                               "background-color: %s;\n"
-                               "border: none; }\n"
-                               "QPushButton::pressed { background-color: %s; }" % (
-                                   colors["PUSH_BUTTON_TEXT_COLOR"], colors["PUSH_BUTTON_COLOR"],
-                                   colors["PUSH_BUTTON_PRESSED_COLOR"]))
 
 
 class database_options(windowWithToolbar):
@@ -243,8 +65,8 @@ class database_options(windowWithToolbar):
         self.numOfResults = None
 
     def _add_filter_button(self, button):
-        button.clicked.connect(lambda: self.setFilterFlag(button))
-        button.clicked.connect(lambda: self.sortResults(self.resultOrder))
+        button.clicked.connect(lambda: self._setFilterFlag(button))
+        button.clicked.connect(lambda: self._sortResults(self.resultOrder))
         button.setObjectName(button.objectName())
         self.sidePanelVLayout.addWidget(button)
 
@@ -293,7 +115,7 @@ class database_options(windowWithToolbar):
                                             colors["PUSH_BUTTON_TEXT_COLOR"], colors["SEARCH_BUTTON_COLOR"],
                                             colors["PUSH_BUTTON_COLOR"]))
         self.searchButton.setObjectName("searchButton")
-        self.searchButton.clicked.connect(self.getResults)
+        self.searchButton.clicked.connect(self._getResults)
         self.searchGridLayout.addWidget(self.searchButton, 0, 1, 1, 2)
 
         self.searchBar.setStyleSheet("background-color: %s;" % colors["SEARCH_BAR_COLOR"])
@@ -307,7 +129,7 @@ class database_options(windowWithToolbar):
         self.sortSelect.addItem('Relevance')
         self.sortSelect.addItem('Alphabet')
         self.sortSelect.addItem('Alphabet DESC')
-        self.sortSelect.currentIndexChanged.connect(self.sortResults)
+        self.sortSelect.currentIndexChanged.connect(self._sortResults)
         self.sortGridLayout.addWidget(self.sortSelect, 0, 1, 1, 3, Qt.AlignmentFlag.AlignLeft)
 
         self.resultLimitDropDown.addItems(['10', '25', '50'])
@@ -380,14 +202,14 @@ class database_options(windowWithToolbar):
             if page != "":
                 if int(page) > 1:
                     self.pageSelect.setText(str(int(page) - 1))
-                    self.updateResults()
+                    self._updateResults()
 
         def _nextPage():
             page = self.pageSelect.text()
             if page != "":
                 if int(page) < int(self.totalPagesLabel.text()):
                     self.pageSelect.setText(str(int(page) + 1))
-                    self.updateResults()
+                    self._updateResults()
 
         def _submitPage():
             if self.pageSelect.text() != "":
@@ -397,13 +219,13 @@ class database_options(windowWithToolbar):
                 if page > int(self.totalPagesLabel.text()):
                     self.pageSelect.setText(self.totalPagesLabel.text())
 
-                self.updateResults()
+                self._updateResults()
 
         self.prevPage.clicked.connect(_prevPage)
         self.nextPage.clicked.connect(_nextPage)
         self.pageSelect.returnPressed.connect(_submitPage)
         self.resultLimitDropDown.currentIndexChanged.connect(lambda: self.pageSelect.setText("1"))
-        self.resultLimitDropDown.currentIndexChanged.connect(self.updateResults)
+        self.resultLimitDropDown.currentIndexChanged.connect(self._updateResults)
 
         self.pageNavLayout.setSpacing(10)
         self.pageNavLayout.setContentsMargins(5, 0, 0, 5)
@@ -421,9 +243,9 @@ class database_options(windowWithToolbar):
 
         self.pageNavFrame.setLayout(self.pageNavLayout)
 
-    def updateResults(self):
+    def _updateResults(self):
         def showNoResults():
-            self.clearSearchResults()
+            self._clearSearchResults()
             noResults = {'id': '',
                          'lastName': 'No Results',
                          'firstName': None,
@@ -433,7 +255,7 @@ class database_options(windowWithToolbar):
             self.pageSelect.setText("1")
             self.totalPagesLabel.setText("1")
 
-        results = self.filterHelper()
+        results = self._filterHelper()
         if results:
             perPage = int(self.resultLimitDropDown.currentText())
             numOfResults = len(results)
@@ -442,7 +264,7 @@ class database_options(windowWithToolbar):
                 extraPage = 1
             self.totalPagesLabel.setText(f"{int(numOfResults / perPage) + extraPage}")
 
-            self.clearSearchResults()
+            self._clearSearchResults()
             self.populateSearchResults(results)
             bar = self.scrollArea.verticalScrollBar()
             bar.setValue(bar.minimum())
@@ -461,7 +283,7 @@ class database_options(windowWithToolbar):
         else:
             showNoResults()
 
-    def clearSearchResults(self):
+    def _clearSearchResults(self):
         """
            Removes the search results starting from last one
 
@@ -481,7 +303,7 @@ class database_options(windowWithToolbar):
         for obj in search_results:
             self.searchResultsVLayout.addWidget(obj)
 
-    def getResults(self):
+    def _getResults(self):
         """
                    Removes the search results starting from last one
 
@@ -493,17 +315,17 @@ class database_options(windowWithToolbar):
 
         # text punctuation removed  here to avoid blank query (and any subsequent error resulting from it)
         query = str(self.searchBar.text())
-        self.clearSearchResults()
+        self._clearSearchResults()
         results = self.sEngine.search(query)
         self.savedResults = results
-        self.updateResults()
+        self._updateResults()
 
-    def sortResults(self, order):
+    def _sortResults(self, order):
         self.resultOrder = order
         if self.savedResults is not None:
-            self.updateResults()
+            self._updateResults()
 
-    def filterHelper(self):
+    def _filterHelper(self):
         """
                 Returns a list of result dictionaries if their type is in the filter list.
 
@@ -527,7 +349,7 @@ class database_options(windowWithToolbar):
 
         return results
 
-    def setFilterFlag(self, button):
+    def _setFilterFlag(self, button):
         if button.isChecked():
             self.filterList.append(button.flag)
         else:
