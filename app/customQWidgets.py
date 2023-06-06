@@ -139,7 +139,6 @@ class CollapsibleSection(QFrame):
         self.setLineWidth(1)
         self.contentFrame = QFrame()
 
-
         self.init_ui(*content)
 
     def init_ui(self, *content: QWidget):
@@ -148,6 +147,21 @@ class CollapsibleSection(QFrame):
         layout.setSpacing(0)
 
         self.arrowButton.setCheckable(True)
+        self.arrowButton.setFlat(True)
+        self.arrowButton.setStyleSheet("""
+            QPushButton {
+                border: none;
+                background-color: transparent;
+            }
+
+            QPushButton:checked {
+                background-color: transparent;
+            }
+
+            QPushButton:hover {
+                background-color: none;
+            }
+        """)
         self.arrowButton.toggled.connect(self._toggle_collapse)
         self.arrowButton.setFixedWidth(16)
         self.arrowButton.setFixedHeight(16)
@@ -167,16 +181,18 @@ class CollapsibleSection(QFrame):
         for w in content:
             w.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
             contentFrameLayout.addWidget(w)
-        self.setLayout(layout)
+
 
         layout.addWidget(self.titleFrame)
         layout.addWidget(self.contentFrame)
 
+        self.contentFrame.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        self.setLayout(layout)
 
         self._toggle_collapse()
 
     def _toggle_collapse(self):
-
         if not self.arrowButton.isChecked():
             arrow = "▶"
             self.contentFrame.hide()

@@ -79,6 +79,7 @@ class infoWindowBase(windowWithToolbar):
         super().__init__(parent)
         self.scrollArea = QScrollArea()
         self.scrollArea.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+
         self.scrollArea.setWidgetResizable(True)
 
         self.layout = QVBoxLayout()
@@ -141,6 +142,7 @@ class employeeInfo(infoWindowBase):
             self.layout.addWidget(label)
 
         self.layout.addWidget(self.colaap)
+
 
         # pushes all the labels to the top of the layout
         spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
