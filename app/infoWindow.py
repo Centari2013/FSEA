@@ -2,7 +2,7 @@ import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QVBoxLayout, QScrollArea, QWidget, QLabel, QFrame, QSpacerItem
 from app.baseWindows import windowWithToolbar
-from app.customQWidgets import CollapsibleSection
+from app.customQWidgets import collapsibleSection, headerLabel
 from utils.databaseUtils import *
 from app.stylePresets import stylesheets
 
@@ -27,10 +27,7 @@ class infoWindowBase(windowWithToolbar):
         self.exitButton.clicked.connect(self.close)
         self.ID = ID
 
-        qargs = [QLabel("hi!") for _ in range(10)]
-        self.collapsibleSection = CollapsibleSection('Collapsible', *qargs, parent=self)
-
-        comfyLayout = QVBoxLayout()
+        comfyLayout = QVBoxLayout()  # used to add content margings around scrollArea for better aesthetics
         comfyLayout.setContentsMargins(0, 10, 0, 10)
         comfyLayout.addWidget(self.scrollArea)
         comfyFrame = QFrame()
@@ -43,24 +40,41 @@ class infoWindowBase(windowWithToolbar):
 class employeeInfo(infoWindowBase):
     def __init__(self, ID, parent=None):
         super().__init__(ID, parent)
-        self._medicalData = manageEmployee.getMedical(ID)
+        self.ID = ID
+        self._empData = None
+        self._medicalData = None
+        self._medicalSection = collapsibleSection()
+
+        self._designationData = None
+
+        self._involvedMissions = None
+        self._missionSection = collapsibleSection()
+        self._clearance = None
+
+        self._initEmployeeData()
+        self._initDataGUI()
+        self.initFooter()
+
+    def _initEmployeeData(self):
+        self._empData = manageEmployee.get(self.ID)
+        self._medicalData = manageEmployee.getMedical(self.ID)
+
         dID = manageEmployeeDesignation.get(self.ID)['designationID']
         self._designationData = manageDesignation.get(dID)
 
-        self.initEmployeeData()
-        self.initFooter()
+        self._involvedMissions = manageMission.getMissionByEmpID(self.ID)
 
-    def initEmployeeData(self):
-        empData = manageEmployee.get(self.ID)
+        cID = manageEmployee.getEmployeeClearance(self.ID)
+        self._clearance = manageClearance.get(cID["clearanceID"])
 
-        frame = QFrame()
-        nameLabel = QLabel(f"{empData['firstName']} {empData['lastName']}")
+    def _initDataGUI(self):
+        nameLabel = headerLabel(f"{self._empData['firstName']} {self._empData['lastName']}")
         idLabel = QLabel(f"Employee ID: {self.ID}")
         designationLabel = QLabel(f"Designation: {self._designationData['name']}")
-        startDateLabel = QLabel(f"Start Date: {empData['startDate']}")
-        endDateLabel = QLabel(f"End Date: {empData['endDate']}")
+        startDateLabel = QLabel(f"Start Date: {self._empData['startDate']}")
+        endDateLabel = QLabel(f"End Date: {self._empData['endDate']}")
         summaryLabel = QLabel("Summary:")
-        summary = QLabel(empData["summary"])
+        summary = QLabel(self._empData["summary"])
         summary.setWordWrap(True)
         labels = [nameLabel, idLabel, designationLabel, startDateLabel, endDateLabel, summaryLabel, summary]
 
@@ -68,7 +82,8 @@ class employeeInfo(infoWindowBase):
             self.layout.addWidget(label)
 
         self.layout.addSpacerItem(QSpacerItem(1, 20))
-        self.layout.addWidget(self.collapsibleSection)
+
+    #TODO: Finish Employee page GUI
 
 
 app = QApplication(sys.argv)

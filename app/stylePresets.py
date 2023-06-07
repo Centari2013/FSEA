@@ -39,5 +39,20 @@ stylesheets = {
         
         QScrollBar::add-page:vertical {
         background: none;
-        }"""
+        }""",
+    "COLLAPSIBLE_BUTTON": """
+            QPushButton {
+                border: none;
+                background-color: transparent;
+            }
+
+            QPushButton:checked {
+                background-color: transparent;
+            }
+
+            QPushButton:hover {
+                background-color: none;
+            }
+        """,
+    "HEADER_LABEL": "font-size: 20px; font-weight: bold;"
 }

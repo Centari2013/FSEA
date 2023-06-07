@@ -1,9 +1,9 @@
 from PyQt6 import QtGui, QtWidgets, QtCore
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy, QScrollBar, \
-    QScrollArea
-from app.stylePresets import colors
-
+from PyQt6.QtGui import QIcon, QFont
+from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy, QScrollBar
+from utils.filePaths import icons
+from app.stylePresets import colors, stylesheets
 
 
 class PanelButton(QPushButton):
@@ -123,22 +123,20 @@ class IdLabel(QLabel):
         self.setFont(f)
 
 
-
-
-class CollapsibleSection(QFrame):
-    def __init__(self, title, *content: QWidget, parent=None):
+class collapsibleSection(QFrame):
+    def __init__(self, title="", *content: QWidget, parent=None):
         super().__init__(parent)
-
-        self.title = title
-
+        self._collapsedIcon = QIcon(icons["COLLAPSED_ARROW"])
+        self._expandedIcon = QIcon(icons["EXPANDED_ARROW"])
         self.arrowButton = QPushButton()
-        self.titleLabel = QLabel(self.title)
+        self.titleLabel = QLabel(title)
 
         self.titleFrame = QFrame(self)
 
         self.setFrameStyle(QFrame.Shape.Box)
         self.setLineWidth(1)
         self.contentFrame = QFrame()
+        self.contentFrameLayout = QVBoxLayout()
 
         self.init_ui(*content)
 
@@ -149,20 +147,7 @@ class CollapsibleSection(QFrame):
 
         self.arrowButton.setCheckable(True)
         self.arrowButton.setFlat(True)
-        self.arrowButton.setStyleSheet("""
-            QPushButton {
-                border: none;
-                background-color: transparent;
-            }
-
-            QPushButton:checked {
-                background-color: transparent;
-            }
-
-            QPushButton:hover {
-                background-color: none;
-            }
-        """)
+        self.arrowButton.setStyleSheet(stylesheets["COLLAPSIBLE_BUTTON"])
         self.arrowButton.toggled.connect(self._toggle_collapse)
         self.arrowButton.setFixedWidth(16)
         self.arrowButton.setFixedHeight(16)
@@ -176,18 +161,14 @@ class CollapsibleSection(QFrame):
 
         self.titleFrame.setLayout(titleFrameLayout)
 
-        contentFrameLayout = QVBoxLayout()
-        self.contentFrame.setLayout(contentFrameLayout)
+        self.contentFrame.setLayout(self.contentFrameLayout)
 
-        for w in content:
-            w.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-            contentFrameLayout.addWidget(w)
-
+        self.setContent(*content)
 
         layout.addWidget(self.titleFrame)
         layout.addWidget(self.contentFrame)
 
-        #self.contentFrame.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        # self.contentFrame.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.setLayout(layout)
 
@@ -195,14 +176,23 @@ class CollapsibleSection(QFrame):
 
     def _toggle_collapse(self):
         if not self.arrowButton.isChecked():
-            arrow = "▶"
+            self.arrowButton.setIcon(self._collapsedIcon)
             self.contentFrame.hide()
         else:
-            arrow = "▼"
+            self.arrowButton.setIcon(self._expandedIcon)
             self.contentFrame.show()
-        self.arrowButton.setText(arrow)
+
+    def setTitle(self, title: str):
+        self.titleLabel.setText(title)
+
+    def setContent(self, *content: QWidget):
+        for w in content:
+            w.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+            self.contentFrameLayout.addWidget(w)
 
 
-
-
+class headerLabel(QLabel):
+    def __init__(self, text, parent=None):
+        super().__init__(text, parent)
+        self.setStyleSheet(stylesheets["HEADER_LABEL"])
 
