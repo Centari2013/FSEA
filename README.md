@@ -17,7 +17,7 @@ password: test
 The database query page is depicted below with dummy search results. 
 The left-hand buttons filter search results.
 
-![image](https://user-images.githubusercontent.com/60724207/205428048-928f1f39-fbd7-4424-8207-099c84633f5a.gif)
+![fsea](https://github.com/Centari2013/FSEA/assets/60724207/54090a7c-ca5b-4a88-bab7-8bec3237d603)
 
 ### Primary TODO
 - [ ] **code cleanup**
