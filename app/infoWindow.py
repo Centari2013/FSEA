@@ -27,7 +27,7 @@ class infoWindowBase(windowWithToolbar):
         self.exitButton.clicked.connect(self.close)
         self.ID = ID
 
-        comfyLayout = QVBoxLayout()  # used to add content margings around scrollArea for better aesthetics
+        comfyLayout = QVBoxLayout()  # used to add content margins around scrollArea for better aesthetics
         comfyLayout.setContentsMargins(0, 10, 0, 10)
         comfyLayout.addWidget(self.scrollArea)
         comfyFrame = QFrame()
@@ -81,9 +81,32 @@ class employeeInfo(infoWindowBase):
         for label in labels:
             self.layout.addWidget(label)
 
+        # medical data setup
+        medicalFrame = QFrame(self._medicalSection)
+        medicalLayout = QVBoxLayout(medicalFrame)
+
+        dob = QLabel("DOB: " + self._medicalData["dob"])
+        bloodtype = QLabel("Blood Type: " + self._medicalData["bloodtype"])
+        sex = QLabel("Sex: " + self._medicalData["sex"])
+        kg = QLabel("Weight (kg): " + str(self._medicalData["kilograms"]))
+        height = QLabel("Height (cm): " + str(self._medicalData["height"]))
+        notes = QLabel("Notes: " + self._medicalData["notes"])
+        notes.setWordWrap(True)
+
+        labels = [dob, bloodtype, sex, kg, height, notes]
+
+        for label in labels:
+            medicalLayout.addWidget(label)
+
+        medicalFrame.setLayout(medicalLayout)
+
+        self._medicalSection.setTitle("Medical Data")
+        self._medicalSection.setContent(medicalFrame)
+
+        self.layout.addWidget(self._medicalSection)
         self.layout.addSpacerItem(QSpacerItem(1, 20))
 
-    #TODO: Finish Employee page GUI
+    # TODO: Finish Employee page GUI
 
 
 app = QApplication(sys.argv)
