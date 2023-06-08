@@ -68,6 +68,7 @@ class EmployeeInfo(InfoWindowBase):
 
         cID = manageEmployee.getEmployeeClearance(self.ID)
         self._clearance = manageClearance.get(cID["clearanceID"])
+        print(self._involvedMissions)
 
     def _initDataGUI(self):
         nameLabel = headerLabel(f"{self._empData['firstName']} {self._empData['lastName']}")
@@ -103,6 +104,10 @@ class EmployeeInfo(InfoWindowBase):
         self._medicalSection.setContent(medicalFrame)
 
         self.layout.addWidget(self._medicalSection)
+
+        self._missionSection.setTitle("Mission Involvement")
+
+        self.layout.addWidget(self._missionSection)
 
 
 
@@ -155,6 +160,6 @@ class MedicalTable(QTableWidget):
 
 
 app = QApplication(sys.argv)
-w = EmployeeInfo("E0136531")
+w = EmployeeInfo("E2676502")
 w.show()
 app.exec()

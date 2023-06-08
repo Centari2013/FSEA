@@ -193,13 +193,13 @@ class CollapsibleSection(QFrame):
         self.titleLabel.setText(title)
 
     def setContent(self, *content: QWidget):
-        for i in reversed(range(self.contentFrameHLayout.count() - 1)):
-            self.contentFrameHLayout.itemAt(i).widget().setParent(None)
+        for i in reversed(range(self.contentFrameVLayout.count() )):
+            self.contentFrameVLayout.itemAt(i).widget().setParent(None)
 
         for w in content:
             w.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
             self.contentFrameVLayout.addWidget(w)
-            self.contentFrameHLayout.addWidget(self.contentFrameV)
+        self.contentFrameHLayout.addWidget(self.contentFrameV)
 
 
 class headerLabel(QLabel):
