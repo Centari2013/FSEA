@@ -1,13 +1,15 @@
 import sys
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QApplication, QVBoxLayout, QScrollArea, QWidget, QLabel, QFrame, QSpacerItem
-from app.baseWindows import windowWithToolbar
-from app.customQWidgets import collapsibleSection, headerLabel
+from PyQt6.QtGui import QFont
+from PyQt6.QtWidgets import QApplication, QVBoxLayout, QScrollArea, QWidget, QLabel, QFrame, QTableWidget, \
+    QTableWidgetItem
+from app.baseWindows import windowWithTitleBar
+from app.customQWidgets import CollapsibleSection, headerLabel, IdLabel
 from utils.databaseUtils import *
 from app.stylePresets import stylesheets
 
 
-class infoWindowBase(windowWithToolbar):
+class InfoWindowBase(windowWithTitleBar):
     def __init__(self, ID, parent=None):
         super().__init__(parent)
         self.scrollArea = QScrollArea()
@@ -37,18 +39,18 @@ class infoWindowBase(windowWithToolbar):
         self.initFooter()
 
 
-class employeeInfo(infoWindowBase):
+class EmployeeInfo(InfoWindowBase):
     def __init__(self, ID, parent=None):
         super().__init__(ID, parent)
         self.ID = ID
         self._empData = None
         self._medicalData = None
-        self._medicalSection = collapsibleSection()
+        self._medicalSection = CollapsibleSection()
 
         self._designationData = None
 
         self._involvedMissions = None
-        self._missionSection = collapsibleSection()
+        self._missionSection = CollapsibleSection()
         self._clearance = None
 
         self._initEmployeeData()
@@ -85,18 +87,15 @@ class employeeInfo(infoWindowBase):
         medicalFrame = QFrame(self._medicalSection)
         medicalLayout = QVBoxLayout(medicalFrame)
 
-        dob = QLabel("DOB: " + self._medicalData["dob"])
-        bloodtype = QLabel("Blood Type: " + self._medicalData["bloodtype"])
-        sex = QLabel("Sex: " + self._medicalData["sex"])
-        kg = QLabel("Weight (kg): " + str(self._medicalData["kilograms"]))
-        height = QLabel("Height (cm): " + str(self._medicalData["height"]))
-        notes = QLabel("Notes: " + self._medicalData["notes"])
-        notes.setWordWrap(True)
+        medData = {"DOB:": [self._medicalData["dob"]],
+                   "Blood Type:": [self._medicalData["bloodtype"]],
+                   "Sex:": [self._medicalData["sex"]],
+                   "Weight (kg):": [str(self._medicalData["kilograms"])],
+                   "Height (cm):": [str(self._medicalData["height"])],
+                   "Notes:": [self._medicalData["notes"]]}
 
-        labels = [dob, bloodtype, sex, kg, height, notes]
 
-        for label in labels:
-            medicalLayout.addWidget(label)
+        medicalLayout.addWidget(MedicalTable(medData))
 
         medicalFrame.setLayout(medicalLayout)
 
@@ -104,12 +103,58 @@ class employeeInfo(infoWindowBase):
         self._medicalSection.setContent(medicalFrame)
 
         self.layout.addWidget(self._medicalSection)
-        self.layout.addSpacerItem(QSpacerItem(1, 20))
 
-    # TODO: Finish Employee page GUI
+
+
+class MissionInvolvementView(QFrame):
+    def __init__(self, missionList: list[str]):
+        super(MissionInvolvementView, self).__init__()
+        self.layout = QVBoxLayout(self)
+        self.layout.setSpacing(10)
+        self.layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+
+        for m in missionList:
+            self.layout.addWidget(IdLabel(m))
+
+
+class MedicalTable(QTableWidget):
+    def __init__(self, data):
+        super(MedicalTable, self).__init__()
+        self.data = data
+        self.setData()
+        self.resizeColumnsToContents()
+        self.resizeRowsToContents()
+        self.setShowGrid(False)
+        font = QFont()
+        font.setBold(True)
+        self.verticalHeader().setFont(font)
+
+        self.setStyleSheet(
+            "QTableWidget { background-color: transparent; border: none; }"
+            "QHeaderView::section { background-color: transparent; border: none; color: dimgray;}"
+            "QTableWidget::item { border: none; }"
+        )
+        self.horizontalHeader().setVisible(False)
+
+    def setData(self):
+        keys = sorted(self.data.keys())
+        self.setColumnCount(1)  # Set column count to 1 since we only need one column for the values
+        self.setRowCount(len(keys))  # Set row count to the number of keys
+
+        for n, key in enumerate(keys):
+            self.setVerticalHeaderItem(n, QTableWidgetItem(key))  # Set key as vertical header item
+            items = self.data[key]
+            for m, item in enumerate(items):
+                new_item = QTableWidgetItem(item)
+                self.setItem(n, 0, new_item)  # Set item in the same row (n) but in the first column (0)
+
+
+        self.resizeColumnsToContents()
+        self.resizeRowsToContents()
+
 
 
 app = QApplication(sys.argv)
-w = employeeInfo("E0136531")
+w = EmployeeInfo("E0136531")
 w.show()
 app.exec()

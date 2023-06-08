@@ -1,7 +1,8 @@
 from PyQt6 import QtGui, QtWidgets, QtCore
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon, QFont
-from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy, QScrollBar
+from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy, QScrollBar, \
+    QSpacerItem
 from utils.filePaths import icons
 from app.stylePresets import colors, stylesheets
 
@@ -87,18 +88,19 @@ class IdLabel(QLabel):
                 n/a
     """
 
-    def __init__(self, parent, func, args: tuple = None):
-        super().__init__(parent)
+    def __init__(self, text, func=None, args: tuple=None):
+        super().__init__(text)
         self.setStyleSheet('border: 0px; padding: 0px;')
         self.function = func
         self.args = args
 
     def mouseReleaseEvent(self, event):
         if self.rect().contains(event.pos()):
-            if self.args is not None:
-                self.function(*self.args)
-            else:
-                self.function()
+            if self.function is not None:
+                if self.args is not None:
+                    self.function(*self.args)
+                else:
+                    self.function()
         else:
             pass
 
@@ -123,20 +125,21 @@ class IdLabel(QLabel):
         self.setFont(f)
 
 
-class collapsibleSection(QFrame):
+class CollapsibleSection(QFrame):
     def __init__(self, title="", *content: QWidget, parent=None):
         super().__init__(parent)
         self._collapsedIcon = QIcon(icons["COLLAPSED_ARROW"])
         self._expandedIcon = QIcon(icons["EXPANDED_ARROW"])
         self.arrowButton = QPushButton()
         self.titleLabel = QLabel(title)
-
         self.titleFrame = QFrame(self)
 
         self.setFrameStyle(QFrame.Shape.Box)
         self.setLineWidth(1)
-        self.contentFrame = QFrame()
-        self.contentFrameLayout = QVBoxLayout()
+        self.contentFrameH = QFrame(self)
+        self.contentFrameHLayout = QHBoxLayout()
+        self.contentFrameV = QFrame(self)
+        self.contentFrameVLayout = QVBoxLayout(self)
 
         self.init_ui(*content)
 
@@ -149,26 +152,30 @@ class collapsibleSection(QFrame):
         self.arrowButton.setFlat(True)
         self.arrowButton.setStyleSheet(stylesheets["COLLAPSIBLE_BUTTON"])
         self.arrowButton.toggled.connect(self._toggle_collapse)
-        self.arrowButton.setFixedWidth(16)
-        self.arrowButton.setFixedHeight(16)
+        self.arrowButton.setFixedSize(16, 16)
 
         self.titleLabel.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.titleLabel.setStyleSheet("font-weight: bold;")
 
         titleFrameLayout = QHBoxLayout()
+        titleFrameLayout.setContentsMargins(5, 0, 5, 0)
         titleFrameLayout.addWidget(self.arrowButton)
         titleFrameLayout.addWidget(self.titleLabel)
 
         self.titleFrame.setLayout(titleFrameLayout)
+        self.contentFrameH.setLayout(self.contentFrameHLayout)
+        self.contentFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.contentFrameV.setLayout(self.contentFrameVLayout)
+        self.contentFrameVLayout.setContentsMargins(0, 0, 0, 0)
 
-        self.contentFrame.setLayout(self.contentFrameLayout)
+        # Set up visual indent for content in widget
+        self.contentFrameHLayout.addSpacing(20)
 
         self.setContent(*content)
 
         layout.addWidget(self.titleFrame)
-        layout.addWidget(self.contentFrame)
+        layout.addWidget(self.contentFrameH)
 
-        # self.contentFrame.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
         self.setLayout(layout)
 
@@ -177,18 +184,22 @@ class collapsibleSection(QFrame):
     def _toggle_collapse(self):
         if not self.arrowButton.isChecked():
             self.arrowButton.setIcon(self._collapsedIcon)
-            self.contentFrame.hide()
+            self.contentFrameH.hide()
         else:
             self.arrowButton.setIcon(self._expandedIcon)
-            self.contentFrame.show()
+            self.contentFrameH.show()
 
     def setTitle(self, title: str):
         self.titleLabel.setText(title)
 
     def setContent(self, *content: QWidget):
+        for i in reversed(range(self.contentFrameHLayout.count() - 1)):
+            self.contentFrameHLayout.itemAt(i).widget().setParent(None)
+
         for w in content:
             w.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-            self.contentFrameLayout.addWidget(w)
+            self.contentFrameVLayout.addWidget(w)
+            self.contentFrameHLayout.addWidget(self.contentFrameV)
 
 
 class headerLabel(QLabel):
