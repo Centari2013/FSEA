@@ -106,6 +106,8 @@ class EmployeeInfo(InfoWindowBase):
         self.layout.addWidget(self._medicalSection)
 
         self._missionSection.setTitle("Mission Involvement")
+        missionList = [m["missionID"] for m in self._involvedMissions]
+        self._missionSection.setContent(MissionInvolvementView(missionList))
 
         self.layout.addWidget(self._missionSection)
 
