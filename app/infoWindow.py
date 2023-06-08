@@ -68,7 +68,7 @@ class EmployeeInfo(InfoWindowBase):
 
         cID = manageEmployee.getEmployeeClearance(self.ID)
         self._clearance = manageClearance.get(cID["clearanceID"])
-        print(self._involvedMissions)
+
 
     def _initDataGUI(self):
         nameLabel = headerLabel(f"{self._empData['firstName']} {self._empData['lastName']}")
@@ -106,8 +106,9 @@ class EmployeeInfo(InfoWindowBase):
         self.layout.addWidget(self._medicalSection)
 
         self._missionSection.setTitle("Mission Involvement")
-        missionList = [m["missionID"] for m in self._involvedMissions]
-        self._missionSection.setContent(MissionInvolvementView(missionList))
+        if self._involvedMissions is not None:
+            missionList = [m["missionID"] for m in self._involvedMissions]
+            self._missionSection.setContent(MissionInvolvementView(missionList))
 
         self.layout.addWidget(self._missionSection)
 
@@ -161,7 +162,7 @@ class MedicalTable(QTableWidget):
 
 
 
-app = QApplication(sys.argv)
+"""app = QApplication(sys.argv)
 w = EmployeeInfo("E2676502")
 w.show()
-app.exec()
+app.exec()"""

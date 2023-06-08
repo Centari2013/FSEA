@@ -2,7 +2,6 @@ import sys
 from app.loginScreen import authWindow
 from app.fseaDatabaseOptions import database_options
 from PyQt6.QtWidgets import QApplication
-from app.baseWindows import windowWithTitleBar
 
 app = QApplication(sys.argv)
 options = database_options()

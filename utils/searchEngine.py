@@ -56,7 +56,7 @@ class searchEngine:
             q = self._cleanQuery(query)
 
             self.cur.execute('''DELETE FROM search_results;''')
-
+            # todo: update search engine to include employee occupations
             self.cur.execute('''INSERT INTO search_results (type, id, firstName, lastName, description, rank)
                             SELECT 'D', depID, NULL, depName, description, bm25(Department_fts)
                             FROM Department_fts

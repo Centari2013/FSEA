@@ -13,6 +13,7 @@ class authWindow(QMainWindow):
         self.setStyleSheet("background-color: %s;" % (colors["FRAME_COLOR"]))
         self.setWindowTitle("F-SEA Authentication")
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
+        self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint)
         self.setWindowModality(Qt.WindowModality.WindowModal)
         self.prevPos = None
 
