@@ -1,32 +1,65 @@
-# FSEA
-F-SEA Database Project  
-This project is something I am making for my best friend and I. It is based on a story that we wrote together.
-This project serves as practice in PyQT, OOP, python, sqlite3, and database design. 
+# FSEA Database Project
 
-At this point in time, the program only authenticates users through a login page and opens a page to query 
-the database.
+The FSEA (F-SEA) Database Project is a collaborative project that I am working on with my best friend. It is based on a story that we wrote together and serves as a platform for practicing various skills, including PyQT, OOP, Python, SQLite3, and database design.
 
-The login screen is depicted below. (It is a semi-transparent window.)  
+## Project Overview
 
-For testing:  
-username: test  
-password: test  
+The main objective of this project is to develop a comprehensive database management and design application. It provides an intuitive interface for interacting with the FSEA database, which contains information about specimens, employees, missions, and more.
 
-![image](https://user-images.githubusercontent.com/60724207/194465001-7d667144-dffc-4b6a-8c1a-77b882d14c37.png)
+## Features
 
-The database query page is depicted below with dummy search results. 
-The left-hand buttons filter search results.
+At its current stage of development, the FSEA Database Project offers the following features:
 
-![image](https://user-images.githubusercontent.com/60724207/205428048-928f1f39-fbd7-4424-8207-099c84633f5a.gif)
+- **User Authentication**: The program includes a login page to authenticate users and ensure secure access to the database.
 
-### Primary TODO
-- [ ] **code cleanup**
-- [ ] **GUI for entity pages**
-- [ ] implement employee access levels
-- [ ] Export Page to PDF
-- [x] implement basic GUI for search result info page
-- [x] implement simple search filters
-- [x] implement full database search engine
-- [x] implement basic database search page GUI
+- **Database Query**: Once logged in, users can access a database query page to perform searches and retrieve information from the FSEA database.
 
-**bolded tasks are being actively worked on*
+## Screenshots
+
+Here are some screenshots showcasing the project's functionality:
+
+![Login Screen](https://user-images.githubusercontent.com/60724207/194465001-7d667144-dffc-4b6a-8c1a-77b882d14c37.png)
+
+![Database Query Page](https://github.com/Centari2013/FSEA/assets/60724207/54090a7c-ca5b-4a88-bab7-8bec3237d603)
+
+## Getting Started
+
+To test the application, you can use the following login credentials:
+
+- Username: test
+- Password: test
+
+Before running the program, ensure that you have the necessary dependencies installed and configured.
+
+## TODO List
+
+Here are the primary tasks that need to be completed for this project:
+
+- **Code Cleanup**: Perform cleanup and refactoring to improve code quality. (always a priority)
+
+- **GUI for Entity Pages**: Implement graphical user interfaces for entity-specific pages, such as specimen details, employee profiles, and mission reports.
+
+- Employee Access Levels: Incorporate different access levels for employees based on their roles and privileges.
+
+- Export Page to PDF: Add functionality to export database pages and search results to PDF format.
+
+- ~~Implement Basic GUI for Search Result Info Page~~ (Completed)
+
+- ~~Implement Simple Search Filters~~ (Completed)
+
+- ~~Implement Full Database Search Engine~~ (Completed)
+
+- ~~Implement Basic Database Search Page GUI~~ (Completed)
+
+Please note that tasks marked with **bold** are currently in progress.
+
+## Contribution
+
+This project is a result of continuous learning and exploration in database management and design. I am dedicated to improving its functionality, usability, and overall user experience. If you would like to contribute or have any suggestions, feel free to reach out.
+
+My email: [zb19e@fsu.edu](mailto:zb19e@fsu.edu)
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
