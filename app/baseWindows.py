@@ -4,11 +4,11 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtCore import *
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import *
-from app.colorPresets import colors
+from app.stylePresets import colors
 from utils.filePaths import icons
 
 
-class windowWithToolbar(QMainWindow):
+class windowWithTitleBar(QMainWindow):
     def __init__(self, parent):
         super().__init__(parent)
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint) # allows for custom title bar
@@ -38,8 +38,8 @@ class windowWithToolbar(QMainWindow):
 
         self._titleBarInit()
 
-        self.titlebarFrame.mousePressEvent = lambda event: self._toolbarClick(event)
-        self.titlebarFrame.mouseMoveEvent = lambda event: self._toolbarMove(event)
+        self.titlebarFrame.mousePressEvent = lambda event: self._titlebarClick(event)
+        self.titlebarFrame.mouseMoveEvent = lambda event: self._titlebarMove(event)
 
         self.footerFrame = QtWidgets.QFrame(self.centralWidget)
         self.footerLayout = QtWidgets.QGridLayout(self.footerFrame)
@@ -80,9 +80,7 @@ class windowWithToolbar(QMainWindow):
         self.titlebarLayout.addWidget(self.title)
 
         # separates buttons from title QLabel
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding,
-                                           QtWidgets.QSizePolicy.Policy.Minimum)
-        self.titlebarLayout.addItem(spacerItem)
+        self.titlebarLayout.addSpacing(40)
 
         self.add_titlebar_button(self.minimizeButton, "minimize", icons['MINIMIZE_BUTTON'], self.showMinimized)
         self.add_titlebar_button(self.restoreButton, "restore", icons['RESTORE_BUTTON'], self._minOrMax)
@@ -126,12 +124,12 @@ class windowWithToolbar(QMainWindow):
         else:
             self.showMaximized()
 
-    def _toolbarClick(self, event: QWidget.mousePressEvent):
+    def _titlebarClick(self, event: QWidget.mousePressEvent):
         """"
         sets self.pos to coordinates of click event
         """
 
-        # ignore buttons when moving toolbar
+        # ignore buttons when moving title bar
         if self.exitButton.underMouse():
             pass
         elif self.minimizeButton.underMouse():
@@ -142,21 +140,21 @@ class windowWithToolbar(QMainWindow):
             # set prevPos to where the click occurred
             self.prevPos = event.globalPosition().toPoint()
 
-    def _toolbarMove(self, event: QWidget.mouseMoveEvent):
+    def _titlebarMove(self, event: QWidget.mouseMoveEvent):
         """
-    Move the toolbar based on the mouse movement.
+    Move the title bar based on the mouse movement.
 
     Parameters:
-    - event (QMouseEvent): The mouse move event that triggered the toolbar movement.
+    - event (QMouseEvent): The mouse move event that triggered the title bar movement.
 
     Description:
-    - This method is called when the toolbar is being dragged by the user.
+    - This method is called when the title bar is being dragged by the user.
     - It calculates the movement delta based on the difference between the current mouse position and the previous position.
-    - If the mouse is not over any of the toolbar buttons (exitButton, minimizeButton, restoreButton), the toolbar is moved accordingly.
+    - If the mouse is not over any of the title bar buttons (exitButton, minimizeButton, restoreButton), the title bar is moved accordingly.
     - If the window is maximized, it restores the window to its normal size and moves it by a fraction of its width and height to give a smooth movement effect.
     - Finally, it updates the previous position with the current mouse position for the next movement calculation.
     """
-        # ignore buttons when moving toolbar
+        # ignore buttons when moving title bar
         if self.exitButton.underMouse():
             pass
         elif self.minimizeButton.underMouse():

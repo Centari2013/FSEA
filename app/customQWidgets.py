@@ -1,9 +1,10 @@
 from PyQt6 import QtGui, QtWidgets, QtCore
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QLabel, QGridLayout, QFrame, QPushButton
-from app.colorPresets import colors
-from app.infoWindow import employeeInfo
-from utils.dbVariables import employeeType
+from PyQt6.QtGui import QIcon, QFont
+from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy, QScrollBar, \
+    QSpacerItem
+from utils.filePaths import icons
+from app.stylePresets import colors, stylesheets
 
 
 class PanelButton(QPushButton):
@@ -87,18 +88,19 @@ class IdLabel(QLabel):
                 n/a
     """
 
-    def __init__(self, parent, func, args: tuple = None):
-        super().__init__(parent)
+    def __init__(self, text, func=None, args: tuple=None):
+        super().__init__(text)
         self.setStyleSheet('border: 0px; padding: 0px;')
         self.function = func
         self.args = args
 
     def mouseReleaseEvent(self, event):
         if self.rect().contains(event.pos()):
-            if self.args is not None:
-                self.function(*self.args)
-            else:
-                self.function()
+            if self.function is not None:
+                if self.args is not None:
+                    self.function(*self.args)
+                else:
+                    self.function()
         else:
             pass
 
@@ -123,63 +125,85 @@ class IdLabel(QLabel):
         self.setFont(f)
 
 
-class SearchResult(QFrame):
-    """
-            A frame inherited from QFrame that is used to populate
-            search results
+class CollapsibleSection(QFrame):
+    def __init__(self, title="", *content: QWidget, parent=None):
+        super().__init__(parent)
+        self._collapsedIcon = QIcon(icons["COLLAPSED_ARROW"])
+        self._expandedIcon = QIcon(icons["EXPANDED_ARROW"])
+        self.arrowButton = QPushButton()
+        self.titleLabel = QLabel(title)
+        self.titleFrame = QFrame(self)
 
-            Added Attributes:
-                idLabel (IdLabel): The clickable QLabel
-                id (str): The ID you want to show in the idLabel.
+        self.setFrameStyle(QFrame.Shape.Box)
+        self.setLineWidth(1)
+        self.contentFrameH = QFrame(self)
+        self.contentFrameHLayout = QHBoxLayout()
+        self.contentFrameV = QFrame(self)
+        self.contentFrameVLayout = QVBoxLayout(self)
 
-            Added Methods:
-                openInfoWindow(): opens window with more info on the search results
+        self.init_ui(*content)
 
-            *Note: If firstName is None, then only the lastName will show on the frame.
-    """
+    def init_ui(self, *content: QWidget):
+        layout = QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
 
-    def __init__(self, parent=None, ID: str = None, resultType=None, lastName=None, firstName=None, description=None):
-        super(SearchResult, self).__init__(parent=None)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
-        self.setSizePolicy(sizePolicy)
-        self.setMinimumSize(QtCore.QSize(0, 90))
-        self.setMaximumSize(QtCore.QSize(16777215, 100))
-        self.setAutoFillBackground(False)
-        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-        self.setObjectName("search_label")
-        self.setStyleSheet("border: 1px solid gray; padding: 6;")
+        self.arrowButton.setCheckable(True)
+        self.arrowButton.setFlat(True)
+        self.arrowButton.setStyleSheet(stylesheets["COLLAPSIBLE_BUTTON"])
+        self.arrowButton.toggled.connect(self._toggle_collapse)
+        self.arrowButton.setFixedSize(16, 16)
 
-        self._gridLayout = QGridLayout(parent)
+        self.titleLabel.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+        self.titleLabel.setStyleSheet("font-weight: bold;")
 
-        self.id = ID
-        self._lastName = lastName
-        self._firstName = firstName
-        self._description = description
-        self._type = resultType
+        titleFrameLayout = QHBoxLayout()
+        titleFrameLayout.setContentsMargins(5, 0, 5, 0)
+        titleFrameLayout.addWidget(self.arrowButton)
+        titleFrameLayout.addWidget(self.titleLabel)
 
-        # allows for entities with only one name to use this class
-        if firstName is not None:
-            nameLabel = ElidedLabel(f'{self._lastName},  {self._firstName}')
+        self.titleFrame.setLayout(titleFrameLayout)
+        self.contentFrameH.setLayout(self.contentFrameHLayout)
+        self.contentFrameHLayout.setContentsMargins(0, 0, 0, 0)
+        self.contentFrameV.setLayout(self.contentFrameVLayout)
+        self.contentFrameVLayout.setContentsMargins(0, 0, 0, 0)
+
+        # Set up visual indent for content in widget
+        self.contentFrameHLayout.addSpacing(20)
+
+        self.setContent(*content)
+
+        layout.addWidget(self.titleFrame)
+        layout.addWidget(self.contentFrameH)
+
+        self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        self.setLayout(layout)
+
+        self._toggle_collapse()
+
+    def _toggle_collapse(self):
+        if not self.arrowButton.isChecked():
+            self.arrowButton.setIcon(self._collapsedIcon)
+            self.contentFrameH.hide()
         else:
-            nameLabel = ElidedLabel(self._lastName)
+            self.arrowButton.setIcon(self._expandedIcon)
+            self.contentFrameH.show()
 
-        self.idLabel = IdLabel(self.id, self.openInfoWindow)
+    def setTitle(self, title: str):
+        self.titleLabel.setText(title)
 
-        self._gridLayout.addWidget(self.idLabel, 0, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self._gridLayout.addWidget(nameLabel, 1, 0, 1, 1, Qt.AlignmentFlag.AlignLeft)
-        self._gridLayout.addWidget(ElidedLabel(self._description), 2, 0, 1, 2, Qt.AlignmentFlag.AlignLeft)
+    def setContent(self, *content: QWidget):
+        for i in reversed(range(self.contentFrameVLayout.count() )):
+            self.contentFrameVLayout.itemAt(i).widget().setParent(None)
 
-        self._gridLayout.setColumnStretch(0, 1)
-        self._gridLayout.setColumnStretch(1, 20)
-        self._gridLayout.setColumnStretch(2, 0)
+        for w in content:
+            w.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+            self.contentFrameVLayout.addWidget(w)
+        self.contentFrameHLayout.addWidget(self.contentFrameV)
 
-        self.setLayout(self._gridLayout)
-        self._window = None
 
-    def openInfoWindow(self):
-        if self._type == employeeType:
-            self._window = employeeInfo(self.id)
-            self._window.show()
+class headerLabel(QLabel):
+    def __init__(self, text, parent=None):
+        super().__init__(text, parent)
+        self.setStyleSheet(stylesheets["HEADER_LABEL"])
+

@@ -2,17 +2,17 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox, QLineEdit, QSpacerItem, QSizePolicy
 
-from app.baseWindows import windowWithToolbar
-from app.colorPresets import colors
+from app.baseWindows import windowWithTitleBar
+from app.stylePresets import colors, stylesheets
 from app.customQWidgets import PanelButton, ElidedLabel, IdLabel
-from app.infoWindow import employeeInfo
+from app.infoWindow import EmployeeInfo
 from utils.searchEngine import searchEngine
 from utils.dbVariables import (employeeType, specimenType, originType,
                                missionType, departmentType)
 
 
 
-class database_options(windowWithToolbar):
+class database_options(windowWithTitleBar):
     def __init__(self):
         super(database_options, self).__init__(None)
 
@@ -146,6 +146,8 @@ class database_options(windowWithToolbar):
 
     def _initSearchResultsArea(self):
         self.scrollArea.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        bar = self.scrollArea.verticalScrollBar()
+        bar.setStyleSheet(stylesheets["SCROLL_BAR"])
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
@@ -255,7 +257,6 @@ class database_options(windowWithToolbar):
             self.populateSearchResults([noResults])
             self.pageSelect.setText("1")
             self.totalPagesLabel.setText("1")
-
         results = self._filterHelper()
         if results:
             perPage = int(self.resultLimitDropDown.currentText())
@@ -416,6 +417,6 @@ class database_options(windowWithToolbar):
 
         def openInfoWindow(self):
             if self._type == employeeType:
-                self._window = employeeInfo(self.id)
+                self._window = EmployeeInfo(self.id)
                 self._window.show()
 

@@ -345,7 +345,7 @@ class manageEmployee(DatabaseManager):
 
     @staticmethod
     def getEmployeeClearance(empID):
-        return DatabaseManager._execute_with_return('SELECT * FROM EmployeeClearance where empID = ?', (empID,))
+        return DatabaseManager._execute_with_return('SELECT clearanceID FROM EmployeeClearance where empID = ?', (empID,))
 
     @staticmethod
     def getByClearance(clearanceID):
@@ -481,12 +481,15 @@ class manageMission(DatabaseManager):
         return DatabaseManager._execute_with_return('SELECT * FROM Mission WHERE missionID = ?', (missionID,))
 
     @staticmethod
-    def getMissionByEmpID(empID):
-        return DatabaseManager._execute_with_return('SELECT * FROM Mission WHERE missionID ='
-                                                    '(SELECT missionID FROM EmployeeMission WHERE empID = ?)', (empID,))
+    def getDepartmentByMissionID(missionID):
+        return DatabaseManager._execute_with_return('SELECT depID FROM DepartmentMission WHERE missionID = ?', (missionID,))
 
     @staticmethod
-    def getEmployeeByMission(missionID):
+    def getMissionByEmpID(empID):
+        return DatabaseManager._execute_with_return('SELECT missionID FROM EmployeeMission WHERE empID = ?', (empID,))
+
+    @staticmethod
+    def getEmployeeByMissionID(missionID):
         return DatabaseManager._execute_with_return('SELECT * FROM Employee WHERE empID ='
                                                     '(SELECT empID FROM EmployeeMission WHERE missionID = ?)', (missionID,))
 
