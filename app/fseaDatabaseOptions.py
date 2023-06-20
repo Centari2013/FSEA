@@ -257,7 +257,6 @@ class database_options(windowWithTitleBar):
             self.populateSearchResults([noResults])
             self.pageSelect.setText("1")
             self.totalPagesLabel.setText("1")
-
         results = self._filterHelper()
         if results:
             perPage = int(self.resultLimitDropDown.currentText())

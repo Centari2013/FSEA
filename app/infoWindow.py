@@ -38,11 +38,64 @@ class InfoWindowBase(windowWithTitleBar):
         self.primaryGridLayout.addWidget(comfyFrame, 1, 0)
         self.initFooter()
 
+class MissionInfo(InfoWindowBase):
+    def __init__(self, missionID, parent=None):
+        super().__init__(missionID, parent)
+        self._missionData = None
+        self._employeeInvolvement = None
+        self._departmentInvolvement = None
+
+        self._initMissionData()
+
+    def _initMissionData(self):
+        self._missionData = manageMission.get(self.ID)
+        self._employeeInvolvement = manageMission.getEmployeeByMissionID(self.ID)
+        self._departmentInvolvement = manageMission.getDepartmentByMissionID(self.ID)
+
+    def _initDataGUI(self):
+        nameLabel = headerLabel(f"{self._missionData['name']}")
+        idLabel = QLabel(f"Mission ID: {self.ID}")
+        originIdText = IdLabel("Origin ID: ")
+        startDateLabel = QLabel(f"Start Date: {self._empData['startDate']}")
+        endDateLabel = QLabel(f"End Date: {self._empData['endDate']}")
+        summaryLabel = QLabel("Summary:")
+        summary = QLabel(self._empData["summary"])
+        summary.setWordWrap(True)
+        labels = [nameLabel, idLabel, originIdText, startDateLabel, endDateLabel, summaryLabel, summary]
+
+        for label in labels:
+            self.layout.addWidget(label)
+
+        # medical data setup
+        medicalFrame = QFrame(self._medicalSection)
+        medicalLayout = QVBoxLayout(medicalFrame)
+
+        medData = {"DOB:": [self._medicalData["dob"]],
+                   "Blood Type:": [self._medicalData["bloodtype"]],
+                   "Sex:": [self._medicalData["sex"]],
+                   "Weight (kg):": [str(self._medicalData["kilograms"])],
+                   "Height (cm):": [str(self._medicalData["height"])],
+                   "Notes:": [self._medicalData["notes"]]}
+
+        medicalLayout.addWidget(DataTable(medData))
+
+        medicalFrame.setLayout(medicalLayout)
+
+        self._medicalSection.setTitle("Medical Data")
+        self._medicalSection.setContent(medicalFrame)
+
+        self.layout.addWidget(self._medicalSection)
+
+        self._missionSection.setTitle("Mission Involvement")
+        if self._involvedMissions is not None:
+            missionList = [m["missionID"] for m in self._involvedMissions]
+            self._missionSection.setContent(MissionInvolvementView(missionList))
+
+        self.layout.addWidget(self._missionSection)
 
 class EmployeeInfo(InfoWindowBase):
-    def __init__(self, ID, parent=None):
-        super().__init__(ID, parent)
-        self.ID = ID
+    def __init__(self, empID, parent=None):
+        super().__init__(empID, parent)
         self._empData = None
         self._medicalData = None
         self._medicalSection = CollapsibleSection()
@@ -72,17 +125,19 @@ class EmployeeInfo(InfoWindowBase):
 
     def _initDataGUI(self):
         nameLabel = headerLabel(f"{self._empData['firstName']} {self._empData['lastName']}")
-        idLabel = QLabel(f"Employee ID: {self.ID}")
-        designationLabel = QLabel(f"Designation: {self._designationData['name']}")
-        startDateLabel = QLabel(f"Start Date: {self._empData['startDate']}")
-        endDateLabel = QLabel(f"End Date: {self._empData['endDate']}")
-        summaryLabel = QLabel("Summary:")
-        summary = QLabel(self._empData["summary"])
+        summary = QLabel()
         summary.setWordWrap(True)
-        labels = [nameLabel, idLabel, designationLabel, startDateLabel, endDateLabel, summaryLabel, summary]
 
-        for label in labels:
-            self.layout.addWidget(label)
+        empData = {"Employee ID:": [self.ID],
+                   "Designation:": [self._designationData["name"]],
+                   "Start Date:": [self._empData["startDate"]],
+                   "End Date:": [self._empData["endDate"]],
+                   "Summary:": []}
+
+        self.layout.addWidget(nameLabel)
+        self.layout.addWidget(DataTable(empData))
+        self.layout.addWidget(summary)
+
 
         # medical data setup
         medicalFrame = QFrame(self._medicalSection)
@@ -96,10 +151,10 @@ class EmployeeInfo(InfoWindowBase):
                    "Notes:": [self._medicalData["notes"]]}
 
 
-        medicalLayout.addWidget(MedicalTable(medData))
+        medicalLayout.addWidget(DataTable(medData))
 
         medicalFrame.setLayout(medicalLayout)
-
+        self.layout.addSpacing(100)
         self._medicalSection.setTitle("Medical Data")
         self._medicalSection.setContent(medicalFrame)
 
@@ -125,13 +180,13 @@ class MissionInvolvementView(QFrame):
             self.layout.addWidget(IdLabel(m))
 
 
-class MedicalTable(QTableWidget):
+class DataTable(QTableWidget):
     def __init__(self, data):
-        super(MedicalTable, self).__init__()
+        super(DataTable, self).__init__()
         self.data = data
+        self.setStyleSheet("background-color: blue;")
         self.setData()
-        self.resizeColumnsToContents()
-        self.resizeRowsToContents()
+        self.setContentsMargins(0,0,0,0)
         self.setShowGrid(False)
         font = QFont()
         font.setBold(True)
@@ -153,16 +208,18 @@ class MedicalTable(QTableWidget):
             self.setVerticalHeaderItem(n, QTableWidgetItem(key))  # Set key as vertical header item
             items = self.data[key]
             for m, item in enumerate(items):
-                new_item = QTableWidgetItem(item)
-                self.setItem(n, 0, new_item)  # Set item in the same row (n) but in the first column (0)
-
+                try:
+                    new_item = QTableWidgetItem(item)
+                    self.setItem(n, 0, new_item)  # Set item in the same row (n) but in the first column (0)
+                except:
+                    self.setCellWidget(n, 0, item)
 
         self.resizeColumnsToContents()
         self.resizeRowsToContents()
 
 
 
-"""app = QApplication(sys.argv)
+app = QApplication(sys.argv)
 w = EmployeeInfo("E2676502")
 w.show()
-app.exec()"""
+app.exec()

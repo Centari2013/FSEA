@@ -481,6 +481,10 @@ class manageMission(DatabaseManager):
         return DatabaseManager._execute_with_return('SELECT * FROM Mission WHERE missionID = ?', (missionID,))
 
     @staticmethod
+    def getDepartmentByMissionID(missionID):
+        return DatabaseManager._execute_with_return('SELECT depID FROM DepartmentMission WHERE missionID = ?', (missionID,))
+
+    @staticmethod
     def getMissionByEmpID(empID):
         return DatabaseManager._execute_with_return('SELECT missionID FROM EmployeeMission WHERE empID = ?', (empID,))
 
