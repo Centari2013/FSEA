@@ -35,6 +35,8 @@ Before running the program, ensure that you have the necessary dependencies inst
 
 The program is built over an SQLite3 database. Here is the [schema](https://github.com/Centari2013/FSEA/blob/969662d02a4c4a4565d3ba582ec3530f67a8afab/FSEA_DB_Schema.pdf) if you are interested.
 
+For readability purposes, I removed the full text search (FTS) tables from the ER diagram, but they are still mentioned in the document's trigger statements.
+
 ## TODO List
 
 Here are the primary tasks that need to be completed for this project:
