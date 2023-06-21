@@ -219,7 +219,8 @@ class DataTable(QTableWidget):
 
 
 
-app = QApplication(sys.argv)
+"""app = QApplication(sys.argv)
 w = EmployeeInfo("E2676502")
 w.show()
 app.exec()
+"""
