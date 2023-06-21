@@ -1,6 +1,6 @@
 import sys
-from app.loginScreen import authWindow
-from app.fseaDatabaseOptions import database_options
+from src.loginScreen import authWindow
+from src.fseaDatabaseOptions import database_options
 from PyQt6.QtWidgets import QApplication
 
 app = QApplication(sys.argv)

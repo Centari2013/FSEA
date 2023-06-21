@@ -1,7 +1,7 @@
 from PyQt6.QtCore import QSize, Qt, QCoreApplication, QPoint
 from PyQt6.QtGui import QPixmap, QIcon
 from PyQt6.QtWidgets import QMainWindow, QLineEdit, QLabel, QPushButton, QGridLayout, QVBoxLayout, QWidget
-from app.stylePresets import colors
+from src.stylePresets import colors
 from utils.filePaths import icons
 from utils.authUtils import authenticate
 

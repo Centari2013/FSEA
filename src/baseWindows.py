@@ -4,7 +4,7 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtCore import *
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import *
-from app.stylePresets import colors
+from src.stylePresets import colors
 from utils.filePaths import icons
 
 
