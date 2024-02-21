@@ -1,0 +1,11 @@
+clearanceID,name,description
+1,"General Access","Basic access granted to all personnel for non-sensitive information and common areas."
+2,"Administrative Access","Access to administrative systems, employee records, and non-sensitive operational information."
+3,"Technical Access","Access to technical documentation, equipment, and systems relevant to assigned duties."
+4,"Project Access","Access to project-specific information, research data, and specialized facilities."
+5,Confidential,"Access to sensitive information, classified projects, and restricted areas."
+6,Secret,"Access to highly classified information, advanced research facilities, and strategic initiatives."
+7,"Top Secret","Access to top-secret information, advanced technologies, and critical operational activities."
+8,"Special Access","Access to exclusive, compartmentalized information and projects with exceptional importance."
+9,Cosmic,"Access to cosmic-level information, advanced extraterrestrial research, and interstellar exploration data."
+10,Unlimited,"Highest level of clearance, granting access to sensitive F-SEA directives, classified security matters, and all F-SEA systems."
