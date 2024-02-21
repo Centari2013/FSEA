@@ -1,6 +1,5 @@
 import json
 import random
-from database_setup.declaration.DB_Declaration import *
 from datetime import datetime
 from utils.encryption import encrypt
 from utils.databaseUtils import *
