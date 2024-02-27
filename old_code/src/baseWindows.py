@@ -4,8 +4,8 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtCore import *
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import *
-from src.stylePresets import colors
-from utils.filePaths import icons
+from old_code.src.stylePresets import colors
+from old_code.utils.filePaths import icons
 
 
 class windowWithTitleBar(QMainWindow):

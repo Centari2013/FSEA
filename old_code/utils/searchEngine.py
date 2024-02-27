@@ -1,7 +1,7 @@
 import sqlite3
 import string
 import logging
-from utils.filePaths import DB_PATH
+from old_code.utils.filePaths import DB_PATH
 from nltk.corpus import stopwords
 
 

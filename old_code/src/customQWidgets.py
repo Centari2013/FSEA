@@ -1,10 +1,9 @@
 from PyQt6 import QtGui, QtWidgets, QtCore
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QIcon, QFont
-from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy, QScrollBar, \
-    QSpacerItem
-from utils.filePaths import icons
-from src.stylePresets import colors, stylesheets
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QLabel, QFrame, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy
+from old_code.utils.filePaths import icons
+from old_code.src.stylePresets import colors, stylesheets
 
 
 class PanelButton(QPushButton):

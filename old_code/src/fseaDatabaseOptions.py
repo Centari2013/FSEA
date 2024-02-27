@@ -2,13 +2,13 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QLabel, QFrame, QGridLayout, QPushButton, QComboBox, QLineEdit, QSpacerItem, QSizePolicy
 
-from src.baseWindows import windowWithTitleBar
-from src.stylePresets import colors, stylesheets
-from src.customQWidgets import PanelButton, ElidedLabel, IdLabel
-from src.infoWindow import EmployeeInfo
-from utils.searchEngine import searchEngine
-from utils.dbVariables import (employeeType, specimenType, originType,
-                               missionType, departmentType)
+from old_code.src.baseWindows import windowWithTitleBar
+from old_code.src.stylePresets import colors, stylesheets
+from old_code.src.customQWidgets import PanelButton, ElidedLabel, IdLabel
+from old_code.src.infoWindow import EmployeeInfo
+from old_code.utils.searchEngine import searchEngine
+from old_code.utils.dbVariables import (employeeType, specimenType, originType,
+                                        missionType, departmentType)
 
 
 

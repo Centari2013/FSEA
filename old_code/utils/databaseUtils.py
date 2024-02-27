@@ -1,6 +1,6 @@
 import sqlite3
-from utils.filePaths import DB_PATH
-from utils.authUtils import generateEID, generateUsername, generatePWD, generateOID, generateMID, generateSID
+from old_code.utils.filePaths import DB_PATH
+from old_code.utils.authUtils import generateEID, generateUsername, generatePWD, generateOID, generateMID, generateSID
 from abc import ABC, abstractmethod
 import traceback
 

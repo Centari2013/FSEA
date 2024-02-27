@@ -2,8 +2,8 @@ import secrets
 import sqlite3
 import string
 from random import randint
-from utils.filePaths import DB_PATH
-from utils.encryption import encrypt
+from old_code.utils.filePaths import DB_PATH
+from old_code.utils.encryption import encrypt
 
 
 def authenticate(user, pwd):

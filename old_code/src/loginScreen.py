@@ -1,9 +1,9 @@
 from PyQt6.QtCore import QSize, Qt, QCoreApplication, QPoint
 from PyQt6.QtGui import QPixmap, QIcon
 from PyQt6.QtWidgets import QMainWindow, QLineEdit, QLabel, QPushButton, QGridLayout, QVBoxLayout, QWidget
-from src.stylePresets import colors
-from utils.filePaths import icons
-from utils.authUtils import authenticate
+from old_code.src.stylePresets import colors
+from old_code.utils.filePaths import icons
+from old_code.utils.authUtils import authenticate
 
 
 class authWindow(QMainWindow):

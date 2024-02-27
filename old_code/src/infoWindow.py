@@ -1,12 +1,11 @@
-import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QApplication, QVBoxLayout, QScrollArea, QWidget, QLabel, QFrame, QTableWidget, \
+from PyQt6.QtWidgets import QVBoxLayout, QScrollArea, QWidget, QLabel, QFrame, QTableWidget, \
     QTableWidgetItem
-from src.baseWindows import windowWithTitleBar
-from src.customQWidgets import CollapsibleSection, headerLabel, IdLabel
-from utils.databaseUtils import *
-from src.stylePresets import stylesheets
+from old_code.src.baseWindows import windowWithTitleBar
+from old_code.src.customQWidgets import CollapsibleSection, headerLabel, IdLabel
+from old_code.utils.databaseUtils import *
+from old_code.src.stylePresets import stylesheets
 
 
 class InfoWindowBase(windowWithTitleBar):
