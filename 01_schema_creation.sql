@@ -31,6 +31,8 @@ CREATE TABLE employees (
     startDate DATE NOT NULL,
     endDate DATE DEFAULT NULL,
     summary TEXT DEFAULT NULL,
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (departmentID) REFERENCES departments(departmentID)
 );
 
@@ -50,15 +52,16 @@ CREATE TABLE employeeDesignations (
     FOREIGN KEY (designationID) REFERENCES designations(designationID)
 );
 
-CREATE TABLE employeeMedical (
-    employeeID VARCHAR(8) NOT NULL,
+CREATE TABLE employeeMedicalRecords (
+    employeeID VARCHAR(8) PRIMARY KEY,
     dob DATE,
     bloodtype VARCHAR(10) DEFAULT NULL CHECK (bloodtype IN ('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined')),
     sex VARCHAR(10) DEFAULT NULL CHECK (sex IN ('m', 'f', 'inter', 'unknown', 'undefined')),
     kilograms REAL CHECK(kilograms > 0),
     height_cm REAL CHECK (height_cm > 0),
     notes TEXT DEFAULT NULL,
-    PRIMARY KEY (employeeID),
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (employeeID) REFERENCES employees(employeeID) ON DELETE CASCADE
 );
 
@@ -70,6 +73,8 @@ CREATE TABLE missions (
     commanderID VARCHAR(8),
     supervisorID VARCHAR(8),
     description TEXT NOT NULL,
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (commanderID) REFERENCES employees(employeeID),
     FOREIGN KEY (supervisorID) REFERENCES employees(employeeID) 
 );
@@ -78,7 +83,9 @@ CREATE TABLE origins (
     originID VARCHAR(8) PRIMARY KEY, -- Origin IDs are formatted as 'OXXXXXXX'
     name TEXT NOT NULL,
     discoveryDate DATE NOT NULL,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL
 );
 
 CREATE TABLE missionOrigins(
@@ -98,6 +105,8 @@ CREATE TABLE specimens (
     acquisitionDate DATE NOT NULL,
     notes TEXT DEFAULT NULL,
     description TEXT DEFAULT NULL,
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (originID) REFERENCES origins(originID) ON DELETE CASCADE,
     FOREIGN KEY (missionID) REFERENCES missions(missionID) ON DELETE CASCADE
 );
@@ -110,13 +119,14 @@ CREATE TABLE specimenContainmentStatuses (
     FOREIGN KEY (containmentStatusID) REFERENCES containmentStatuses(containmentStatusID) ON DELETE CASCADE
 );
 
-CREATE TABLE specimenMedical (
-    specimenID VARCHAR(8) NOT NULL,
+CREATE TABLE specimenMedicalRecords (
+    specimenID VARCHAR(8) PRIMARY KEY ,
     bloodtype VARCHAR(10) DEFAULT NULL,
     sex VARCHAR(10) DEFAULT NULL,
     kilograms REAL CHECK(kilograms > 0),
     notes TEXT DEFAULT NULL,
-    PRIMARY KEY (specimenID),
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (specimenID) REFERENCES specimens(specimenID) ON DELETE CASCADE
 );
 
@@ -130,11 +140,12 @@ CREATE TABLE specimenMissions (
 );
 
 CREATE TABLE credentials (
-    employeeID VARCHAR(8) NOT NULL,
-    username TEXT NOT NULL,
-    password TEXT NOT NULL,
+    employeeID VARCHAR(8) PRIMARY KEY ,
+    username DEFAULT NULL,
+    password DEFAULT NULL,
     loginAttempts INTEGER DEFAULT 0,
-    PRIMARY KEY (employeeID),
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (employeeID) REFERENCES employees(employeeID) ON DELETE CASCADE
 );
 
