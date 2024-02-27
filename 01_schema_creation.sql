@@ -87,7 +87,7 @@ CREATE TABLE missionOrigins(
     PRIMARY KEY (missionID, originID),
     FOREIGN KEY (originID) REFERENCES origins(originID),
     FOREIGN KEY (missionID) REFERENCES missions(missionID) 
-)
+);
 
 CREATE TABLE specimens (
     specimenID VARCHAR(8) PRIMARY KEY, -- SpecimenIDs are formatted as 'SXXXXXXX'

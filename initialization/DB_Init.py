@@ -1,8 +1,8 @@
 import json
 import random
 from datetime import datetime
-from utils.encryption import encrypt
-from utils.databaseUtils import *
+from old_code.utils.encryption import encrypt
+from old_code.utils.databaseUtils import *
 
 '''
 IMPORTANT!!!!
