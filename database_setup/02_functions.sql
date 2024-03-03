@@ -7,26 +7,29 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-
 CREATE OR REPLACE FUNCTION create_employee_records()
 RETURNS TRIGGER AS $$
-    BEGIN
-        INSERT INTO employeeMedicalRecords(employeeID) VALUES (NEW.employeeID);
-        INSERT INTO credentials(employeeID) VALUES (NEW.employeeID);
-        RETURN NEW;
+BEGIN
+    INSERT INTO employee_medical_records (employee_id) 
+    VALUES (NEW.employee_id);
+
+    INSERT INTO credentials (employee_id) 
+    VALUES (NEW.employee_id);
+
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-
 
 
 CREATE OR REPLACE FUNCTION create_specimen_medical_record()
 RETURNS TRIGGER AS $$
-    BEGIN
-        INSERT INTO specimenMedicalRecords(specimenID) VALUES (NEW.specimenID);
+BEGIN
+    INSERT INTO specimen_medical_records (specimen_id) 
+    VALUES (NEW.specimen_id);
+
+    RETURN NEW; -- Make sure to include RETURN NEW; for consistency and to avoid errors.
 END;
 $$ LANGUAGE plpgsql;
-
-
 
 
 CREATE OR REPLACE FUNCTION generate_unique_id(prefix TEXT, target_table TEXT, target_column TEXT)
@@ -56,47 +59,37 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-
-CREATE OR REPLACE FUNCTION insert_employeeID()
+CREATE OR REPLACE FUNCTION insert_employee_id()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.employeeID := generate_unique_id('E', 'employees', 'employeeID');
+    NEW.employee_id := generate_unique_id('E', 'employees', 'employee_id');
+    RETURN NEW;
 END;
-
-$$ LANGUAGE  plpgsql;
-
+$$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION insert_specimenID()
+CREATE OR REPLACE FUNCTION insert_specimen_id()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.specimenID := generate_unique_id('S', 'specimens', 'specimenID');
+    NEW.specimen_id := generate_unique_id('S', 'specimens', 'specimen_id');
+    RETURN NEW;
 END;
-
-$$ LANGUAGE  plpgsql;
-
+$$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION insert_missionID()
+CREATE OR REPLACE FUNCTION insert_mission_id()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.missionID := generate_unique_id('M', 'missions', 'missionID');
+    NEW.mission_id := generate_unique_id('M', 'missions', 'mission_id');
+    RETURN NEW;
 END;
-
-$$ LANGUAGE  plpgsql;
-
+$$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION insert_originID()
+CREATE OR REPLACE FUNCTION insert_origin_id()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.originID := generate_unique_id('O', 'origins', 'originID');
+    NEW.origin_id := generate_unique_id('O', 'origins', 'origin_id');
+    RETURN NEW;
 END;
-
-$$ LANGUAGE  plpgsql;
-
-
-
-
-
-
+$$ LANGUAGE plpgsql;
