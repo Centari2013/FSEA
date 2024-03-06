@@ -27,7 +27,7 @@ BEGIN
     INSERT INTO specimen_medical_records (specimen_id) 
     VALUES (NEW.specimen_id);
 
-    RETURN NEW; -- Make sure to include RETURN NEW; for consistency and to avoid errors.
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
