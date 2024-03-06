@@ -20,7 +20,7 @@ CREATE TABLE departments (
 CREATE TABLE designations (
     designation_id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    abbreviation VARCHAR(10) NOT NULL
+    abbreviation VARCHAR(5) NOT NULL
 );
 
 CREATE TABLE employees (
@@ -123,53 +123,53 @@ CREATE TABLE specimen_medical_records (
     specimen_id VARCHAR(8) PRIMARY KEY,
     bloodtype VARCHAR(10) DEFAULT NULL,
     sex VARCHAR(10) DEFAULT NULL,
-		kilograms REAL CHECK(kilograms > 0),
-		notes TEXT DEFAULT NULL,
-		created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-		updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
-		FOREIGN KEY (specimen_id) REFERENCES specimens(specimen_id) ON DELETE CASCADE
+    kilograms REAL CHECK(kilograms > 0),
+    notes TEXT DEFAULT NULL,
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
+    FOREIGN KEY (specimen_id) REFERENCES specimens(specimen_id) ON DELETE CASCADE
 );
 
 CREATE TABLE specimen_missions (
-		specimen_id VARCHAR(8) NOT NULL,
-		mission_id VARCHAR(8) NOT NULL,
-		involvement_summary TEXT,
-		PRIMARY KEY (specimen_id, mission_id),
-		FOREIGN KEY (specimen_id) REFERENCES specimens(specimen_id) ON DELETE CASCADE,
-		FOREIGN KEY (mission_id) REFERENCES missions(mission_id) ON DELETE CASCADE
+    specimen_id VARCHAR(8) NOT NULL,
+    mission_id VARCHAR(8) NOT NULL,
+    involvement_summary TEXT,
+    PRIMARY KEY (specimen_id, mission_id),
+    FOREIGN KEY (specimen_id) REFERENCES specimens(specimen_id) ON DELETE CASCADE,
+    FOREIGN KEY (mission_id) REFERENCES missions(mission_id) ON DELETE CASCADE
 );
 
 CREATE TABLE credentials (
-		employee_id VARCHAR(8) PRIMARY KEY,
-		username TEXT DEFAULT NULL,
-		password TEXT DEFAULT NULL,
-		login_attempts INTEGER DEFAULT 0,
-		created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-		updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
-		FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE
+    employee_id VARCHAR(8) PRIMARY KEY,
+    username TEXT DEFAULT NULL,
+    password TEXT DEFAULT NULL,
+    login_attempts INTEGER DEFAULT 0,
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE
 );
 
 CREATE TABLE department_missions (
-		department_id INTEGER NOT NULL,
-		mission_id VARCHAR(8) NOT NULL,
-		PRIMARY KEY (department_id, mission_id),
-		FOREIGN KEY (department_id) REFERENCES departments(department_id) ON DELETE CASCADE,
-		FOREIGN KEY (mission_id) REFERENCES missions(mission_id) ON DELETE CASCADE
+    department_id INTEGER NOT NULL,
+    mission_id VARCHAR(8) NOT NULL,
+    PRIMARY KEY (department_id, mission_id),
+    FOREIGN KEY (department_id) REFERENCES departments(department_id) ON DELETE CASCADE,
+    FOREIGN KEY (mission_id) REFERENCES missions(mission_id) ON DELETE CASCADE
 );
 
 CREATE TABLE employee_missions (
-		employee_id VARCHAR(8) NOT NULL,
-		mission_id VARCHAR(8) NOT NULL,
-		involvement_summary TEXT DEFAULT NULL,
-		PRIMARY KEY (employee_id, mission_id),
-		FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE,
-		FOREIGN KEY (mission_id) REFERENCES missions(mission_id) ON DELETE CASCADE
+    employee_id VARCHAR(8) NOT NULL,
+    mission_id VARCHAR(8) NOT NULL,
+    involvement_summary TEXT DEFAULT NULL,
+    PRIMARY KEY (employee_id, mission_id),
+    FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE,
+    FOREIGN KEY (mission_id) REFERENCES missions(mission_id) ON DELETE CASCADE
 );
 
 CREATE TABLE researcher_specimens (
-		employee_id VARCHAR(8) NOT NULL,
-		specimen_id VARCHAR(8) NOT NULL,
-		PRIMARY KEY (employee_id, specimen_id),
-		FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE,
-		FOREIGN KEY (specimen_id) REFERENCES specimens(specimen_id) ON DELETE CASCADE
+    employee_id VARCHAR(8) NOT NULL,
+    specimen_id VARCHAR(8) NOT NULL,
+    PRIMARY KEY (employee_id, specimen_id),
+    FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE,
+    FOREIGN KEY (specimen_id) REFERENCES specimens(specimen_id) ON DELETE CASCADE
 );
