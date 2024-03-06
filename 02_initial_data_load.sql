@@ -26,3 +26,15 @@ CSV Upload Order:
 
 -- Note: The actual data import commands are executed within pgAdmin 4 and thus are not represented in this SQL script.
 -- This documentation is intended to provide clarity on the data import process for this project.
+
+-- After loading in the data from the csvs, I then ran the following insert statement to keep consistent with the app logic that will be present after implementing triggers.ADD
+
+INSERT INTO credentials (employee_id)
+SELECT employee_id 
+FROM employees;
+
+
+-- Employee usernames and passwords will be generated in a later stage of this application's development.
+-- I have only deemed this appropriate as this is fictional system that previusly used a rudimentary form of password protection and encryption.
+-- Data for the specimen_containment_statuses table will be handles programatically as well.
+-- As for the specimen_missions table, that will remain empty until I decide to use it for storytelling purposes.
