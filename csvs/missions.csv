@@ -1,4 +1,4 @@
-missionID,name,startDate,endDate,commanderID,supervisorID,description
+mission_id,name,start_date,end_date,commander_id,supervisor_id,description
 M6281862,Dying Prophet,2052-09-23,2053-05-01,E6428947,E4232170,Recon mission to investigate reports of a glowing 'rosetta-stone-like' object
 M9125616,Gaseous Depths,2055-07-27,,E9537978,E8367340,Exploratory mission to study the atmospheric composition and behavior of gaseous pockets
 M9093853,Abyssal Expedition,2064-11-19,2065-07-03,E5085375,E0162206,Mission to investigate the unusual properties of the underground ocean
@@ -18,7 +18,7 @@ M2739748,Dark Terrain,2069-06-23,2070-09-17,E2676502,E7947414,"A treacherous exp
 M4875871,Light Beacon,2072-04-28,2073-08-15,E7843495,E0380472,A predominantly aerial mission featuring digital assessment of the planet terrain for future missions
 M7909416,Spectral Trails,2045-08-01,2046-12-13,E8541698,E4232170,Observation of the planet's multiple shadowing phenomena that might be hindering colonization efforts
 M1405983,Acid Return,2064-02-20,,E1783092,E4232170,A research mission themed around chemical assessments and disease testinges of aquatic life on the planet.
-M0837036,Wet and Able,2073-11-25,2075-04-16,E7245705,E7947414,A mission to assess the risks of acid induced corrosion on tools and equipment required of deep underwater research and work 
+M0837036,Wet and Able,2073-11-25,2075-04-16,E7245705,E7947414,A mission to assess the risks of acid induced corrosion on tools and equipment required of deep underwater research and work
 M3280310,Planetary Guard,2039-05-26,2043-02-03,E7870753,E4232170,Deployment of a team of special operatives to protect researchers and machinery while studying the microbiology of aquatic lifeforms
 M2735957,Ghost Data,2046-11-25,2047-03-08,E5085375,E7947414,A mission to analyze the residual gravitational waves found in the virtually stagnant planet.
 M2708728,Operation Starlight,2058-06-23,2058-08-03,E5502287,E8367340,"Deployment of a team of special operatives to conduct a surveillance mission, keeping watch over a detected foreign non-sentient humanoids"

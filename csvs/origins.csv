@@ -1,219 +1,219 @@
-originID,name,discoveryDate,description
-O2366904,Lypso,2045-12-05,"A highly hazardous gaseous ice planet"
-O6646163,Nirax,2047-09-01,"A rocky planet with an underground ocean"
-O3270343,Oxna,2046-06-15,"A planet with a highly unstable atmosphere"
-O3832972,Uzirp,2049-11-30,"A planet with high volcanic activity"
-O7085856,Zeluna,2053-07-07,"A planet with high radiation levels"
-O0183790,Lypso,2044-03-14,"A highly hazardous gaseous ice planet"
-O2988737,Oenebria,2056-10-23,"A dark and dense planet with high seismic activity"
-O2837285,Therese,2056-10-23,"A wet planet with a highly acidic water composition"
-O7311600,Teritum,2056-10-23,"A planet devoid of organic life and atmosphere"
-O7928681,Aronica,2054-11-05,"A desert planet with unique geological formations due to extreme temperature fluctuations"
-O3764030,Euni,2060-02-14,"A frigid and icy planet with unstable terrain caused by seismic disturbances beneath the surface"
-O6840813,Nulm,2062-12-28,"A swampy planet with a diverse ecosystem but dangerous predators"
-O9381854,Sagiria,2069-07-18,"A planet with frequent electrical storms"
-O7378703,Zogiaxa,2043-04-09,"A dusty planet with a unique axis tilt that causes a variety of temperatures"
+origin_id,name,discovery_date,description
+O2366904,Lypso,2045-12-05,A highly hazardous gaseous ice planet
+O6646163,Nirax,2047-09-01,A rocky planet with an underground ocean
+O3270343,Oxna,2046-06-15,A planet with a highly unstable atmosphere
+O3832972,Uzirp,2049-11-30,A planet with high volcanic activity
+O7085856,Zeluna,2053-07-07,A planet with high radiation levels
+O0183790,Lypso,2044-03-14,A highly hazardous gaseous ice planet
+O2988737,Oenebria,2056-10-23,A dark and dense planet with high seismic activity
+O2837285,Therese,2056-10-23,A wet planet with a highly acidic water composition
+O7311600,Teritum,2056-10-23,A planet devoid of organic life and atmosphere
+O7928681,Aronica,2054-11-05,A desert planet with unique geological formations due to extreme temperature fluctuations
+O3764030,Euni,2060-02-14,A frigid and icy planet with unstable terrain caused by seismic disturbances beneath the surface
+O6840813,Nulm,2062-12-28,A swampy planet with a diverse ecosystem but dangerous predators
+O9381854,Sagiria,2069-07-18,A planet with frequent electrical storms
+O7378703,Zogiaxa,2043-04-09,A dusty planet with a unique axis tilt that causes a variety of temperatures
 O7023832,Krytos,2050-04-11,"A large, rocky planet with a dense atmosphere that has led to unique cloud formations"
-O2645918,Vylbia,2065-06-09,"An ocean planet with extreme tidal forces that create dangerous whirlpools and currents"
+O2645918,Vylbia,2065-06-09,An ocean planet with extreme tidal forces that create dangerous whirlpools and currents
 O5864926,Xaldor,2049-11-22,"A hot, barren planet with active volcanoes and geothermal activity"
 O4127782,Noltria,2074-02-12,"A planet covered in vast, dense forests with a diverse ecosystem"
 O5947506,Ziraq,2069-08-20,"A small, icy planet with unique mineral deposits"
 O7861272,Zaxtor,2055-09-22,"An arid, rocky planet with vast networks of underground caves"
-O5136135,"Nebula Vista",2048-05-12,"A gaseous planet with a vibrant ring system"
-O6309997,Sylira,2060-12-20,"A planet covered in vast oceans with a temperate climate and diverse marine life"
-O7147846,Gevron,2075-05-01,"An icy planet with a highly elliptical orbit and extreme temperature fluctuations"
-O3838355,Axiom,2065-11-13,"A planet with a thick atmosphere and extreme seismic activity"
-O5987986,Nalma,2040-04-08,"A planet with a varied topography ranging from massive mountain ranges to vast open plains"
+O5136135,Nebula Vista,2048-05-12,A gaseous planet with a vibrant ring system
+O6309997,Sylira,2060-12-20,A planet covered in vast oceans with a temperate climate and diverse marine life
+O7147846,Gevron,2075-05-01,An icy planet with a highly elliptical orbit and extreme temperature fluctuations
+O3838355,Axiom,2065-11-13,A planet with a thick atmosphere and extreme seismic activity
+O5987986,Nalma,2040-04-08,A planet with a varied topography ranging from massive mountain ranges to vast open plains
 O3546226,Zereth,2044-03-14,"A distant, uninhabitable planet with an extremely harsh climate"
-O9943026,Galora,2044-03-14,"A planet with a moderate climate and complex ecosystem"
-O4538007,Eira,2044-03-14,"A cold and barren planet with a unique geological composition"
-O1143211,Aviza,2061-02-20,"A habitable planet with a diverse range of flora and fauna"
-O8748904,Neoma,2062-10-12,"A planet with diverse terrain and volcanic activity"
-O1100980,Varin,2063-07-14,"A planet with a dense atmosphere and intense climate patterns"
-O3965629,Nalia,2064-01-07,"A planet with large ice caps and subterranean liquid oceans"
-O6067432,Candor,2065-04-02,"A barren planet with a unique geological structure"
-O4906078,Grypthon,2042-11-21,"A rocky planet with highly irregular terrain and a severe atmosphere."
-O8135597,Eurifix,2045-06-01,"Gas giant with a cloudy and stormy atmosphere and a rocky ring system."
-O1862475,Arithea,2049-12-14,"Frozen moon with icy crevasse types"
-O7118501,Icaria,2055-08-02,"A frigid ice planet with strong magnetic activity"
-O4724143,Venera,2055-08-02,"A swampy planet with sulfuric acid rain"
-O6728390,Corinthea,2055-08-02,"A highly irradiated desert planet"
-O3291710,Megaclite,2058-04-05,"A planet covered in expanse of the ice that is under the control of massive electrical storms"
+O9943026,Galora,2044-03-14,A planet with a moderate climate and complex ecosystem
+O4538007,Eira,2044-03-14,A cold and barren planet with a unique geological composition
+O1143211,Aviza,2061-02-20,A habitable planet with a diverse range of flora and fauna
+O8748904,Neoma,2062-10-12,A planet with diverse terrain and volcanic activity
+O1100980,Varin,2063-07-14,A planet with a dense atmosphere and intense climate patterns
+O3965629,Nalia,2064-01-07,A planet with large ice caps and subterranean liquid oceans
+O6067432,Candor,2065-04-02,A barren planet with a unique geological structure
+O4906078,Grypthon,2042-11-21,A rocky planet with highly irregular terrain and a severe atmosphere.
+O8135597,Eurifix,2045-06-01,Gas giant with a cloudy and stormy atmosphere and a rocky ring system.
+O1862475,Arithea,2049-12-14,Frozen moon with icy crevasse types
+O7118501,Icaria,2055-08-02,A frigid ice planet with strong magnetic activity
+O4724143,Venera,2055-08-02,A swampy planet with sulfuric acid rain
+O6728390,Corinthea,2055-08-02,A highly irradiated desert planet
+O3291710,Megaclite,2058-04-05,A planet covered in expanse of the ice that is under the control of massive electrical storms
 O6512319,Thasos,2061-12-19,"A large, barren and rocky planet with remarkable geological phenomena and unexplainable electromagnetic anomalies"
-O5416457,Azhanti,2070-08-26,"A small and acidic planet with highly volatile tectonic activity and immense geysers of superheated gas and liquid"
+O5416457,Azhanti,2070-08-26,A small and acidic planet with highly volatile tectonic activity and immense geysers of superheated gas and liquid
 O2688773,Cocytus,2076-01-01,"A tiny, frigid ice planet with vast internal oceans and erratic rotation"
 O2367053,Sisyphus,2080-09-23,"A massive, gas giant planet with violent and fast-moving storms and an array of unique atmospheric phenomena"
-O8093344,Zaxxon,2056-01-01,"A rocky and barren planet with an toxic atmosphere and very high radiation levels."
+O8093344,Zaxxon,2056-01-01,A rocky and barren planet with an toxic atmosphere and very high radiation levels.
 O3374852,Omicron,2059-09-03,"A planet with a dense, poisonous atmosphere and an extremely hot surface."
-O1572613,Noma,2079-05-12,"A small planet with a mostly terrestrial environment and a toxic atmosphere and a few frozen seas."
-O9173400,Kronos,2081-11-09,"A gas giant planet with a hot atmosphere with a population of sky creatures that wander in its gaseous atmosphere"
+O1572613,Noma,2079-05-12,A small planet with a mostly terrestrial environment and a toxic atmosphere and a few frozen seas.
+O9173400,Kronos,2081-11-09,A gas giant planet with a hot atmosphere with a population of sky creatures that wander in its gaseous atmosphere
 O9865994,Zephyrion,2070-02-22,"A super-earth planet with a rocky terrain and a hazy atmosphere, prone to frequent and unpredictable weather patterns."
-O4098950,Xenonom,2036-01-01,"A planet with a methane atmosphere and large deposits of xenon."
-O3175496,Esperon,2044-06-02,"A planet with a highly elliptical orbit around its star and an unstable climate."
-O6736593,Cerestria,2059-03-12,"A rocky planet with a thin atmosphere and harsh climate conditions."
-O9073365,Helixa,2072-08-24,"A gas giant with intricate weather patterns and an abundance of helium-3."
-O9070420,Noxus,2081-05-20,"A planet with a highly toxic atmosphere and volatile terrain."
+O4098950,Xenonom,2036-01-01,A planet with a methane atmosphere and large deposits of xenon.
+O3175496,Esperon,2044-06-02,A planet with a highly elliptical orbit around its star and an unstable climate.
+O6736593,Cerestria,2059-03-12,A rocky planet with a thin atmosphere and harsh climate conditions.
+O9073365,Helixa,2072-08-24,A gas giant with intricate weather patterns and an abundance of helium-3.
+O9070420,Noxus,2081-05-20,A planet with a highly toxic atmosphere and volatile terrain.
 O8874690,Aurorax,2075-11-15,"A planet with a thick carbon dioxide atmosphere and a dense, jungled surface."
-O3929032,Arcta,2060-05-20,"A frozen desert planet with icy spikes protruding from its surface"
+O3929032,Arcta,2060-05-20,A frozen desert planet with icy spikes protruding from its surface
 O0018345,Aurora,2061-09-30,"A gas giant planet with swirling, colorful storms"
-O0574688,Sylfa,2063-03-19,"A planet with a unique symbiotic ecosystem"
-O3649571,Astraeus,2062-11-27,"An Earth-like planet with a vibrant atmosphere and oceans"
-O1493097,Nemesis,2063-05-12,"A rogue planet that drifts alone in space"
-O8149004,Othela,2048-01-15,"A volcanic planet with an extremely thin atmosphere"
-O2870012,Galeth,2049-11-23,"An ice planet with severe windstorms"
-O5674088,Ravala,2056-06-30,"A planet with a dense forest ecosystem"
-O6765202,Xenida,2058-10-05,"A gas giant planet with various floating rock formations"
-O0807865,Zeta,2060-08-02,"A barren desert planet with a complex canyon system"
-O0896981,Korin,2052-04-20,"A planet with a large and intricate cave system"
-O9031268,Eryl,2048-01-27,"A lush garden planet with a variety of flora and fauna."
-O6633006,Vindell,2051-06-14,"An icy planet with a rocky core."
-O0286579,Pyros,2056-04-02,"A desert planet with high temperatures."
-O4094858,Gormor,2065-02-08,"A planet with a highly volatile atmosphere and frequent storms."
-O4338572,Aegrus,2061-03-17,"A planet with toxic atmosphere and vegetation."
-O7205855,"Nova X",2043-11-07,"A planet with a highly unstable core."
-O2221806,Klydeon,2070-06-11,"A planet with highly radioactive atmosphere and a hostile ecosystem."
-O9757230,Eramir,2067-09-12,"A barren planet with extreme temperatures and minimal atmosphere."
+O0574688,Sylfa,2063-03-19,A planet with a unique symbiotic ecosystem
+O3649571,Astraeus,2062-11-27,An Earth-like planet with a vibrant atmosphere and oceans
+O1493097,Nemesis,2063-05-12,A rogue planet that drifts alone in space
+O8149004,Othela,2048-01-15,A volcanic planet with an extremely thin atmosphere
+O2870012,Galeth,2049-11-23,An ice planet with severe windstorms
+O5674088,Ravala,2056-06-30,A planet with a dense forest ecosystem
+O6765202,Xenida,2058-10-05,A gas giant planet with various floating rock formations
+O0807865,Zeta,2060-08-02,A barren desert planet with a complex canyon system
+O0896981,Korin,2052-04-20,A planet with a large and intricate cave system
+O9031268,Eryl,2048-01-27,A lush garden planet with a variety of flora and fauna.
+O6633006,Vindell,2051-06-14,An icy planet with a rocky core.
+O0286579,Pyros,2056-04-02,A desert planet with high temperatures.
+O4094858,Gormor,2065-02-08,A planet with a highly volatile atmosphere and frequent storms.
+O4338572,Aegrus,2061-03-17,A planet with toxic atmosphere and vegetation.
+O7205855,Nova X,2043-11-07,A planet with a highly unstable core.
+O2221806,Klydeon,2070-06-11,A planet with highly radioactive atmosphere and a hostile ecosystem.
+O9757230,Eramir,2067-09-12,A barren planet with extreme temperatures and minimal atmosphere.
 O3303506,Xeron,2060-05-13,"A cold, barren planet that shows evidence of a past volcanic eruption"
 O1857898,Arclight,2060-05-13,"A planet with bioluminescent plant life and a thick, hazy atmosphere"
 O1045008,Oceantide,2060-05-13,"A moon of a gas giant, completely covered in a vast ocean"
-O0204317,Starwind,2060-05-13,"An extremely turbulent gas giant with a varied and dynamic atmosphere"
-O8950108,Krystallos,2058-08-16,"An ice-covered planet with highly reflective surfaces"
-O1847292,Icharus,2058-08-16,"A planet with an extremely elongated orbit and highly varied surface terrain"
-O3595490,Stardust,2058-08-16,"A large asteroid composed of a variety of minerals and materials"
-O2349156,Ouroboros,2058-08-16,"A planet with multiple rings and a rapidly spinning atmosphere"
-O3411286,Nova,2058-08-16,"A small star with a highly unstable core"
-O5111912,Andromeda,2058-08-16,"A distant galaxy with numerous potential exploration targets"
+O0204317,Starwind,2060-05-13,An extremely turbulent gas giant with a varied and dynamic atmosphere
+O8950108,Krystallos,2058-08-16,An ice-covered planet with highly reflective surfaces
+O1847292,Icharus,2058-08-16,A planet with an extremely elongated orbit and highly varied surface terrain
+O3595490,Stardust,2058-08-16,A large asteroid composed of a variety of minerals and materials
+O2349156,Ouroboros,2058-08-16,A planet with multiple rings and a rapidly spinning atmosphere
+O3411286,Nova,2058-08-16,A small star with a highly unstable core
+O5111912,Andromeda,2058-08-16,A distant galaxy with numerous potential exploration targets
 O5868979,Celestia,2058-08-16,"A planet with a highly eccentric orbit, extreme temperature fluctuations, and intense radiation levels"
-O9758011,Erosa,2044-05-13,"A rocky and arid planet with a thin atmosphere"
-O3597116,Omnicon,2044-05-13,"A gas giant with a ring system and many moons"
-O5864921,Choros,2044-05-13,"An icy dwarf planet with a rocky core"
-O6650762,Nimarus,2044-05-13,"A large moon of a gas giant with a dense atmosphere and high volcanic activity"
-O0334590,Zerax,2044-05-13,"A rocky planet with a thick atmosphere and extreme weather conditions"
-O1734698,Vythos,2071-02-28,"A volcanic planet with high geothermal activity"
+O9758011,Erosa,2044-05-13,A rocky and arid planet with a thin atmosphere
+O3597116,Omnicon,2044-05-13,A gas giant with a ring system and many moons
+O5864921,Choros,2044-05-13,An icy dwarf planet with a rocky core
+O6650762,Nimarus,2044-05-13,A large moon of a gas giant with a dense atmosphere and high volcanic activity
+O0334590,Zerax,2044-05-13,A rocky planet with a thick atmosphere and extreme weather conditions
+O1734698,Vythos,2071-02-28,A volcanic planet with high geothermal activity
 O6820187,Helith,2061-11-07,"A gas giant with multiple moons, including one that is potentially habitable"
-O7744844,Aurorion,2058-03-25,"A planet with a highly active magnetic field and frequent auroras"
-O7705759,Orin,2069-04-06,"A desert planet with a thin atmosphere and unique geological features"
-O2995906,Tychus,2063-06-03,"A rocky planet with a dense atmosphere"
-O7553135,Galaxia,2063-06-03,"A gas giant with multiple moons"
-O8514084,Aurora,2063-06-03,"A small icy planet with a thin atmosphere"
-O9601404,Nebula,2063-06-03,"A small planet surrounded by a colorful nebula"
-O2021422,Exodus,2063-06-03,"A rocky planet with high levels of toxic gases"
-O9997581,"Fenix Prime",2041-11-12,"A gaseous planet with a unique ring system."
-O1210687,Aetheria,2041-11-12,"A mysterious planet surrounded by intense radiation."
+O7744844,Aurorion,2058-03-25,A planet with a highly active magnetic field and frequent auroras
+O7705759,Orin,2069-04-06,A desert planet with a thin atmosphere and unique geological features
+O2995906,Tychus,2063-06-03,A rocky planet with a dense atmosphere
+O7553135,Galaxia,2063-06-03,A gas giant with multiple moons
+O8514084,Aurora,2063-06-03,A small icy planet with a thin atmosphere
+O9601404,Nebula,2063-06-03,A small planet surrounded by a colorful nebula
+O2021422,Exodus,2063-06-03,A rocky planet with high levels of toxic gases
+O9997581,Fenix Prime,2041-11-12,A gaseous planet with a unique ring system.
+O1210687,Aetheria,2041-11-12,A mysterious planet surrounded by intense radiation.
 O3263127,Aquillon,2041-11-12,"An oceanic world with large, turbulent storms."
-O2301044,Hindar,2068-05-24,"A barren and rocky planet with extreme temperature fluctuations"
-O1494953,Aurorium,2068-05-24,"A gas giant with bright auroras and strong magnetic fields"
-O6866582,"Nebula Prime",2068-05-24,"A misty nebula with varying gases"
-O5771472,Lucidus,2068-05-24,"A rocky planet with a thick atmosphere and extreme weather conditions"
-O6528949,Cerulean,2068-05-24,"A super-earth exoplanet in a binary star system."
-O3046694,Xania,2057-05-24,"A rocky planet with a toxic atmosphere"
-O7332040,Nantah,2057-05-24,"A desert planet with frequent sandstorms"
-O3173378,Nentori,2057-05-24,"A largely water-based planet with a large ice shelf"
+O2301044,Hindar,2068-05-24,A barren and rocky planet with extreme temperature fluctuations
+O1494953,Aurorium,2068-05-24,A gas giant with bright auroras and strong magnetic fields
+O6866582,Nebula Prime,2068-05-24,A misty nebula with varying gases
+O5771472,Lucidus,2068-05-24,A rocky planet with a thick atmosphere and extreme weather conditions
+O6528949,Cerulean,2068-05-24,A super-earth exoplanet in a binary star system.
+O3046694,Xania,2057-05-24,A rocky planet with a toxic atmosphere
+O7332040,Nantah,2057-05-24,A desert planet with frequent sandstorms
+O3173378,Nentori,2057-05-24,A largely water-based planet with a large ice shelf
 O2671014,Meridian,2057-05-24,"A planet with high terrestrial activity, violent storms, and extreme temperature fluctuations"
-O9737203,Kao,2057-05-24,"A jungle planet containing life forms with unknown medicinal and technological capabilities"
-O1474284,Kronos,2057-05-24,"A planet with extremely high gravity levels and a volatile atmosphere"
+O9737203,Kao,2057-05-24,A jungle planet containing life forms with unknown medicinal and technological capabilities
+O1474284,Kronos,2057-05-24,A planet with extremely high gravity levels and a volatile atmosphere
 O5858747,Cassiopeia,2057-05-24,"A gaseous, tempestuous planet with frequent lightning strikes"
-O0632242,Astraeus,2057-05-24,"A planet with a diverse and rapidly-evolving ecosystem"
-O0233506,Kynos,2059-07-16,"An extremely turbulent and unstable gas giant"
-O1794354,Aurion,2059-07-16,"A barren planet with acidic soil"
-O0736711,Choros,2059-07-16,"A frozen world with an extremely cold atmosphere"
-O7522906,Osira,2059-07-16,"A rocky planet with an opaque atmosphere"
+O0632242,Astraeus,2057-05-24,A planet with a diverse and rapidly-evolving ecosystem
+O0233506,Kynos,2059-07-16,An extremely turbulent and unstable gas giant
+O1794354,Aurion,2059-07-16,A barren planet with acidic soil
+O0736711,Choros,2059-07-16,A frozen world with an extremely cold atmosphere
+O7522906,Osira,2059-07-16,A rocky planet with an opaque atmosphere
 O0847967,Zorion,2059-07-16,"A planet with a dense, toxic atmosphere"
-O8638796,Arktos,2063-04-18,"A frigid planet with a large ice cap at its southern pole"
-O6294049,Tenebris,2065-03-22,"A planet with a thick atmosphere that blocks most of the light from its sun"
-O9982321,Echelon,2071-10-05,"A small moon of a gas giant with a unique crystalline structure"
-O0631955,Haven,2073-06-19,"A terrestrial planet with a diverse and complex ecosystem"
-O9671844,Ostara,2069-01-11,"A volcanic planet with highly unstable tectonic activity"
-O5943653,Olenop,2057-11-04,"A planet with extremely low temperatures which arrived early in universe formation."
-O1353473,Vasenka,2060-11-18,"A planet with a highly complex electromagnetic field which disrupts technology"
-O0080251,Nekor,2075-01-12,"A gas giant with a variety of undiscovered asteroids within its rings"
-O0769454,Volette,2073-08-29,"A terrestrial planet with an acidic rain climate."
-O3835823,Maxral,2070-09-28,"A terrestrial planet with extreme weather conditions."
-O7722952,Torrin,2049-02-14,"A terrestrial planet with a significant concentration of rare earth elements"
-O2019545,Thelma,2062-10-26,"A gas giant with massive cyclones and dangerous atmospheric conditions"
-O4825862,Kaelo,2057-05-21,"An earthlike planet with a large body of water and an abundance of plant life"
-O3569523,Delaque,2067-11-15,"A rocky planet with intense volcanic activity"
-O0781722,Nocra,2070-03-10,"A terrestrial planet with low oxygen levels and uniquely adapted lifeforms"
-O8427755,Nelara,2054-10-06,"A barren rocky planet rich in minerals."
-O1795310,Zarvax,2054-10-06,"A gas giant with strange atmospheric formations."
-O2417022,Olethia,2054-10-06,"A habitable terrestrial planet with a mild climate."
-O8100784,Xarthon,2054-10-06,"A frozen planet with abundant ice and water."
-O2765372,Lirathia,2054-10-06,"An ocean planet with a vast network of underground caverns."
+O8638796,Arktos,2063-04-18,A frigid planet with a large ice cap at its southern pole
+O6294049,Tenebris,2065-03-22,A planet with a thick atmosphere that blocks most of the light from its sun
+O9982321,Echelon,2071-10-05,A small moon of a gas giant with a unique crystalline structure
+O0631955,Haven,2073-06-19,A terrestrial planet with a diverse and complex ecosystem
+O9671844,Ostara,2069-01-11,A volcanic planet with highly unstable tectonic activity
+O5943653,Olenop,2057-11-04,A planet with extremely low temperatures which arrived early in universe formation.
+O1353473,Vasenka,2060-11-18,A planet with a highly complex electromagnetic field which disrupts technology
+O0080251,Nekor,2075-01-12,A gas giant with a variety of undiscovered asteroids within its rings
+O0769454,Volette,2073-08-29,A terrestrial planet with an acidic rain climate.
+O3835823,Maxral,2070-09-28,A terrestrial planet with extreme weather conditions.
+O7722952,Torrin,2049-02-14,A terrestrial planet with a significant concentration of rare earth elements
+O2019545,Thelma,2062-10-26,A gas giant with massive cyclones and dangerous atmospheric conditions
+O4825862,Kaelo,2057-05-21,An earthlike planet with a large body of water and an abundance of plant life
+O3569523,Delaque,2067-11-15,A rocky planet with intense volcanic activity
+O0781722,Nocra,2070-03-10,A terrestrial planet with low oxygen levels and uniquely adapted lifeforms
+O8427755,Nelara,2054-10-06,A barren rocky planet rich in minerals.
+O1795310,Zarvax,2054-10-06,A gas giant with strange atmospheric formations.
+O2417022,Olethia,2054-10-06,A habitable terrestrial planet with a mild climate.
+O8100784,Xarthon,2054-10-06,A frozen planet with abundant ice and water.
+O2765372,Lirathia,2054-10-06,An ocean planet with a vast network of underground caverns.
 O9297795,Aurora,2056-09-17,"A lush, green planet with a complex ecosystem"
 O4640216,Nirax,2056-09-17,"A barren, rocky planet with evidence of past volcanic activity"
-O8617784,Zypheria,2056-09-17,"A gas giant planet with several large moons"
-O1466501,Chronos,2056-09-17,"An icy planet with a massive ring system"
-O3699400,Astra,2056-09-17,"A rocky planet with an extensive cave system"
-O3559995,Villano,2051-12-03,"An uninhabitable planet with poisonous gas pockets"
+O8617784,Zypheria,2056-09-17,A gas giant planet with several large moons
+O1466501,Chronos,2056-09-17,An icy planet with a massive ring system
+O3699400,Astra,2056-09-17,A rocky planet with an extensive cave system
+O3559995,Villano,2051-12-03,An uninhabitable planet with poisonous gas pockets
 O2072601,Tyduro,2051-12-03,"A rocky, dry planet with high seismic activity"
-O9765991,Uranalisis,2051-12-03,"A bright blue gas giant planet with a complex ring system"
+O9765991,Uranalisis,2051-12-03,A bright blue gas giant planet with a complex ring system
 O1265138,Groxina,2051-12-03,"A cool, rocky planet with two small moons"
-O8486056,Synthetica,2051-12-03,"A planet with a highly reflective and electric magnetic surface"
+O8486056,Synthetica,2051-12-03,A planet with a highly reflective and electric magnetic surface
 O7267531,Zephyrion,2065-12-20,"A small, rocky planet with high winds"
-O8738532,Auroraplex,2070-05-08,"A multi-colored gas giant with numerous auroras"
-O5952379,Nimnisia,2073-07-15,"A planet with a high density atmosphere and constant electrical storms"
-O6782517,Spheria,2072-06-15,"A large planet comprised mostly of water and ice"
+O8738532,Auroraplex,2070-05-08,A multi-colored gas giant with numerous auroras
+O5952379,Nimnisia,2073-07-15,A planet with a high density atmosphere and constant electrical storms
+O6782517,Spheria,2072-06-15,A large planet comprised mostly of water and ice
 O5859630,Nova,2067-03-01,"A small, rocky planet with frequent volcanic activity"
-O6624196,Cosmograd,2071-04-10,"A terrestrial planet with no atmosphere and a vast network of underground tunnels"
+O6624196,Cosmograd,2071-04-10,A terrestrial planet with no atmosphere and a vast network of underground tunnels
 O0563357,Atlas,2068-11-28,"A planet with a thick, dense atmosphere and high gravity"
-O4007752,Delta,2074-01-01,"A planet with a thin atmosphere and a harsh radiation environment"
-O6137297,Luminex,2044-07-23,"A luminous gas giant with thick layers of ionized hydrogen."
-O4677206,Xenoleon,2044-07-23,"A rocky planet with high levels of xenon and an active tectonic system."
-O6621137,"Orion's Shard",2044-07-23,"A large fragment of a destroyed planet caught in the gravity well of a large gas giant."
-O7474114,Golthon,2044-07-23,"An ocean planet with an active biosphere that exudes a remarkable bioluminescence."
-O0132330,"Terra Nova",2044-07-23,"A super-earth just outside the habitable zone."
-O1692910,Vulnus,2061-07-01,"A highly unstable planet with extreme seismic activity and dangerous high-pressure gas pockets"
+O4007752,Delta,2074-01-01,A planet with a thin atmosphere and a harsh radiation environment
+O6137297,Luminex,2044-07-23,A luminous gas giant with thick layers of ionized hydrogen.
+O4677206,Xenoleon,2044-07-23,A rocky planet with high levels of xenon and an active tectonic system.
+O6621137,Orion's Shard,2044-07-23,A large fragment of a destroyed planet caught in the gravity well of a large gas giant.
+O7474114,Golthon,2044-07-23,An ocean planet with an active biosphere that exudes a remarkable bioluminescence.
+O0132330,Terra Nova,2044-07-23,A super-earth just outside the habitable zone.
+O1692910,Vulnus,2061-07-01,A highly unstable planet with extreme seismic activity and dangerous high-pressure gas pockets
 O5757443,Solaspis,2066-03-06,"A large, rocky planet with dense atmosphere and high solar radiation"
 O1818096,Talos,2067-11-30,"A small, rocky planet with sparse atmosphere and various forms of volcanic activity"
 O1262514,Cindra,2064-04-22,"A large, rocky planet with a dense atmosphere and highly aggressive microbial life forms."
-O3521004,Belnor,2071-02-18,"A gas giant with a highly complex atmospheric composition and strong magnetosphere"
-O3309356,Oryx,2068-07-09,"An icy planet with a highly eccentric orbit and unpredictable meteor shower activity"
-O4505843,Glothir,2047-08-08,"A rocky planet with an atmosphere consisting mostly of nitrogen and oxygen."
-O3752503,"Zandor Prime",2047-08-08,"A gas planet with a murky atmosphere and unstable weather patterns."
-O0750939,Pheilon,2047-08-08,"A small planet with a rough surface and very little atmosphere."
-O0951913,Kepler-438b,2062-11-03,"A potentially habitable exoplanet discovered by F-SEA"
-O4370206,"Zeta Reticuli d",2062-11-03,"A gas giant located in the Zeta Reticuli star system"
-O4584246,"Gliese 667 Cc",2062-11-03,"A super-Earth exoplanet with three confirmed habitable zones"
-O7027710,TRAPPIST-1d,2062-11-03,"A potentially habitable exoplanet discovered by F-SEA"
-O2942930,Grana,2058-10-03,"A terrestrial planet in the habitable zone of a G-type star"
-O5944239,Keloni,2058-10-03,"A gas giant located within the habitable zone of a red dwarf star"
-O5971223,Saha,2058-10-03,"A rogue planet that remains unassociated with any solar system"
-O8160622,Thalua,2058-10-03,"A high gravity exoplanet with a tilted axis"
+O3521004,Belnor,2071-02-18,A gas giant with a highly complex atmospheric composition and strong magnetosphere
+O3309356,Oryx,2068-07-09,An icy planet with a highly eccentric orbit and unpredictable meteor shower activity
+O4505843,Glothir,2047-08-08,A rocky planet with an atmosphere consisting mostly of nitrogen and oxygen.
+O3752503,Zandor Prime,2047-08-08,A gas planet with a murky atmosphere and unstable weather patterns.
+O0750939,Pheilon,2047-08-08,A small planet with a rough surface and very little atmosphere.
+O0951913,Kepler-438b,2062-11-03,A potentially habitable exoplanet discovered by F-SEA
+O4370206,Zeta Reticuli d,2062-11-03,A gas giant located in the Zeta Reticuli star system
+O4584246,Gliese 667 Cc,2062-11-03,A super-Earth exoplanet with three confirmed habitable zones
+O7027710,TRAPPIST-1d,2062-11-03,A potentially habitable exoplanet discovered by F-SEA
+O2942930,Grana,2058-10-03,A terrestrial planet in the habitable zone of a G-type star
+O5944239,Keloni,2058-10-03,A gas giant located within the habitable zone of a red dwarf star
+O5971223,Saha,2058-10-03,A rogue planet that remains unassociated with any solar system
+O8160622,Thalua,2058-10-03,A high gravity exoplanet with a tilted axis
 O6360978,Aurora-7,2048-08-25,"A rocky, sub-zero temperature planet"
-O7944468,Nebula-12,2048-08-25,"A gas giant with unstable weather patterns"
-O3073235,Rigel-9,2048-08-25,"A planet with high levels of volcanic activity"
-O9967543,Centaurus-6,2048-08-25,"A planet with low gravity and abundant water resources"
-O3210149,Orion-13,2048-08-25,"A planet with a complex ring system"
-O4264368,Orionus-8,2045-06-26,"A gas giant with frequent atmospheric storms"
-O6780666,Canopus-9,2045-06-26,"A planet with arid and desert-like conditions"
-O6773965,Cygnus-7,2045-06-26,"A planet with dense cloud cover and high levels of ionizing radiation"
-O2758518,Leo-12,2045-06-26,"A planet with a fractal-like surface and seismic activity"
-O3465170,Sirius-11,2045-06-26,"A planet with a diverse ecosystem and abundant plant life"
-O8148360,Gareon-15,2040-05-25,"A rocky planet with a thin atmosphere and subzero temperatures"
-O4936163,Polaris-13,2040-12-16,"A gas giant with high wind speeds and frequent lightning storms"
-O5677824,Andromeda-8,2041-12-24,"A planet covered almost entirely in water and home to complex marine life"
-O7336898,Orionus-5,2042-03-02,"A terrestrial planet with a nitrogen-rich atmosphere and extreme climate variations"
-O2992151,Vega-12,2042-12-16,"An ice-covered planet with a volatile atmosphere and intense solar radiation"
-O9453612,Bellatrix-7,2043-06-18,"A planet with a thick atmosphere and an unexplained magnetic anomaly"
+O7944468,Nebula-12,2048-08-25,A gas giant with unstable weather patterns
+O3073235,Rigel-9,2048-08-25,A planet with high levels of volcanic activity
+O9967543,Centaurus-6,2048-08-25,A planet with low gravity and abundant water resources
+O3210149,Orion-13,2048-08-25,A planet with a complex ring system
+O4264368,Orionus-8,2045-06-26,A gas giant with frequent atmospheric storms
+O6780666,Canopus-9,2045-06-26,A planet with arid and desert-like conditions
+O6773965,Cygnus-7,2045-06-26,A planet with dense cloud cover and high levels of ionizing radiation
+O2758518,Leo-12,2045-06-26,A planet with a fractal-like surface and seismic activity
+O3465170,Sirius-11,2045-06-26,A planet with a diverse ecosystem and abundant plant life
+O8148360,Gareon-15,2040-05-25,A rocky planet with a thin atmosphere and subzero temperatures
+O4936163,Polaris-13,2040-12-16,A gas giant with high wind speeds and frequent lightning storms
+O5677824,Andromeda-8,2041-12-24,A planet covered almost entirely in water and home to complex marine life
+O7336898,Orionus-5,2042-03-02,A terrestrial planet with a nitrogen-rich atmosphere and extreme climate variations
+O2992151,Vega-12,2042-12-16,An ice-covered planet with a volatile atmosphere and intense solar radiation
+O9453612,Bellatrix-7,2043-06-18,A planet with a thick atmosphere and an unexplained magnetic anomaly
 O2668460,Antares-10,2044-09-10,"A planet with a dense and toxic atmosphere, and a unique ecosystem"
-O2235327,"Planet X-781",2054-09-28,"A barren and inhospitable planet with no atmosphere."
-O1795292,"Planet Y-192",2054-09-28,"A gas giant with several moons and asteroid belts in orbit."
-O1489887,Zaknafein,2068-12-15,"A barren planet with extreme temperatures and strong winds."
-O3026166,Viburnum,2071-12-01,"A rocky planet with a thin atmosphere and large craters."
-O5966921,Maeve,2066-09-17,"An icy planet with a thick atmosphere and frequent radiation storms."
-O1645943,Caliban,2058-12-01,"A gas giant with several moons and a prominent planetary ring system."
-O9161174,Zephyr,2072-08-04,"A rocky planet with a dense atmosphere and frequent electrical storms."
-O9516822,Aurora,2062-04-23,"A planet with a diverse ecosystem and abundant surface water."
-O1393680,Frostbite,2046-11-11,"A planet with extreme temperatures and unpredictable weather patterns."
-O7623081,Thunderstorm,2065-05-08,"A gas giant with prominent cloud bands and frequent electrical storms."
-O9854973,Grimhilde,2066-07-11,"A dense terrestrial planet located on the edge of the galaxy with intense volcanic activity."
+O2235327,Planet X-781,2054-09-28,A barren and inhospitable planet with no atmosphere.
+O1795292,Planet Y-192,2054-09-28,A gas giant with several moons and asteroid belts in orbit.
+O1489887,Zaknafein,2068-12-15,A barren planet with extreme temperatures and strong winds.
+O3026166,Viburnum,2071-12-01,A rocky planet with a thin atmosphere and large craters.
+O5966921,Maeve,2066-09-17,An icy planet with a thick atmosphere and frequent radiation storms.
+O1645943,Caliban,2058-12-01,A gas giant with several moons and a prominent planetary ring system.
+O9161174,Zephyr,2072-08-04,A rocky planet with a dense atmosphere and frequent electrical storms.
+O9516822,Aurora,2062-04-23,A planet with a diverse ecosystem and abundant surface water.
+O1393680,Frostbite,2046-11-11,A planet with extreme temperatures and unpredictable weather patterns.
+O7623081,Thunderstorm,2065-05-08,A gas giant with prominent cloud bands and frequent electrical storms.
+O9854973,Grimhilde,2066-07-11,A dense terrestrial planet located on the edge of the galaxy with intense volcanic activity.
 O4537650,Revenant,2066-07-11,"A small, icy moon of a gas giant planet located near the center of the galaxy."
-O2436996,Calendula,2066-07-11,"A super-Earth exoplanet located in a nearby planetary system."
-O0700067,Cressida,2066-07-11,"A gas dwarf planet located in the outer reaches of the galaxy."
+O2436996,Calendula,2066-07-11,A super-Earth exoplanet located in a nearby planetary system.
+O0700067,Cressida,2066-07-11,A gas dwarf planet located in the outer reaches of the galaxy.
 O4425051,Velnor,2071-11-06,"A rocky planet with a thin atmosphere, orbiting a blue giant star."
-O5355170,Cyrigosa,2071-11-06,"A gas giant with several moons and a ring system."
-O2705267,Xilary,2070-09-14,"An arid and lifeless planet with unusual rock formations."
-O3652342,Celestina,2070-11-05,"A large gas giant with a strong magnetic field and an extensive ring system."
-O8718504,Maxios,2072-01-15,"A rocky planet with a unique mineral composition."
-O7919011,"Proxima B",2069-06-21,"An Earth-sized planet in the habitable zone of the Proxima Centauri system."
-O6069544,Elios,2074-05-02,"A frozen planet with unique geological features."
+O5355170,Cyrigosa,2071-11-06,A gas giant with several moons and a ring system.
+O2705267,Xilary,2070-09-14,An arid and lifeless planet with unusual rock formations.
+O3652342,Celestina,2070-11-05,A large gas giant with a strong magnetic field and an extensive ring system.
+O8718504,Maxios,2072-01-15,A rocky planet with a unique mineral composition.
+O7919011,Proxima B,2069-06-21,An Earth-sized planet in the habitable zone of the Proxima Centauri system.
+O6069544,Elios,2074-05-02,A frozen planet with unique geological features.

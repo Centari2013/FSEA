@@ -1,8 +1,0 @@
-containmentStatusID,name,description
-1,Safe,"The subject is secure and poses no immediate threat. It can be freely accessed within designated areas."
-2,Restricted,"The subject requires controlled access and monitoring due to its potentially unpredictable behavior."
-3,Supervised,"The subject must be constantly monitored by trained personnel due to its potentially hazardous nature."
-4,Isolated,"The subject is kept isolated from other entities due to its hostile nature or unknown effects."
-5,"Maximum Security","The subject poses an extreme threat and requires extensive security measures to prevent escape or interaction."
-6,Apex,"The subject is highly dangerous and must be contained in a specially designed facility. Any contact must be authorized by top-level personnel."
-7,Uncontainable,"The subject is deemed uncontainable and poses an inherent risk to containment measures. Alternative methods are being explored to mitigate potential threats."
