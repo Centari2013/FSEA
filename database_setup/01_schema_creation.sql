@@ -23,6 +23,14 @@ CREATE TABLE designations (
     abbreviation VARCHAR(5) NOT NULL
 );
 
+CREATE TABLE department_designations (
+    department_id INT NOT NULL,
+    designation_id INT NOT NULL,
+    PRIMARY KEY (department_id, designation_id),
+    FOREIGN KEY (department_id) REFERENCES departments(department_id),
+    FOREIGN KEY (designation_id) REFERENCES designations(designation_id)
+);
+
 CREATE TABLE employees (
     employee_id VARCHAR(8) PRIMARY KEY, -- Employee IDs are formatted as 'EXXXXXXX'
     department_id INTEGER NOT NULL,
