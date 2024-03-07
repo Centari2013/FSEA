@@ -1,2 +1,4 @@
 /FSEA.dbs
 *.env
+.idea
+__pycache__

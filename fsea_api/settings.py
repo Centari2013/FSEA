@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'fsea_frontend',
+    'bootstrap5'
 ]
 
 MIDDLEWARE = [
@@ -77,9 +79,14 @@ WSGI_APPLICATION = 'fsea_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'fsea',
+        'USER': 'centari',
+        'PASSWORD': 'centari',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
