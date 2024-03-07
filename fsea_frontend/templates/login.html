@@ -3,27 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FSEA Login</title>
-   {% load bootstrap5 %}
-   {% bootstrap_css %}
-   {% bootstrap_javascript %}
+    <title>F-SEA Login</title>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}    
 </head>
-<body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form action="/login" method="post">
-            <div class="form-input">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-input">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-submit">
-                <button type="submit">Login</button>
-            </div>
-        </form>
+<body class="bg-dark" style="opacity: 0.9;">
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <form class="p-4 bg-dark rounded" style="width: 320px;" method="post">
+            {% csrf_token %}
+            <div class="mb-3 text-center">
+                <img src="{% static 'img/fsea_logo.png' %}" alt="Logo" class="mb-4">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="User">
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Passkey">
+                    <label for="password">Passkey</label>
+                </div>
+                <div class="text-danger mt-3" style="display: none;">
+                    <p class="error-msg mb-0">Credentials not recognized.</p>
+                    <p class="lockout-msg mb-0">Account locked.</p>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 w-100">Authenticate</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

@@ -1,0 +1,175 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #31353D; /* FRAME_COLOR */
+    color: white; /* Adjusted for better readability */
+    opacity: 0.9;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #31353D; /* FRAME_COLOR */
+    color: white; /* Adjusted for better readability */
+    opacity: 0.9;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns child elements (labels and inputs) to the start (left) */
+    width: 100%; /* Takes full width to respect the parent's center alignment */
+    margin-bottom: 15px; /* Adds some spacing between each input container */
+}
+
+.exit-button {
+    border: none;
+    background-color: #31353D; /* TITLEBAR_BUTTON_COLOR */
+    color: white;
+    cursor: pointer;
+}
+
+.exit-button:hover {
+    background-color: #262829; /* A hover effect for exit button */
+}
+
+.form-container input {
+    width: 150px;
+    height: 25px;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #6B7482; /* SEARCH_BUTTON_COLOR for the border */
+    background-color: white; /* SEARCH_BAR_COLOR */
+    color: black;
+    align-self: center; /* Ensures inputs are centered within their .input-container */
+}
+
+.error-msg, .lockout-msg {
+    color: #E85D04; /* ERROR_MSG */
+    display: none; /* Initially hidden */
+}
+
+.submit-button {
+    width: 80px;
+    height: 25px;
+    color: white; /* PUSH_BUTTON_TEXT_COLOR */
+    background-color: #262829; /* PUSH_BUTTON_COLOR */
+    border: none;
+    margin-top: 10px;
+}
+
+.submit-button:active {
+    background-color: #111314; /* PUSH_BUTTON_PRESSED_COLOR */
+}
+
+.header-label {
+    font-size: 20px;
+    font-weight: bold;
+    color: white; /* Assuming you want the header label to be white for readability */
+}
+
+/* Collapsible Button Styles */
+.collapsible-button {
+    border: none;
+    background-color: transparent;
+}
+
+.collapsible-button:hover {
+    background-color: transparent; /* Corrected to a valid value */
+}
+
+.collapsible-button:active {
+    background-color: transparent;
+}
+
+    display: flex;
+    align-items: ;
+}
+
+.exit-button {
+    border: none;
+    background-color: #31353D; /* TITLEBAR_BUTTON_COLOR */
+    color: white;
+    cursor: pointer;
+}
+
+.exit-button:hover {
+    background-color: #262829; /* A hover effect for exit button */
+}
+
+.form-container input {
+    width: 150px;
+    height: 25px;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #6B7482; /* SEARCH_BUTTON_COLOR for the border */
+    background-color: white; /* SEARCH_BAR_COLOR */
+    color: black;
+}
+
+.error-msg, .lockout-msg {
+    color: #E85D04; /* ERROR_MSG */
+    display: none; /* Initially hidden */
+}
+
+.submit-button {
+    width: 80px;
+    height: 25px;
+    color: white; /* PUSH_BUTTON_TEXT_COLOR */
+    background-color: #262829; /* PUSH_BUTTON_COLOR */
+    border: none;
+    margin-top: 10px;
+}
+
+.submit-button:active {
+    background-color: #111314; /* PUSH_BUTTON_PRESSED_COLOR */
+}
+
+.header-label {
+    font-size: 20px;
+    font-weight: bold;
+    color: white; /* Assuming you want the header label to be white for readability */
+}
+
+
+
+/* Collapsible Button Styles */
+.collapsible-button {
+    border: none;
+    background-color: transparent;
+}
+
+.collapsible-button:hover {
+    background-color: none; /* Modified to valid value */
+}
+
+.collapsible-button:active {
+    background-color: transparent;
+}
