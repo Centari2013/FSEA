@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'fsea_api.urls'
+ROOT_URLCONF = 'fsea_project.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'fsea_api.wsgi.application'
+WSGI_APPLICATION = 'fsea_project.wsgi.application'
 
 
 # Database
