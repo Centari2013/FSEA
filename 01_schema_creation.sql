@@ -38,7 +38,7 @@ CREATE TABLE employees (
     last_name TEXT NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE DEFAULT NULL,
-    summary TEXT DEFAULT NULL,
+    notes JSON DEFAULT NULL,
     created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (department_id) REFERENCES departments(department_id)
@@ -67,7 +67,7 @@ CREATE TABLE employee_medical_records (
     sex VARCHAR(10) DEFAULT NULL CHECK (sex IN ('m', 'f', 'inter', 'unknown', 'undefined')),
     kilograms REAL CHECK(kilograms > 0),
     height_cm REAL CHECK (height_cm > 0),
-    notes TEXT DEFAULT NULL,
+    notes JSON DEFAULT NULL,
     created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE
@@ -92,6 +92,7 @@ CREATE TABLE origins (
     name TEXT NOT NULL,
     discovery_date DATE NOT NULL,
     description TEXT NOT NULL,
+    notes JSON DEFAULT NULL,
     created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL
 );
@@ -111,7 +112,7 @@ CREATE TABLE specimens (
     mission_id VARCHAR(8),
     threat_level REAL CHECK (threat_level >= 0 AND threat_level <= 10),
     acquisition_date DATE NOT NULL,
-    notes TEXT DEFAULT NULL,
+    notes JSON DEFAULT NULL,
     description TEXT DEFAULT NULL,
     created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
@@ -132,7 +133,7 @@ CREATE TABLE specimen_medical_records (
     bloodtype VARCHAR(10) DEFAULT NULL,
     sex VARCHAR(10) DEFAULT NULL,
     kilograms REAL CHECK(kilograms > 0),
-    notes TEXT DEFAULT NULL,
+    notes JSON DEFAULT NULL,
     created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (specimen_id) REFERENCES specimens(specimen_id) ON DELETE CASCADE
