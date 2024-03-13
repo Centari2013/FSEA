@@ -83,7 +83,7 @@ CREATE TABLE missions (
 
 CREATE TABLE origins (
     origin_id VARCHAR(8) PRIMARY KEY, -- Origin IDs are formatted as 'OXXXXXXX'
-    name TEXT NOT NULL,
+    origin_name TEXT NOT NULL,
     discovery_date DATE NOT NULL,
     description TEXT NOT NULL,
     notes JSON DEFAULT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE mission_origins (
 
 CREATE TABLE specimens (
     specimen_id VARCHAR(8) PRIMARY KEY, -- SpecimenIDs are formatted as 'SXXXXXXX'
-    name TEXT NOT NULL,
+    specimen_name TEXT NOT NULL,
     origin_id VARCHAR(8),
     mission_id VARCHAR(8),
     threat_level REAL CHECK (threat_level >= 0 AND threat_level <= 10),
