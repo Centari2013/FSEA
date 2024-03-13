@@ -13,7 +13,7 @@ CREATE TABLE containment_statuses (
 CREATE TABLE departments (
     department_id SERIAL PRIMARY KEY,
     department_name TEXT NOT NULL,
-    supervisor_id VARCHAR(8), -- Assuming employeeID types for consistency
+    director_id VARCHAR(8), -- Assuming employeeID types for consistency
     description TEXT DEFAULT NULL
 );
 

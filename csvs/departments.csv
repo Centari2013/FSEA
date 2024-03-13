@@ -1,4 +1,4 @@
-department_id,department_name,supervisor_id,description
+department_id,department_name,director_id,description
 1,Exploration,E7097519,"The Exploration Department plans and executes missions to explore the universe. They identify target destinations, develop new technologies, and coordinate with other departments to ensure successful exploration."
 2,Navigation,E0593543,"The Navigation Department oversees the ship's route planning, ensuring it follows the best course to reach destinations identified by the Exploration Department. They maintain the ship's navigation systems and map out new routes when necessary."
 3,Science,E0671750,"The Science Department conducts research on the planets, stars, and other celestial bodies encountered during exploration missions. They analyze samples and data and work with other departments to ensure that all findings are properly documented."
