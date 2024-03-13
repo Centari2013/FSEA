@@ -1,4 +1,4 @@
-designation_id,name,abbreviation
+designation_id,designation_name,abbreviation
 1,Mission Planner,MP
 2,Project Manager,PM
 3,Spacecraft Engineer,SE
