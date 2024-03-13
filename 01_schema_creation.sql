@@ -69,7 +69,7 @@ CREATE TABLE employee_medical_records (
 
 CREATE TABLE missions (
     mission_id VARCHAR(8) PRIMARY KEY, -- Mission IDs are formatted as 'MXXXXXXX'
-    name TEXT NOT NULL DEFAULT 'NAME-PENDING',
+    mission_name TEXT NOT NULL DEFAULT 'NAME-PENDING',
     start_date DATE,
     end_date DATE,
     commander_id VARCHAR(8),
