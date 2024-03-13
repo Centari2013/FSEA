@@ -34,6 +34,13 @@ SELECT employee_id
 FROM employees;
 
 
+-- And this statement is to ensure that only valid employees can become directors of departments.
+ALTER TABLE departments 
+ADD CONSTRAINT fk_director_id 
+FOREIGN KEY (director_id) 
+REFERENCES employees(employee_id)
+;
+
 -- Employee usernames and passwords will be generated in a later stage of this application's development.
 -- I have only deemed this appropriate as this is fictional system that previusly used a rudimentary form of password protection and encryption.
 -- Data for the specimen_containment_statuses table will be handles programatically as well.
