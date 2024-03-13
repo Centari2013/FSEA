@@ -75,6 +75,7 @@ CREATE TABLE missions (
     commander_id VARCHAR(8),
     supervisor_id VARCHAR(8),
     description TEXT NOT NULL,
+    notes JSON DEFAULT NULL,
     created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated TIMESTAMP WITHOUT TIME ZONE DEFAULT NULL,
     FOREIGN KEY (commander_id) REFERENCES employees(employee_id),
