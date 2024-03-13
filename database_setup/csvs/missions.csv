@@ -1,478 +1,478 @@
-mission_id,name,start_date,end_date,commander_id,supervisor_id,description
-M6281862,Dying Prophet,2052-09-23,2053-05-01,E6428947,E4232170,Recon mission to investigate reports of a glowing 'rosetta-stone-like' object
-M9125616,Gaseous Depths,2055-07-27,,E9537978,E8367340,Exploratory mission to study the atmospheric composition and behavior of gaseous pockets
-M9093853,Abyssal Expedition,2064-11-19,2065-07-03,E5085375,E0162206,Mission to investigate the unusual properties of the underground ocean
-M6614428,Subterranean Safari,2065-11-15,2066-05-12,E5085375,E4232170,A mission to catalogue the underwater fauna residing in the underground ocean
-M2076528,Twister,2046-08-10,2049-04-22,E1783092,E0380472,Mission to study the composition of the planet's atmosphere during its erratic weather patterns
-M1071145,Whirlwind,2051-10-02,,E0477498,E8367340,Mission to study the planet's magnetic field during the planet's most intense weather event
-M0339092,Volcano Watch,2053-03-05,2054-12-11,E7870753,E4232170,Mission to study the seismic activity and volcanic behavior of the planet
-M0623313,Lava Walk,2061-05-07,2062-06-30,E3357916,E8367340,Mission to retrieve samples from the planet's active lava tubes
-M0366996,Radiance,2055-12-01,,E8961035,E7947414,Mission to study the impact of the planet's radiation on biological matter
-M7025755,Gamma Rays,2067-01-01,2067-04-03,E5085375,E4232170,Mission to collect data on the planet's gamma radiation bursts
-M2986914,Dying Prophet,2050-08-11,2050-11-21,E8541698,E7947414,Recon mission to investigate reports of a glowing 'rosetta-stone-like' object
-M1730300,Gaseous Depths,2072-03-14,2074-08-29,E8541698,E0380472,Exploratory mission to study the atmospheric composition and behavior of gaseous pockets
-M4694538,Lypso's Icy Abyss,2072-05-13,2074-10-27,E7843495,E7947414,Manned expedition to study the properties of the hazardous frozen gases on Lypso's surface.
-M7167181,Lypso's Polar Winds,2061-04-05,,E7870753,E7947414,A mission to study the effect of Lypso's polar winds and how it affects the gaseous atmosphere of Lypso
-M6727468,Gaseous Flares,2060-07-05,2060-12-13,E1783092,E8367340,A mission to investigate strange electromagnetic radiation patterns detected on the surface of Lypso
-M2739748,Dark Terrain,2069-06-23,2070-09-17,E2676502,E7947414,"A treacherous expedition on foot to collect seismic data, analyzing its core"
-M4875871,Light Beacon,2072-04-28,2073-08-15,E7843495,E0380472,A predominantly aerial mission featuring digital assessment of the planet terrain for future missions
-M7909416,Spectral Trails,2045-08-01,2046-12-13,E8541698,E4232170,Observation of the planet's multiple shadowing phenomena that might be hindering colonization efforts
-M1405983,Acid Return,2064-02-20,,E1783092,E4232170,A research mission themed around chemical assessments and disease testinges of aquatic life on the planet.
-M0837036,Wet and Able,2073-11-25,2075-04-16,E7245705,E7947414,A mission to assess the risks of acid induced corrosion on tools and equipment required of deep underwater research and work
-M3280310,Planetary Guard,2039-05-26,2043-02-03,E7870753,E4232170,Deployment of a team of special operatives to protect researchers and machinery while studying the microbiology of aquatic lifeforms
-M2735957,Ghost Data,2046-11-25,2047-03-08,E5085375,E7947414,A mission to analyze the residual gravitational waves found in the virtually stagnant planet.
-M2708728,Operation Starlight,2058-06-23,2058-08-03,E5502287,E8367340,"Deployment of a team of special operatives to conduct a surveillance mission, keeping watch over a detected foreign non-sentient humanoids"
-M5555961,Empty Echoes,2057-08-10,,E7870753,E0162206,A deep space satellite deployment mission with the primary object of relaying and communicating with other colonies
-M2028493,Hot and Dry,2056-03-12,2056-10-18,E8961035,E4232170,Study of erosional features caused by extreme weather fluctuations and collection of samples for geological analysis
-M4963514,Dust in the Wind,2045-09-17,,E2676502,E4232170,Deployment of a satellite system to observe dust patterns and movement across the planet
-M6524479,Tropic Venture,2073-04-28,2074-07-19,E5502287,E7947414,A ground expediton to assess potential for desert agriculture and test growth of drought resistant produce
-M9354170,Frozen Fury,2050-07-10,2051-01-03,E7843495,E4232170,A scientific mission to measure seismic activity and investigate the cause of severe weather shifts
-M5618859,Icy Expanse,2067-11-08,,E3357916,E0162206,A mission to study the composition of ice deposits and their potential use in resource recovery
-M2729020,Glacier Roads,2039-09-01,2042-02-13,E1783092,E7947414,A mission exploring the possibility of constructing roads made of ice and the effects of temperature change in construction and maintenance
-M5633985,Bog Beast,2044-06-29,,E8541698,E0162206,"Observation mission of the dangerous predator, the Bog Beast"
-M4250325,Mosiack Marsh,2058-12-12,2060-05-22,E3487347,E4232170,"A muddy mission where elite researchers obtain samples of the swampy vegetation, water, and creatures to document the complex ecosystem"
-M6480988,Venomous Vibe,2065-09-15,2067-03-08,E6793306,E7947414,A mission examining the toxicity of the various creatures on the planet in defense and for potential use in toxicology and pharmacology
-M4447336,Electric Attic,2056-03-12,,E5502287,E8367340,A mission with the goal of measuring planetary electric field and determining its effects on technology. First conducted in the planet’s outer layer atmosphere
-M5334671,Thunder Knocking,2075-11-22,,E7870753,E0380472,A mission designed to install and measure the effectiveness of a lightning rod system for future planetary human settlements
-M7582581,Charge Game,2047-02-28,2048-09-23,E5085375,E4232170,A light-hearted mission with the purpose of documenting the electrical interaction of different species on the planet
-M1634234,Dunescape Expedition,2067-01-15,2068-08-12,E6428947,E7947414,A mission studying the formation of sand dunes formed by natural phenomenon
-M6890435,Volcanic Tremors,2055-02-02,2056-06-19,E3357916,E4232170,A dangerous mission studying the effects of temperature change on volcanically active areas
-M6130742,Hibernation Hysteria,2070-03-04,,E8541698,E8367340,A mission landing on a frozen tundra with the aim of expediting hibernation and cryogenic techniques for future missions
-M7526856,Thunderhead Explorer,2039-07-16,2040-03-23,E8541698,E0162206,A mission to study the unique cloud formations on the planet's surface
-M3686145,Rocks of Ages,2045-12-05,,E7843495,E0162206,An exploratory mission to assess the mineral content and potential for resource extraction on the planet
-M4393895,Tidal Turmoil,2046-08-23,2047-03-19,E8483883,E4232170,A dangerous mission to study the planet's tidal forces and their effects on nearby celestial bodies
-M0415033,Deep Blue,2055-09-08,2056-04-12,E6428947,E0380472,A deep sea exploration mission focused on studying the planet's underwater ecosystem
-M8178894,Fire and Ashes,2065-01-02,2065-06-15,E8541698,E4232170,A mission to study the planet's active volcanoes and the effects of their eruptions on the planet's atmosphere
-M0745779,Geothermal Wonders,2048-01-16,,E5502287,E4232170,An exploration mission focused on the planet's geothermal activity and the potential for energy extraction
-M9563718,Forest Haven,2045-11-01,2046-05-22,E8541698,E0162206,An ecological mission focused on studying the planet's forests and the creatures that inhabit them
-M0904260,Tree of Life,2073-01-09,,E7245705,E7947414,A mission to study the most massive tree on the planet and its effect on the planet's ecology
-M9248533,Frozen Riches,2046-09-10,2047-05-03,E7843495,E8367340,A mission to assess the planet's valuable mineral deposits in its icy terrain
-M2282363,Ice and Stone,2070-06-18,2071-01-12,E0356214,E7947414,A geological mission studying the planet's icy surface and the effects of its unique geological formations
-M5465477,Cave System Conquest,2060-04-10,2061-01-27,E7843495,E0380472,A mission to explore and map the extensive underground cave networks on the planet in search of valuable minerals
-M6840513,Dust and Dirt,2052-07-04,,E7843495,E7947414,A reconnaissance mission to collect surface samples of the planet to study the geology and potential resource extraction
-M8275269,Ring Observations,2059-11-29,2060-05-02,E8541698,E7947414,"A mission to study the planet’s ring system, including its composition, structure, and how it interacts with the planet’s atmosphere"
-M8883868,Gas Giants,2045-02-28,,E3487347,E7947414,A mission to send specialized equipment to monitor and study the planet’s atmosphere and the gases in its upper atmosphere and ionosphere
-M1505444,Underwater World,2049-07-18,2050-01-19,E7870753,E0380472,"An exploration mission to study the planet’s oceans, including its marine life, tides, currents, and underwater geology"
-M2268592,Oceanic Mystery,2074-01-07,2075-04-01,E2842201,E0162206,A mission to study strange underwater formations and ancient ruins found deep within the planet’s oceans
-M9413014,Ice-Cold Mystery,2070-01-24,2071-12-12,E5085375,E0162206,A mission to study the planet’s extreme temperature fluctuations and to explore the mysterious structures found on its surface
-M6054079,Frozen Frontier,2069-10-29,2071-11-21,E9901102,E4232170,A mission to study the planet’s ice formations and to assess the potential for resource extraction
-M9319115,Seismic Shifts,2072-03-29,2073-02-16,E8483883,E7947414,"A mission to study the planet’s frequent and extreme seismic activity, including volcano eruptions and earthquake patterns"
-M4785663,Storm Chasers,2039-12-21,2040-08-10,E7843495,E0162206,A mission to observe the severe storms and hurricane patterns on the planet
-M3922881,Mountaintop Marvels,2053-02-27,,E2676502,E0162206,"An expedition to study the planet’s highly varied geography, including its many mountain ranges and the effects of altitude on the planet’s ecology"
-M8422102,Prairie Discoveries,2049-01-02,2049-06-30,E7843495,E8367340,An exploration mission to study the vast open plains of the planet and the interactions between its herbivorous and carnivorous creatures
-M0575039,Frostbite,2050-09-15,2051-03-10,E8483883,E0162206,Exploratory mission to study the planet's geological features and determine the possibility of resource extraction
-M8051746,CryoSat,2064-04-16,2064-07-25,E3357916,E7947414,Deploy a satellite to monitor the planet's weather patterns and ice caps
-M3068838,Jungle Trek,2066-07-19,2067-12-09,E7843495,E8367340,Expedition to study the flora and fauna of the planet's dense rainforests
-M1828316,Ocean Survey,2054-06-21,2056-10-08,E8483883,E0162206,Submarine mission to study the planet's oceans and marine life
-M6769658,Orbiting Survey,2050-09-15,2051-03-10,E2362099,E7947414,Deploy a satellite to monitor the planet's weather patterns and natural occurrences from orbit
-M9444860,Frigid Depths,2061-10-27,2063-12-15,E7870753,E8367340,Exploratory mission to study the planet's subterranean water and ice formations
-M1664522,EcoTrek,2043-12-13,2044-03-05,E1783092,E4232170,Expedition to study the planet’s different ecosystems
-M9178071,FloraEvo,2065-02-11,2065-06-29,E7843495,E0380472,Collect and study various plant samples
-M7994016,CraterCrawl,2070-03-13,2070-04-16,E8541698,E8367340,Exploratory mission to study geological activity in craters
-M9481125,LavaLogs,2045-11-09,,E7843495,E4232170,Study the magma flows and repercussions on the planet’s terrain
-M4991444,TornadoTactics,2039-04-25,2039-08-17,E3357916,E7947414,"Study the frequency, speed, and effects of tornados on the planet"
-M4568749,AeroArch,2042-06-12,2043-02-22,E8961035,E4232170,Study the planet’s dense atmosphere and wind patterns
-M1817961,SubIce,2071-03-05,2071-05-23,E7870753,E7947414,Submarine mission to study the planet’s oceans and marine life
-M3092873,IceBreak,2044-08-03,2045-01-22,E6428947,E7947414,Exploratory mission to study the behavior of ice caps
-M3399087,Crystalline Caverns,2054-10-15,2055-03-02,E3357916,E8367340,Explore and study the planet’s subterranean crystal formations
-M6187584,VolcanicVenture,2067-01-12,,E8541698,E0380472,Study the planet’s volcanic activity
-M8033177,Rock of Ages,2043-09-01,2045-06-01,E8483883,E4232170,Survey mission of the strange rock formations and natural satellites orbiting Grypthon
-M2609717,Grypthonese Carpet,2048-03-04,2050-08-15,E6428947,E0162206,Surface exploration mission to study the native flora and fauna existing in the most rugged terrain of Grypthon
-M5082541,Eurifix Ringside,2066-06-09,2067-09-30,E7870753,E0162206,Investigation of chemical composition and formation process of Eurifix's rings
-M0588489,Storm Watchers,2067-03-06,2069-03-11,E6428947,E4232170,Study and monitoring mission of the highly variable atmospheric structure of Eurifix
-M5227989,Cracking Ice,2054-01-16,2056-07-04,E8483883,E7947414,Drilling and sampling mission focused on studying the composition of Arithea's unique ice crevasses
-M2448858,Snow Trek,2066-06-09,,E9901102,E7947414,Expedition exploring Arithea's vast icy tundras and locating hidden glacial lakes
-M9109508,Magnetic Tempests,2042-09-01,2043-02-01,E7843495,E0162206,A Mission to study the magnetic activity of Icaria's poles during a particularly strong and hazardous tempest season.
-M6296228,Jinxed Phenomena,2060-06-01,,E0356214,E7947414,An ongoing mission to study mysterious and unexplained phenomena occurring in Icaria's frigid plains.
-M3471268,Acid Rain,2038-07-01,2039-01-01,E8483883,E4232170,An exploratory mission to study the effects of sulfuric acid rain on Venera's surface and its potential for exploiting its subterranean resources. Led by the Science Department.
-M8669069,Boggy Bayou,2070-04-01,,E5085375,E4232170,"This dangerous mission involves traversing Venera's swampy and relatively uncharted terrain to study its unique characteristics and potential indigenous life forms. Multiple departments of F-SEA are involved, mainly the Exploration and Special Operations Departments."
-M6999294,Radiative Emissions,2045-09-01,2045-12-01,E6428947,E0380472,An Engineering-led mission to study Corinthea's intense radiation emissions and develop new radiation-resistant materials and systems
-M7694488,Desolation Wilderness,2055-09-01,2055-12-01,E7870753,E8367340,"One of the first missions to explore Corinthea's desert terrain and its potential for habitation. Led by the Supply and Logistics Department, the mission lasted a few months and involved testing new technology and infrastructure."
-M3934684,Star Worms,2058-01-12,2058-03-01,E3487347,E7947414,An exobiology mission led by the F-SEA Science Department to investigate reports of strange deep burrowing creatures that emit small wormholes out behind their movement.
-M9290400,Magma Mines,2075-09-15,,E7560667,E0380472,An Engineering-led mission that involves investigating the potential for mining the minerals beneath Corinthea's surface
-M7817097,Stormchasers,2072-06-07,,E6428947,E0162206,A daring mission to study the electrical storms on Megaclite up close and devise new methods of navigating these treacherous conditions. This dangerous mission is led by the F-SEA Special Operations Department.
-M4430799,Sub-Zero Icecapade,2049-06-09,2049-07-31,E8961035,E4232170,"A Science Department led mission to study the unique ice formations of Megaclite, and assess their potential benefits to colonization endeavors"
-M9855226,Zeitgeist,2038-08-19,,E7870753,E0380472,"Exploratory mission to study Thasos and assess its potential for habitation, resource extraction and other colonisation efforts. Led by the F-SEA Exploration Department."
-M0448326,Magnetic Anomaly Reconnaissance,2074-09-14,,E8961035,E4232170,A mission to study the unexplainable electromagnetic anomalies on Thasos and investigate any possible connection to the strange geological phenomena present on the planet. This dangerous mission is led by the F-SEA Special Operations Department.
-M8615483,Acid Rain,2038-07-01,2039-01-01,E7843495,E8367340,An exploratory mission to study the effects of the planet's corrosive atmosphere and potential for exploitation of its subterranean resources. This mission is led by the F-SEA Science Department.
-M1633756,Volcanic Vistas,2042-06-13,2042-11-28,E6428947,E4232170,A mission to observe and document the immense geysers of Azhanti and assess their effects on the planet. The mission is led by the F-SEA Engineering Department
-M8187543,Tectonic Tempests,2074-09-14,2075-11-22,E2328765,E4232170,A mission to study Azhanti's tectonic activity and assess its impact on the planet. This mission is led by the F-SEA Exploration Department.
-M4221127,Ice-Cold Seafoam,2039-05-12,,E8483883,E8367340,"A mission to study Cocytus' internal oceans and assess their potential for habitation, exploration, and resource extraction. Led by the F-SEA Exploration Department."
-M5243050,Polar Night,2063-11-01,2064-02-01,E8541698,E0162206,"A mission to study Cocytus's erratic rotation about its axis, and its effects on the planet. This mission is led by the F-SEA Engineering Department."
-M5416964,Stormy Skies,2068-11-01,,E1783092,E0162206,A mission to study the violent storms and atmospheric phenomena on Sisyphus. This mission is led by the F-SEA Science Department.
-M7572299,The Winds of War,2074-09-14,2076-12-23,E3349141,E0380472,A risky mission to explore Sisyphus's upper atmosphere and study its potential for resource extraction and colonization. This mission is led by the F-SEA Engineering Department.
-M7975224,Radscout,2068-04-23,2068-05-30,E8961035,E0380472,An Exploration Department mission to study Zaxxon's high radiation levels and assess its potential for resource extraction.
-M4268194,Inferno,2075-08-15,2075-11-16,E3357916,E0380472,A risky mission led by the Engineering Department to study the surface of Omicron and assess its potential for resource extraction. The mission involves specialized equipment and suits to withstand the extreme temperatures and toxic atmosphere.
-M5113967,Frozen Frontier,2064-02-02,2064-05-09,E7843495,E0162206,A mission by the Medical Department to study the icy seas of Noma and assess its potential as a source of water.
-M8695320,Gas station,2068-08-20,,E7843495,E7947414,A mission led by the Supply and Logistics to study the feasibility of using Noma as a refueling station.
-M5329423,Sky Riders,2074-12-12,2075-02-28,E7560667,E0162206,A mission to study the sky creatures of Kronos and their behavior. Led by the Alien Relations Department.
-M2549857,Gaswalker,2079-08-23,2079-11-01,E9901102,E7947414,A dangerous mission led by the Special Operations Department to collect atmospheric gases from the planet's upper atmosphere for analysis. Involves the creation of specialized equipment to withstand the extreme pressures and temperatures.
-M2436156,Windchaser,2060-08-08,2061-01-23,E3357916,E0380472,A mission to study the weather patterns on Zephyrion and assess their impact on the planet. Led by the Exploration Department.
-M0335901,Rock Hunter,2072-06-05,,E7843495,E0162206,A mission by the Engineering Department to analyze Zephyrion's unique rocky formations and assess their potential uses.
-M5917805,Xenon Haul,2072-01-08,2072-04-25,E3357916,E8367340,A mission led by the Supply and Logistics Department to extract xenon from Xenonom's rich deposits and store it in the ship's reserves.
-M1491455,Gas Harvest,2075-02-15,,E3349141,E0162206,An Engineering Department led mission to study and collect the rare atmospheric gases that can be found on the planet's surface.
-M0880334,Orbital Observer,2065-06-12,,E5502287,E4232170,An Exploration Department mission to study the planet's orbit and its impact on its climate.
-M3871242,Atmospheric Anomalies,2068-04-16,2068-05-21,E8961035,E7947414,A Science Department led mission to study the environmental changes and atmospheric anomalies in Esperon's atmosphere due to its peculiar orbit.
-M3893897,Planet Prospector,2061-06-06,,E5085375,E4232170,An Engineering Department led mission to analyze the planet's surface for potential mining operations.
-M1370992,Rock Regolith,2064-07-08,2064-09-12,E8961035,E0380472,A Science Department led mission to study the elements composing Cerestria's abundant regolith and understand the planet's geological formation.
-M3123155,Helium Hunt,2068-03-29,2068-05-21,E8961035,E4232170,A Recon Department led mission to collect helium-3 from Helixa's upper atmosphere.
-M3007682,Weather Watch,2071-11-07,,E8541698,E4232170,An Exploration Department led mission to gather data on the planet's intricate and stormy weather patterns.
-M5622635,Toxic Tango,2066-09-15,2066-11-01,E7843495,E7947414,A Supply and Logistics led mission to study the feasibility of extracting resources from Noxus and the necessary equipment needed for survival in the hazardous environment.
-M3844010,Rock Rider,2073-07-23,,E6793306,E0380472,A Science Department led mission to analyze the unique rock formations found on Noxus for future applications in manufacturing and engineering.
-M6018085,Noxus Nightmares,2075-11-22,2076-01-30,E2499796,E0380472,A Special Operations Department led mission to secretly study the hostile creatures that inhabit Noxus along with kidnapping a few for more detailed study on the ship.
-M6858384,Jungle Jive,2078-03-14,,E8483883,E7947414,A Science Department led mission to study the exotic flora and fauna of Aurorax's dense jungles.
-M4135631,Atmospheric Analysis,2080-01-05,2080-02-22,E8483883,E0380472,An Engineering Department led mission to investigate the high levels of carbon dioxide in the planet's atmosphere and its impact on the planet's ecosystem.
-M2956620,Ice Storm,2067-06-27,2068-12-19,E7870753,E4232170,Mission to drill ice core samples for analysis of the planet's climate history
-M3201329,Snowblind,2070-11-20,2072-12-18,E5502287,E4232170,Exploratory mission to search for signs of life and study geological formations
-M1775550,Rainbow Rendezvous,2072-02-09,,E8541698,E0162206,Mission to study the planet's atmospheric composition and behavior of storms
-M3295774,Eco-System Expedition,2069-10-18,2071-03-02,E7843495,E4232170,Mission to study and document the interactions between different species
-M8228711,Life and Death,2072-02-11,2074-05-02,E8961035,E0380472,Mission to study the predator-prey relationships in the ecosystem
-M7023328,Ocean Worlds,2069-10-18,2071-03-02,E7843495,E7947414,Exploratory mission to study the marine life and geology of the planet's oceans
-M0611631,Home Away from Home,2072-02-11,,E9901102,E7947414,Mission to establish a long-term human settlement on the planet
-M0149122,Dark Odyssey,2072-02-09,2073-07-01,E8961035,E4232170,Mission to study and document the planet's unique geological features and mineral compositions
-M9666760,Fire and Ashes,2056-07-12,2057-03-23,E7843495,E0380472,Mission to study the planet's geological features and volcanic activity
-M2601456,Atmospheric Analysis,2066-02-17,2066-07-08,E9537978,E8367340,Mission to analyze the planet's atmosphere and determine its composition
-M1004947,Ice and Wind,2060-01-04,2061-09-17,E7870753,E4232170,Mission to study the planet's ice formations and extreme windstorms
-M9853115,Storm Chaser,2074-04-12,,E7245705,E0380472,Mission to explore the planet's weather patterns and search for signs of life
-M8677205,Forest Haven,2069-11-02,2071-05-26,E1783092,E0162206,Mission to study the planet's fauna and flora in the dense forest ecosystem
-M0424481,Green Planet,2073-01-08,2074-11-15,E3357916,E4232170,Mission to analyze the planet's carbon cycle and overall impact of the forest on the planet's ecosystem
-M2438805,Gas Giant Gaze,2063-09-09,2064-12-20,E0477498,E8367340,Mission to observe the planet's weather patterns and geological features
-M9631551,Sky Rocks,2067-04-20,2068-11-02,E7843495,E8367340,Mission to collect rock samples from the floating formations on the planet's atmosphere
-M1414114,Canyon Run,2069-08-12,,E3357916,E7947414,Mission to explore the planet's extensive canyon system and study the geology of the planet
-M0971335,Desert Storm,2072-03-12,2074-01-07,E8541698,E4232170,Mission to study the planet's extreme weather patterns and possible geological consequences
-M6727506,Cave Crawler,2061-10-25,2062-06-14,E5085375,E4232170,Mission to explore the planet's underground cave system and search for any life forms
-M4962315,Dark Passages,2069-12-01,2070-05-03,E3357916,E0380472,Mission to study the planet's unique rock structures and geological formation within the cave system
-M4554958,New Frontiers,2050-01-01,2051-07-15,E3357916,E8367340,"Exploratory mission to study the planet's atmosphere, geology, and biosphere."
-M0042712,Gardeners of Eryl,2055-02-12,,E1783092,E0380472,Research mission to study the planet's crops and find ways to cultivate them on other planets.
-M7579426,Surviving Eden,2061-11-20,2063-08-05,E1783092,E7947414,Survival mission. The crew will be stranded on the planet with limited resources and will have to find a way to survive and eventually be rescued.
-M8875846,Deep Freeze,2065-02-18,2065-10-01,E7870753,E0162206,Exploratory mission to study the planet's core and composition.
-M3235228,Frozen in Time,2067-12-24,,E5085375,E7947414,Geological survey mission to drill into the planet's core and collect samples.
-M6756508,Glacier Race,2070-06-09,2072-01-12,E8483883,E4232170,Race mission between two teams to circumnavigate the planet's equator. The first team to complete the journey wins a prize.
-M7361870,Beneath the Sands,2060-09-03,2062-06-12,E7843495,E0162206,Exploratory mission to study the planet's underground water resources and their potential for supporting life.
-M1816299,Heat Wave,2064-07-19,,E7843495,E7947414,Analysis mission to study the planet's geological features and volcanic activity.
-M2363524,Pyroclastic Symphony,2070-01-03,2071-07-31,E0356214,E4232170,Geological and atmospheric analysis mission to study the planet's weather patterns and natural phenomena.
-M6449655,Storm Chasers,2070-01-04,2070-06-16,E5085375,E0380472,A high-risk mission to study the planet’s storms up close and gather atmospheric data.
-M6397769,Electric Thunder,2070-12-22,,E8541698,E0162206,A mission to study lightning in the planet’s atmosphere and its effect on the ecosystem.
-M2967158,Gormorian Sandworms,2071-06-23,2073-04-18,E7843495,E0380472,A dangerous mission to study the planet’s sandworms and their role in the ecosystem.
-M2056446,Toxicity Quest,2065-10-22,2067-05-12,E8483883,E7947414,A mission to study the toxicity levels in the planet’s environment and their impact on the ecosystem.
-M6962124,Vegetation Harvest,2073-11-11,2074-05-12,E9901102,E0380472,A mission to collect samples of the planet’s vegetation for potential use in medicine and food.
-M0685881,Aegrus Underground,2075-02-28,,E7843495,E0380472,A mission to study the underground ecosystem and potential for habitable caves.
-M3866457,Core Decay,2063-08-14,2064-06-28,E7910907,E8367340,A mission to study the planet’s unstable core and potential for energy extraction.
-M5651730,Tectonic Shift,2065-04-25,2065-10-10,E0477498,E0162206,A mission to study the planet’s tectonic plates and their impact on the planet’s surface.
-M9381313,Volcanic Ashes,2075-03-15,,E8541698,E4232170,A mission to study the impact of the planet’s volcanic activity on the atmosphere and ecosystem.
-M9576017,Radioactive Oasis,2075-01-03,,E7843495,E4232170,A mission to study a rare oasis on the planet and any potential forms of life that may live there.
-M0685346,Radiation Shielding,2071-12-04,2072-03-19,E8541698,E8367340,A mission to test new radiation shielding technologies in the planet’s extreme environment.
-M1224391,Klydeon Wildlife,2074-06-08,2075-02-21,E8541698,E7947414,An exploration mission to study the planet’s unique and highly evolved wildlife.
-M0832920,Infrared Analysis,2070-10-15,2070-12-05,E0356214,E0380472,An analysis mission to study the planet’s surface temperature and composition using infrared technology.
-M6681931,Solar Flares,2074-05-28,,E8483883,E0162206,A mission to study the effects of solar flares on the planet’s atmosphere and surface.
-M7306427,Eramir Habitation Study,2075-09-19,,E5085375,E0380472,A study mission to investigate the potential for human habitation on the planet and potential use as a colonization site.
-M9405494,Volcanic Survey,2062-03-27,2062-05-06,E0356214,E4232170,A mission to study evidence of past volcanic activity on Xeron
-M5669491,Bioluminescent Study,2068-07-02,2070-12-31,E3357916,E0162206,A long-term study of the bioluminescent plant life on Arclight and its adaptation to the planet's unique atmospheric conditions
-M6548989,Atmospheric Analysis,2071-02-01,,E7843495,E0162206,An ongoing study of the planet's atmosphere and its potential implications for future colonization efforts
-M8050339,Oceanic Exploration,2072-03-01,2072-11-30,E8961035,E7947414,A mission to explore the depths of Oceantide's ocean and study the life forms that thrive there
-M9321386,Subsurface Sampling,2074-06-01,2074-08-31,E7245705,E8367340,A mission to collect samples from the moon's subsurface ocean and study its chemical composition
-M2503174,Atmospheric Study,2072-01-01,,E5085375,E8367340,An ongoing study of the atmospheric dynamics of Starwind and its interactions with its moons
-M2176514,Reflection Study,2067-07-15,,E3357916,E8367340,A study of the highly reflective surfaces on Krystallos
-M3715321,Cryovolcanic Eruption Investigation,2071-05-29,2073-09-21,E7843495,E8367340,An investigation into the cause of recent cryovolcanic eruptions on Krystallos
-M9651136,Orbital Analysis,2063-11-20,,E8541698,E8367340,A study of the unique orbital behavior of Icharus and its potential impacts on the planet
-M1119205,Surface Geology Survey,2068-07-15,2068-11-11,E3487347,E0380472,A survey of the diverse surface terrain of Icharus and its geological history
-M0996559,Atmospheric Analysis,2070-04-02,2070-06-17,E9901102,E7947414,A study of the planet's atmosphere and its interactions with its surface features
-M5760132,Compositional Analysis,2048-09-13,,E7843495,E0162206,A detailed study of the composition and mineral content of Stardust
-M7844435,Mining Expedition,2069-01-01,2071-01-01,E2676502,E8367340,A mining operation to extract valuable resources from Stardust
-M2419759,Impact Simulation,2062-12-01,2065-12-12,E3357916,E4232170,A simulation to understand the potential damage a Stardust impact would have on a planet
-M6444836,Ring System Study,2074-02-01,,E8541698,E0162206,A study of the unique ring system surrounding Ouroboros
-M0294810,Atmospheric Dynamics,2055-12-01,2057-12-01,E0477498,E8367340,A study of the rapid atmospheric changes of Ouroboros
-M8185547,Colonization Study,2069-05-01,2070-07-01,E7843495,E4232170,An investigation into the potential for sustainable colonization on Ouroboros
-M4210895,Star Composition Study,2065-06-01,,E3487347,E0162206,A study of the composition of Nova and its potential implications on the stability of its core
-M3684409,Stellar Dynamics,2069-08-01,,E7843495,E7947414,A study of the dynamic behavior of Nova and its impact on potential colonization and exploration efforts
-M6000947,Exoplanet Survey,2049-01-01,,E8483883,E4232170,A survey to identify potential exoplanets within Andromeda for future exploration
-M1451371,Black Hole Study,2053-07-01,2057-01-01,E8541698,E0162206,A detailed study of a black hole within the Andromeda galaxy
-M3888528,Galactic Mapping,2068-02-01,2070-12-31,E7843495,E0380472,A mapping of the Andromeda galaxy and identification of potential areas for further exploration efforts
-M2812415,Planetary Geology Study,2072-01-01,,E7843495,E4232170,A study of the unique geological features of Celestia and their potential formation mechanisms
-M6773909,Radiation Analysis,2055-06-01,,E6428947,E0380472,An analysis of the intense radiation levels on Celestia and their potential impact on exploration and colonization efforts
-M8416037,Atmospheric Escape Investigation,2072-08-01,2073-12-01,E0477498,E0380472,An investigation into the escape of gases from Celestia and their potential implications for the long-term habitability of the planet
-M5039005,Red Horizon,2048-09-12,2050-05-31,E7843495,E8367340,A manned mission to conduct geologic surveys and collect data on Erosa's atmosphere and climate
-M8694257,Crimson Dune,2052-06-08,,E8961035,E0162206,An exploration mission to investigate strange magnetic readings detected on the surface of Erosa
-M2907803,Blackout,2053-11-27,2054-04-13,E5085375,E0162206,A mission to study Erosa's unique magnetic field and its effects on the planet's climate and geology
-M9957414,Ringside,2047-03-22,2049-02-28,E8541698,E0380472,An exploratory mission to study the rings of Omnicon and map the planet's many moons
-M1279358,Dark Sky,2051-06-15,2052-11-18,E7843495,E0162206,"A scientific mission to study the atmospheric composition and dynamics of Omnicon, including its massive storms and lightning discharges"
-M4463432,Ghost Moon,2054-01-19,,E1783092,E8367340,"An investigation mission to a small moon of Omnicon, which is said to be haunted by the ghosts of an ancient civilization"
-M1442827,Frozen Frontier,2047-11-09,2049-08-26,E8541698,E8367340,"A manned mission to explore Choros's surface and conduct research on its geology, climate, and potential for colonization"
-M0924622,Icebreakers,2052-06-08,2053-11-27,E3357916,E0380472,A scientific mission to study the dynamics of Choros's ice caps and their effects on the planet's geology and climate
-M2173168,Blood Red,2055-07-04,2056-02-08,E3357916,E4232170,"A hazardous mission to extract valuable resources from the molten core of Choros, including rare earth metals and radioactive isotopes"
-M4462109,Fire and Ashes,2048-03-12,2050-01-21,E3357916,E0380472,A dangerous mission to map the volcanic activity of Nimarus and investigate potential geothermal energy sources
-M9933473,Stormwatch,2052-06-08,,E8541698,E8367340,An atmospheric mission to study the powerful storms and lightning discharges of Nimarus
-M1168946,Cryovolcanism,2054-11-07,2055-04-01,E1783092,E4232170,"A scientific mission to study the unique cryovolcanic activity of Nimarus, which spews out liquid nitrogen and other volatiles"
-M6118809,Tornado Alley,2049-08-02,2051-03-09,E1783092,E4232170,A scientific mission to study Zerax's massive tornadoes and other extreme weather patterns
-M5209098,Aurora Zone,2052-06-08,,E6428947,E0162206,An atmospheric mission to study the aurora and other atmospheric phenomena of Zerax
-M8034270,Thunder Road,2055-02-03,2056-01-07,E3357916,E0380472,A hazardous mission to explore the lightning-filled canyons and mountains of Zerax in search of valuable resources
-M2170305,Molten Core,2062-09-23,2066-05-15,E1783092,E0162206,A hazardous mission to extract energy from the highly active geothermal vents on Vythos
-M0787631,Fire and Ash,2068-11-02,2071-04-14,E3357916,E0162206,A manned mission to study the volcanic activity of Vythos and search for signs of life
-M2572175,Smoke and Mirrors,2072-08-10,2075-05-09,E5085375,E8367340,A scientific mission to study the effects of volcanic emissions on Vythos’ atmosphere and its potential impact on habitability
-M5097271,Rings of Helith,2064-04-16,2070-09-08,E7843495,E8367340,An exploratory mission to study the ring system of Helith and map the planet’s many moons
-M4379081,Balanced Equilibrium,2071-02-12,,E5085375,E0380472,"A mission to investigate unusual readings on one of Helith’s moons, including potential signs of habitability"
-M1439023,Storm Chasers,2072-06-02,2075-01-19,E3357916,E7947414,An atmospheric mission to study the powerful storms and lightning discharges of Helith
-M6152859,Magnetic Meltdown,2062-07-09,,E8541698,E8367340,"A mission to study the origin and behavior of Aurorion’s magnetic field, including any potential impact on habitability and future colonization"
-M2122875,Auroral Symphony,2067-05-12,2070-02-18,E3487347,E0162206,An atmospheric mission to study the auroras of Aurorion and their impact on the planet’s climate and geology
-M9288154,Electromagnetic Pulse,2072-11-01,,E1783092,E0380472,A hazardous mission to investigate the source and potential effects of a massive electromagnetic pulse detected on Aurorion
-M9355321,Treasure Hunt,2071-10-16,,E7843495,E8367340,A hazardous mission to explore deep underground caves on Orin in search of valuable resources and potential signs of life
-M6587836,Sand and Rock,2072-12-24,2075-11-22,E7843495,E7947414,A manned mission to conduct geologic surveys and collect data on Orin’s atmosphere and climate
-M9341766,Storm Chasers,2071-06-09,2073-01-31,E5502287,E4232170,An atmospheric mission to study the ephemeral flash floods and lightning discharges of Orin’s desert landscape
-M8404951,Atmospheric Probe,2038-06-25,2038-06-30,E7843495,E0380472,Launch an unmanned probe into the atmosphere of Tychus to study its composition and behavior.
-M5576312,Surface Sample,2039-11-20,2039-11-27,E7843495,E8367340,Launch manned mission to collect samples of the rocky surface of Tychus.
-M8356259,Cave Exploration,2045-03-12,2045-03-22,E6428947,E8367340,Send team to explore the deep cave systems discovered on Tychus.
-M2779210,Volcano Observation,2050-09-01,2051-02-01,E5085375,E0162206,Deploy a team to study the behavior of the volcanoes on Tychus and their potential impact on future colonization.
-M0716633,Moon Exploration,2045-05-15,2045-06-15,E7843495,E0380472,"Send team to explore the most promising moon of Galaxia and study its geology, atmosphere, and potential for colonization."
-M0741631,Gas Giant Mapping,2055-07-22,,E7843495,E7947414,Deploy unmanned drones to map the surface of Galaxia and study its atmosphere.
-M9427943,Ice Sample Collection,2040-04-01,2040-04-10,E3357916,E0162206,Manned mission to collect ice samples from Aurora for research purposes.
-M0978108,Aurora Ring Observation,2050-11-01,,E5085375,E0380472,Deploy unmanned probes to study the Aurora Ring and its composition.
-M6235019,Nebula Study,2048-08-01,,E3357916,E4232170,Send team to study the composition and behavior of the colorful nebula surrounding Nebula planet.
-M4101675,Toxic Gas Study,2065-09-15,2065-10-01,E8541698,E0380472,Deploy crew to study and analyze the level and behavior of toxic gases in Exodus planet.
-M9762974,Surface Habitability Study,2071-11-24,2072-04-03,E2676502,E0380472,Send team to study the habitability and potential for colonization of Exodus planet surface.
-M9131370,Project Phoenix,2050-09-28,2052-02-15,E5085375,E7947414,An exploratory mission to study Fenix Prime's unique ring system and the planet's composition and behavior.
-M0954864,Ring Odyssey,2060-01-10,,E7870753,E0380472,A prolonged mission to continue studying Fenix Prime's rings at various angles and to study atmospheric phenomena.
-M0201916,Radiance,2045-10-18,2046-07-01,E9537978,E4232170,"A hazardous mission to study Aetheria's radiation belt, using a heavily-shielded probe and advanced sensors."
-M6756731,Aetherian Dreams,2050-03-14,2053-06-15,E7843495,E8367340,"An experimental mission to test a new radiation-resistant spacecraft, and to gather data on Aetheria's surface and subsurface activities."
-M7922841,Aetheric Shadows,2060-06-06,,E5502287,E7947414,"A long-term mission to study the relationship between Aetheria's atmosphere and its radiation belt, using advanced sensor arrays and high-altitude probes."
-M5594845,Stormchaser,2044-02-15,2046-06-30,E8541698,E0162206,A mission to study Aquillon's massive storms and to determine their effect on the planet's oceanic and atmospheric systems.
-M7369465,Marine Odyssey,2057-09-22,2060-05-05,E3357916,E7947414,"A mission to explore Aquillon's oceanic depths, using a specially-equipped submersible craft."
-M6609841,Aqua Vitae,2065-04-01,,E7843495,E0162206,"An extended mission to study Aquillon's oceanic and atmospheric chemistry, and to search for signs of life."
-M5384092,Heatwave,2070-01-02,,E7843495,E0380472,A mission to investigate the phenomenon of extreme temperature fluctuations on Hindar and collect data to understand its causes.
-M7650540,Arid Moon,2071-05-28,2072-07-06,E6428947,E8367340,An exploratory mission to investigate the geological properties of Hindar and its composition and potential for colonization.
-M7562838,Aurora Borealis,2073-08-15,,E1783092,E7947414,A mission to study the magnetic fields and bright auroras of Aurorium to understand the long-term behavior of planetary magnetospheres.
-M8542123,Magnetic Sphere,2068-09-12,2070-04-30,E7870753,E8367340,A mission to study the magnetic field and potential radiation hazards around Aurorium to gather data on the planet's atmosphere and composition.
-M5277721,Nebula Odyssey,2045-12-15,2048-06-30,E3357916,E0380472,An ambitious mission to study the chemical makeup and behavior of the gases in the nebula
-M1408637,Cosmic Mirage,2050-09-12,2053-02-05,E8483883,E7947414,A mission to study optical illusions caused by the nebula and photograph the nebula from various angles in attempt to understand formation
-M4728202,Weathering Heights,2043-10-10,2046-02-18,E8961035,E7947414,"A mission to study the extreme weather phenomena on Lucidus, such as dust storms and electrical discharges."
-M3297382,Rocky Horrors,2073-11-12,,E2842201,E4232170,An exploratory mission to study the unique rocky terrain on Lucidus with focus on geological formation of canyons.
-M0189460,Double Star,2053-04-18,2055-08-12,E3357916,E0162206,An exploratory mission to study and document the binary stars and complex configuration of Cerulean
-M8933551,Super-Earth,2060-03-15,,E4514470,E7947414,"A mission to investigate the potential for life on Cerulean, including observations of biosignature gases and atmospheric compositions."
-M4433133,Rocky Descent,2074-03-10,2076-05-07,E3357916,E0380472,Deploying rovers and drones to analyze atmospheric and surface data
-M8504097,Hazardous Meanderings,2061-09-14,2061-12-14,E1783092,E0380472,Deploying protective drones to study the toxic atmosphere
-M5144984,Sandstorm Watch,2062-02-18,2062-04-12,E5085375,E0162206,Keeping track of sandstorm patterns and how they affect the planet's environment
-M3792793,Sands of Time,2059-05-06,2060-06-22,E3357916,E0162206,Analyze sandstorms to determine patterns and sieving for unknown materials
-M0527808,Icy Dip,2073-03-10,2074-05-07,E7870753,E8367340,Retrieve and study samples from the ice shelf.
-M9506521,Underwater Odyssey,2047-02-10,2051-03-09,E9901102,E4232170,Investigate underwater geological formations and search for new species.
-M8521929,The Teutonic Shift,2068-12-12,,E8961035,E8367340,Studying tectonic activity and testing new terraforming techniques.
-M1890512,Eye of the Storm,2050-10-02,2051-01-07,E8541698,E0162206,Analyze the violent storms plaguing the planet's surface and their effect on life.
-M8171300,Jungle Fever,2074-02-14,,E0477498,E0162206,Catalogue and analyze the different flora and fauna found on the planet.
-M4169283,Biochemical Reconnaissance,2045-06-06,2047-11-22,E9537978,E0380472,Study the planet's life forms for any potential medicinal or technological properties.
-M6168578,A Heavy Haul,2065-09-19,,E0692717,E4232170,Test different mechanized suits and engines in extreme gravity conditions.
-M5563084,A Glimmer of Hope,2057-03-15,2058-03-20,E9901102,E7947414,Study the planet's violent weather patterns and their effects on the environment.
-M9676988,Thunderstruck,2071-08-05,,E7843495,E8367340,Collect atmospheric data during lightning storms.
-M8406300,Gaseous Gossamer,2038-06-06,2041-11-22,E7843495,E4232170,Study the planet's gaseous clouds for any potential unknown properties.
-M8580936,Evolutionary Watch,2075-02-20,,E2842201,E7947414,Monitor the evolutionary patterns of the planet's life forms.
-M4436552,Planet of the Chameleons,2060-01-14,2062-01-14,E7843495,E8367340,Document the planet's diverse animal ecology.
-M4189220,Gas Giant Diver,2064-08-12,2066-08-17,E3357916,E7947414,A mission to study the effects of the harsh atmospheric environment on spacecraft structure and functionality
-M9612668,Raging Storm,2073-05-18,,E7245705,E7947414,A dangerous mission to analyze the behavior of a powerful storm in the planet's atmosphere.
-M4386919,Acidic Terrain Survey,2062-01-10,,E8541698,E0162206,An exploratory mission to study the geological composition of the planet's acidic terrain
-M2252465,Atmospheric Analysis,2068-04-03,2068-09-15,E3357916,E8367340,A mission to study the planet's unusual atmospheric behavior and composition
-M2125474,Extreme Cold Research,2075-11-22,2076-08-20,E5085375,E4232170,A research mission to study the extreme cold environment of the planet and its effects on living organisms
-M5680126,Ice Formation Study,2064-11-20,2066-05-11,E7870753,E8367340,A mission to study the formation and movement of ice on the planet's surface
-M8449903,Atmospheric Penetration,2064-11-20,,E7843495,E8367340,A mission to study the planet's atmospheric composition by penetrating it with a specialized probe
-M6003120,Heavy Metal Mining,2062-01-10,2064-04-20,E7870753,E0162206,A mission to extract valuable minerals from deep within the planet's rocky surface
-M4905913,Atmospheric Survey,2073-05-18,,E2842201,E8367340,An exploratory mission to study the composition and behavior of the planet's toxic atmosphere
-M3133708,Hazardous Waste Disposal,2068-04-03,2068-09-15,E8961035,E4232170,A hazardous mission to dispose of potentially dangerous toxins on the planet's surface
-M4802761,Glacial Retreat,2073-02-07,2074-08-23,E2676502,E7947414,A mission to study the retreat of the planet's ice cap in order to better understand the effects of climate change on the planet's ecosystem
-M4439733,Aurora View,2046-12-08,2047-02-17,E8541698,E4232170,An exploratory mission to observe the planet's northern lights
-M7613438,Hidden Depths,2069-07-14,2070-05-09,E9901102,E4232170,A mission to explore the deepest areas of the oceans and uncover any mysteries they may hold
-M8828093,Light the Void,2055-12-30,,E3357916,E8367340,An exploratory mission to understand the properties and secrets of dark matter
-M8656235,Crystal Formation Study,2049-06-02,2051-03-22,E0477498,E4232170,A mission to study the formation and properties of the moon's unique crystal lattice
-M5412020,Reflected Glory,2072-09-17,2073-12-08,E3357916,E0380472,A mission to study the way light reflects off the moon's crystalline surface and its effects on the surrounding space
-M5832421,Rainforest Expedition,2049-11-12,2053-07-19,E7843495,E0162206,A mission to explore the planet's rainforests and catalog its diverse flora and fauna
-M5500596,Avalon,2064-08-09,2066-10-03,E7843495,E8367340,"A mission to study the planet's unique geological features and the mechanisms that have given rise to its rich, flourishing ecosystem"
-M1384891,Extreme Hotspot Monitoring,2052-01-25,2052-06-30,E7843495,E4232170,A mission to study the most active and dangerous areas of the planet's volcanic activity
-M6044209,Molten Depths Expedition,2072-01-26,,E7843495,E0380472,A highly dangerous mission to explore the molten depths of the planet's mantle and gather samples to better understand the nature of the planet's tectonic activity
-M2810424,Early Universe Formation Investigation,2059-03-14,2061-09-06,E3357916,E8367340,Investigation of the planet's early universe formation with an emphasis on geological samples.
-M2549791,Ground Exploration,2063-02-02,2063-06-19,E7843495,E0380472,The objective of this ground mission is to analyse the elements found on surface.
-M0863250,Navigational Tech Improvement,2062-07-24,,E1783092,E7947414,A long term research project to improve navigational technology in order to reduce impacts of the electromagnetic field on navigation.
-M2767318,EM field analysis,2041-11-22,2042-06-01,E3357916,E0380472,Detailed analysis of the electromagnetic field. Sensors placed throughout the planet to determine how power is generated by the planet.
-M5282162,Ring Clustering Research,2049-11-01,2050-12-12,E8541698,E8367340,A mission to study how asteroids in the rings are formed and if there are clusters.
-M5528304,Remote Mining Operation,2058-03-02,2060-11-09,E8541698,E4232170,A mining operation to extract valuable minerals from denser asteroid clusters using drones.
-M0746127,Acid Rain Analysis,2052-07-13,2054-02-19,E3357916,E4232170,A mission to analyze the pH levels of the rain and finding how it has an impact on the environment.
-M9965549,Remote Observation,2067-05-11,,E8961035,E0162206,A remote observation of the planet to observe its climate and weather patterns.
-M9110615,Weather Pattern Analysis,2046-08-23,2047-06-10,E7870753,E4232170,Analysis of extreme weather patterns to study and predict localized natural disasters.
-M7640435,Severe Weather Observation,2045-02-04,2052-06-03,E7843495,E8367340,"Long term observation of natural disaster phenomenon, with a particular emphasis on typhoons and sandstorms."
-M9999647,Mining,2057-08-07,2059-12-24,E6793306,E8367340,An operation to extract valuable minerals and rare earth elements from the planet's surface.
-M8018741,Geological Analysis,2063-03-01,2063-06-15,E8961035,E8367340,A mission to collect and analyze geological samples from the planet's surface.
-M4707508,Atmospheric Study,2041-09-13,2042-06-04,E8961035,E0162206,A mission to study the planet's atmospheric composition and behavior of massive cyclones.
-M1025732,Remote Observation,2065-07-20,,E3357916,E4232170,A remote observation to collect and analyze data on weather patterns and atmospheric conditions.
-M0105728,Botanical Study,2048-08-08,2050-05-02,E9901102,E0162206,A botanical study to analyze the planet's flora and ecosystem.
-M4281308,Oceanic Study,2060-12-01,2061-02-15,E8961035,E4232170,An oceanic study to analyze the water body and its abundant life forms.
-M6852988,Volcanic Activity Study,2058-02-22,2059-07-05,E7870753,E8367340,A mission to study the planet's intense volcanic activity and its impact on its environment.
-M9000930,Geological Survey,2065-12-07,,E0356214,E7947414,A geological survey to collect samples and analyze the planet's mineral and rock formations.
-M5351599,Ecosystem Study,2055-11-10,2057-04-13,E6428947,E8367340,A mission to study the planet's unique ecosystem and its highly adapted life forms.
-M2445545,Atmospheric Analysis,2062-01-01,2062-03-15,E7843495,E8367340,A mission to analyze the planet's low oxygen levels and atmospheric composition.
-M0310086,Stonewalker,2038-07-12,2040-02-21,E3357916,E4232170,Prospecting mission to locate and extract valuable minerals.
-M1893368,Fractured Foundations,2041-04-09,2042-12-31,E1783092,E0380472,Geological mission to study the planet's tectonic activity and formation.
-M4914306,Cloud Weaver,2050-08-06,,E8541698,E8367340,Exploratory mission to study unusual cloud formations and atmospheric currents.
-M0768474,Storm Chaser,2062-08-05,2064-05-13,E6428947,E0380472,Mission to track and analyze severe storms and weather patterns.
-M2224022,New Horizons,2061-09-19,2065-02-02,E1783092,E4232170,Colonization mission to establish a sustainable settlement.
-M2221143,Pathfinder,2067-01-19,,E8483883,E4232170,Reconnaissance mission to explore uncharted regions of the planet.
-M5917069,Icebreaker,2044-03-11,2047-10-28,E8961035,E7947414,Mission to study the planet's water cycle and extract samples of exotic ice formations.
-M0478872,Frostbite,2060-07-25,2061-11-30,E3487347,E8367340,Geological mission to study the planet's unique landforms and geological history.
-M0040624,Marine Explorer,2038-06-10,2040-12-25,E7843495,E0162206,Marine biology and oceanography mission to study the planet's underwater ecosystems and geology.
-M2546129,Subterranean Odyssey,2061-04-02,,E3357916,E7947414,Exploratory mission to survey and map the underground cavern systems and search for valuable resources.
-M7657106,New Horizons,2045-09-05,2048-05-18,E8483883,E0162206,Exploratory mission to study the planet's flora and fauna
-M9604390,The Green Frontier,2055-01-15,,E7843495,E4232170,Mission to establish a permanent base on the planet and study the surrounding area
-M8047184,Fury of the Volcano,2062-11-11,2063-05-20,E1783092,E0380472,Mission to study the planet's volcanic activity and collect samples
-M8923783,Moons of Zypheria,2048-08-15,2051-05-14,E8541698,E7947414,Mission to study the behavior of the moons orbiting the gas giant
-M1481301,Into the Storm,2070-03-01,,E7843495,E0380472,Mission to study the storms and other atmospheric phenomena of the gas giant
-M9931122,Ring of Ice,2040-10-10,2042-08-13,E5502287,E8367340,Mission to study the planet's ring system and collect samples
-M4562144,Frozen Wasteland,2075-03-25,,E3357916,E8367340,Mission to establish a research base on the planet and study the surrounding area
-M3636676,Cave Dwellers,2042-06-01,2044-03-20,E1783092,E4232170,Mission to explore and map the planet's cave system
-M6455846,The Red Planet,2075-10-01,,E7843495,E0162206,Mission to study the planet's geology and search for signs of life
-M1120544,Gaseous Death,2042-07-15,2044-12-25,E5085375,E0380472,Study of the atmospheric composition and behavior of poisonous gas pockets
-M6413839,Lifeless Excursion,2062-08-01,2064-02-01,E0692717,E0162206,Exploratory study of the planet's topography and geography
-M4363251,Rex Mortem,2045-12-23,2049-08-13,E0356214,E0380472,Investigation of seismic activity and collecting data on topography
-M5460290,Praesagio,2071-07-01,2073-01-01,E1783092,E8367340,Investigation of planet's geological history to predict potential natural threats.
-M8378606,Eye in the Sky,2046-11-05,2052-09-15,E7843495,E4232170,"Orbit study of planet's atmosphere, composition and ring system identification."
-M8390369,Blue Glory,2070-03-01,,E6428947,E0162206,Mission to establish an atmospheric monitoring station.
-M6135518,Moons of Groxina,2041-01-01,2043-07-20,E8541698,E7947414,"Study of the behavior, composition and general characteristics of the moons."
-M9590871,The Frozen Frontier,2073-10-01,,E2842201,E0380472,"Establishing a research base on the planet, studying surrounding area and seeking for potentially valuable resources."
-M5496775,Shiny Shield,2042-03-12,,E2676502,E8367340,Study of the planet's electromagnetic fields and their impact on safety and equipment.
-M6797782,Project Echo,2070-01-01,2074-01-01,E3487347,E8367340,Project to establish and operate a radio-transmission station in order to monitor space and any signals received from extraterrestrial sources.
-M7146997,Wind Rider,2072-06-10,,E7843495,E0380472,Study of the planet's high winds and development of weather prediction models
-M0644156,Rocky Outcrop,2069-02-14,2071-10-09,E7870753,E8367340,Exploration of the planet's surface and collection of geological samples.
-M1516433,Aurora Sky,2063-10-17,2070-05-08,E3487347,E4232170,Study of the auroras in the planet's atmosphere and the impact of the planet's magnetic field on them.
-M0666044,Jovian Storm,2058-07-22,2061-02-01,E8541698,E7947414,Investigation of the planet's extreme weather and development of protective measures for spacecraft.
-M3102395,Storm Chaser,2044-12-01,2048-05-10,E2676502,E8367340,Study of the behavior and characteristics of the lightning storms on the planet and the impact on the atmosphere.
-M0159718,Heavy Clouds,2058-02-15,,E7843495,E4232170,Investigation of the composition of the planet's dense atmosphere and potential benefits of atmospheric extraction.
-M4552455,Arctic Oasis,2045-05-22,,E3357916,E0380472,Investigation of the planet's polar regions and potential for a sustainable colony.
-M7477998,Underwater Depths,2055-01-10,2058-12-01,E7843495,E4232170,Exploration of the planet's undersea depths and collection of marine samples.
-M5315046,Lava Fields,2048-10-15,,E6793306,E7947414,Study of the planet's volcanic activity and potential for resource extraction.
-M1360326,Inferno,2066-03-05,2067-08-20,E8541698,E7947414,Investigation of the planet's magma chambers and prediction of volcanic eruptions.
-M7474349,Underground Explorer,2054-06-01,2056-12-01,E8541698,E7947414,Exploration of the planet's underground tunnel system and collection of geological samples.
-M7809870,Terrestrial Surveyor,2060-08-20,,E1783092,E0162206,Investigation of the planet's surface for potential resource extraction.
-M1416973,Heavy Lifter,2038-06-06,,E7843495,E0380472,Test of new spacecraft technologies designed for high-gravity environments.
-M5147208,Storm Sentinel,2045-11-10,2047-09-15,E2676502,E4232170,Study of the planet's severe weather and development of protective measures for spacecraft.
-M4076526,Radiation Shield,2048-04-12,,E8961035,E8367340,Development and testing of new radiation shielding technologies.
-M6953442,Gamma Storm,2055-08-05,2057-02-28,E7843495,E7947414,Investigation of the planet's harsh radiation environment and development of protective measures for spacecraft.
-M0642603,Project Singularity,2065-02-11,2069-12-31,E8961035,E0380472,Mission to study a rapidly-spinning black hole and its accretion disk.
-M0695797,High Frontier,2046-03-25,2048-12-19,E7843495,E8367340,The initial exploratory mission to scan and survey Luminex for resources.
-M4824789,Stranger Tides,2071-12-25,2072-11-26,E3357916,E7947414,Mission to collect geological samples from an area of the planet's crust that displays highly anomalous mineral content and activity.
-M3289331,Molten Heart,2056-08-14,,E9901102,E4232170,Mission to collect data and perform experiments on the planet's molten core and geothermal vents.
-M8487348,Chasing Shadows,2055-06-01,2058-10-13,E8541698,E7947414,Mission to study the unique and anomalous properties of the planet fragment's composition. This mission presented severe navigation and orbiting challenges.
-M3472434,Fragments of the Past,2047-02-28,2050-07-10,E5502287,E4232170,Mission to study the planet's history and gather data about the event that led to the planet's fragmentation.
-M5606722,Mirage,2070-06-07,2071-01-15,E7870753,E4232170,"The first manned expedition to Golthon, this mission studied bioluminescent activity and the highly concentrated microbes living in the planet's atmosphere."
-M7928704,Echoes of the Abyss,2051-11-11,2053-04-29,E3357916,E7947414,"Mission to investigate anomalous sonar readings, suspected to be a sea monster, in one of the planet's incredibly deep oceans."
-M5788872,Aurora,2043-09-19,2051-02-15,E1783092,E0162206,Exploratory mission to scan and survey Terra Nova for resources.
-M6122255,New Dawn,2061-01-01,,E5085375,E0380472,Mission to establish the first colony on Terra Nova and research its potential habitability.
-M3412188,Seismic Instability,2062-09-08,2063-07-11,E5085375,E7947414,Mission to investigate the cause of the planet’s extreme seismic activity.
-M4258128,Gas Pockets,2066-04-05,,E1783092,E4232170,Exploratory mission to study the behavior and composition of the high-pressure gas pockets present in the planet’s atmosphere.
-M3611761,Atmospheric Dynamics,2067-07-08,2068-05-02,E1783092,E0380472,Mission to study the planet’s dense atmosphere and its behavior under intense solar radiation.
-M5744971,Radiation Mapping,2072-12-03,,E8961035,E7947414,Mission to map the planet’s radiation emissions and study the effects of solar radiation on living organisms.
-M8777804,Volcanic Eruptions,2070-01-10,2072-07-06,E1783092,E4232170,Mission to study the various forms of volcanic activity on the planet and analyze its effects on the planet’s geology.
-M8204464,Tectonic Plates,2074-09-16,,E7560667,E0162206,Mission to study the planet’s tectonic plates and analyze the planet’s geological history.
-M1705355,Microbial Life Forms,2065-11-02,2067-04-07,E5502287,E0162206,Mission to study and analyze the behavior and composition of the planet’s highly aggressive microbial life forms.
-M9623016,Atmospheric Composition,2071-01-08,,E0356214,E0162206,Mission to study the composition of the planet’s dense atmosphere and analyze its potential effects on the planet’s microbial life forms.
-M0185849,Atmospheric Complexity,2073-06-22,2074-09-06,E9901102,E7947414,Mission to study the highly complex atmospheric composition of the planet and analyze its potential effects on nearby celestial bodies.
-M0940003,Magnetic Field,2075-02-08,,E2676502,E4232170,Mission to study and analyze the planet’s strong magnetosphere and its potential effects on space travel and communication.
-M8894561,Orbital Behavior,2070-09-26,2071-12-30,E3357916,E0162206,Mission to study the planet’s highly eccentric orbit and analyze its potential effects on nearby celestial bodies.
-M0224173,Meteor Shower Activity,2074-07-22,,E5218212,E0380472,Mission to study and analyze the unpredictable meteor shower activity on the planet and develop strategies for safeguarding nearby celestial bodies.
-M8521825,Glothir Recon,2040-07-10,2042-01-15,E8961035,E8367340,A reconnaissance mission to explore the surface of Glothir.
-M7693328,Seismic Testing,2039-05-05,2040-02-14,E8541698,E0162206,Testing for minerals and resources
-M6046584,Glothir Atmospheric Exploration,2065-09-03,,E7843495,E7947414,Exploring the atmospheric composition of Glothir.
-M6055179,Zandor Prime Study,2038-09-20,2041-01-01,E7843495,E0162206,Deep Study of the Zandor environment
-M0380823,Zandor Gas Study,2066-06-01,,E1783092,E4232170,Study behavior of gases within Zandor prime.
-M5973762,Zandor Tornado Study,2050-04-13,2053-05-12,E6428947,E0162206,Investigating behavior of massive tornadoes
-M6558178,Pheilon Seismic Testing,2074-07-24,2075-11-22,E7843495,E8367340,Testing for minerals and resources
-M1660209,Pheilon Magnetic Field Analysis,2061-11-05,,E8961035,E8367340,Studying the magnetic field of the planet Pheilon
-M9915390,Pheilon Low Gravity Studies,2055-02-11,2057-06-02,E8541698,E7947414,Experiment on the behavior of human body in low gravity.
-M0806660,Kepler's Legacy,2065-08-20,2070-05-27,E1783092,E4232170,"The primary mission to study the exoplanet's atmosphere and determine its potential for human habitation. The mission involves a crew of five, led by a mission planner, two astrobiologists, and two atmospheric scientists. The mission is expected to last five years and involves the deployment and maintenance of several probes around the exoplanet."
-M5315561,The Great Migration,2072-02-12,2075-11-22,E3349141,E0162206,"The first colonization attempt of Kepler-438b. A crew of 50, led by a project manager, a spacecraft engineer, and a chief medical officer, will establish a permanent human colony on the exoplanet. The mission is expected to last three years, and the crew will be tasked with building infrastructure, conducting necessary research, and establishing a sustainable colony."
-M0317530,Into the Gas Giant,2049-11-22,2052-06-11,E1783092,E4232170,"An exploratory mission to study the atmospheric composition and behavior of the gas giant. The mission involves a small crew of four, including a planetary scientist, an atmospheric scientist, a propulsion engineer, and a communications specialist. The mission is expected to last two and a half years and involves deploying several probes into the gas giant's atmosphere."
-M6168109,Beyond the Blue,2063-06-06,,E7843495,E4232170,"An initial reconnaissance mission to study the exoplanet's surface and atmosphere. The mission involves a small crew of two, including a planetary scientist and a data scientist, and is expected to last several months. The mission involves deploying several autonomous probes on the surface and in the atmosphere."
-M4417358,Over the Rainbow,2069-02-18,,E9901102,E7947414,"A more in-depth mission to study the exoplanet's potential for human habitation. The mission involves a larger crew of ten, including a project manager, a systems engineer, an exobiologist, and several atmospheric scientists. The mission is expected to last two years and involves the deployment of several rovers, landers, and autonomous drones."
-M1181410,The New Frontier,2075-07-02,,E7245705,E4232170,"The first colonization attempt of Gliese 667 Cc. The mission involves a crew of 100, led by a chief engineer, a logistics officer, and a chief operating officer. The mission is expected to last several years and involves establishing a permanent human colony on the exoplanet's surface. The crew will be tasked with building infrastructure, conducting necessary research, and establishing a sustainable colony."
-M1238732,TRAPPIST-1: Window to the Universe,2040-09-18,2045-12-20,E8961035,E8367340,"The primary mission to study the exoplanet's atmosphere and determine its potential for human habitation. The mission involves a crew of five, led by a mission planner, two astrobiologists, and two atmospheric scientists. The mission is expected to last five years and involves the deployment and maintenance of several probes around the exoplanet."
-M0803693,The Second Chance,2068-03-22,,E1783092,E8367340,"An ambitious mission to establish a second colony on TRAPPIST-1d. The mission involves a crew of 50, led by a project manager, a spacecraft engineer, and a chief medical officer, and is expected to last several years. The crew will be tasked with building infrastructure, conducting necessary research, and establishing a sustainable colony."
-M1385399,New Horizons,2038-06-06,,E8483883,E8367340,"An initial exploratory mission to study Grana's surface and atmosphere. The mission involves a small crew of two, including a planetary scientist and a data scientist, and is expected to last several months. The mission involves deploying several autonomous probes on the surface and in the atmosphere."
-M2396863,Pathfinders,2059-08-22,2061-12-06,E7870753,E0162206,"An extensive exploration mission to study the geology, geography, and biosphere of Grana. It is a crew of ten, led by a project manager, a planetary scientist, a systems engineer, and several atmospheric scientists. The mission is pathfinding for the colonization attempt that will come after. The crew will utilize available resources on the planet in order to maintain and provide for themselves as they travel."
-M6610898,Storm Chasers,2051-07-12,2053-09-16,E3357916,E0380472,"An exploratory mission to study the behavior of the immense storms present within Keloni. The mission involves a small crew of four, including a planetary scientist, an atmospheric specialist, a propulsion engineer, and a communications engineer. The mission gives data that is useful to the designers of the unmanned probe that will be sent to Keloni which will emit sensors to study the storms over a long period of time."
-M0066571,Gas Titans,2060-05-11,,E3487347,E0162206,"An extensive study of the upper atmosphere of Keloni in regards to its atmospheric composition. A crew of twenty, composed of atmospheric scientists, engineers, and life support specialists; will be sent to study various regions of the atmosphere for one year."
-M0934838,Blind Eye,2045-03-03,2053-05-18,E5502287,E0380472,"An exoplanet survey mission leads to the chance encounter with Saha. Due to a maze of regulations, the crew of the ship that encountered Saha has to abandon the planet without so much as a proper scan. Now, a newly formed team at F-SEA, composed of their best engineers, leads a mission to closely observe the planet and work to gather readings for trade with other research institutions."
-M3202007,Lost Wanderer,2067-01-22,,E7843495,E8367340,"A second mission to Saha in order to try and unveil the planet’s secrets. It is a crew of forty, composed of astrophysicists, planetary geologists, and environmental scientists led by both a project manager and a planetary scientist. Their goal is to establish a proper research station to lead comprehensive research on Saha over a long period of time."
-M2283654,Highlanders,2065-03-22,2067-05-15,E7870753,E4232170,"The first expedition to the surface of Thalua. A crew of twenty, including planetary geologists, environmental scientists, and a group of climbers/scientists, as the planet's heavy gravity will require the crew to do substantial walking in order to complete their mission. They are equipped with base camps and provisions to last for the duration of their stay. Their goal is to map the planet's surface and study its geology, mountain ranges, and landscapes before determining its potential for building infrastructure or establishment of a colony."
-M6714212,Aurora Reconnaissance,2050-04-15,2051-06-30,E0692717,E8367340,Recon mission to investigate the icy terrain and rocky formations
-M9380572,Nebula Study,2052-09-05,,E0356214,E7947414,Long-term mission to study the planet's atmosphere and weather patterns
-M7823882,Nebula Probe,2049-11-23,2051-06-30,E0356214,E0162206,Robotic probe mission to collect data on the planet's core
-M2675970,Rigel Volcanic Study,2055-08-02,2057-04-15,E8541698,E8367340,Mission to study volcanic activity and assess potential hazards
-M5386695,Rigel Rover,2049-03-15,,E8541698,E4232170,Robotic rover mission to collect samples and data on the planet's geology
-M1579934,Centaurus Water Study,2067-02-04,2069-06-19,E8483883,E7947414,Mission to study water resources and assess their potential for human consumption and industrial use
-M2130866,Centaurus Life,2061-10-23,2063-02-05,E1783092,E0162206,Mission to study microbial life forms and their potential impact on the planet's ecosystem
-M4512143,Orion Ring Study,2057-04-15,,E5502287,E4232170,Mission to study the planet's ring system and assess potential hazards
-M8671293,Orion Exobiology,2068-11-18,,E8541698,E0380472,Mission to study microbial life forms and assess their potential for extraterrestrial colonization
-M6186051,Orionus Atmosphere Analysis,2067-01-28,2068-03-03,E8961035,E4232170,Mission to study the atmospheric composition and behavior during a storm
-M1534461,Orionus Probe,2040-11-12,2041-06-10,E7843495,E0380472,Robotic probe mission to collect data on the planet's internal structure and composition
-M1718947,Canopus Terraforming,2072-03-20,2074-09-05,E6793306,E0380472,Mission to assess the feasibility of terraforming the planet for future human colonization
-M7249932,Canopus Dust Study,2060-07-15,,E1783092,E0162206,Mission to understand the behavior and effects of the planet’s dust storms
-M3717431,Cygnus Radiation Shielding,2048-12-02,2050-06-09,E3357916,E7947414,Mission to test various radiation shielding materials and designs
-M7553000,Cygnus Cloud Study,2075-01-10,,E7843495,E8367340,Mission to study the planet's dense cloud cover and atmospheric conditions
-M5797864,Leo Seismology Study,2063-09-09,2065-04-03,E1783092,E4232170,Mission to study the planet’s fractional surface and seismic activity
-M7994582,Leo Geology Study,2043-04-27,,E3357916,E8367340,Mission to collect samples and data on the planet’s unique geology
-M7664491,Sirius Exobiology,2054-11-03,,E8541698,E0380472,Mission to study the diversity and potential of the planet’s plant life
-M3764122,Sirius Fauna Study,2058-08-11,2060-03-22,E6428947,E0162206,Mission to study the planet’s animal life
-M3463242,Gareon Thermal Mapping,2060-05-11,2063-02-18,E7843495,E7947414,Mission to map the heat distribution and volcanic activity on the planet
-M7130145,Gareon Geology Study,2050-06-28,,E5085375,E0162206,Mission to analyze the planet’s unique mineral and rock formations
-M1660294,Polaris Lightning Study,2065-08-04,2066-12-22,E7843495,E0380472,Mission to study the behavior and effects of lightning in the planet’s atmosphere
-M0421762,Polaris Magnetosphere Study,2070-11-15,,E3357916,E0380472,Mission to study the planet’s magnetosphere using magnetic field sensors
-M3857281,Andromeda Marine Biology Study,2047-10-01,2050-02-28,E3487347,E8367340,Mission to study the diverse marine life and ecosystems of the planet
-M0023560,Andromeda Oceanography Study,2072-11-01,,E8483883,E0380472,"Mission to study the planet’s ocean currents, tides, and weather patterns"
-M2610497,Orionus Climate Study,2060-08-25,2063-05-01,E1783092,E4232170,Mission to study the extreme climate variations and atmospheric composition of the planet
-M7762692,Orionus Soil Analysis,2055-01-10,,E3357916,E7947414,Mission to analyze soil samples and map the planet’s terrain features
-M7510474,Vega Solar Radiation Study,2056-09-09,2059-06-03,E6428947,E4232170,Mission to study the planet’s magnetosphere and its interaction with the intense solar radiation
-M5770583,Vega Ice Geology Study,2043-11-29,,E1783092,E0380472,Mission to study the planet’s ice formations and their geologic history
-M8739103,Bellatrix Atmosphere Study,2043-12-23,2046-02-15,E7870753,E0162206,Mission to study the atmospheric conditions and the effects of the planet’s magnetic anomaly
-M3636567,Bellatrix Magnetic Field Study,2065-03-12,,E2676502,E4232170,Mission to study the planet’s magnetic anomaly and map its extent and properties
-M6183470,Antares Exobiology Study,2046-08-11,2048-11-22,E5502287,E8367340,Mission to study the unique and potentially dangerous lifeforms on the planet
-M9431654,Antares Atmospheric Analysis,2057-06-03,,E3487347,E0380472,Mission to analyze the planet’s toxic atmosphere and find possible ways to mitigate its effects
-M5598106,Project Phoenix,2055-07-15,2057-02-20,E1783092,E4232170,Reconnaissance mission to study the surface characteristics and mineral composition of Planet X-781.
-M8290759,Project Dawn,2060-10-10,,E5502287,E0162206,Exploration mission to investigate potential subsurface water deposits on Planet X-781.
-M3162251,Mission Atlas,2063-11-25,2065-08-15,E9901102,E0380472,Mapping mission to study the atmospheric conditions and moons of Planet Y-192.
-M9377378,Operation Delta,2070-12-08,2073-03-30,E3349141,E0162206,Joint mission with the Engineering department to test new spacecraft propulsion technology and study asteroid belt formations around Planet Y-192.
-M0714742,Project Phoenix,2069-03-01,2070-04-01,E9901102,E0162206,Recon mission to study the geology and atmosphere of Zaknafein.
-M5593867,Project Dawn II,2071-06-28,,E7843495,E7947414,Exploratory mission to investigate the possibility of underground water sources.
-M3426388,Mission Atlas,2071-12-17,2073-03-30,E9537978,E0380472,An exploratory mission to study the geology and history of Viburnum.
-M1123299,Habitat Hunt,2074-06-06,,E1783092,E7947414,Recon mission to collect rock and soil samples and search for viable environments for a potential permanent settlement.
-M4620739,Project Polar,2067-06-28,2068-01-28,E0692717,E0162206,A mission to study the planet's unique magnetic field and its effects on the atmosphere and radiation levels.
-M8639893,Deep Freeze,2070-06-25,2071-05-22,E7843495,E7947414,Exploration mission to study the behavior of ice particles in Maeve's atmosphere and their potential to form ice crystals.
-M6488692,Ring Watch,2059-11-05,2061-09-30,E8541698,E0162206,A mission to study the behavior of the planet's ring system and its effect on surrounding moons and asteroids.
-M6585703,Hidden Treasures,2070-06-28,,E1783092,E7947414,A joint mission with the Cultural Affairs Department to study unique cultural artifacts on one of Caliban's moons.
-M0580925,Project Tempest,2072-09-15,2073-12-10,E9901102,E0380472,An exploratory mission to study the geological features of Zephyr and investigate reports of underground electrical activity.
-M6837234,Search for Safe Harbor,2074-08-31,,E1783092,E8367340,A reconnaissance mission to survey potential landing sites for a permanent settlement.
-M5444361,Project Eden,2063-01-15,2064-05-10,E2676502,E4232170,"A mission to study the unique biodiversity of Aurora, with a focus on aquatic and avian species."
-M0954609,Deep Dive,2067-03-15,2068-02-20,E3357916,E0162206,An exploratory mission to investigate underwater cave systems on Aurora and study their geological features.
-M9009386,Project Glacier,2048-01-01,2049-04-01,E1783092,E7947414,An exploratory mission to study the geological features of Frostbite and investigate reports of underground water sources.
-M9890497,Operation Icicle,2070-06-28,,E0477498,E0380472,A mission to retrieve a stranded spacecraft and rescue its crew from one of Frostbite's moons.
-M2986704,Project Lightning,2066-01-05,2067-06-30,E8541698,E7947414,A mission to study the planet's electrical storms and their potential impact on the planet's moons.
-M2612566,Eye on the Universe,2069-09-01,,E6428947,E0162206,A reconnaissance mission to survey potential sites for a long-range telescope on one of Thunderstorm's moons.
-M0273691,Project Volcano,2072-07-21,2072-09-22,E7843495,E0162206,Study the volcanic activity and collect samples of lava for analysis. This mission will be conducted remotely using unmanned probes.
-M2831733,Project Glimpse,2074-08-27,,E8961035,E8367340,Launch a satellite into orbit around Grimhilde to survey the planet's surface. The data collected will be used to identify potential landing sites.
-M9904187,Project Chasm,2072-09-30,2072-10-22,E5085375,E4232170,Explore the series of deep chasms on Grimhilde. Collect samples of the rock and analyze it using remote sensing technology.
-M3287824,Project Heat,2070-03-27,2072-03-30,E3357916,E7947414,Study the intense heat generated by Grimhilde's volcanoes. Send a team of astronauts to collect samples and collect data on the planet's geology.
-M3970870,Operation Icicle,2042-08-23,,E7870753,E0380472,Establish a research station on the surface of Revenant. Study the moon's ice formations and its potential as a source of water for future space missions.
-M4559964,Operation Rime,2075-04-15,2075-11-22,E7910907,E0380472,Investigate the unusual crystal formations on Revenant. Search for signs of extraterrestrial life and study the moon's effect on the gas giant it orbits.
-M7753387,Operation Avalanche,2064-10-11,2065-02-08,E3357916,E0380472,Scout the surface for potential landing sites for future missions. Study the geological and environmental factors of Revenant.
-M1172566,Project Atlas,2040-09-01,2043-07-28,E5085375,E4232170,"Send a probe to map the planet's surface, collect data on its atmosphere, and search for signs of alien life."
-M3337989,Project Explorer,2063-02-14,2065-12-22,E7843495,E0380472,Send a manned mission to orbit Calendula and study its moon. Analyze the planet's magnetic field and solar wind.
-M2376004,Project Insight,2068-11-01,2074-06-30,E7843495,E7947414,"Send a team of astronauts to the surface of Calendula. Study the planet's geology, search for signs of extraterrestrial life, and study the planet's atmosphere."
-M0296810,Project Odyssey,2038-06-06,,E7870753,E8367340,Send a probe to scan the planet's magnetic field and solar wind. Collect data on the planet's geology and atmosphere.
-M5027302,Project Nimbus,2060-10-02,2062-08-17,E3357916,E8367340,Study the planet's atmosphere and collect data on its composition. Launch a series of balloons to measure the atmospheric pressure and temperature.
-M5850924,Project Phantasm,2075-11-01,,E2842201,E0162206,Send a probe to study the planet's magnetic field and search for signs of extraterrestrial life. Investigate the radiation levels near Cressida.
-M5293369,Project Cloudbreak,2050-03-14,2053-02-17,E3487347,E4232170,Launch a series of rockets to study the planet's cloud patterns. Collect samples of the planet's atmosphere and study its chemical composition.
-M1996053,Project Gale,2074-04-01,,E7843495,E8367340,Establish a research station on the surface of one of Cressida's moons. Study the planet's rings and collect data on the moon's geological patterns.
-M2331179,Rock Hound,2060-02-15,2060-06-15,E8961035,E4232170,Mining mission to extract rare earth metals.
-M7998747,Star Tracker,2061-05-02,2061-08-05,E3357916,E0162206,Astronomical observation mission to study the blue giant star.
-M6708562,Moon Explorer,2067-01-15,,E9901102,E4232170,"A mission to explore one of Cyrigosa’s moons, studying its geology and biology."
-M1434499,Ring Observer,2072-03-23,2072-06-23,E5085375,E7947414,A mission to study the formation and behavior of Cyrigosa’s ring system.
-M4302694,Dry Spell,2071-10-13,2072-03-14,E7843495,E4232170,A mission to collect samples from the unique rock formations and study the planet’s geological history.
-M3395764,Solar Sweep,2073-01-19,2074-03-02,E2676502,E0162206,A mission to study the planet’s solar winds and their effects on Xilary’s atmosphere.
-M3719328,Ring Explorer,2041-10-17,,E5502287,E0380472,"An extended mission to study Celestina’s ring system, its composition and origins."
-M6644353,Magnetic Probe,2051-08-12,2052-01-05,E1783092,E8367340,A mission to study the magnetic field of the planet and collect data on space weather phenomena caused by it.
-M4924363,Mineral Collector,2074-01-23,2074-04-27,E1783092,E8367340,"A mission to collect rare minerals, study their origin and composition, and analyze their possible applications in space technology."
-M5667295,Atmospheric Surveyor,2069-02-01,,E6428947,E4232170,"An ongoing mission to study the planet’s atmosphere and weather patterns, with the goal of understanding how to best protect future colonies from harsh environments."
-M3759240,Habitable Worlds Survey,2068-05-10,2069-07-15,E9901102,E4232170,"A mission to search for potentially habitable planets in nearby star systems, with Proxima B as the primary target."
-M8304851,Exoplanet Explorer,2073-09-02,,E3357916,E7947414,"An ongoing mission to study Proxima B’s environment, including its atmosphere, geology, and potential for habitability."
-M5089801,Frozen Frontier,2073-09-30,,E3357916,E7947414,"A mission to explore Elios’ unique ice formations, study its geological history, and search for signs of past or present microbial life."
-M6730425,Aurora Hunter,2055-11-11,2056-02-21,E7843495,E0162206,A mission to study the planet’s auroras and their relationship with its magnetic field.
+mission_id,mission_name,start_date,end_date,commander_id,supervisor_id,description,notes
+M6281862,Dying Prophet,2052-09-23,2053-05-01,E6428947,E4232170,Recon mission to investigate reports of a glowing 'rosetta-stone-like' object,
+M9125616,Gaseous Depths,2055-07-27,,E9537978,E8367340,Exploratory mission to study the atmospheric composition and behavior of gaseous pockets,
+M9093853,Abyssal Expedition,2064-11-19,2065-07-03,E5085375,E0162206,Mission to investigate the unusual properties of the underground ocean,
+M6614428,Subterranean Safari,2065-11-15,2066-05-12,E5085375,E4232170,A mission to catalogue the underwater fauna residing in the underground ocean,
+M2076528,Twister,2046-08-10,2049-04-22,E1783092,E0380472,Mission to study the composition of the planet's atmosphere during its erratic weather patterns,
+M1071145,Whirlwind,2051-10-02,,E0477498,E8367340,Mission to study the planet's magnetic field during the planet's most intense weather event,
+M0339092,Volcano Watch,2053-03-05,2054-12-11,E7870753,E4232170,Mission to study the seismic activity and volcanic behavior of the planet,
+M0623313,Lava Walk,2061-05-07,2062-06-30,E3357916,E8367340,Mission to retrieve samples from the planet's active lava tubes,
+M0366996,Radiance,2055-12-01,,E8961035,E7947414,Mission to study the impact of the planet's radiation on biological matter,
+M7025755,Gamma Rays,2067-01-01,2067-04-03,E5085375,E4232170,Mission to collect data on the planet's gamma radiation bursts,
+M2986914,Dying Prophet,2050-08-11,2050-11-21,E8541698,E7947414,Recon mission to investigate reports of a glowing 'rosetta-stone-like' object,
+M1730300,Gaseous Depths,2072-03-14,2074-08-29,E8541698,E0380472,Exploratory mission to study the atmospheric composition and behavior of gaseous pockets,
+M4694538,Lypso's Icy Abyss,2072-05-13,2074-10-27,E7843495,E7947414,Manned expedition to study the properties of the hazardous frozen gases on Lypso's surface.,
+M7167181,Lypso's Polar Winds,2061-04-05,,E7870753,E7947414,A mission to study the effect of Lypso's polar winds and how it affects the gaseous atmosphere of Lypso,
+M6727468,Gaseous Flares,2060-07-05,2060-12-13,E1783092,E8367340,A mission to investigate strange electromagnetic radiation patterns detected on the surface of Lypso,
+M2739748,Dark Terrain,2069-06-23,2070-09-17,E2676502,E7947414,"A treacherous expedition on foot to collect seismic data, analyzing its core",
+M4875871,Light Beacon,2072-04-28,2073-08-15,E7843495,E0380472,A predominantly aerial mission featuring digital assessment of the planet terrain for future missions,
+M7909416,Spectral Trails,2045-08-01,2046-12-13,E8541698,E4232170,Observation of the planet's multiple shadowing phenomena that might be hindering colonization efforts,
+M1405983,Acid Return,2064-02-20,,E1783092,E4232170,A research mission themed around chemical assessments and disease testinges of aquatic life on the planet.,
+M0837036,Wet and Able,2073-11-25,2075-04-16,E7245705,E7947414,A mission to assess the risks of acid induced corrosion on tools and equipment required of deep underwater research and work,
+M3280310,Planetary Guard,2039-05-26,2043-02-03,E7870753,E4232170,Deployment of a team of special operatives to protect researchers and machinery while studying the microbiology of aquatic lifeforms,
+M2735957,Ghost Data,2046-11-25,2047-03-08,E5085375,E7947414,A mission to analyze the residual gravitational waves found in the virtually stagnant planet.,
+M2708728,Operation Starlight,2058-06-23,2058-08-03,E5502287,E8367340,"Deployment of a team of special operatives to conduct a surveillance mission, keeping watch over a detected foreign non-sentient humanoids",
+M5555961,Empty Echoes,2057-08-10,,E7870753,E0162206,A deep space satellite deployment mission with the primary object of relaying and communicating with other colonies,
+M2028493,Hot and Dry,2056-03-12,2056-10-18,E8961035,E4232170,Study of erosional features caused by extreme weather fluctuations and collection of samples for geological analysis,
+M4963514,Dust in the Wind,2045-09-17,,E2676502,E4232170,Deployment of a satellite system to observe dust patterns and movement across the planet,
+M6524479,Tropic Venture,2073-04-28,2074-07-19,E5502287,E7947414,A ground expediton to assess potential for desert agriculture and test growth of drought resistant produce,
+M9354170,Frozen Fury,2050-07-10,2051-01-03,E7843495,E4232170,A scientific mission to measure seismic activity and investigate the cause of severe weather shifts,
+M5618859,Icy Expanse,2067-11-08,,E3357916,E0162206,A mission to study the composition of ice deposits and their potential use in resource recovery,
+M2729020,Glacier Roads,2039-09-01,2042-02-13,E1783092,E7947414,A mission exploring the possibility of constructing roads made of ice and the effects of temperature change in construction and maintenance,
+M5633985,Bog Beast,2044-06-29,,E8541698,E0162206,"Observation mission of the dangerous predator, the Bog Beast",
+M4250325,Mosiack Marsh,2058-12-12,2060-05-22,E3487347,E4232170,"A muddy mission where elite researchers obtain samples of the swampy vegetation, water, and creatures to document the complex ecosystem",
+M6480988,Venomous Vibe,2065-09-15,2067-03-08,E6793306,E7947414,A mission examining the toxicity of the various creatures on the planet in defense and for potential use in toxicology and pharmacology,
+M4447336,Electric Attic,2056-03-12,,E5502287,E8367340,A mission with the goal of measuring planetary electric field and determining its effects on technology. First conducted in the planet’s outer layer atmosphere,
+M5334671,Thunder Knocking,2075-11-22,,E7870753,E0380472,A mission designed to install and measure the effectiveness of a lightning rod system for future planetary human settlements,
+M7582581,Charge Game,2047-02-28,2048-09-23,E5085375,E4232170,A light-hearted mission with the purpose of documenting the electrical interaction of different species on the planet,
+M1634234,Dunescape Expedition,2067-01-15,2068-08-12,E6428947,E7947414,A mission studying the formation of sand dunes formed by natural phenomenon,
+M6890435,Volcanic Tremors,2055-02-02,2056-06-19,E3357916,E4232170,A dangerous mission studying the effects of temperature change on volcanically active areas,
+M6130742,Hibernation Hysteria,2070-03-04,,E8541698,E8367340,A mission landing on a frozen tundra with the aim of expediting hibernation and cryogenic techniques for future missions,
+M7526856,Thunderhead Explorer,2039-07-16,2040-03-23,E8541698,E0162206,A mission to study the unique cloud formations on the planet's surface,
+M3686145,Rocks of Ages,2045-12-05,,E7843495,E0162206,An exploratory mission to assess the mineral content and potential for resource extraction on the planet,
+M4393895,Tidal Turmoil,2046-08-23,2047-03-19,E8483883,E4232170,A dangerous mission to study the planet's tidal forces and their effects on nearby celestial bodies,
+M0415033,Deep Blue,2055-09-08,2056-04-12,E6428947,E0380472,A deep sea exploration mission focused on studying the planet's underwater ecosystem,
+M8178894,Fire and Ashes,2065-01-02,2065-06-15,E8541698,E4232170,A mission to study the planet's active volcanoes and the effects of their eruptions on the planet's atmosphere,
+M0745779,Geothermal Wonders,2048-01-16,,E5502287,E4232170,An exploration mission focused on the planet's geothermal activity and the potential for energy extraction,
+M9563718,Forest Haven,2045-11-01,2046-05-22,E8541698,E0162206,An ecological mission focused on studying the planet's forests and the creatures that inhabit them,
+M0904260,Tree of Life,2073-01-09,,E7245705,E7947414,A mission to study the most massive tree on the planet and its effect on the planet's ecology,
+M9248533,Frozen Riches,2046-09-10,2047-05-03,E7843495,E8367340,A mission to assess the planet's valuable mineral deposits in its icy terrain,
+M2282363,Ice and Stone,2070-06-18,2071-01-12,E0356214,E7947414,A geological mission studying the planet's icy surface and the effects of its unique geological formations,
+M5465477,Cave System Conquest,2060-04-10,2061-01-27,E7843495,E0380472,A mission to explore and map the extensive underground cave networks on the planet in search of valuable minerals,
+M6840513,Dust and Dirt,2052-07-04,,E7843495,E7947414,A reconnaissance mission to collect surface samples of the planet to study the geology and potential resource extraction,
+M8275269,Ring Observations,2059-11-29,2060-05-02,E8541698,E7947414,"A mission to study the planet’s ring system, including its composition, structure, and how it interacts with the planet’s atmosphere",
+M8883868,Gas Giants,2045-02-28,,E3487347,E7947414,A mission to send specialized equipment to monitor and study the planet’s atmosphere and the gases in its upper atmosphere and ionosphere,
+M1505444,Underwater World,2049-07-18,2050-01-19,E7870753,E0380472,"An exploration mission to study the planet’s oceans, including its marine life, tides, currents, and underwater geology",
+M2268592,Oceanic Mystery,2074-01-07,2075-04-01,E2842201,E0162206,A mission to study strange underwater formations and ancient ruins found deep within the planet’s oceans,
+M9413014,Ice-Cold Mystery,2070-01-24,2071-12-12,E5085375,E0162206,A mission to study the planet’s extreme temperature fluctuations and to explore the mysterious structures found on its surface,
+M6054079,Frozen Frontier,2069-10-29,2071-11-21,E9901102,E4232170,A mission to study the planet’s ice formations and to assess the potential for resource extraction,
+M9319115,Seismic Shifts,2072-03-29,2073-02-16,E8483883,E7947414,"A mission to study the planet’s frequent and extreme seismic activity, including volcano eruptions and earthquake patterns",
+M4785663,Storm Chasers,2039-12-21,2040-08-10,E7843495,E0162206,A mission to observe the severe storms and hurricane patterns on the planet,
+M3922881,Mountaintop Marvels,2053-02-27,,E2676502,E0162206,"An expedition to study the planet’s highly varied geography, including its many mountain ranges and the effects of altitude on the planet’s ecology",
+M8422102,Prairie Discoveries,2049-01-02,2049-06-30,E7843495,E8367340,An exploration mission to study the vast open plains of the planet and the interactions between its herbivorous and carnivorous creatures,
+M0575039,Frostbite,2050-09-15,2051-03-10,E8483883,E0162206,Exploratory mission to study the planet's geological features and determine the possibility of resource extraction,
+M8051746,CryoSat,2064-04-16,2064-07-25,E3357916,E7947414,Deploy a satellite to monitor the planet's weather patterns and ice caps,
+M3068838,Jungle Trek,2066-07-19,2067-12-09,E7843495,E8367340,Expedition to study the flora and fauna of the planet's dense rainforests,
+M1828316,Ocean Survey,2054-06-21,2056-10-08,E8483883,E0162206,Submarine mission to study the planet's oceans and marine life,
+M6769658,Orbiting Survey,2050-09-15,2051-03-10,E2362099,E7947414,Deploy a satellite to monitor the planet's weather patterns and natural occurrences from orbit,
+M9444860,Frigid Depths,2061-10-27,2063-12-15,E7870753,E8367340,Exploratory mission to study the planet's subterranean water and ice formations,
+M1664522,EcoTrek,2043-12-13,2044-03-05,E1783092,E4232170,Expedition to study the planet’s different ecosystems,
+M9178071,FloraEvo,2065-02-11,2065-06-29,E7843495,E0380472,Collect and study various plant samples,
+M7994016,CraterCrawl,2070-03-13,2070-04-16,E8541698,E8367340,Exploratory mission to study geological activity in craters,
+M9481125,LavaLogs,2045-11-09,,E7843495,E4232170,Study the magma flows and repercussions on the planet’s terrain,
+M4991444,TornadoTactics,2039-04-25,2039-08-17,E3357916,E7947414,"Study the frequency, speed, and effects of tornados on the planet",
+M4568749,AeroArch,2042-06-12,2043-02-22,E8961035,E4232170,Study the planet’s dense atmosphere and wind patterns,
+M1817961,SubIce,2071-03-05,2071-05-23,E7870753,E7947414,Submarine mission to study the planet’s oceans and marine life,
+M3092873,IceBreak,2044-08-03,2045-01-22,E6428947,E7947414,Exploratory mission to study the behavior of ice caps,
+M3399087,Crystalline Caverns,2054-10-15,2055-03-02,E3357916,E8367340,Explore and study the planet’s subterranean crystal formations,
+M6187584,VolcanicVenture,2067-01-12,,E8541698,E0380472,Study the planet’s volcanic activity,
+M8033177,Rock of Ages,2043-09-01,2045-06-01,E8483883,E4232170,Survey mission of the strange rock formations and natural satellites orbiting Grypthon,
+M2609717,Grypthonese Carpet,2048-03-04,2050-08-15,E6428947,E0162206,Surface exploration mission to study the native flora and fauna existing in the most rugged terrain of Grypthon,
+M5082541,Eurifix Ringside,2066-06-09,2067-09-30,E7870753,E0162206,Investigation of chemical composition and formation process of Eurifix's rings,
+M0588489,Storm Watchers,2067-03-06,2069-03-11,E6428947,E4232170,Study and monitoring mission of the highly variable atmospheric structure of Eurifix,
+M5227989,Cracking Ice,2054-01-16,2056-07-04,E8483883,E7947414,Drilling and sampling mission focused on studying the composition of Arithea's unique ice crevasses,
+M2448858,Snow Trek,2066-06-09,,E9901102,E7947414,Expedition exploring Arithea's vast icy tundras and locating hidden glacial lakes,
+M9109508,Magnetic Tempests,2042-09-01,2043-02-01,E7843495,E0162206,A Mission to study the magnetic activity of Icaria's poles during a particularly strong and hazardous tempest season.,
+M6296228,Jinxed Phenomena,2060-06-01,,E0356214,E7947414,An ongoing mission to study mysterious and unexplained phenomena occurring in Icaria's frigid plains.,
+M3471268,Acid Rain,2038-07-01,2039-01-01,E8483883,E4232170,An exploratory mission to study the effects of sulfuric acid rain on Venera's surface and its potential for exploiting its subterranean resources. Led by the Science Department.,
+M8669069,Boggy Bayou,2070-04-01,,E5085375,E4232170,"This dangerous mission involves traversing Venera's swampy and relatively uncharted terrain to study its unique characteristics and potential indigenous life forms. Multiple departments of F-SEA are involved, mainly the Exploration and Special Operations Departments.",
+M6999294,Radiative Emissions,2045-09-01,2045-12-01,E6428947,E0380472,An Engineering-led mission to study Corinthea's intense radiation emissions and develop new radiation-resistant materials and systems,
+M7694488,Desolation Wilderness,2055-09-01,2055-12-01,E7870753,E8367340,"One of the first missions to explore Corinthea's desert terrain and its potential for habitation. Led by the Supply and Logistics Department, the mission lasted a few months and involved testing new technology and infrastructure.",
+M3934684,Star Worms,2058-01-12,2058-03-01,E3487347,E7947414,An exobiology mission led by the F-SEA Science Department to investigate reports of strange deep burrowing creatures that emit small wormholes out behind their movement.,
+M9290400,Magma Mines,2075-09-15,,E7560667,E0380472,An Engineering-led mission that involves investigating the potential for mining the minerals beneath Corinthea's surface,
+M7817097,Stormchasers,2072-06-07,,E6428947,E0162206,A daring mission to study the electrical storms on Megaclite up close and devise new methods of navigating these treacherous conditions. This dangerous mission is led by the F-SEA Special Operations Department.,
+M4430799,Sub-Zero Icecapade,2049-06-09,2049-07-31,E8961035,E4232170,"A Science Department led mission to study the unique ice formations of Megaclite, and assess their potential benefits to colonization endeavors",
+M9855226,Zeitgeist,2038-08-19,,E7870753,E0380472,"Exploratory mission to study Thasos and assess its potential for habitation, resource extraction and other colonisation efforts. Led by the F-SEA Exploration Department.",
+M0448326,Magnetic Anomaly Reconnaissance,2074-09-14,,E8961035,E4232170,A mission to study the unexplainable electromagnetic anomalies on Thasos and investigate any possible connection to the strange geological phenomena present on the planet. This dangerous mission is led by the F-SEA Special Operations Department.,
+M8615483,Acid Rain,2038-07-01,2039-01-01,E7843495,E8367340,An exploratory mission to study the effects of the planet's corrosive atmosphere and potential for exploitation of its subterranean resources. This mission is led by the F-SEA Science Department.,
+M1633756,Volcanic Vistas,2042-06-13,2042-11-28,E6428947,E4232170,A mission to observe and document the immense geysers of Azhanti and assess their effects on the planet. The mission is led by the F-SEA Engineering Department,
+M8187543,Tectonic Tempests,2074-09-14,2075-11-22,E2328765,E4232170,A mission to study Azhanti's tectonic activity and assess its impact on the planet. This mission is led by the F-SEA Exploration Department.,
+M4221127,Ice-Cold Seafoam,2039-05-12,,E8483883,E8367340,"A mission to study Cocytus' internal oceans and assess their potential for habitation, exploration, and resource extraction. Led by the F-SEA Exploration Department.",
+M5243050,Polar Night,2063-11-01,2064-02-01,E8541698,E0162206,"A mission to study Cocytus's erratic rotation about its axis, and its effects on the planet. This mission is led by the F-SEA Engineering Department.",
+M5416964,Stormy Skies,2068-11-01,,E1783092,E0162206,A mission to study the violent storms and atmospheric phenomena on Sisyphus. This mission is led by the F-SEA Science Department.,
+M7572299,The Winds of War,2074-09-14,2076-12-23,E3349141,E0380472,A risky mission to explore Sisyphus's upper atmosphere and study its potential for resource extraction and colonization. This mission is led by the F-SEA Engineering Department.,
+M7975224,Radscout,2068-04-23,2068-05-30,E8961035,E0380472,An Exploration Department mission to study Zaxxon's high radiation levels and assess its potential for resource extraction.,
+M4268194,Inferno,2075-08-15,2075-11-16,E3357916,E0380472,A risky mission led by the Engineering Department to study the surface of Omicron and assess its potential for resource extraction. The mission involves specialized equipment and suits to withstand the extreme temperatures and toxic atmosphere.,
+M5113967,Frozen Frontier,2064-02-02,2064-05-09,E7843495,E0162206,A mission by the Medical Department to study the icy seas of Noma and assess its potential as a source of water.,
+M8695320,Gas station,2068-08-20,,E7843495,E7947414,A mission led by the Supply and Logistics to study the feasibility of using Noma as a refueling station.,
+M5329423,Sky Riders,2074-12-12,2075-02-28,E7560667,E0162206,A mission to study the sky creatures of Kronos and their behavior. Led by the Alien Relations Department.,
+M2549857,Gaswalker,2079-08-23,2079-11-01,E9901102,E7947414,A dangerous mission led by the Special Operations Department to collect atmospheric gases from the planet's upper atmosphere for analysis. Involves the creation of specialized equipment to withstand the extreme pressures and temperatures.,
+M2436156,Windchaser,2060-08-08,2061-01-23,E3357916,E0380472,A mission to study the weather patterns on Zephyrion and assess their impact on the planet. Led by the Exploration Department.,
+M0335901,Rock Hunter,2072-06-05,,E7843495,E0162206,A mission by the Engineering Department to analyze Zephyrion's unique rocky formations and assess their potential uses.,
+M5917805,Xenon Haul,2072-01-08,2072-04-25,E3357916,E8367340,A mission led by the Supply and Logistics Department to extract xenon from Xenonom's rich deposits and store it in the ship's reserves.,
+M1491455,Gas Harvest,2075-02-15,,E3349141,E0162206,An Engineering Department led mission to study and collect the rare atmospheric gases that can be found on the planet's surface.,
+M0880334,Orbital Observer,2065-06-12,,E5502287,E4232170,An Exploration Department mission to study the planet's orbit and its impact on its climate.,
+M3871242,Atmospheric Anomalies,2068-04-16,2068-05-21,E8961035,E7947414,A Science Department led mission to study the environmental changes and atmospheric anomalies in Esperon's atmosphere due to its peculiar orbit.,
+M3893897,Planet Prospector,2061-06-06,,E5085375,E4232170,An Engineering Department led mission to analyze the planet's surface for potential mining operations.,
+M1370992,Rock Regolith,2064-07-08,2064-09-12,E8961035,E0380472,A Science Department led mission to study the elements composing Cerestria's abundant regolith and understand the planet's geological formation.,
+M3123155,Helium Hunt,2068-03-29,2068-05-21,E8961035,E4232170,A Recon Department led mission to collect helium-3 from Helixa's upper atmosphere.,
+M3007682,Weather Watch,2071-11-07,,E8541698,E4232170,An Exploration Department led mission to gather data on the planet's intricate and stormy weather patterns.,
+M5622635,Toxic Tango,2066-09-15,2066-11-01,E7843495,E7947414,A Supply and Logistics led mission to study the feasibility of extracting resources from Noxus and the necessary equipment needed for survival in the hazardous environment.,
+M3844010,Rock Rider,2073-07-23,,E6793306,E0380472,A Science Department led mission to analyze the unique rock formations found on Noxus for future applications in manufacturing and engineering.,
+M6018085,Noxus Nightmares,2075-11-22,2076-01-30,E2499796,E0380472,A Special Operations Department led mission to secretly study the hostile creatures that inhabit Noxus along with kidnapping a few for more detailed study on the ship.,
+M6858384,Jungle Jive,2078-03-14,,E8483883,E7947414,A Science Department led mission to study the exotic flora and fauna of Aurorax's dense jungles.,
+M4135631,Atmospheric Analysis,2080-01-05,2080-02-22,E8483883,E0380472,An Engineering Department led mission to investigate the high levels of carbon dioxide in the planet's atmosphere and its impact on the planet's ecosystem.,
+M2956620,Ice Storm,2067-06-27,2068-12-19,E7870753,E4232170,Mission to drill ice core samples for analysis of the planet's climate history,
+M3201329,Snowblind,2070-11-20,2072-12-18,E5502287,E4232170,Exploratory mission to search for signs of life and study geological formations,
+M1775550,Rainbow Rendezvous,2072-02-09,,E8541698,E0162206,Mission to study the planet's atmospheric composition and behavior of storms,
+M3295774,Eco-System Expedition,2069-10-18,2071-03-02,E7843495,E4232170,Mission to study and document the interactions between different species,
+M8228711,Life and Death,2072-02-11,2074-05-02,E8961035,E0380472,Mission to study the predator-prey relationships in the ecosystem,
+M7023328,Ocean Worlds,2069-10-18,2071-03-02,E7843495,E7947414,Exploratory mission to study the marine life and geology of the planet's oceans,
+M0611631,Home Away from Home,2072-02-11,,E9901102,E7947414,Mission to establish a long-term human settlement on the planet,
+M0149122,Dark Odyssey,2072-02-09,2073-07-01,E8961035,E4232170,Mission to study and document the planet's unique geological features and mineral compositions,
+M9666760,Fire and Ashes,2056-07-12,2057-03-23,E7843495,E0380472,Mission to study the planet's geological features and volcanic activity,
+M2601456,Atmospheric Analysis,2066-02-17,2066-07-08,E9537978,E8367340,Mission to analyze the planet's atmosphere and determine its composition,
+M1004947,Ice and Wind,2060-01-04,2061-09-17,E7870753,E4232170,Mission to study the planet's ice formations and extreme windstorms,
+M9853115,Storm Chaser,2074-04-12,,E7245705,E0380472,Mission to explore the planet's weather patterns and search for signs of life,
+M8677205,Forest Haven,2069-11-02,2071-05-26,E1783092,E0162206,Mission to study the planet's fauna and flora in the dense forest ecosystem,
+M0424481,Green Planet,2073-01-08,2074-11-15,E3357916,E4232170,Mission to analyze the planet's carbon cycle and overall impact of the forest on the planet's ecosystem,
+M2438805,Gas Giant Gaze,2063-09-09,2064-12-20,E0477498,E8367340,Mission to observe the planet's weather patterns and geological features,
+M9631551,Sky Rocks,2067-04-20,2068-11-02,E7843495,E8367340,Mission to collect rock samples from the floating formations on the planet's atmosphere,
+M1414114,Canyon Run,2069-08-12,,E3357916,E7947414,Mission to explore the planet's extensive canyon system and study the geology of the planet,
+M0971335,Desert Storm,2072-03-12,2074-01-07,E8541698,E4232170,Mission to study the planet's extreme weather patterns and possible geological consequences,
+M6727506,Cave Crawler,2061-10-25,2062-06-14,E5085375,E4232170,Mission to explore the planet's underground cave system and search for any life forms,
+M4962315,Dark Passages,2069-12-01,2070-05-03,E3357916,E0380472,Mission to study the planet's unique rock structures and geological formation within the cave system,
+M4554958,New Frontiers,2050-01-01,2051-07-15,E3357916,E8367340,"Exploratory mission to study the planet's atmosphere, geology, and biosphere.",
+M0042712,Gardeners of Eryl,2055-02-12,,E1783092,E0380472,Research mission to study the planet's crops and find ways to cultivate them on other planets.,
+M7579426,Surviving Eden,2061-11-20,2063-08-05,E1783092,E7947414,Survival mission. The crew will be stranded on the planet with limited resources and will have to find a way to survive and eventually be rescued.,
+M8875846,Deep Freeze,2065-02-18,2065-10-01,E7870753,E0162206,Exploratory mission to study the planet's core and composition.,
+M3235228,Frozen in Time,2067-12-24,,E5085375,E7947414,Geological survey mission to drill into the planet's core and collect samples.,
+M6756508,Glacier Race,2070-06-09,2072-01-12,E8483883,E4232170,Race mission between two teams to circumnavigate the planet's equator. The first team to complete the journey wins a prize.,
+M7361870,Beneath the Sands,2060-09-03,2062-06-12,E7843495,E0162206,Exploratory mission to study the planet's underground water resources and their potential for supporting life.,
+M1816299,Heat Wave,2064-07-19,,E7843495,E7947414,Analysis mission to study the planet's geological features and volcanic activity.,
+M2363524,Pyroclastic Symphony,2070-01-03,2071-07-31,E0356214,E4232170,Geological and atmospheric analysis mission to study the planet's weather patterns and natural phenomena.,
+M6449655,Storm Chasers,2070-01-04,2070-06-16,E5085375,E0380472,A high-risk mission to study the planet’s storms up close and gather atmospheric data.,
+M6397769,Electric Thunder,2070-12-22,,E8541698,E0162206,A mission to study lightning in the planet’s atmosphere and its effect on the ecosystem.,
+M2967158,Gormorian Sandworms,2071-06-23,2073-04-18,E7843495,E0380472,A dangerous mission to study the planet’s sandworms and their role in the ecosystem.,
+M2056446,Toxicity Quest,2065-10-22,2067-05-12,E8483883,E7947414,A mission to study the toxicity levels in the planet’s environment and their impact on the ecosystem.,
+M6962124,Vegetation Harvest,2073-11-11,2074-05-12,E9901102,E0380472,A mission to collect samples of the planet’s vegetation for potential use in medicine and food.,
+M0685881,Aegrus Underground,2075-02-28,,E7843495,E0380472,A mission to study the underground ecosystem and potential for habitable caves.,
+M3866457,Core Decay,2063-08-14,2064-06-28,E7910907,E8367340,A mission to study the planet’s unstable core and potential for energy extraction.,
+M5651730,Tectonic Shift,2065-04-25,2065-10-10,E0477498,E0162206,A mission to study the planet’s tectonic plates and their impact on the planet’s surface.,
+M9381313,Volcanic Ashes,2075-03-15,,E8541698,E4232170,A mission to study the impact of the planet’s volcanic activity on the atmosphere and ecosystem.,
+M9576017,Radioactive Oasis,2075-01-03,,E7843495,E4232170,A mission to study a rare oasis on the planet and any potential forms of life that may live there.,
+M0685346,Radiation Shielding,2071-12-04,2072-03-19,E8541698,E8367340,A mission to test new radiation shielding technologies in the planet’s extreme environment.,
+M1224391,Klydeon Wildlife,2074-06-08,2075-02-21,E8541698,E7947414,An exploration mission to study the planet’s unique and highly evolved wildlife.,
+M0832920,Infrared Analysis,2070-10-15,2070-12-05,E0356214,E0380472,An analysis mission to study the planet’s surface temperature and composition using infrared technology.,
+M6681931,Solar Flares,2074-05-28,,E8483883,E0162206,A mission to study the effects of solar flares on the planet’s atmosphere and surface.,
+M7306427,Eramir Habitation Study,2075-09-19,,E5085375,E0380472,A study mission to investigate the potential for human habitation on the planet and potential use as a colonization site.,
+M9405494,Volcanic Survey,2062-03-27,2062-05-06,E0356214,E4232170,A mission to study evidence of past volcanic activity on Xeron,
+M5669491,Bioluminescent Study,2068-07-02,2070-12-31,E3357916,E0162206,A long-term study of the bioluminescent plant life on Arclight and its adaptation to the planet's unique atmospheric conditions,
+M6548989,Atmospheric Analysis,2071-02-01,,E7843495,E0162206,An ongoing study of the planet's atmosphere and its potential implications for future colonization efforts,
+M8050339,Oceanic Exploration,2072-03-01,2072-11-30,E8961035,E7947414,A mission to explore the depths of Oceantide's ocean and study the life forms that thrive there,
+M9321386,Subsurface Sampling,2074-06-01,2074-08-31,E7245705,E8367340,A mission to collect samples from the moon's subsurface ocean and study its chemical composition,
+M2503174,Atmospheric Study,2072-01-01,,E5085375,E8367340,An ongoing study of the atmospheric dynamics of Starwind and its interactions with its moons,
+M2176514,Reflection Study,2067-07-15,,E3357916,E8367340,A study of the highly reflective surfaces on Krystallos,
+M3715321,Cryovolcanic Eruption Investigation,2071-05-29,2073-09-21,E7843495,E8367340,An investigation into the cause of recent cryovolcanic eruptions on Krystallos,
+M9651136,Orbital Analysis,2063-11-20,,E8541698,E8367340,A study of the unique orbital behavior of Icharus and its potential impacts on the planet,
+M1119205,Surface Geology Survey,2068-07-15,2068-11-11,E3487347,E0380472,A survey of the diverse surface terrain of Icharus and its geological history,
+M0996559,Atmospheric Analysis,2070-04-02,2070-06-17,E9901102,E7947414,A study of the planet's atmosphere and its interactions with its surface features,
+M5760132,Compositional Analysis,2048-09-13,,E7843495,E0162206,A detailed study of the composition and mineral content of Stardust,
+M7844435,Mining Expedition,2069-01-01,2071-01-01,E2676502,E8367340,A mining operation to extract valuable resources from Stardust,
+M2419759,Impact Simulation,2062-12-01,2065-12-12,E3357916,E4232170,A simulation to understand the potential damage a Stardust impact would have on a planet,
+M6444836,Ring System Study,2074-02-01,,E8541698,E0162206,A study of the unique ring system surrounding Ouroboros,
+M0294810,Atmospheric Dynamics,2055-12-01,2057-12-01,E0477498,E8367340,A study of the rapid atmospheric changes of Ouroboros,
+M8185547,Colonization Study,2069-05-01,2070-07-01,E7843495,E4232170,An investigation into the potential for sustainable colonization on Ouroboros,
+M4210895,Star Composition Study,2065-06-01,,E3487347,E0162206,A study of the composition of Nova and its potential implications on the stability of its core,
+M3684409,Stellar Dynamics,2069-08-01,,E7843495,E7947414,A study of the dynamic behavior of Nova and its impact on potential colonization and exploration efforts,
+M6000947,Exoplanet Survey,2049-01-01,,E8483883,E4232170,A survey to identify potential exoplanets within Andromeda for future exploration,
+M1451371,Black Hole Study,2053-07-01,2057-01-01,E8541698,E0162206,A detailed study of a black hole within the Andromeda galaxy,
+M3888528,Galactic Mapping,2068-02-01,2070-12-31,E7843495,E0380472,A mapping of the Andromeda galaxy and identification of potential areas for further exploration efforts,
+M2812415,Planetary Geology Study,2072-01-01,,E7843495,E4232170,A study of the unique geological features of Celestia and their potential formation mechanisms,
+M6773909,Radiation Analysis,2055-06-01,,E6428947,E0380472,An analysis of the intense radiation levels on Celestia and their potential impact on exploration and colonization efforts,
+M8416037,Atmospheric Escape Investigation,2072-08-01,2073-12-01,E0477498,E0380472,An investigation into the escape of gases from Celestia and their potential implications for the long-term habitability of the planet,
+M5039005,Red Horizon,2048-09-12,2050-05-31,E7843495,E8367340,A manned mission to conduct geologic surveys and collect data on Erosa's atmosphere and climate,
+M8694257,Crimson Dune,2052-06-08,,E8961035,E0162206,An exploration mission to investigate strange magnetic readings detected on the surface of Erosa,
+M2907803,Blackout,2053-11-27,2054-04-13,E5085375,E0162206,A mission to study Erosa's unique magnetic field and its effects on the planet's climate and geology,
+M9957414,Ringside,2047-03-22,2049-02-28,E8541698,E0380472,An exploratory mission to study the rings of Omnicon and map the planet's many moons,
+M1279358,Dark Sky,2051-06-15,2052-11-18,E7843495,E0162206,"A scientific mission to study the atmospheric composition and dynamics of Omnicon, including its massive storms and lightning discharges",
+M4463432,Ghost Moon,2054-01-19,,E1783092,E8367340,"An investigation mission to a small moon of Omnicon, which is said to be haunted by the ghosts of an ancient civilization",
+M1442827,Frozen Frontier,2047-11-09,2049-08-26,E8541698,E8367340,"A manned mission to explore Choros's surface and conduct research on its geology, climate, and potential for colonization",
+M0924622,Icebreakers,2052-06-08,2053-11-27,E3357916,E0380472,A scientific mission to study the dynamics of Choros's ice caps and their effects on the planet's geology and climate,
+M2173168,Blood Red,2055-07-04,2056-02-08,E3357916,E4232170,"A hazardous mission to extract valuable resources from the molten core of Choros, including rare earth metals and radioactive isotopes",
+M4462109,Fire and Ashes,2048-03-12,2050-01-21,E3357916,E0380472,A dangerous mission to map the volcanic activity of Nimarus and investigate potential geothermal energy sources,
+M9933473,Stormwatch,2052-06-08,,E8541698,E8367340,An atmospheric mission to study the powerful storms and lightning discharges of Nimarus,
+M1168946,Cryovolcanism,2054-11-07,2055-04-01,E1783092,E4232170,"A scientific mission to study the unique cryovolcanic activity of Nimarus, which spews out liquid nitrogen and other volatiles",
+M6118809,Tornado Alley,2049-08-02,2051-03-09,E1783092,E4232170,A scientific mission to study Zerax's massive tornadoes and other extreme weather patterns,
+M5209098,Aurora Zone,2052-06-08,,E6428947,E0162206,An atmospheric mission to study the aurora and other atmospheric phenomena of Zerax,
+M8034270,Thunder Road,2055-02-03,2056-01-07,E3357916,E0380472,A hazardous mission to explore the lightning-filled canyons and mountains of Zerax in search of valuable resources,
+M2170305,Molten Core,2062-09-23,2066-05-15,E1783092,E0162206,A hazardous mission to extract energy from the highly active geothermal vents on Vythos,
+M0787631,Fire and Ash,2068-11-02,2071-04-14,E3357916,E0162206,A manned mission to study the volcanic activity of Vythos and search for signs of life,
+M2572175,Smoke and Mirrors,2072-08-10,2075-05-09,E5085375,E8367340,A scientific mission to study the effects of volcanic emissions on Vythos’ atmosphere and its potential impact on habitability,
+M5097271,Rings of Helith,2064-04-16,2070-09-08,E7843495,E8367340,An exploratory mission to study the ring system of Helith and map the planet’s many moons,
+M4379081,Balanced Equilibrium,2071-02-12,,E5085375,E0380472,"A mission to investigate unusual readings on one of Helith’s moons, including potential signs of habitability",
+M1439023,Storm Chasers,2072-06-02,2075-01-19,E3357916,E7947414,An atmospheric mission to study the powerful storms and lightning discharges of Helith,
+M6152859,Magnetic Meltdown,2062-07-09,,E8541698,E8367340,"A mission to study the origin and behavior of Aurorion’s magnetic field, including any potential impact on habitability and future colonization",
+M2122875,Auroral Symphony,2067-05-12,2070-02-18,E3487347,E0162206,An atmospheric mission to study the auroras of Aurorion and their impact on the planet’s climate and geology,
+M9288154,Electromagnetic Pulse,2072-11-01,,E1783092,E0380472,A hazardous mission to investigate the source and potential effects of a massive electromagnetic pulse detected on Aurorion,
+M9355321,Treasure Hunt,2071-10-16,,E7843495,E8367340,A hazardous mission to explore deep underground caves on Orin in search of valuable resources and potential signs of life,
+M6587836,Sand and Rock,2072-12-24,2075-11-22,E7843495,E7947414,A manned mission to conduct geologic surveys and collect data on Orin’s atmosphere and climate,
+M9341766,Storm Chasers,2071-06-09,2073-01-31,E5502287,E4232170,An atmospheric mission to study the ephemeral flash floods and lightning discharges of Orin’s desert landscape,
+M8404951,Atmospheric Probe,2038-06-25,2038-06-30,E7843495,E0380472,Launch an unmanned probe into the atmosphere of Tychus to study its composition and behavior.,
+M5576312,Surface Sample,2039-11-20,2039-11-27,E7843495,E8367340,Launch manned mission to collect samples of the rocky surface of Tychus.,
+M8356259,Cave Exploration,2045-03-12,2045-03-22,E6428947,E8367340,Send team to explore the deep cave systems discovered on Tychus.,
+M2779210,Volcano Observation,2050-09-01,2051-02-01,E5085375,E0162206,Deploy a team to study the behavior of the volcanoes on Tychus and their potential impact on future colonization.,
+M0716633,Moon Exploration,2045-05-15,2045-06-15,E7843495,E0380472,"Send team to explore the most promising moon of Galaxia and study its geology, atmosphere, and potential for colonization.",
+M0741631,Gas Giant Mapping,2055-07-22,,E7843495,E7947414,Deploy unmanned drones to map the surface of Galaxia and study its atmosphere.,
+M9427943,Ice Sample Collection,2040-04-01,2040-04-10,E3357916,E0162206,Manned mission to collect ice samples from Aurora for research purposes.,
+M0978108,Aurora Ring Observation,2050-11-01,,E5085375,E0380472,Deploy unmanned probes to study the Aurora Ring and its composition.,
+M6235019,Nebula Study,2048-08-01,,E3357916,E4232170,Send team to study the composition and behavior of the colorful nebula surrounding Nebula planet.,
+M4101675,Toxic Gas Study,2065-09-15,2065-10-01,E8541698,E0380472,Deploy crew to study and analyze the level and behavior of toxic gases in Exodus planet.,
+M9762974,Surface Habitability Study,2071-11-24,2072-04-03,E2676502,E0380472,Send team to study the habitability and potential for colonization of Exodus planet surface.,
+M9131370,Project Phoenix,2050-09-28,2052-02-15,E5085375,E7947414,An exploratory mission to study Fenix Prime's unique ring system and the planet's composition and behavior.,
+M0954864,Ring Odyssey,2060-01-10,,E7870753,E0380472,A prolonged mission to continue studying Fenix Prime's rings at various angles and to study atmospheric phenomena.,
+M0201916,Radiance,2045-10-18,2046-07-01,E9537978,E4232170,"A hazardous mission to study Aetheria's radiation belt, using a heavily-shielded probe and advanced sensors.",
+M6756731,Aetherian Dreams,2050-03-14,2053-06-15,E7843495,E8367340,"An experimental mission to test a new radiation-resistant spacecraft, and to gather data on Aetheria's surface and subsurface activities.",
+M7922841,Aetheric Shadows,2060-06-06,,E5502287,E7947414,"A long-term mission to study the relationship between Aetheria's atmosphere and its radiation belt, using advanced sensor arrays and high-altitude probes.",
+M5594845,Stormchaser,2044-02-15,2046-06-30,E8541698,E0162206,A mission to study Aquillon's massive storms and to determine their effect on the planet's oceanic and atmospheric systems.,
+M7369465,Marine Odyssey,2057-09-22,2060-05-05,E3357916,E7947414,"A mission to explore Aquillon's oceanic depths, using a specially-equipped submersible craft.",
+M6609841,Aqua Vitae,2065-04-01,,E7843495,E0162206,"An extended mission to study Aquillon's oceanic and atmospheric chemistry, and to search for signs of life.",
+M5384092,Heatwave,2070-01-02,,E7843495,E0380472,A mission to investigate the phenomenon of extreme temperature fluctuations on Hindar and collect data to understand its causes.,
+M7650540,Arid Moon,2071-05-28,2072-07-06,E6428947,E8367340,An exploratory mission to investigate the geological properties of Hindar and its composition and potential for colonization.,
+M7562838,Aurora Borealis,2073-08-15,,E1783092,E7947414,A mission to study the magnetic fields and bright auroras of Aurorium to understand the long-term behavior of planetary magnetospheres.,
+M8542123,Magnetic Sphere,2068-09-12,2070-04-30,E7870753,E8367340,A mission to study the magnetic field and potential radiation hazards around Aurorium to gather data on the planet's atmosphere and composition.,
+M5277721,Nebula Odyssey,2045-12-15,2048-06-30,E3357916,E0380472,An ambitious mission to study the chemical makeup and behavior of the gases in the nebula,
+M1408637,Cosmic Mirage,2050-09-12,2053-02-05,E8483883,E7947414,A mission to study optical illusions caused by the nebula and photograph the nebula from various angles in attempt to understand formation,
+M4728202,Weathering Heights,2043-10-10,2046-02-18,E8961035,E7947414,"A mission to study the extreme weather phenomena on Lucidus, such as dust storms and electrical discharges.",
+M3297382,Rocky Horrors,2073-11-12,,E2842201,E4232170,An exploratory mission to study the unique rocky terrain on Lucidus with focus on geological formation of canyons.,
+M0189460,Double Star,2053-04-18,2055-08-12,E3357916,E0162206,An exploratory mission to study and document the binary stars and complex configuration of Cerulean,
+M8933551,Super-Earth,2060-03-15,,E4514470,E7947414,"A mission to investigate the potential for life on Cerulean, including observations of biosignature gases and atmospheric compositions.",
+M4433133,Rocky Descent,2074-03-10,2076-05-07,E3357916,E0380472,Deploying rovers and drones to analyze atmospheric and surface data,
+M8504097,Hazardous Meanderings,2061-09-14,2061-12-14,E1783092,E0380472,Deploying protective drones to study the toxic atmosphere,
+M5144984,Sandstorm Watch,2062-02-18,2062-04-12,E5085375,E0162206,Keeping track of sandstorm patterns and how they affect the planet's environment,
+M3792793,Sands of Time,2059-05-06,2060-06-22,E3357916,E0162206,Analyze sandstorms to determine patterns and sieving for unknown materials,
+M0527808,Icy Dip,2073-03-10,2074-05-07,E7870753,E8367340,Retrieve and study samples from the ice shelf.,
+M9506521,Underwater Odyssey,2047-02-10,2051-03-09,E9901102,E4232170,Investigate underwater geological formations and search for new species.,
+M8521929,The Teutonic Shift,2068-12-12,,E8961035,E8367340,Studying tectonic activity and testing new terraforming techniques.,
+M1890512,Eye of the Storm,2050-10-02,2051-01-07,E8541698,E0162206,Analyze the violent storms plaguing the planet's surface and their effect on life.,
+M8171300,Jungle Fever,2074-02-14,,E0477498,E0162206,Catalogue and analyze the different flora and fauna found on the planet.,
+M4169283,Biochemical Reconnaissance,2045-06-06,2047-11-22,E9537978,E0380472,Study the planet's life forms for any potential medicinal or technological properties.,
+M6168578,A Heavy Haul,2065-09-19,,E0692717,E4232170,Test different mechanized suits and engines in extreme gravity conditions.,
+M5563084,A Glimmer of Hope,2057-03-15,2058-03-20,E9901102,E7947414,Study the planet's violent weather patterns and their effects on the environment.,
+M9676988,Thunderstruck,2071-08-05,,E7843495,E8367340,Collect atmospheric data during lightning storms.,
+M8406300,Gaseous Gossamer,2038-06-06,2041-11-22,E7843495,E4232170,Study the planet's gaseous clouds for any potential unknown properties.,
+M8580936,Evolutionary Watch,2075-02-20,,E2842201,E7947414,Monitor the evolutionary patterns of the planet's life forms.,
+M4436552,Planet of the Chameleons,2060-01-14,2062-01-14,E7843495,E8367340,Document the planet's diverse animal ecology.,
+M4189220,Gas Giant Diver,2064-08-12,2066-08-17,E3357916,E7947414,A mission to study the effects of the harsh atmospheric environment on spacecraft structure and functionality,
+M9612668,Raging Storm,2073-05-18,,E7245705,E7947414,A dangerous mission to analyze the behavior of a powerful storm in the planet's atmosphere.,
+M4386919,Acidic Terrain Survey,2062-01-10,,E8541698,E0162206,An exploratory mission to study the geological composition of the planet's acidic terrain,
+M2252465,Atmospheric Analysis,2068-04-03,2068-09-15,E3357916,E8367340,A mission to study the planet's unusual atmospheric behavior and composition,
+M2125474,Extreme Cold Research,2075-11-22,2076-08-20,E5085375,E4232170,A research mission to study the extreme cold environment of the planet and its effects on living organisms,
+M5680126,Ice Formation Study,2064-11-20,2066-05-11,E7870753,E8367340,A mission to study the formation and movement of ice on the planet's surface,
+M8449903,Atmospheric Penetration,2064-11-20,,E7843495,E8367340,A mission to study the planet's atmospheric composition by penetrating it with a specialized probe,
+M6003120,Heavy Metal Mining,2062-01-10,2064-04-20,E7870753,E0162206,A mission to extract valuable minerals from deep within the planet's rocky surface,
+M4905913,Atmospheric Survey,2073-05-18,,E2842201,E8367340,An exploratory mission to study the composition and behavior of the planet's toxic atmosphere,
+M3133708,Hazardous Waste Disposal,2068-04-03,2068-09-15,E8961035,E4232170,A hazardous mission to dispose of potentially dangerous toxins on the planet's surface,
+M4802761,Glacial Retreat,2073-02-07,2074-08-23,E2676502,E7947414,A mission to study the retreat of the planet's ice cap in order to better understand the effects of climate change on the planet's ecosystem,
+M4439733,Aurora View,2046-12-08,2047-02-17,E8541698,E4232170,An exploratory mission to observe the planet's northern lights,
+M7613438,Hidden Depths,2069-07-14,2070-05-09,E9901102,E4232170,A mission to explore the deepest areas of the oceans and uncover any mysteries they may hold,
+M8828093,Light the Void,2055-12-30,,E3357916,E8367340,An exploratory mission to understand the properties and secrets of dark matter,
+M8656235,Crystal Formation Study,2049-06-02,2051-03-22,E0477498,E4232170,A mission to study the formation and properties of the moon's unique crystal lattice,
+M5412020,Reflected Glory,2072-09-17,2073-12-08,E3357916,E0380472,A mission to study the way light reflects off the moon's crystalline surface and its effects on the surrounding space,
+M5832421,Rainforest Expedition,2049-11-12,2053-07-19,E7843495,E0162206,A mission to explore the planet's rainforests and catalog its diverse flora and fauna,
+M5500596,Avalon,2064-08-09,2066-10-03,E7843495,E8367340,"A mission to study the planet's unique geological features and the mechanisms that have given rise to its rich, flourishing ecosystem",
+M1384891,Extreme Hotspot Monitoring,2052-01-25,2052-06-30,E7843495,E4232170,A mission to study the most active and dangerous areas of the planet's volcanic activity,
+M6044209,Molten Depths Expedition,2072-01-26,,E7843495,E0380472,A highly dangerous mission to explore the molten depths of the planet's mantle and gather samples to better understand the nature of the planet's tectonic activity,
+M2810424,Early Universe Formation Investigation,2059-03-14,2061-09-06,E3357916,E8367340,Investigation of the planet's early universe formation with an emphasis on geological samples.,
+M2549791,Ground Exploration,2063-02-02,2063-06-19,E7843495,E0380472,The objective of this ground mission is to analyse the elements found on surface.,
+M0863250,Navigational Tech Improvement,2062-07-24,,E1783092,E7947414,A long term research project to improve navigational technology in order to reduce impacts of the electromagnetic field on navigation.,
+M2767318,EM field analysis,2041-11-22,2042-06-01,E3357916,E0380472,Detailed analysis of the electromagnetic field. Sensors placed throughout the planet to determine how power is generated by the planet.,
+M5282162,Ring Clustering Research,2049-11-01,2050-12-12,E8541698,E8367340,A mission to study how asteroids in the rings are formed and if there are clusters.,
+M5528304,Remote Mining Operation,2058-03-02,2060-11-09,E8541698,E4232170,A mining operation to extract valuable minerals from denser asteroid clusters using drones.,
+M0746127,Acid Rain Analysis,2052-07-13,2054-02-19,E3357916,E4232170,A mission to analyze the pH levels of the rain and finding how it has an impact on the environment.,
+M9965549,Remote Observation,2067-05-11,,E8961035,E0162206,A remote observation of the planet to observe its climate and weather patterns.,
+M9110615,Weather Pattern Analysis,2046-08-23,2047-06-10,E7870753,E4232170,Analysis of extreme weather patterns to study and predict localized natural disasters.,
+M7640435,Severe Weather Observation,2045-02-04,2052-06-03,E7843495,E8367340,"Long term observation of natural disaster phenomenon, with a particular emphasis on typhoons and sandstorms.",
+M9999647,Mining,2057-08-07,2059-12-24,E6793306,E8367340,An operation to extract valuable minerals and rare earth elements from the planet's surface.,
+M8018741,Geological Analysis,2063-03-01,2063-06-15,E8961035,E8367340,A mission to collect and analyze geological samples from the planet's surface.,
+M4707508,Atmospheric Study,2041-09-13,2042-06-04,E8961035,E0162206,A mission to study the planet's atmospheric composition and behavior of massive cyclones.,
+M1025732,Remote Observation,2065-07-20,,E3357916,E4232170,A remote observation to collect and analyze data on weather patterns and atmospheric conditions.,
+M0105728,Botanical Study,2048-08-08,2050-05-02,E9901102,E0162206,A botanical study to analyze the planet's flora and ecosystem.,
+M4281308,Oceanic Study,2060-12-01,2061-02-15,E8961035,E4232170,An oceanic study to analyze the water body and its abundant life forms.,
+M6852988,Volcanic Activity Study,2058-02-22,2059-07-05,E7870753,E8367340,A mission to study the planet's intense volcanic activity and its impact on its environment.,
+M9000930,Geological Survey,2065-12-07,,E0356214,E7947414,A geological survey to collect samples and analyze the planet's mineral and rock formations.,
+M5351599,Ecosystem Study,2055-11-10,2057-04-13,E6428947,E8367340,A mission to study the planet's unique ecosystem and its highly adapted life forms.,
+M2445545,Atmospheric Analysis,2062-01-01,2062-03-15,E7843495,E8367340,A mission to analyze the planet's low oxygen levels and atmospheric composition.,
+M0310086,Stonewalker,2038-07-12,2040-02-21,E3357916,E4232170,Prospecting mission to locate and extract valuable minerals.,
+M1893368,Fractured Foundations,2041-04-09,2042-12-31,E1783092,E0380472,Geological mission to study the planet's tectonic activity and formation.,
+M4914306,Cloud Weaver,2050-08-06,,E8541698,E8367340,Exploratory mission to study unusual cloud formations and atmospheric currents.,
+M0768474,Storm Chaser,2062-08-05,2064-05-13,E6428947,E0380472,Mission to track and analyze severe storms and weather patterns.,
+M2224022,New Horizons,2061-09-19,2065-02-02,E1783092,E4232170,Colonization mission to establish a sustainable settlement.,
+M2221143,Pathfinder,2067-01-19,,E8483883,E4232170,Reconnaissance mission to explore uncharted regions of the planet.,
+M5917069,Icebreaker,2044-03-11,2047-10-28,E8961035,E7947414,Mission to study the planet's water cycle and extract samples of exotic ice formations.,
+M0478872,Frostbite,2060-07-25,2061-11-30,E3487347,E8367340,Geological mission to study the planet's unique landforms and geological history.,
+M0040624,Marine Explorer,2038-06-10,2040-12-25,E7843495,E0162206,Marine biology and oceanography mission to study the planet's underwater ecosystems and geology.,
+M2546129,Subterranean Odyssey,2061-04-02,,E3357916,E7947414,Exploratory mission to survey and map the underground cavern systems and search for valuable resources.,
+M7657106,New Horizons,2045-09-05,2048-05-18,E8483883,E0162206,Exploratory mission to study the planet's flora and fauna,
+M9604390,The Green Frontier,2055-01-15,,E7843495,E4232170,Mission to establish a permanent base on the planet and study the surrounding area,
+M8047184,Fury of the Volcano,2062-11-11,2063-05-20,E1783092,E0380472,Mission to study the planet's volcanic activity and collect samples,
+M8923783,Moons of Zypheria,2048-08-15,2051-05-14,E8541698,E7947414,Mission to study the behavior of the moons orbiting the gas giant,
+M1481301,Into the Storm,2070-03-01,,E7843495,E0380472,Mission to study the storms and other atmospheric phenomena of the gas giant,
+M9931122,Ring of Ice,2040-10-10,2042-08-13,E5502287,E8367340,Mission to study the planet's ring system and collect samples,
+M4562144,Frozen Wasteland,2075-03-25,,E3357916,E8367340,Mission to establish a research base on the planet and study the surrounding area,
+M3636676,Cave Dwellers,2042-06-01,2044-03-20,E1783092,E4232170,Mission to explore and map the planet's cave system,
+M6455846,The Red Planet,2075-10-01,,E7843495,E0162206,Mission to study the planet's geology and search for signs of life,
+M1120544,Gaseous Death,2042-07-15,2044-12-25,E5085375,E0380472,Study of the atmospheric composition and behavior of poisonous gas pockets,
+M6413839,Lifeless Excursion,2062-08-01,2064-02-01,E0692717,E0162206,Exploratory study of the planet's topography and geography,
+M4363251,Rex Mortem,2045-12-23,2049-08-13,E0356214,E0380472,Investigation of seismic activity and collecting data on topography,
+M5460290,Praesagio,2071-07-01,2073-01-01,E1783092,E8367340,Investigation of planet's geological history to predict potential natural threats.,
+M8378606,Eye in the Sky,2046-11-05,2052-09-15,E7843495,E4232170,"Orbit study of planet's atmosphere, composition and ring system identification.",
+M8390369,Blue Glory,2070-03-01,,E6428947,E0162206,Mission to establish an atmospheric monitoring station.,
+M6135518,Moons of Groxina,2041-01-01,2043-07-20,E8541698,E7947414,"Study of the behavior, composition and general characteristics of the moons.",
+M9590871,The Frozen Frontier,2073-10-01,,E2842201,E0380472,"Establishing a research base on the planet, studying surrounding area and seeking for potentially valuable resources.",
+M5496775,Shiny Shield,2042-03-12,,E2676502,E8367340,Study of the planet's electromagnetic fields and their impact on safety and equipment.,
+M6797782,Project Echo,2070-01-01,2074-01-01,E3487347,E8367340,Project to establish and operate a radio-transmission station in order to monitor space and any signals received from extraterrestrial sources.,
+M7146997,Wind Rider,2072-06-10,,E7843495,E0380472,Study of the planet's high winds and development of weather prediction models,
+M0644156,Rocky Outcrop,2069-02-14,2071-10-09,E7870753,E8367340,Exploration of the planet's surface and collection of geological samples.,
+M1516433,Aurora Sky,2063-10-17,2070-05-08,E3487347,E4232170,Study of the auroras in the planet's atmosphere and the impact of the planet's magnetic field on them.,
+M0666044,Jovian Storm,2058-07-22,2061-02-01,E8541698,E7947414,Investigation of the planet's extreme weather and development of protective measures for spacecraft.,
+M3102395,Storm Chaser,2044-12-01,2048-05-10,E2676502,E8367340,Study of the behavior and characteristics of the lightning storms on the planet and the impact on the atmosphere.,
+M0159718,Heavy Clouds,2058-02-15,,E7843495,E4232170,Investigation of the composition of the planet's dense atmosphere and potential benefits of atmospheric extraction.,
+M4552455,Arctic Oasis,2045-05-22,,E3357916,E0380472,Investigation of the planet's polar regions and potential for a sustainable colony.,
+M7477998,Underwater Depths,2055-01-10,2058-12-01,E7843495,E4232170,Exploration of the planet's undersea depths and collection of marine samples.,
+M5315046,Lava Fields,2048-10-15,,E6793306,E7947414,Study of the planet's volcanic activity and potential for resource extraction.,
+M1360326,Inferno,2066-03-05,2067-08-20,E8541698,E7947414,Investigation of the planet's magma chambers and prediction of volcanic eruptions.,
+M7474349,Underground Explorer,2054-06-01,2056-12-01,E8541698,E7947414,Exploration of the planet's underground tunnel system and collection of geological samples.,
+M7809870,Terrestrial Surveyor,2060-08-20,,E1783092,E0162206,Investigation of the planet's surface for potential resource extraction.,
+M1416973,Heavy Lifter,2038-06-06,,E7843495,E0380472,Test of new spacecraft technologies designed for high-gravity environments.,
+M5147208,Storm Sentinel,2045-11-10,2047-09-15,E2676502,E4232170,Study of the planet's severe weather and development of protective measures for spacecraft.,
+M4076526,Radiation Shield,2048-04-12,,E8961035,E8367340,Development and testing of new radiation shielding technologies.,
+M6953442,Gamma Storm,2055-08-05,2057-02-28,E7843495,E7947414,Investigation of the planet's harsh radiation environment and development of protective measures for spacecraft.,
+M0642603,Project Singularity,2065-02-11,2069-12-31,E8961035,E0380472,Mission to study a rapidly-spinning black hole and its accretion disk.,
+M0695797,High Frontier,2046-03-25,2048-12-19,E7843495,E8367340,The initial exploratory mission to scan and survey Luminex for resources.,
+M4824789,Stranger Tides,2071-12-25,2072-11-26,E3357916,E7947414,Mission to collect geological samples from an area of the planet's crust that displays highly anomalous mineral content and activity.,
+M3289331,Molten Heart,2056-08-14,,E9901102,E4232170,Mission to collect data and perform experiments on the planet's molten core and geothermal vents.,
+M8487348,Chasing Shadows,2055-06-01,2058-10-13,E8541698,E7947414,Mission to study the unique and anomalous properties of the planet fragment's composition. This mission presented severe navigation and orbiting challenges.,
+M3472434,Fragments of the Past,2047-02-28,2050-07-10,E5502287,E4232170,Mission to study the planet's history and gather data about the event that led to the planet's fragmentation.,
+M5606722,Mirage,2070-06-07,2071-01-15,E7870753,E4232170,"The first manned expedition to Golthon, this mission studied bioluminescent activity and the highly concentrated microbes living in the planet's atmosphere.",
+M7928704,Echoes of the Abyss,2051-11-11,2053-04-29,E3357916,E7947414,"Mission to investigate anomalous sonar readings, suspected to be a sea monster, in one of the planet's incredibly deep oceans.",
+M5788872,Aurora,2043-09-19,2051-02-15,E1783092,E0162206,Exploratory mission to scan and survey Terra Nova for resources.,
+M6122255,New Dawn,2061-01-01,,E5085375,E0380472,Mission to establish the first colony on Terra Nova and research its potential habitability.,
+M3412188,Seismic Instability,2062-09-08,2063-07-11,E5085375,E7947414,Mission to investigate the cause of the planet’s extreme seismic activity.,
+M4258128,Gas Pockets,2066-04-05,,E1783092,E4232170,Exploratory mission to study the behavior and composition of the high-pressure gas pockets present in the planet’s atmosphere.,
+M3611761,Atmospheric Dynamics,2067-07-08,2068-05-02,E1783092,E0380472,Mission to study the planet’s dense atmosphere and its behavior under intense solar radiation.,
+M5744971,Radiation Mapping,2072-12-03,,E8961035,E7947414,Mission to map the planet’s radiation emissions and study the effects of solar radiation on living organisms.,
+M8777804,Volcanic Eruptions,2070-01-10,2072-07-06,E1783092,E4232170,Mission to study the various forms of volcanic activity on the planet and analyze its effects on the planet’s geology.,
+M8204464,Tectonic Plates,2074-09-16,,E7560667,E0162206,Mission to study the planet’s tectonic plates and analyze the planet’s geological history.,
+M1705355,Microbial Life Forms,2065-11-02,2067-04-07,E5502287,E0162206,Mission to study and analyze the behavior and composition of the planet’s highly aggressive microbial life forms.,
+M9623016,Atmospheric Composition,2071-01-08,,E0356214,E0162206,Mission to study the composition of the planet’s dense atmosphere and analyze its potential effects on the planet’s microbial life forms.,
+M0185849,Atmospheric Complexity,2073-06-22,2074-09-06,E9901102,E7947414,Mission to study the highly complex atmospheric composition of the planet and analyze its potential effects on nearby celestial bodies.,
+M0940003,Magnetic Field,2075-02-08,,E2676502,E4232170,Mission to study and analyze the planet’s strong magnetosphere and its potential effects on space travel and communication.,
+M8894561,Orbital Behavior,2070-09-26,2071-12-30,E3357916,E0162206,Mission to study the planet’s highly eccentric orbit and analyze its potential effects on nearby celestial bodies.,
+M0224173,Meteor Shower Activity,2074-07-22,,E5218212,E0380472,Mission to study and analyze the unpredictable meteor shower activity on the planet and develop strategies for safeguarding nearby celestial bodies.,
+M8521825,Glothir Recon,2040-07-10,2042-01-15,E8961035,E8367340,A reconnaissance mission to explore the surface of Glothir.,
+M7693328,Seismic Testing,2039-05-05,2040-02-14,E8541698,E0162206,Testing for minerals and resources,
+M6046584,Glothir Atmospheric Exploration,2065-09-03,,E7843495,E7947414,Exploring the atmospheric composition of Glothir.,
+M6055179,Zandor Prime Study,2038-09-20,2041-01-01,E7843495,E0162206,Deep Study of the Zandor environment,
+M0380823,Zandor Gas Study,2066-06-01,,E1783092,E4232170,Study behavior of gases within Zandor prime.,
+M5973762,Zandor Tornado Study,2050-04-13,2053-05-12,E6428947,E0162206,Investigating behavior of massive tornadoes,
+M6558178,Pheilon Seismic Testing,2074-07-24,2075-11-22,E7843495,E8367340,Testing for minerals and resources,
+M1660209,Pheilon Magnetic Field Analysis,2061-11-05,,E8961035,E8367340,Studying the magnetic field of the planet Pheilon,
+M9915390,Pheilon Low Gravity Studies,2055-02-11,2057-06-02,E8541698,E7947414,Experiment on the behavior of human body in low gravity.,
+M0806660,Kepler's Legacy,2065-08-20,2070-05-27,E1783092,E4232170,"The primary mission to study the exoplanet's atmosphere and determine its potential for human habitation. The mission involves a crew of five, led by a mission planner, two astrobiologists, and two atmospheric scientists. The mission is expected to last five years and involves the deployment and maintenance of several probes around the exoplanet.",
+M5315561,The Great Migration,2072-02-12,2075-11-22,E3349141,E0162206,"The first colonization attempt of Kepler-438b. A crew of 50, led by a project manager, a spacecraft engineer, and a chief medical officer, will establish a permanent human colony on the exoplanet. The mission is expected to last three years, and the crew will be tasked with building infrastructure, conducting necessary research, and establishing a sustainable colony.",
+M0317530,Into the Gas Giant,2049-11-22,2052-06-11,E1783092,E4232170,"An exploratory mission to study the atmospheric composition and behavior of the gas giant. The mission involves a small crew of four, including a planetary scientist, an atmospheric scientist, a propulsion engineer, and a communications specialist. The mission is expected to last two and a half years and involves deploying several probes into the gas giant's atmosphere.",
+M6168109,Beyond the Blue,2063-06-06,,E7843495,E4232170,"An initial reconnaissance mission to study the exoplanet's surface and atmosphere. The mission involves a small crew of two, including a planetary scientist and a data scientist, and is expected to last several months. The mission involves deploying several autonomous probes on the surface and in the atmosphere.",
+M4417358,Over the Rainbow,2069-02-18,,E9901102,E7947414,"A more in-depth mission to study the exoplanet's potential for human habitation. The mission involves a larger crew of ten, including a project manager, a systems engineer, an exobiologist, and several atmospheric scientists. The mission is expected to last two years and involves the deployment of several rovers, landers, and autonomous drones.",
+M1181410,The New Frontier,2075-07-02,,E7245705,E4232170,"The first colonization attempt of Gliese 667 Cc. The mission involves a crew of 100, led by a chief engineer, a logistics officer, and a chief operating officer. The mission is expected to last several years and involves establishing a permanent human colony on the exoplanet's surface. The crew will be tasked with building infrastructure, conducting necessary research, and establishing a sustainable colony.",
+M1238732,TRAPPIST-1: Window to the Universe,2040-09-18,2045-12-20,E8961035,E8367340,"The primary mission to study the exoplanet's atmosphere and determine its potential for human habitation. The mission involves a crew of five, led by a mission planner, two astrobiologists, and two atmospheric scientists. The mission is expected to last five years and involves the deployment and maintenance of several probes around the exoplanet.",
+M0803693,The Second Chance,2068-03-22,,E1783092,E8367340,"An ambitious mission to establish a second colony on TRAPPIST-1d. The mission involves a crew of 50, led by a project manager, a spacecraft engineer, and a chief medical officer, and is expected to last several years. The crew will be tasked with building infrastructure, conducting necessary research, and establishing a sustainable colony.",
+M1385399,New Horizons,2038-06-06,,E8483883,E8367340,"An initial exploratory mission to study Grana's surface and atmosphere. The mission involves a small crew of two, including a planetary scientist and a data scientist, and is expected to last several months. The mission involves deploying several autonomous probes on the surface and in the atmosphere.",
+M2396863,Pathfinders,2059-08-22,2061-12-06,E7870753,E0162206,"An extensive exploration mission to study the geology, geography, and biosphere of Grana. It is a crew of ten, led by a project manager, a planetary scientist, a systems engineer, and several atmospheric scientists. The mission is pathfinding for the colonization attempt that will come after. The crew will utilize available resources on the planet in order to maintain and provide for themselves as they travel.",
+M6610898,Storm Chasers,2051-07-12,2053-09-16,E3357916,E0380472,"An exploratory mission to study the behavior of the immense storms present within Keloni. The mission involves a small crew of four, including a planetary scientist, an atmospheric specialist, a propulsion engineer, and a communications engineer. The mission gives data that is useful to the designers of the unmanned probe that will be sent to Keloni which will emit sensors to study the storms over a long period of time.",
+M0066571,Gas Titans,2060-05-11,,E3487347,E0162206,"An extensive study of the upper atmosphere of Keloni in regards to its atmospheric composition. A crew of twenty, composed of atmospheric scientists, engineers, and life support specialists; will be sent to study various regions of the atmosphere for one year.",
+M0934838,Blind Eye,2045-03-03,2053-05-18,E5502287,E0380472,"An exoplanet survey mission leads to the chance encounter with Saha. Due to a maze of regulations, the crew of the ship that encountered Saha has to abandon the planet without so much as a proper scan. Now, a newly formed team at F-SEA, composed of their best engineers, leads a mission to closely observe the planet and work to gather readings for trade with other research institutions.",
+M3202007,Lost Wanderer,2067-01-22,,E7843495,E8367340,"A second mission to Saha in order to try and unveil the planet’s secrets. It is a crew of forty, composed of astrophysicists, planetary geologists, and environmental scientists led by both a project manager and a planetary scientist. Their goal is to establish a proper research station to lead comprehensive research on Saha over a long period of time.",
+M2283654,Highlanders,2065-03-22,2067-05-15,E7870753,E4232170,"The first expedition to the surface of Thalua. A crew of twenty, including planetary geologists, environmental scientists, and a group of climbers/scientists, as the planet's heavy gravity will require the crew to do substantial walking in order to complete their mission. They are equipped with base camps and provisions to last for the duration of their stay. Their goal is to map the planet's surface and study its geology, mountain ranges, and landscapes before determining its potential for building infrastructure or establishment of a colony.",
+M6714212,Aurora Reconnaissance,2050-04-15,2051-06-30,E0692717,E8367340,Recon mission to investigate the icy terrain and rocky formations,
+M9380572,Nebula Study,2052-09-05,,E0356214,E7947414,Long-term mission to study the planet's atmosphere and weather patterns,
+M7823882,Nebula Probe,2049-11-23,2051-06-30,E0356214,E0162206,Robotic probe mission to collect data on the planet's core,
+M2675970,Rigel Volcanic Study,2055-08-02,2057-04-15,E8541698,E8367340,Mission to study volcanic activity and assess potential hazards,
+M5386695,Rigel Rover,2049-03-15,,E8541698,E4232170,Robotic rover mission to collect samples and data on the planet's geology,
+M1579934,Centaurus Water Study,2067-02-04,2069-06-19,E8483883,E7947414,Mission to study water resources and assess their potential for human consumption and industrial use,
+M2130866,Centaurus Life,2061-10-23,2063-02-05,E1783092,E0162206,Mission to study microbial life forms and their potential impact on the planet's ecosystem,
+M4512143,Orion Ring Study,2057-04-15,,E5502287,E4232170,Mission to study the planet's ring system and assess potential hazards,
+M8671293,Orion Exobiology,2068-11-18,,E8541698,E0380472,Mission to study microbial life forms and assess their potential for extraterrestrial colonization,
+M6186051,Orionus Atmosphere Analysis,2067-01-28,2068-03-03,E8961035,E4232170,Mission to study the atmospheric composition and behavior during a storm,
+M1534461,Orionus Probe,2040-11-12,2041-06-10,E7843495,E0380472,Robotic probe mission to collect data on the planet's internal structure and composition,
+M1718947,Canopus Terraforming,2072-03-20,2074-09-05,E6793306,E0380472,Mission to assess the feasibility of terraforming the planet for future human colonization,
+M7249932,Canopus Dust Study,2060-07-15,,E1783092,E0162206,Mission to understand the behavior and effects of the planet’s dust storms,
+M3717431,Cygnus Radiation Shielding,2048-12-02,2050-06-09,E3357916,E7947414,Mission to test various radiation shielding materials and designs,
+M7553000,Cygnus Cloud Study,2075-01-10,,E7843495,E8367340,Mission to study the planet's dense cloud cover and atmospheric conditions,
+M5797864,Leo Seismology Study,2063-09-09,2065-04-03,E1783092,E4232170,Mission to study the planet’s fractional surface and seismic activity,
+M7994582,Leo Geology Study,2043-04-27,,E3357916,E8367340,Mission to collect samples and data on the planet’s unique geology,
+M7664491,Sirius Exobiology,2054-11-03,,E8541698,E0380472,Mission to study the diversity and potential of the planet’s plant life,
+M3764122,Sirius Fauna Study,2058-08-11,2060-03-22,E6428947,E0162206,Mission to study the planet’s animal life,
+M3463242,Gareon Thermal Mapping,2060-05-11,2063-02-18,E7843495,E7947414,Mission to map the heat distribution and volcanic activity on the planet,
+M7130145,Gareon Geology Study,2050-06-28,,E5085375,E0162206,Mission to analyze the planet’s unique mineral and rock formations,
+M1660294,Polaris Lightning Study,2065-08-04,2066-12-22,E7843495,E0380472,Mission to study the behavior and effects of lightning in the planet’s atmosphere,
+M0421762,Polaris Magnetosphere Study,2070-11-15,,E3357916,E0380472,Mission to study the planet’s magnetosphere using magnetic field sensors,
+M3857281,Andromeda Marine Biology Study,2047-10-01,2050-02-28,E3487347,E8367340,Mission to study the diverse marine life and ecosystems of the planet,
+M0023560,Andromeda Oceanography Study,2072-11-01,,E8483883,E0380472,"Mission to study the planet’s ocean currents, tides, and weather patterns",
+M2610497,Orionus Climate Study,2060-08-25,2063-05-01,E1783092,E4232170,Mission to study the extreme climate variations and atmospheric composition of the planet,
+M7762692,Orionus Soil Analysis,2055-01-10,,E3357916,E7947414,Mission to analyze soil samples and map the planet’s terrain features,
+M7510474,Vega Solar Radiation Study,2056-09-09,2059-06-03,E6428947,E4232170,Mission to study the planet’s magnetosphere and its interaction with the intense solar radiation,
+M5770583,Vega Ice Geology Study,2043-11-29,,E1783092,E0380472,Mission to study the planet’s ice formations and their geologic history,
+M8739103,Bellatrix Atmosphere Study,2043-12-23,2046-02-15,E7870753,E0162206,Mission to study the atmospheric conditions and the effects of the planet’s magnetic anomaly,
+M3636567,Bellatrix Magnetic Field Study,2065-03-12,,E2676502,E4232170,Mission to study the planet’s magnetic anomaly and map its extent and properties,
+M6183470,Antares Exobiology Study,2046-08-11,2048-11-22,E5502287,E8367340,Mission to study the unique and potentially dangerous lifeforms on the planet,
+M9431654,Antares Atmospheric Analysis,2057-06-03,,E3487347,E0380472,Mission to analyze the planet’s toxic atmosphere and find possible ways to mitigate its effects,
+M5598106,Project Phoenix,2055-07-15,2057-02-20,E1783092,E4232170,Reconnaissance mission to study the surface characteristics and mineral composition of Planet X-781.,
+M8290759,Project Dawn,2060-10-10,,E5502287,E0162206,Exploration mission to investigate potential subsurface water deposits on Planet X-781.,
+M3162251,Mission Atlas,2063-11-25,2065-08-15,E9901102,E0380472,Mapping mission to study the atmospheric conditions and moons of Planet Y-192.,
+M9377378,Operation Delta,2070-12-08,2073-03-30,E3349141,E0162206,Joint mission with the Engineering department to test new spacecraft propulsion technology and study asteroid belt formations around Planet Y-192.,
+M0714742,Project Phoenix,2069-03-01,2070-04-01,E9901102,E0162206,Recon mission to study the geology and atmosphere of Zaknafein.,
+M5593867,Project Dawn II,2071-06-28,,E7843495,E7947414,Exploratory mission to investigate the possibility of underground water sources.,
+M3426388,Mission Atlas,2071-12-17,2073-03-30,E9537978,E0380472,An exploratory mission to study the geology and history of Viburnum.,
+M1123299,Habitat Hunt,2074-06-06,,E1783092,E7947414,Recon mission to collect rock and soil samples and search for viable environments for a potential permanent settlement.,
+M4620739,Project Polar,2067-06-28,2068-01-28,E0692717,E0162206,A mission to study the planet's unique magnetic field and its effects on the atmosphere and radiation levels.,
+M8639893,Deep Freeze,2070-06-25,2071-05-22,E7843495,E7947414,Exploration mission to study the behavior of ice particles in Maeve's atmosphere and their potential to form ice crystals.,
+M6488692,Ring Watch,2059-11-05,2061-09-30,E8541698,E0162206,A mission to study the behavior of the planet's ring system and its effect on surrounding moons and asteroids.,
+M6585703,Hidden Treasures,2070-06-28,,E1783092,E7947414,A joint mission with the Cultural Affairs Department to study unique cultural artifacts on one of Caliban's moons.,
+M0580925,Project Tempest,2072-09-15,2073-12-10,E9901102,E0380472,An exploratory mission to study the geological features of Zephyr and investigate reports of underground electrical activity.,
+M6837234,Search for Safe Harbor,2074-08-31,,E1783092,E8367340,A reconnaissance mission to survey potential landing sites for a permanent settlement.,
+M5444361,Project Eden,2063-01-15,2064-05-10,E2676502,E4232170,"A mission to study the unique biodiversity of Aurora, with a focus on aquatic and avian species.",
+M0954609,Deep Dive,2067-03-15,2068-02-20,E3357916,E0162206,An exploratory mission to investigate underwater cave systems on Aurora and study their geological features.,
+M9009386,Project Glacier,2048-01-01,2049-04-01,E1783092,E7947414,An exploratory mission to study the geological features of Frostbite and investigate reports of underground water sources.,
+M9890497,Operation Icicle,2070-06-28,,E0477498,E0380472,A mission to retrieve a stranded spacecraft and rescue its crew from one of Frostbite's moons.,
+M2986704,Project Lightning,2066-01-05,2067-06-30,E8541698,E7947414,A mission to study the planet's electrical storms and their potential impact on the planet's moons.,
+M2612566,Eye on the Universe,2069-09-01,,E6428947,E0162206,A reconnaissance mission to survey potential sites for a long-range telescope on one of Thunderstorm's moons.,
+M0273691,Project Volcano,2072-07-21,2072-09-22,E7843495,E0162206,Study the volcanic activity and collect samples of lava for analysis. This mission will be conducted remotely using unmanned probes.,
+M2831733,Project Glimpse,2074-08-27,,E8961035,E8367340,Launch a satellite into orbit around Grimhilde to survey the planet's surface. The data collected will be used to identify potential landing sites.,
+M9904187,Project Chasm,2072-09-30,2072-10-22,E5085375,E4232170,Explore the series of deep chasms on Grimhilde. Collect samples of the rock and analyze it using remote sensing technology.,
+M3287824,Project Heat,2070-03-27,2072-03-30,E3357916,E7947414,Study the intense heat generated by Grimhilde's volcanoes. Send a team of astronauts to collect samples and collect data on the planet's geology.,
+M3970870,Operation Icicle,2042-08-23,,E7870753,E0380472,Establish a research station on the surface of Revenant. Study the moon's ice formations and its potential as a source of water for future space missions.,
+M4559964,Operation Rime,2075-04-15,2075-11-22,E7910907,E0380472,Investigate the unusual crystal formations on Revenant. Search for signs of extraterrestrial life and study the moon's effect on the gas giant it orbits.,
+M7753387,Operation Avalanche,2064-10-11,2065-02-08,E3357916,E0380472,Scout the surface for potential landing sites for future missions. Study the geological and environmental factors of Revenant.,
+M1172566,Project Atlas,2040-09-01,2043-07-28,E5085375,E4232170,"Send a probe to map the planet's surface, collect data on its atmosphere, and search for signs of alien life.",
+M3337989,Project Explorer,2063-02-14,2065-12-22,E7843495,E0380472,Send a manned mission to orbit Calendula and study its moon. Analyze the planet's magnetic field and solar wind.,
+M2376004,Project Insight,2068-11-01,2074-06-30,E7843495,E7947414,"Send a team of astronauts to the surface of Calendula. Study the planet's geology, search for signs of extraterrestrial life, and study the planet's atmosphere.",
+M0296810,Project Odyssey,2038-06-06,,E7870753,E8367340,Send a probe to scan the planet's magnetic field and solar wind. Collect data on the planet's geology and atmosphere.,
+M5027302,Project Nimbus,2060-10-02,2062-08-17,E3357916,E8367340,Study the planet's atmosphere and collect data on its composition. Launch a series of balloons to measure the atmospheric pressure and temperature.,
+M5850924,Project Phantasm,2075-11-01,,E2842201,E0162206,Send a probe to study the planet's magnetic field and search for signs of extraterrestrial life. Investigate the radiation levels near Cressida.,
+M5293369,Project Cloudbreak,2050-03-14,2053-02-17,E3487347,E4232170,Launch a series of rockets to study the planet's cloud patterns. Collect samples of the planet's atmosphere and study its chemical composition.,
+M1996053,Project Gale,2074-04-01,,E7843495,E8367340,Establish a research station on the surface of one of Cressida's moons. Study the planet's rings and collect data on the moon's geological patterns.,
+M2331179,Rock Hound,2060-02-15,2060-06-15,E8961035,E4232170,Mining mission to extract rare earth metals.,
+M7998747,Star Tracker,2061-05-02,2061-08-05,E3357916,E0162206,Astronomical observation mission to study the blue giant star.,
+M6708562,Moon Explorer,2067-01-15,,E9901102,E4232170,"A mission to explore one of Cyrigosa’s moons, studying its geology and biology.",
+M1434499,Ring Observer,2072-03-23,2072-06-23,E5085375,E7947414,A mission to study the formation and behavior of Cyrigosa’s ring system.,
+M4302694,Dry Spell,2071-10-13,2072-03-14,E7843495,E4232170,A mission to collect samples from the unique rock formations and study the planet’s geological history.,
+M3395764,Solar Sweep,2073-01-19,2074-03-02,E2676502,E0162206,A mission to study the planet’s solar winds and their effects on Xilary’s atmosphere.,
+M3719328,Ring Explorer,2041-10-17,,E5502287,E0380472,"An extended mission to study Celestina’s ring system, its composition and origins.",
+M6644353,Magnetic Probe,2051-08-12,2052-01-05,E1783092,E8367340,A mission to study the magnetic field of the planet and collect data on space weather phenomena caused by it.,
+M4924363,Mineral Collector,2074-01-23,2074-04-27,E1783092,E8367340,"A mission to collect rare minerals, study their origin and composition, and analyze their possible applications in space technology.",
+M5667295,Atmospheric Surveyor,2069-02-01,,E6428947,E4232170,"An ongoing mission to study the planet’s atmosphere and weather patterns, with the goal of understanding how to best protect future colonies from harsh environments.",
+M3759240,Habitable Worlds Survey,2068-05-10,2069-07-15,E9901102,E4232170,"A mission to search for potentially habitable planets in nearby star systems, with Proxima B as the primary target.",
+M8304851,Exoplanet Explorer,2073-09-02,,E3357916,E7947414,"An ongoing mission to study Proxima B’s environment, including its atmosphere, geology, and potential for habitability.",
+M5089801,Frozen Frontier,2073-09-30,,E3357916,E7947414,"A mission to explore Elios’ unique ice formations, study its geological history, and search for signs of past or present microbial life.",
+M6730425,Aurora Hunter,2055-11-11,2056-02-21,E7843495,E0162206,A mission to study the planet’s auroras and their relationship with its magnetic field.,
