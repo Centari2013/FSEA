@@ -19,7 +19,7 @@ CREATE TABLE departments (
 
 CREATE TABLE designations (
     designation_id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    designation_name TEXT NOT NULL,
     abbreviation VARCHAR(5) NOT NULL
 );
 
