@@ -1,4 +1,4 @@
-containment_status_id,name,description
+containment_status_id,status_name,description
 1,Safe,The subject is secure and poses no immediate threat. It can be freely accessed within designated areas.
 2,Restricted,The subject requires controlled access and monitoring due to its potentially unpredictable behavior.
 3,Supervised,The subject must be constantly monitored by trained personnel due to its potentially hazardous nature.

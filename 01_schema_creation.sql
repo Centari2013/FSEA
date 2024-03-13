@@ -1,12 +1,12 @@
 CREATE TABLE clearances (
     clearance_id SERIAL PRIMARY KEY,
-    name TEXT,
+    clearance_name TEXT,
     description TEXT
 );
 
 CREATE TABLE containment_statuses (
     containment_status_id SERIAL PRIMARY KEY,
-    name TEXT,
+    status_name TEXT,
     description TEXT
 );
 
