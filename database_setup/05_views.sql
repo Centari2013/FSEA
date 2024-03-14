@@ -1,4 +1,3 @@
--- Active: 1709160611685@@localhost@5432@fsea@public
 CREATE OR REPLACE VIEW employee_details AS
 SELECT 
     e.employee_id,
