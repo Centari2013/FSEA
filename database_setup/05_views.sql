@@ -117,13 +117,13 @@ FROM missions m
 LEFT JOIN employees commander ON commander.employee_id = m.commander_id
 LEFT JOIN employees supervisor ON supervisor.employee_id = m.supervisor_id
 LEFT JOIN employee_missions em ON em.mission_id = m.mission_id
-LEFT JOIN employees operatives ON operatives.employee_id = em.employee_id
+INNER JOIN employees operatives ON operatives.employee_id = em.employee_id
 LEFT JOIN mission_origins mo ON mo.mission_id = m.mission_id
-LEFT JOIN origins o ON o.origin_id = mo.origin_id
+INNER JOIN origins o ON o.origin_id = mo.origin_id
 LEFT JOIN specimen_missions sm ON sm.mission_id = m.mission_id
-LEFT JOIN specimens s ON s.specimen_id = sm.specimen_id
+INNER JOIN specimens s ON s.specimen_id = sm.specimen_id
 LEFT JOIN department_missions dm ON dm.mission_id = m.mission_id
-LEFT JOIN departments d ON d.department_id = dm.department_id
+INNER JOIN departments d ON d.department_id = dm.department_id
 GROUP BY 
     m.mission_id, 
     commander.first_name, 
@@ -160,11 +160,11 @@ SELECT
     )) AS researchers
 FROM specimens s
 LEFT JOIN specimen_containment_statuses scs ON scs.specimen_id = s.specimen_id
-LEFT JOIN containment_statuses cs ON cs.containment_status_id = scs.containment_status_id
+INNER JOIN containment_statuses cs ON cs.containment_status_id = scs.containment_status_id
 LEFT JOIN specimen_missions sm ON sm.specimen_id = s.specimen_id
-LEFT JOIN missions m ON m.mission_id = sm.mission_id
+INNER JOIN missions m ON m.mission_id = sm.mission_id
 LEFT JOIN researcher_specimens rs ON rs.specimen_id = s.specimen_id
-LEFT JOIN employees researcher ON researcher.employee_id = rs.employee_id
+INNER JOIN employees researcher ON researcher.employee_id = rs.employee_id
 GROUP BY 
     s.specimen_id
 ORDER BY
