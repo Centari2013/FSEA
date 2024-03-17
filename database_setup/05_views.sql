@@ -21,13 +21,13 @@ SELECT
                 'involvement_summary', em.involvement_summary
     )) AS missions
 FROM employees e
-LEFT JOIN departments d ON d.department_id = e.department_id
+INNER JOIN departments d ON d.department_id = e.department_id
 LEFT JOIN employee_designations ed ON ed.employee_id = e.employee_id
-LEFT JOIN designations des ON des.designation_id = ed.designation_id
+INNER JOIN designations des ON des.designation_id = ed.designation_id
 LEFT JOIN employee_clearances ecl ON ecl.employee_id = e.employee_id
-LEFT JOIN clearances cl ON cl.clearance_id = ecl.clearance_id
+INNER JOIN clearances cl ON cl.clearance_id = ecl.clearance_id
 LEFT JOIN employee_missions em ON em.employee_id = e.employee_id
-LEFT JOIN missions m ON m.mission_id = em.mission_id
+INNER JOIN missions m ON m.mission_id = em.mission_id
 GROUP BY
     e.employee_id, d.department_id
 ORDER BY
@@ -68,9 +68,9 @@ SELECT
     )) AS specimens
 FROM origins o
 LEFT JOIN mission_origins mo ON mo.origin_id = o.origin_id
-LEFT JOIN missions m ON m.mission_id = mo.mission_id
+INNER JOIN missions m ON m.mission_id = mo.mission_id
 LEFT JOIN specimen_missions sm ON sm.mission_id = m.mission_id
-LEFT JOIN specimens s ON s.specimen_id = sm.specimen_id
+INNER JOIN specimens s ON s.specimen_id = sm.specimen_id
 GROUP BY 
     o.origin_id
 ORDER BY
