@@ -31,3 +31,48 @@ CREATE INDEX idx_department_missions_mission_id ON department_missions(mission_i
 CREATE INDEX idx_researcher_specimens_employee_id ON researcher_specimens(employee_id);
 CREATE INDEX idx_researcher_specimens_specimen_id ON researcher_specimens(specimen_id);
 
+
+-- TSVECTORS
+ALTER TABLE employees
+ADD COLUMN search_vector tsvector
+GENERATED ALWAYS AS (
+    TO_TSVECTOR('english', first_name || ' ' || last_name || ' ' || employee_id)
+) STORED;
+
+ALTER TABLE departments
+ADD COLUMN search_vector tsvector
+GENERATED ALWAYS AS (
+    TO_TSVECTOR('english', department_name || ' ' || COALESCE(director_id, '') || ' ' || COALESCE(description, ''))
+) STORED;
+
+ALTER TABLE designations
+ADD COLUMN search_vector tsvector
+GENERATED ALWAYS AS (
+    TO_TSVECTOR('english', designation_name || ' ' || abbreviation)
+) STORED;
+
+ALTER TABLE missions
+ADD COLUMN search_vector tsvector
+GENERATED ALWAYS AS (
+    TO_TSVECTOR('english', 
+        mission_id || ' ' || 
+        COALESCE(commander_id, '') || ' ' || 
+        COALESCE(supervisor_id, '') || ' ' || 
+        mission_name || ' ' || 
+        COALESCE(description, '') || ' ' || 
+        COALESCE(notes, '')
+    )
+) STORED;
+
+ALTER TABLE specimens
+ADD COLUMN search_vector tsvector
+GENERATED ALWAYS AS (
+    TO_TSVECTOR('english', specimen_name || ' ' || COALESCE(description, '') || ' ' || COALESCE(notes::text, ''))
+) STORED;
+
+
+CREATE INDEX idx_employees_search_vector ON employees USING GIN(search_vector);
+CREATE INDEX idx_departments_search_vector ON departments USING GIN(search_vector);
+CREATE INDEX idx_designations_search_vector ON designations USING GIN(search_vector);
+CREATE INDEX idx_missions_search_vector ON missions USING GIN(search_vector);
+CREATE INDEX idx_specimens_search_vector ON specimens USING GIN(search_vector);
