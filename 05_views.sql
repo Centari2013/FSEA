@@ -1,3 +1,20 @@
+/*
+ * Considerations for Database Design Decision:
+ *
+ * 1. Dataset Size and Freshness:
+ *    - The database's dataset is relatively small, which facilitates efficient query execution without the need for pre-aggregation or caching.
+ *    - It is imperative that the data remains up-to-date as often as possible to reflect real-time changes and ensure data accuracy for operational and analytical purposes.
+ *
+ * 2. Organizational Growth Projections:
+ *    - The fictional organization represented by this database is expected to experience a slow growth rate in employee population over several decades.
+ *    - This gradual growth trajectory suggests that the dataset will remain manageable without necessitating the complexities introduced by materialized views and the overhead of routine updates.
+ *
+ * Decision Rationale:
+ * Given the considerations above, I have opted for implementing simple views rather than materialized views. 
+ * This decision is underpinned by the current and projected dataset size, the requirement for data to be as current as possible, and the anticipated slow growth rate of the organization's employee base. 
+ * Simple views will thus provide the necessary data access efficiency and currency without the added complexity and maintenance overhead of materialized views and their routine updates.
+ */
+
 CREATE OR REPLACE VIEW employee_details AS
 SELECT 
     e.employee_id,
@@ -29,9 +46,7 @@ INNER JOIN clearances cl ON cl.clearance_id = ecl.clearance_id
 LEFT JOIN employee_missions em ON em.employee_id = e.employee_id
 INNER JOIN missions m ON m.mission_id = em.mission_id
 GROUP BY
-    e.employee_id, d.department_id
-ORDER BY
-    e.last_name;
+    e.employee_id, d.department_id;
 
 CREATE OR REPLACE VIEW department_details AS
 SELECT
@@ -47,9 +62,7 @@ FROM departments d
 LEFT JOIN employees e ON e.employee_id = d.director_id
 GROUP BY 
     d.department_id,
-    e.employee_id
-ORDER BY
-    d.department_id;
+    e.employee_id;
 
 CREATE OR REPLACE VIEW origin_details AS
 SELECT
@@ -72,9 +85,7 @@ INNER JOIN missions m ON m.mission_id = mo.mission_id
 LEFT JOIN specimen_missions sm ON sm.mission_id = m.mission_id
 INNER JOIN specimens s ON s.specimen_id = sm.specimen_id
 GROUP BY 
-    o.origin_id
-ORDER BY
-    o.origin_name;
+    o.origin_id;
 
 CREATE OR REPLACE VIEW mission_details AS
 SELECT
@@ -129,10 +140,7 @@ GROUP BY
     commander.first_name, 
     commander.last_name, 
     supervisor.first_name, 
-    supervisor.last_name
-ORDER BY 
-    m.mission_name;
-
+    supervisor.last_name;
 
 CREATE OR REPLACE VIEW specimen_details AS
 SELECT
@@ -166,6 +174,4 @@ INNER JOIN missions m ON m.mission_id = sm.mission_id
 LEFT JOIN researcher_specimens rs ON rs.specimen_id = s.specimen_id
 INNER JOIN employees researcher ON researcher.employee_id = rs.employee_id
 GROUP BY 
-    s.specimen_id
-ORDER BY
-    s.specimen_name
+    s.specimen_id;
