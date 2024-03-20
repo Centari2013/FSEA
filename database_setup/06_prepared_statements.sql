@@ -49,13 +49,13 @@ aggregated_info AS (
         )) FILTER (WHERE m.mission_id IS NOT NULL) AS missions
     FROM 
         employees e
-    LEFT JOIN departments d ON e.department_id = d.department_id
+    JOIN departments d ON e.department_id = d.department_id
     LEFT JOIN employee_designations ed ON e.employee_id = ed.employee_id
-    LEFT JOIN designations des ON ed.designation_id = des.designation_id
+    JOIN designations des ON ed.designation_id = des.designation_id
     LEFT JOIN employee_clearances ecl ON e.employee_id = ecl.employee_id
-    LEFT JOIN clearances cl ON ecl.clearance_id = cl.clearance_id
+    JOIN clearances cl ON ecl.clearance_id = cl.clearance_id
     LEFT JOIN employee_missions em ON e.employee_id = em.employee_id
-    LEFT JOIN missions m ON em.mission_id = m.mission_id
+    JOIN missions m ON em.mission_id = m.mission_id
     WHERE 
         e.employee_id IN (SELECT employee_id FROM matched_employees)
     GROUP BY 
@@ -116,11 +116,15 @@ matched_missions AS (
 ),
 matched_specimens AS (
     SELECT DISTINCT 
-        sm.origin_id
+        mo.origin_id
     FROM 
         specimen_missions sm
     JOIN 
         specimens s ON sm.specimen_id = s.specimen_id
+    JOIN 
+        missions m ON sm.mission_id = m.mission_id
+    JOIN 
+        mission_origins mo ON m.mission_id = mo.mission_id
     WHERE 
         s.search_vector @@ TO_TSQUERY($1)
 )
@@ -141,9 +145,9 @@ SELECT
 FROM 
     origins o
 LEFT JOIN mission_origins mo ON o.origin_id = mo.origin_id
-LEFT JOIN missions m ON m.mission_id = mo.mission_id
+JOIN missions m ON m.mission_id = mo.mission_id
 LEFT JOIN specimen_missions sm ON sm.mission_id = m.mission_id
-LEFT JOIN specimens s ON s.specimen_id = sm.specimen_id
+JOIN specimens s ON s.specimen_id = sm.specimen_id
 WHERE 
     o.origin_id IN (SELECT origin_id FROM matched_origins)
     OR o.origin_id IN (SELECT origin_id FROM matched_missions)
@@ -296,11 +300,11 @@ SELECT
 FROM 
     specimens s
 LEFT JOIN specimen_containment_statuses scs ON s.specimen_id = scs.specimen_id
-LEFT JOIN containment_statuses cs ON cs.containment_status_id = scs.containment_status_id
+JOIN containment_statuses cs ON cs.containment_status_id = scs.containment_status_id
 LEFT JOIN specimen_missions sm ON sm.specimen_id = s.specimen_id
-LEFT JOIN missions m ON m.mission_id = sm.mission_id
+JOIN missions m ON m.mission_id = sm.mission_id
 LEFT JOIN researcher_specimens rs ON rs.specimen_id = s.specimen_id
-LEFT JOIN employees researcher ON researcher.employee_id = rs.employee_id
+JOIN employees researcher ON researcher.employee_id = rs.employee_id
 WHERE 
     s.specimen_id IN (SELECT specimen_id FROM matched_specimens)
     OR s.specimen_id IN (SELECT specimen_id FROM matched_missions)
