@@ -1,13 +1,13 @@
 CREATE TABLE clearances (
     clearance_id SERIAL PRIMARY KEY,
-    clearance_name TEXT,
-    description TEXT
+    clearance_name TEXT NOT NULL,
+    description TEXT NOT NULL
 );
 
 CREATE TABLE containment_statuses (
     containment_status_id SERIAL PRIMARY KEY,
-    status_name TEXT,
-    description TEXT
+    status_name TEXT NOT NULL,
+    description TEXT NOT NULL
 );
 
 CREATE TABLE departments (
