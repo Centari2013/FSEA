@@ -1,13 +1,19 @@
+SELECT plan(7);
+
 -- data must first be committed
-INSERT INTO employees (employee_id, first_name, last_name, department_id, start_date)
-    VALUES ('testing', 'testing', 'testing', 1, CURRENT_DATE);
+SELECT lives_ok(
+    'INSERT INTO employees (first_name, last_name, department_id, start_date)
+    VALUES (''testing'', ''testing'', 1, CURRENT_DATE)',
+    'Insert of test employee successful.'
+    );
 
-INSERT INTO specimens (specimen_id, specimen_name, acquisition_date)
-    VALUES ('testing', 'testing', CURRENT_DATE);
+SELECT lives_ok ('INSERT INTO specimens (specimen_name, acquisition_date)
+    VALUES (''testing'', CURRENT_DATE)',
+    'Insert of test specimen successful.');
 
-COMMIT;
+
 BEGIN;
-SELECT plan(3);
+
 
 -- the following tests are structured as such due to auto-generated ids
 -- create_employee_records 
@@ -52,7 +58,10 @@ ROLLBACK;
 
 
 -- test data removal
-DELETE FROM employees WHERE first_name = 'testing';
-DELETE FROM specimens WHERE specimen_name = 'testing';
+SELECT lives_ok (
+    'DELETE FROM employees WHERE first_name = ''testing''',
+    'Deletion of test employee successful.');
+SELECT lives_ok (
+    'DELETE FROM specimens WHERE specimen_name = ''testing''',
+    'Deletion of test specimen successful.');
 SELECT * FROM finish();
-COMMIT;
