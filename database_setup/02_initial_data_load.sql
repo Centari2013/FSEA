@@ -45,3 +45,16 @@ REFERENCES employees(employee_id)
 -- I have only deemed this appropriate as this is fictional system that previusly used a rudimentary form of password protection and encryption.
 -- Data for the specimen_containment_statuses table will be handles programatically as well.
 -- As for the specimen_missions table, that will remain empty until I decide to use it for storytelling purposes.
+
+-- And now we have to fix the serial counters for the tables that use them
+
+-- Adjust sequence for clearances
+SELECT setval('clearances_clearance_id_seq', (SELECT MAX(clearance_id) FROM clearances) + 1, false);
+-- Adjust sequence for containment_statuses
+SELECT setval('containment_statuses_containment_status_id_seq', (SELECT MAX(containment_status_id) FROM containment_statuses) + 1, false);
+
+-- Adjust sequence for departments
+SELECT setval('departments_department_id_seq', (SELECT MAX(department_id) FROM departments) + 1, false);
+
+-- Adjust sequence for designations
+SELECT setval('designations_designation_id_seq', (SELECT MAX(designation_id) FROM designations) + 1, false);
