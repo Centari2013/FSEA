@@ -1,6 +1,7 @@
 
-SELECT plan(30);
+SELECT plan(16);
 
+BEGIN;
 -- create clearance
 SELECT lives_ok(
     'INSERT INTO clearances (clearance_name, description)
@@ -66,6 +67,13 @@ SELECT lives_ok(
     'missions insertion success.'
     );
 
+-- create mission origin
+SELECT lives_ok(
+    'INSERT INTO mission_origins (mission_id, origin_id)
+    VALUES (''M8378606'', ''O2942930'')',
+    'mission_origins insertion success.'
+    );
+
 -- create specimen
 SELECT lives_ok ('INSERT INTO specimens (specimen_name, acquisition_date)
     VALUES (''testing'', CURRENT_DATE)',
@@ -112,99 +120,5 @@ SELECT lives_ok(
     'researcher_specimens insertion success.'
     );
 
-
-
--- test data cleanup
--- cleanup researcher_specimens
-SELECT lives_ok(
-    'DELETE FROM researcher_specimens WHERE employee_id = ''E7449700'' AND specimen_id = ''S3510814''',
-    'researcher_specimens cleanup success.'
-);
-
--- cleanup employee_missions
-SELECT lives_ok(
-    'DELETE FROM employee_missions WHERE employee_id = ''E7449700'' AND mission_id = ''M6769658''',
-    'employee_missions cleanup success.'
-);
-
--- cleanup department_missions
-SELECT lives_ok(
-    'DELETE FROM department_missions WHERE department_id = 1 AND mission_id = ''M6769658''',
-    'department_missions cleanup success.'
-);
-
--- cleanup specimen_missions
-SELECT lives_ok(
-    'DELETE FROM specimen_missions WHERE specimen_id = ''S3510814'' AND mission_id = ''M6769658''',
-    'specimen_missions cleanup success.'
-);
-
--- cleanup specimen_containment_statuses
-SELECT lives_ok(
-    'DELETE FROM specimen_containment_statuses WHERE specimen_id = ''S3510814''',
-    'specimen_containment_statuses cleanup success.'
-);
-
--- cleanup specimens
-SELECT lives_ok(
-    'DELETE FROM specimens WHERE specimen_name = ''testing''',
-    'specimens cleanup success.'
-);
-
--- cleanup origins
-SELECT lives_ok(
-    'DELETE FROM origins WHERE origin_name = ''testing''',
-    'origins cleanup success.'
-);
-
--- cleanup missions
-SELECT lives_ok(
-    'DELETE FROM missions WHERE mission_name = ''testing''',
-    'missions cleanup success.'
-);
-
--- cleanup employee_designations
-SELECT lives_ok(
-    'DELETE FROM employee_designations WHERE employee_id = ''E7449700''',
-    'employee_designations cleanup success.'
-);
-
--- cleanup employee_clearances
-SELECT lives_ok(
-    'DELETE FROM employee_clearances WHERE employee_id = ''E7449700''',
-    'employee_clearances cleanup success.'
-);
-
--- cleanup employees
-SELECT lives_ok(
-    'DELETE FROM employees WHERE first_name = ''testing'' AND last_name = ''testing''',
-    'employees cleanup success.'
-);
-
--- cleanup designations
-SELECT lives_ok(
-    'DELETE FROM designations WHERE designation_name = ''testing''',
-    'designations cleanup success.'
-);
-
--- cleanup departments
-SELECT lives_ok(
-    'DELETE FROM departments WHERE department_name = ''testing''',
-    'departments cleanup success.'
-);
-
--- cleanup containment_statuses
-SELECT lives_ok (
-    'DELETE FROM containment_statuses WHERE status_name = ''testing''',
-    'containment_statuses cleanup success.'
-);
-
--- cleanup clearances
-SELECT lives_ok(
-    'DELETE FROM clearances WHERE clearance_name = ''testing''',
-    'clearances cleanup success.'
-);
-
-
 SELECT * FROM finish();
-
+ROLLBACK;

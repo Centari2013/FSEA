@@ -12,8 +12,6 @@ SELECT lives_ok ('INSERT INTO specimens (specimen_name, acquisition_date)
     'Insert of test specimen successful.');
 
 
-BEGIN;
-
 
 -- the following tests are structured as such due to auto-generated ids
 -- create_employee_records 
@@ -53,8 +51,6 @@ SELECT is(
     'create_specimen_medical_record trigger correctly inserts into specimen_medical_records'
 );
 
-
-ROLLBACK;
 
 
 -- test data removal
