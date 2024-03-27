@@ -1,7 +1,7 @@
 -- All of the following tests are contingent upon the fact that the trigger test have run successfully.
--- Employee and Clearance creations will create entries in the employee_clearances table as specified by their triggers.
--- Employee and Clearances deletions are supposed to remove those foreign key links from the employee_clearances table.
-SELECT plan(10);
+-- Employee and Clearance creations will be inserted into the employee_clearances table.
+-- Employee and Clearance deletions are supposed to remove those foreign key links from the employee_clearances table.
+SELECT plan(12);
 
 -- employee_clearances employee(employee_id) on delete cascade
 -- create employee
@@ -10,6 +10,12 @@ SELECT lives_ok(
     VALUES (''testing'', ''testing'', 1, CURRENT_DATE)',
     'employees insertion success.'
     );
+-- create clearance
+SELECT lives_ok(
+    'INSERT INTO clearances (clearance_name, description)
+    VALUES (''testing'', ''testing'')',
+    'clearances insertion success.'
+);
 -- insert into employee_clearances
 SELECT lives_ok(
     'INSERT INTO employee_clearances (employee_id, clearance_id)
@@ -47,6 +53,12 @@ SELECT lives_ok(
     VALUES (''testing'', ''testing'', 1, CURRENT_DATE)',
     'employees insertion success.'
     );
+-- create clearance
+SELECT lives_ok(
+    'INSERT INTO clearances (clearance_name, description)
+    VALUES (''testing'', ''testing'')',
+    'clearances insertion success.'
+);
 -- insert into employee_clearances
 SELECT lives_ok(
     'INSERT INTO employee_clearances (employee_id, clearance_id)
