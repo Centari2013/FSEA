@@ -1,3 +1,4 @@
+BEGIN;
 CREATE TEMP TABLE test_ids (
     e_id VARCHAR(8)
 );
@@ -36,3 +37,4 @@ SELECT ok (
 
 
 SELECT * FROM finish();
+ROLLBACK;

@@ -1,3 +1,4 @@
+BEGIN;
 -- initialize test plan with num of tests
 SELECT plan(25);
 
@@ -260,3 +261,4 @@ SELECT ok (
 
 -- finish tests
 SELECT * FROM finish();
+ROLLBACK;
