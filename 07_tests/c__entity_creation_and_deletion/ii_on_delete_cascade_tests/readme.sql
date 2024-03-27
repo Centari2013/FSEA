@@ -1,0 +1,1 @@
+-- All of the following tests are contingent upon the fact that the trigger tests have run successfully.
