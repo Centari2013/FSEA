@@ -1,6 +1,6 @@
--- All of the following tests are contingent upon the fact that the trigger test have run succesfully.
--- Entity creations will create entries in other tables as specified by their triggers.
--- Entity deletions are supposed to remove those foreign key links.
+-- All of the following tests are contingent upon the fact that the trigger test have run successfully.
+-- Employee and Clearance creations will create entries in the employee_clearances table as specified by their triggers.
+-- Employee and Clearances deletions are supposed to remove those foreign key links from the employee_clearances table.
 SELECT plan(10);
 
 -- employee_clearances employee(employee_id) on delete cascade
@@ -14,9 +14,8 @@ SELECT lives_ok(
 SELECT lives_ok(
     'INSERT INTO employee_clearances (employee_id, clearance_id)
     SELECT e.employee_id, c.clearance_id
-    FROM employees e
-    JOIN clearances c ON c.clearance_name = ''testing''
-    WHERE e.first_name = ''testing''',
+    FROM employees e, clearances c
+    WHERE e.first_name = ''testing'' AND c.clearance_name = ''testing''',
     'employee_clearances insertion success.'
     );
 
@@ -52,11 +51,11 @@ SELECT lives_ok(
 SELECT lives_ok(
     'INSERT INTO employee_clearances (employee_id, clearance_id)
     SELECT e.employee_id, c.clearance_id
-    FROM employees e
-    JOIN clearances c ON c.clearance_name = ''testing''
-    WHERE e.first_name = ''testing''',
+    FROM employees e, clearances c
+    WHERE e.first_name = ''testing'' AND c.clearance_name = ''testing''',
     'employee_clearances insertion success.'
     );
+
 
 -- delete clearance
 SELECT lives_ok(
