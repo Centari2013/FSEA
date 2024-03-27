@@ -1,5 +1,3 @@
-BEGIN;
-
 SELECT plan(6);
 
 -- test cases
@@ -57,4 +55,3 @@ SELECT ok (
 );
 
 SELECT * FROM finish();
-ROLLBACK;
