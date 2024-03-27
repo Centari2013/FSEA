@@ -14,10 +14,6 @@ BEGIN
     INSERT INTO specimens (specimen_id, specimen_name, acquisition_date)
     VALUES ('testing', 'testing', CURRENT_DATE)
     RETURNING specimen_id INTO v_specimen_id;
-  
-    -- Insert a test specimen medical record linked to the test specimen
-    INSERT INTO specimen_medical_records (specimen_id, bloodtype, kilograms, height_cm)
-    VALUES (v_specimen_id, 'O+', 70.0, 180.0);
 
     -- Capture test ID
     INSERT INTO test_ids (specimen_id)
