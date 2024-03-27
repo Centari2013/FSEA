@@ -96,8 +96,8 @@ CREATE TABLE mission_origins (
     mission_id VARCHAR(8) NOT NULL,
     origin_id VARCHAR(8) NOT NULL,
     PRIMARY KEY (mission_id, origin_id),
-    FOREIGN KEY (origin_id) REFERENCES origins(origin_id),
-    FOREIGN KEY (mission_id) REFERENCES missions(mission_id) 
+    FOREIGN KEY (origin_id) REFERENCES origins(origin_id) ON DELETE CASCADE,
+    FOREIGN KEY (mission_id) REFERENCES missions(mission_id) ON DELETE CASCADE
 );
 
 CREATE TABLE specimens (
@@ -176,4 +176,22 @@ CREATE TABLE researcher_specimens (
     PRIMARY KEY (employee_id, specimen_id),
     FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE,
     FOREIGN KEY (specimen_id) REFERENCES specimens(specimen_id) ON DELETE CASCADE
+);
+-- employee_clearances clearances(clearance_id) on delete cascade
+WITH created_employee AS (
+    INSERT INTO employees (first_name, last_name, department_id, start_date)
+    VALUES ('testing', 'testing', 1, CURRENT_DATE)
+    RETURNING employee_id
+), deleted_employee_id AS (
+    DELETE FROM employees
+    WHERE employee_id IN (SELECT employee_id FROM created_employee)
+    RETURNING employee_id
+)
+SELECT ok(
+    NOT EXISTS (
+        SELECT 1
+        FROM employee_clearances ec
+        JOIN deleted_employee de ON ec.employee_id = de.employee_id
+    ),
+    'employees cascade deletion on employee_clearances success.'
 );
