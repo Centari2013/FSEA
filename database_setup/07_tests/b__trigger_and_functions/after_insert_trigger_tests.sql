@@ -1,3 +1,4 @@
+BEGIN;
 -- insert test data
 CREATE TEMP TABLE test_ids (
     id SERIAL,
@@ -79,3 +80,4 @@ SELECT * FROM finish();
 DELETE FROM employees WHERE employee_id = (SELECT e_id FROM test_ids);
 DELETE FROM specimens WHERE specimen_id = (SELECT s_id FROM test_ids);
 
+ROLLBACK;

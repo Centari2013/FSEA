@@ -1,3 +1,4 @@
+BEGIN;
 -- create test data
 CREATE TEMP TABLE test_ids (
     id SERIAL,
@@ -15,22 +16,16 @@ BEGIN
     VALUES ('testing', 'testing', 1, CURRENT_DATE)
     RETURNING employee_id INTO v_employee_id;
   
-  
-    INSERT INTO test_ids (e_id)
-    VALUES (v_employee_id);
-
     INSERT INTO clearances (clearance_name, description)
     VALUES ('testing', 'testing')
     RETURNING clearance_id INTO v_clearance_id;
 
-    UPDATE test_ids
-    SET c_id = v_clearance_id
-    WHERE id = 1;
+    INSERT INTO test_ids (e_id, c_id)
+    VALUES (v_employee_id, v_clearance_id);
 
     INSERT INTO employee_clearances (employee_id, clearance_id)
     SELECT e_id, c_id
-    FROM test_ids
-    WHERE id = 1;
+    FROM test_ids;
 
 END;
 $$;
@@ -58,3 +53,4 @@ WHERE e.employee_id = (SELECT e_id FROM test_ids);
 
 
 SELECT * FROM finish();
+ROLLBACK;
