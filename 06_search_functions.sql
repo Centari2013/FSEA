@@ -203,7 +203,7 @@ RETURNS TABLE (
     specimens JSONB[]
 ) AS $$
 BEGIN
-    WITH matched_missions AS (
+    RETURN QUERY WITH matched_missions AS (
         SELECT 
             m.mission_id
         FROM 
@@ -280,9 +280,9 @@ BEGIN
     LEFT JOIN department_missions dm ON dm.mission_id = m.mission_id
     LEFT JOIN departments d ON d.department_id = dm.department_id
     WHERE 
-        m.mission_id IN (SELECT mission_id FROM matched_missions)
-        OR m.mission_id IN (SELECT mission_id FROM matched_commanders)
-        OR m.mission_id IN (SELECT mission_id FROM matched_supervisors)
+        m.mission_id IN (SELECT mm.mission_id FROM matched_missions mm)
+        OR m.mission_id IN (SELECT mc.mission_id FROM matched_commanders mc)
+        OR m.mission_id IN (SELECT ms.mission_id FROM matched_supervisors ms)
     GROUP BY 
         m.mission_id, 
         commander.first_name, 
@@ -308,7 +308,7 @@ RETURNS TABLE (
     researchers JSONB[]
 ) AS $$
 BEGIN
-WITH matched_specimens AS (
+RETURN QUERY WITH matched_specimens AS (
     SELECT 
         s.specimen_id
     FROM 
@@ -368,9 +368,9 @@ LEFT JOIN missions m ON m.mission_id = sm.mission_id
 LEFT JOIN researcher_specimens rs ON rs.specimen_id = s.specimen_id
 LEFT JOIN employees researcher ON researcher.employee_id = rs.employee_id
 WHERE 
-    s.specimen_id IN (SELECT specimen_id FROM matched_specimens)
-    OR s.specimen_id IN (SELECT specimen_id FROM matched_missions)
-    OR s.specimen_id IN (SELECT specimen_id FROM matched_researchers)
+    s.specimen_id IN (SELECT ms.specimen_id FROM matched_specimens ms)
+    OR s.specimen_id IN (SELECT mm.specimen_id FROM matched_missions mm)
+    OR s.specimen_id IN (SELECT mr.specimen_id FROM matched_researchers mr)
 GROUP BY 
     s.specimen_id;
 END;
