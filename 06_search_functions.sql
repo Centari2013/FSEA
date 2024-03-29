@@ -18,7 +18,7 @@ BEGIN
         FROM 
             employees e
         WHERE 
-            e.search_vector @@ PLAINTO_TSQUERY($1)
+            e.search_vector @@ TO_TSQUERY($1)
         UNION
         SELECT 
             ed.employee_id
@@ -27,7 +27,7 @@ BEGIN
         JOIN 
             designations d ON ed.designation_id = d.designation_id
         WHERE 
-            d.search_vector @@ PLAINTO_TSQUERY($1)
+            d.search_vector @@ TO_TSQUERY($1)
         UNION
         SELECT 
             em.employee_id
@@ -36,7 +36,7 @@ BEGIN
         JOIN 
             missions m ON em.mission_id = m.mission_id
         WHERE 
-            m.search_vector @@ PLAINTO_TSQUERY($1)
+            m.search_vector @@ TO_TSQUERY($1)
     )
     SELECT 
         e.employee_id,
@@ -92,8 +92,8 @@ BEGIN
             departments d
         LEFT JOIN employees e ON d.director_id = e.employee_id
         WHERE 
-            d.search_vector @@ PLAINTO_TSQUERY($1) OR
-            e.search_vector @@ PLAINTO_TSQUERY($1)
+            d.search_vector @@ TO_TSQUERY($1) OR
+            e.search_vector @@ TO_TSQUERY($1)
     )
     SELECT 
         d.department_id,
@@ -126,13 +126,13 @@ RETURNS TABLE (
     specimens JSONB[]
 ) AS $$
 BEGIN
-    WITH matched_origins AS (
+    RETURN QUERY WITH matched_origins AS (
         SELECT 
             o.origin_id
         FROM 
             origins o
         WHERE 
-            o.search_vector @@ PLAINTO_TSQUERY($1)
+            o.search_vector @@ TO_TSQUERY($1)
     ),
     matched_missions AS (
         SELECT DISTINCT 
@@ -142,7 +142,7 @@ BEGIN
         JOIN 
             missions m ON mo.mission_id = m.mission_id
         WHERE 
-            m.search_vector @@ PLAINTO_TSQUERY($1)
+            m.search_vector @@ TO_TSQUERY($1)
     ),
     matched_specimens AS (
         SELECT DISTINCT 
@@ -156,7 +156,7 @@ BEGIN
         JOIN 
             mission_origins mo ON m.mission_id = mo.mission_id
         WHERE 
-            s.search_vector @@ PLAINTO_TSQUERY($1)
+            s.search_vector @@ TO_TSQUERY($1)
     )
     SELECT 
         o.origin_id,
@@ -179,9 +179,9 @@ BEGIN
     LEFT JOIN specimen_missions sm ON sm.mission_id = m.mission_id
     LEFT JOIN specimens s ON s.specimen_id = sm.specimen_id
     WHERE 
-        o.origin_id IN (SELECT origin_id FROM matched_origins)
-        OR o.origin_id IN (SELECT origin_id FROM matched_missions)
-        OR o.origin_id IN (SELECT origin_id FROM matched_specimens)
+        o.origin_id IN (SELECT mo.origin_id FROM matched_origins mo)
+        OR o.origin_id IN (SELECT mm.origin_id FROM matched_missions mm)
+        OR o.origin_id IN (SELECT ms.origin_id FROM matched_specimens ms)
     GROUP BY 
         o.origin_id;
 END;
@@ -209,7 +209,7 @@ BEGIN
         FROM 
             missions m
         WHERE 
-            m.search_vector @@ PLAINTO_TSQUERY($1)
+            m.search_vector @@ TO_TSQUERY($1)
     ),
     matched_commanders AS (
         SELECT 
@@ -219,7 +219,7 @@ BEGIN
         JOIN 
             employees e ON m.commander_id = e.employee_id
         WHERE 
-            e.search_vector @@ PLAINTO_TSQUERY($1)
+            e.search_vector @@ TO_TSQUERY($1)
     ),
     matched_supervisors AS (
         SELECT 
@@ -229,7 +229,7 @@ BEGIN
         JOIN 
             employees e ON m.supervisor_id = e.employee_id
         WHERE 
-            e.search_vector @@ PLAINTO_TSQUERY($1)
+            e.search_vector @@ TO_TSQUERY($1)
     )
     SELECT 
         m.mission_id,
@@ -314,7 +314,7 @@ WITH matched_specimens AS (
     FROM 
         specimens s
     WHERE 
-        s.search_vector @@ PLAINTO_TSQUERY($1)
+        s.search_vector @@ TO_TSQUERY($1)
 ),
 matched_missions AS (
     SELECT DISTINCT 
@@ -324,7 +324,7 @@ matched_missions AS (
     JOIN 
         missions m ON sm.mission_id = m.mission_id
     WHERE 
-        m.search_vector @@ PLAINTO_TSQUERY($1)
+        m.search_vector @@ TO_TSQUERY($1)
 ),
 matched_researchers AS (
     SELECT DISTINCT 
@@ -334,7 +334,7 @@ matched_researchers AS (
     JOIN 
         employees e ON rs.employee_id = e.employee_id
     WHERE 
-        e.search_vector @@ PLAINTO_TSQUERY($1)
+        e.search_vector @@ TO_TSQUERY($1)
 )
 SELECT 
     s.specimen_id,
