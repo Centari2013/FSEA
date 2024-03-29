@@ -42,7 +42,7 @@ GENERATED ALWAYS AS (
 ALTER TABLE departments
 ADD COLUMN search_vector tsvector
 GENERATED ALWAYS AS (
-    TO_TSVECTOR('english', department_name || ' ' || COALESCE(director_id, '') || ' ' || COALESCE(description, ''))
+    TO_TSVECTOR('english', department_name || ' ' || COALESCE(director_id, ''))
 ) STORED;
 
 ALTER TABLE designations
