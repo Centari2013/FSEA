@@ -73,7 +73,7 @@ GENERATED ALWAYS AS (
 ALTER TABLE origins
 ADD COLUMN search_vector tsvector
 GENERATED ALWAYS AS (
-    TO_TSVECTOR('english', origin_id || ' ' || origin_name || ' ' || description || ' ' || notes::TEXT)
+    TO_TSVECTOR('english', origin_id || ' ' || origin_name || ' ' || description || ' ' || COALESCE(notes::text, ''))
 ) STORED;
 
 
