@@ -2,13 +2,12 @@ from imports import *
 from ..models import MissionOrigin
 
 class AssociateOriginWithMission(Resource):
-    def post(self):
+    def post(self, mission_id):
         parser = reqparse.RequestParser()
-        parser.add_argument('mission_id', type=str, required=True, help="Mission ID cannot be blank.")
         parser.add_argument('origin_id', type=str, required=True, help="Origin ID cannot be blank.")
         data = parser.parse_args()
 
-        association = MissionOrigin(**data)
+        association = MissionOrigin(mission_id=mission_id, origin_id=data['origin_id'])
         try:
             db.session.add(association)
             db.session.commit()

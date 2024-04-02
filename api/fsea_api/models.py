@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from fsea_api import db
 from sqlalchemy.dialects.postgresql import JSONB
 from  sqlalchemy import CheckConstraint
@@ -42,6 +43,14 @@ class Employee(db.Model):
     notes = db.Column(JSONB)
     created = db.Column(db.TIMESTAMP, default=db.func.current_timestamp())
     updated = db.Column(db.TIMESTAMP)
+
+
+class EmployeeSession(db.Model):
+    __tablename__ = 'employee_sessions'
+    session_id = db.Column(db.String(36), primary_key=True)  # UUID for session ID
+    employee_id = db.Column(db.String(8), db.ForeignKey('employees.employee_id'), nullable=False)
+    created = db.Column(db.DateTime, default=datetime.now(datetime.UTC))
+    expires = db.Column(db.DateTime, default=lambda: datetime.now(datetime.UTC + timedelta(hours=4)))  # 1 day validity
 
 
 class EmployeeClearance(db.Model):

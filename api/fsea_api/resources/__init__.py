@@ -13,3 +13,7 @@ from .specimen import *
 from .specimen_containment_status import *
 from .specimen_medical_record import *
 from .specimen_mission import *
+from .credentials import *
+from .department_mission import *
+from . employee_mission import *
+from .researcher_specimen import *
