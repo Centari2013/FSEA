@@ -1,28 +1,6 @@
 from .imports import *
 from ..models import EmployeeMedicalRecord
 
-class PostEmployeeMedicalRecord(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('employee_id', type=str, required=True, help="Employee ID cannot be blank.")
-        parser.add_argument('dob', type=str, required=True, help="Date of birth cannot be blank.")  # Consider using a custom date type
-        parser.add_argument('bloodtype', type=str, choices=('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined'), help="Invalid blood type.")
-        parser.add_argument('sex', type=str, choices=('m', 'f', 'inter', 'unknown', 'undefined'), help="Invalid sex.")
-        parser.add_argument('kilograms', type=float, help="Weight must be greater than 0.")
-        parser.add_argument('height_cm', type=float, help="Height must be greater than 0.")
-        parser.add_argument('notes', type=str, store_missing=False)  
-        data = parser.parse_args()
-
-        new_record = EmployeeMedicalRecord(**data)
-        try:
-            db.session.add(new_record)
-            db.session.commit()
-            return {'employee_id': new_record.employee_id}, 201
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            return {'message': f'Failed to create new medical record. Error: {str(e)}'}, 500
-
-
 class GetEmployeeMedicalRecord(Resource):
     def get(self, employee_id):
         medical_record = EmployeeMedicalRecord.query.get(employee_id)

@@ -9,3 +9,7 @@ from .employee_medical_record import *
 from .mission import *
 from .origin import *
 from .mission_origin import *
+from .specimen import *
+from .specimen_containment_status import *
+from .specimen_medical_record import *
+from .specimen_mission import *
