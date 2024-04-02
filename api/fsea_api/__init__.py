@@ -50,7 +50,7 @@ api.add_resource(GetEmployeeDesignations, '/employees/<string:employee_id>/desig
 api.add_resource(GetEmployeeMedicalRecord, '/employees/<string:employee_id>/medical_record')
 api.add_resource(PatchEmployeeMedicalRecord, '/employees/<string:employee_id>/medical_record')
 api.add_resource(DeleteEmployeeMedicalRecord, '/employees/<string:employee_id>/medical_record')
-api.add_resource(UpdateCredentials, 'employees/<string:employee_id>/credentials/')
+api.add_resource(UpdateCredentials, '/employees/<string:employee_id>/credentials/')
 api.add_resource(GetMissionsByEmployee, '/employees/<string:employee_id>/missions')
 api.add_resource(GetSpecimensByResearcher, '/employees/<string:employee_id>/specimens')
 
