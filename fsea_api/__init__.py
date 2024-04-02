@@ -34,5 +34,24 @@ api.add_resource(GetDesignation, '/designations/<int:designation_id>')
 api.add_resource(PatchDesignation, '/designations/<int:designation_id>')
 api.add_resource(DeleteDesignation, '/designations/<int:designation_id>')
 
+api.add_resource(PostEmployee, '/employees')
+api.add_resource(GetEmployee, '/employees/<string:employee_id>')
+api.add_resource(PatchEmployee, '/employees/<string:employee_id>')
+api.add_resource(DeleteEmployee, '/employees/<string:employee_id>')
+
+api.add_resource(AssociateClearanceWithEmployee, '/employee_clearances')
+api.add_resource(DisassociateClearanceFromEmployee, '/employee_clearances/<string:employee_id>/<int:clearance_id>')
+api.add_resource(GetEmployeeClearances, '/employee_clearances/<string:employee_id>')
+
+api.add_resource(AssociateDesignationWithEmployee, '/employee_designations')
+api.add_resource(DisassociateDesignationFromEmployee, '/employee_designations/<string:employee_id>/<int:designation_id>')
+api.add_resource(GetEmployeeDesignations, '/employee_designations/<string:employee_id>')
+
+
+api.add_resource(PostEmployeeMedicalRecord, '/employee_medical_records')
+api.add_resource(GetEmployeeMedicalRecord, '/employee_medical_records/<string:employee_id>')
+api.add_resource(PatchEmployeeMedicalRecord, '/employee_medical_records/<string:employee_id>')
+api.add_resource(DeleteEmployeeMedicalRecord, '/employee_medical_records/<string:employee_id>')
+
 
 
