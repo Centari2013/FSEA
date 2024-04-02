@@ -45,7 +45,7 @@ class PatchContainmentStatus(Resource):
         return {'message': 'Containment status updated successfully'}, 200
 
 class DeleteContainmentStatus(Resource):
-    def delete(self, comtainment_status_id):
+    def delete(self, containment_status_id):
         status = ContainmentStatus.query.get(containment_status_id)
         if not status:
             return {'message': 'Containment status not found'}, 404
