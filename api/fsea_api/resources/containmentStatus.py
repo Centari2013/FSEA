@@ -1,6 +1,5 @@
-from flask_restful import Resource, reqparse
+from .imports import *
 from ..models import ContainmentStatus  
-from .. import db  
 
 
 class PostContainmentStatus(Resource):
@@ -10,9 +9,15 @@ class PostContainmentStatus(Resource):
         parser.add_argument('description', type=str, required=True, help="Description cannot be blank.")
         data = parser.parse_args()
         new_status = ContainmentStatus(**data)
-        db.session.add(new_status)
-        db.session.commit()
-        return {'status_id': new_status.containment_status_id}, 201
+        try:
+            db.session.add(new_status)
+            db.session.commit()
+            return {'status_id': new_status.containment_status_id}, 201
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print(e)
+            return {'message': 'Failed to create new status. The server encountered an error.'}, 500
+
 
 class GetContainmentStatus(Resource):
     def get(self, containment_status_id):
@@ -41,8 +46,14 @@ class PatchContainmentStatus(Resource):
         if data['description']:
             status.description = data['description']
 
-        db.session.commit()
-        return {'message': 'Containment status updated successfully'}, 200
+        try:
+            db.session.commit()
+            return {'message': 'Containment status updated successfully'}, 200
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print(e)
+            return {'message': 'Failed to update containment status. The server encountered an error.'}, 500
+
 
 class DeleteContainmentStatus(Resource):
     def delete(self, containment_status_id):
@@ -50,6 +61,12 @@ class DeleteContainmentStatus(Resource):
         if not status:
             return {'message': 'Containment status not found'}, 404
 
-        db.session.delete(status)
-        db.session.commit()
-        return {'message': 'Containment status deleted successfully'}, 200
+        try:
+            db.session.delete(status)
+            db.session.commit()
+            return {'message': 'Containment status deleted successfully'}, 200
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print(e)
+            return {'message': 'Failed to delete containment status. The server encountered an error.'}, 500
+

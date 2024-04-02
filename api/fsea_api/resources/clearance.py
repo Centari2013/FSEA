@@ -1,7 +1,5 @@
-from flask_restful import Resource, reqparse
+from .imports import *
 from ..models import Clearance  
-from .. import db  
-
 
 class PostClearance(Resource):
     def post(self):
@@ -10,9 +8,14 @@ class PostClearance(Resource):
         parser.add_argument('description', type=str, required=True, help="Description cannot be blank.")
         data = parser.parse_args()
         new_clearance = Clearance(**data)
-        db.session.add(new_clearance)
-        db.session.commit()
-        return {'clearance_id': new_clearance.clearance_id}, 201
+        try:
+            db.session.add(new_clearance)
+            db.session.commit()
+            return {'clearance_id': new_clearance.clearance_id}, 201
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print(e)
+            return {'message': 'Failed to create new clearance. The server encountered an error.'}, 500
 
 class GetClearance(Resource):
     def get(self, clearance_id):
@@ -41,8 +44,13 @@ class PatchClearance(Resource):
         if data['description']:
             clearance.description = data['description']
 
-        db.session.commit()
-        return {'message': 'Clearance updated successfully'}, 200
+        try:
+            db.session.commit()
+            return {'message': 'Clearance updated successfully'}, 200
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print(e)
+            return {'message': 'Failed to update clearance. The server encountered an error.'}, 500
 
 class DeleteClearance(Resource):
     def delete(self, clearance_id):
@@ -50,6 +58,11 @@ class DeleteClearance(Resource):
         if not clearance:
             return {'message': 'Clearance not found'}, 404
 
-        db.session.delete(clearance)
-        db.session.commit()
-        return {'message': 'Clearance deleted successfully'}, 200
+        try:
+            db.session.delete(clearance)
+            db.session.commit()
+            return {'message': 'Clearance deleted successfully'}, 200
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print(e)
+            return {'message': 'Failed to delete clearance. The server encountered an error.'}, 500
