@@ -2,13 +2,12 @@ from .imports import *
 from ..models import EmployeeDesignation
 
 class AssociateDesignationWithEmployee(Resource):
-    def post(self):
+    def post(self, employee_id):
         parser = reqparse.RequestParser()
-        parser.add_argument('employee_id', type=str, required=True, help="Employee ID cannot be blank.")
         parser.add_argument('designation_id', type=int, required=True, help="Designation ID cannot be blank.")
         data = parser.parse_args()
 
-        new_association = EmployeeDesignation(**data)
+        new_association = EmployeeDesignation(employee_id=employee_id, designation_id=data['designation_id'])
         try:
             db.session.add(new_association)
             db.session.commit()

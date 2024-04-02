@@ -2,13 +2,12 @@ from .imports import *
 from .. models import SpecimenContainmentStatus
 
 class AssociateContainmentStatusWithSpecimen(Resource):
-    def post(self):
+    def post(self, specimen_id):
         parser = reqparse.RequestParser()
-        parser.add_argument('specimen_id', type=str, required=True, help="Specimen ID cannot be blank.")
         parser.add_argument('containment_status_id', type=int, required=True, help="Containment status ID cannot be blank.")
         data = parser.parse_args()
 
-        new_association = SpecimenContainmentStatus(**data)
+        new_association = SpecimenContainmentStatus(specimen_id=specimen_id, containment_status_id=data['containment_status_id'])
         try:
             db.session.add(new_association)
             db.session.commit()

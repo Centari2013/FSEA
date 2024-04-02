@@ -2,14 +2,13 @@ from .imports import *
 from ..models import SpecimenMission
 
 class AddSpecimenMission(Resource):
-    def post(self):
+    def post(self, specimen_id):
         parser = reqparse.RequestParser()
-        parser.add_argument('specimen_id', type=str, required=True, help="Specimen ID cannot be blank.")
         parser.add_argument('mission_id', type=str, required=True, help="Mission ID cannot be blank.")
         parser.add_argument('involvement_summary', type=str, required=True, help="Involvement summary cannot be blank.")
         data = parser.parse_args()
 
-        new_link = SpecimenMission(**data)
+        new_link = SpecimenMission(specimen_id=specimen_id, mission_id=data['mission_id'], involvement_summary=data['involvement_summary'])
         try:
             db.session.add(new_link)
             db.session.commit()

@@ -2,14 +2,13 @@ from .imports import *
 from ..models import EmployeeClearance
 
 class AssociateClearanceWithEmployee(Resource):
-    def post(self):
+    def post(self, employee_id):
         parser = reqparse.RequestParser()
-        parser.add_argument('employee_id', type=str, required=True, help="Employee ID cannot be blank.")
         parser.add_argument('clearance_id', type=int, required=True, help="Clearance ID cannot be blank.")
         data = parser.parse_args()
 
         # Assuming a model EmployeeClearance exists that represents this relationship
-        new_association = EmployeeClearance(**data)
+        new_association = EmployeeClearance(employee_id=employee_id, clearance_id=data['clearance_id'])
         try:
             db.session.add(new_association)
             db.session.commit()
