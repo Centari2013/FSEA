@@ -177,3 +177,12 @@ CREATE TABLE researcher_specimens (
     FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE,
     FOREIGN KEY (specimen_id) REFERENCES specimens(specimen_id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE employee_sessions (
+    session_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    employee_id VARCHAR(8) NOT NULL,
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    expires TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP + INTERVAL '4 hours',
+    FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE
+);
