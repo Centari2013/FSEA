@@ -1,4 +1,4 @@
-from imports import *
+from .imports import *
 from ..models import MissionOrigin
 
 class AssociateOriginWithMission(Resource):
