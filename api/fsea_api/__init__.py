@@ -47,7 +47,6 @@ api.add_resource(AssociateDesignationWithEmployee, '/employee_designations')
 api.add_resource(DisassociateDesignationFromEmployee, '/employee_designations/<string:employee_id>/<int:designation_id>')
 api.add_resource(GetEmployeeDesignations, '/employee_designations/<string:employee_id>')
 
-api.add_resource(PostEmployeeMedicalRecord, '/employee_medical_records')
 api.add_resource(GetEmployeeMedicalRecord, '/employee_medical_records/<string:employee_id>')
 api.add_resource(PatchEmployeeMedicalRecord, '/employee_medical_records/<string:employee_id>')
 api.add_resource(DeleteEmployeeMedicalRecord, '/employee_medical_records/<string:employee_id>')
@@ -62,9 +61,26 @@ api.add_resource(GetOrigin, '/origins/<string:origin_id>')
 api.add_resource(PatchOrigin, '/origins/<string:origin_id>')
 api.add_resource(DeleteOrigin, '/origins/<string:origin_id>')
 
-api.add_resource(AssociateOriginWithMission, '/mission-origins')
-api.add_resource(DisassociateOriginFromMission, '/mission-origins/<string:mission_id>/<string:origin_id>')
+api.add_resource(AssociateOriginWithMission, '/mission_origins')
+api.add_resource(DisassociateOriginFromMission, '/mission_origins/<string:mission_id>/<string:origin_id>')
 api.add_resource(GetOriginsForMission, '/missions/<string:mission_id>/origins')
 api.add_resource(GetMissionsForOrigin, '/origins/<string:origin_id>/missions')
 
+api.add_resource(PostSpecimen, '/specimens')
+api.add_resource(GetSpecimen, '/specimens/<string:specimen_id>')
+api.add_resource(PatchSpecimen, '/specimens/<string:specimen_id>')
+api.add_resource(DeleteSpecimen, '/specimens/<string:specimen_id>')
+ 
+api.add_resource(AssociateContainmentStatusWithSpecimen, '/specimen_containment_statuses')
+api.add_resource(DisassociateContainmentStatusFromSpecimen, '/specimen_containment_statuses/<string:specimen_id>/<int:containment_status_id>')
+api.add_resource(GetContainmentStatusesForSpecimen, '/specimens/<string:specimen_id>/containment_statuses')
+api.add_resource(GetSpecimensForContainmentStatus, '/containment_statuses/<int:containment_status_id>/specimens')  # Optional
 
+api.add_resource(GetSpecimenMedicalRecord, '/specimen_medical_records/<string:specimen_id>')
+api.add_resource(PatchSpecimenMedicalRecord, '/specimen_medical_records/<string:specimen_id>')
+api.add_resource(DeleteSpecimenMedicalRecord, '/specimen_medical_records/<string:specimen_id>')
+
+api.add_resource(AddSpecimenMission, '/specimen_missions')
+api.add_resource(DeleteSpecimenMission, '/specimen_missions/<string:specimen_id>/<string:mission_id>')
+api.add_resource(GetMissionsForSpecimen, '/specimens/<string:specimen_id>/missions')
+api.add_resource(GetSpecimensForMission, '/missions/<string:mission_id>/specimens')
