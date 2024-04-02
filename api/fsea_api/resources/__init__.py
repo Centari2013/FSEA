@@ -6,3 +6,6 @@ from .employee import *
 from .employee_clearance import *
 from .employee_designation import *
 from .employee_medical_record import *
+from .mission import *
+from .origin import *
+from .mission_origin import *
