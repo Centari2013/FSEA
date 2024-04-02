@@ -19,5 +19,12 @@ api.add_resource(GetClearance, '/clearances/<int:clearance_id>')
 api.add_resource(PatchClearance, '/clearances/<int:clearance_id>')
 api.add_resource(DeleteClearance, '/clearances/<int:clearance_id>')
 
+api.add_resource(PostContainmentStatus, '/containment_statuses')
+api.add_resource(GetContainmentStatus, '/containment_statuses/<int:containment_status_id>')
+api.add_resource(PatchContainmentStatus, '/containment_statuses/<int:containment_status_id>')
+api.add_resource(DeleteContainmentStatus, '/containment_statuses/<int:containment_status_id>')
+
+
+
 
 
