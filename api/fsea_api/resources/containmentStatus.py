@@ -9,47 +9,47 @@ class PostContainmentStatus(Resource):
         parser.add_argument('status_name', type=str, required=True, help="Status name cannot be blank.")
         parser.add_argument('description', type=str, required=True, help="Description cannot be blank.")
         data = parser.parse_args()
-        new_clearance = ContainmentStatus(**data)
-        db.session.add(new_clearance)
+        new_status = ContainmentStatus(**data)
+        db.session.add(new_status)
         db.session.commit()
-        return {'clearance_id': new_clearance.clearance_id}, 201
+        return {'status_id': new_status.containment_status_id}, 201
 
 class GetContainmentStatus(Resource):
-    def get(self, clearance_id):
-        clearance = ContainmentStatus.query.get(clearance_id)
-        if clearance:
+    def get(self, containment_status_id):
+        status = ContainmentStatus.query.get(containment_status_id)
+        if status:
             return {
-                'clearance_id': clearance.clearance_id,
-                'clearance_name': clearance.clearance_name,
-                'description': clearance.description
+                'containment_status_id': status.containment_status_id,
+                'status_name': status.status_name,
+                'description': status.description
             }, 200
         return {'message': 'Containment status not found'}, 404
 
 class PatchContainmentStatus(Resource):
-    def patch(self, clearance_id):
-        clearance = ContainmentStatus.query.get(clearance_id)
-        if not clearance:
+    def patch(self, containment_status_id):
+        status = ContainmentStatus.query.get(containment_status_id)
+        if not status:
             return {'message': 'Containment status not found'}, 404
         
         parser = reqparse.RequestParser()
-        parser.add_argument('clearance_name', type=str, required=False, help="Optional: New clearance name.")
+        parser.add_argument('status_name', type=str, required=False, help="Optional: New status name.")
         parser.add_argument('description', type=str, required=False, help="Optional: New description.")
         data = parser.parse_args()
 
-        if data['clearance_name']:
-            clearance.clearance_name = data['clearance_name']
+        if data['status_name']:
+            status.status_name = data['status_name']
         if data['description']:
-            clearance.description = data['description']
+            status.description = data['description']
 
         db.session.commit()
         return {'message': 'Containment status updated successfully'}, 200
 
 class DeleteContainmentStatus(Resource):
-    def delete(self, clearance_id):
-        clearance = ContainmentStatus.query.get(clearance_id)
-        if not clearance:
-            return {'message': 'ContainmentStatus not found'}, 404
+    def delete(self, comtainment_status_id):
+        status = ContainmentStatus.query.get(containment_status_id)
+        if not status:
+            return {'message': 'Containment status not found'}, 404
 
-        db.session.delete(clearance)
+        db.session.delete(status)
         db.session.commit()
         return {'message': 'Containment status deleted successfully'}, 200
