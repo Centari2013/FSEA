@@ -47,11 +47,24 @@ api.add_resource(AssociateDesignationWithEmployee, '/employee_designations')
 api.add_resource(DisassociateDesignationFromEmployee, '/employee_designations/<string:employee_id>/<int:designation_id>')
 api.add_resource(GetEmployeeDesignations, '/employee_designations/<string:employee_id>')
 
-
 api.add_resource(PostEmployeeMedicalRecord, '/employee_medical_records')
 api.add_resource(GetEmployeeMedicalRecord, '/employee_medical_records/<string:employee_id>')
 api.add_resource(PatchEmployeeMedicalRecord, '/employee_medical_records/<string:employee_id>')
 api.add_resource(DeleteEmployeeMedicalRecord, '/employee_medical_records/<string:employee_id>')
 
+api.add_resource(PostMission, '/missions')
+api.add_resource(GetMission, '/missions/<string:mission_id>')
+api.add_resource(PatchMission, '/missions/<string:mission_id>')
+api.add_resource(DeleteMission, '/missions/<string:mission_id>')
+
+api.add_resource(PostOrigin, '/origins')
+api.add_resource(GetOrigin, '/origins/<string:origin_id>')
+api.add_resource(PatchOrigin, '/origins/<string:origin_id>')
+api.add_resource(DeleteOrigin, '/origins/<string:origin_id>')
+
+api.add_resource(AssociateOriginWithMission, '/mission-origins')
+api.add_resource(DisassociateOriginFromMission, '/mission-origins/<string:mission_id>/<string:origin_id>')
+api.add_resource(GetOriginsForMission, '/missions/<string:mission_id>/origins')
+api.add_resource(GetMissionsForOrigin, '/origins/<string:origin_id>/missions')
 
 
