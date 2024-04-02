@@ -3,13 +3,8 @@ RETURNS TABLE (
     employee_id VARCHAR(8),
     first_name TEXT,
     last_name TEXT,
-    start_date DATE,
-    end_date DATE,
-    notes JSONB,
-    department JSONB,
-    designations JSONB[],
-    clearances TEXT[],
-    missions JSONB[]
+    department TEXT,
+    designations JSONB[]
 ) AS $$
 BEGIN
     RETURN QUERY WITH matched_employees AS (
@@ -42,32 +37,17 @@ BEGIN
         e.employee_id,
         e.first_name,
         e.last_name,
-        e.start_date,
-        e.end_date,
-        e.notes,
-        JSONB_BUILD_OBJECT(
-            'department_id', e.department_id,
-            'department_name', d.department_name
-        ) AS department,
+        d.department_name AS department,
         ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
                     'designation_name', des.designation_name,
                     'abbreviation', des.abbreviation
-        )) FILTER (WHERE des.designation_id IS NOT NULL) AS designations,
-        ARRAY_AGG(DISTINCT cl.clearance_name) FILTER (WHERE cl.clearance_id IS NOT NULL) AS clearances,
-        ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                    'mission_id', m.mission_id,
-                    'mission_name', m.mission_name,
-                    'involvement_summary', em.involvement_summary
-        )) FILTER (WHERE m.mission_id IS NOT NULL) AS missions
+        )) FILTER (WHERE des.designation_id IS NOT NULL) AS designations
+    
     FROM 
         employees e
     JOIN departments d ON e.department_id = d.department_id
     LEFT JOIN employee_designations ed ON e.employee_id = ed.employee_id
     LEFT JOIN designations des ON ed.designation_id = des.designation_id
-    LEFT JOIN employee_clearances ecl ON e.employee_id = ecl.employee_id
-    LEFT JOIN clearances cl ON ecl.clearance_id = cl.clearance_id
-    LEFT JOIN employee_missions em ON e.employee_id = em.employee_id
-    LEFT JOIN missions m ON em.mission_id = m.mission_id
     WHERE 
         e.employee_id IN (SELECT me.employee_id FROM matched_employees me)
     GROUP BY 
@@ -120,10 +100,7 @@ RETURNS TABLE (
     origin_id VARCHAR(8),
     origin_name TEXT,
     discovery_date DATE,
-    description TEXT,
-    notes JSONB,
-    missions JSONB[],
-    specimens JSONB[]
+    description TEXT
 ) AS $$
 BEGIN
     RETURN QUERY WITH matched_origins AS (
@@ -162,28 +139,15 @@ BEGIN
         o.origin_id,
         o.origin_name,
         o.discovery_date,
-        o.description,
-        o.notes,
-        ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                    'mission_id', m.mission_id,
-                    'mission_name', m.mission_name
-        )) FILTER (WHERE m.mission_id IS NOT NULL) AS missions,
-        ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                    'specimen_id', s.specimen_id,
-                    'specimen_name', s.specimen_name
-        )) FILTER (WHERE s.specimen_id IS NOT NULL) AS specimens
+        o.description
     FROM 
         origins o
-    LEFT JOIN mission_origins mo ON o.origin_id = mo.origin_id
-    LEFT JOIN missions m ON m.mission_id = mo.mission_id
-    LEFT JOIN specimen_missions sm ON sm.mission_id = m.mission_id
-    LEFT JOIN specimens s ON s.specimen_id = sm.specimen_id
+
     WHERE 
         o.origin_id IN (SELECT mo.origin_id FROM matched_origins mo)
         OR o.origin_id IN (SELECT mm.origin_id FROM matched_missions mm)
-        OR o.origin_id IN (SELECT ms.origin_id FROM matched_specimens ms)
-    GROUP BY 
-        o.origin_id;
+        OR o.origin_id IN (SELECT ms.origin_id FROM matched_specimens ms);
+
 END;
 $$ LANGUAGE plpgsql;
 
@@ -193,14 +157,7 @@ RETURNS TABLE (
     mission_name TEXT,
     start_date DATE,
     end_date DATE,
-    description TEXT,
-    notes JSONB,
-    commander JSONB,
-    supervisor JSONB,
-    departments JSONB[],
-    operatives JSONB[],
-    origins JSONB[],
-    specimens JSONB[]
+    description TEXT
 ) AS $$
 BEGIN
     RETURN QUERY WITH matched_missions AS (
@@ -236,59 +193,13 @@ BEGIN
         m.mission_name,
         m.start_date,
         m.end_date,
-        m.description,
-        m.notes,
-        JSONB_BUILD_OBJECT(
-            'commander_id', m.commander_id,
-            'commander_first_name', commander.first_name,
-            'commander_last_name', commander.last_name
-        ) AS commander,
-        JSONB_BUILD_OBJECT(
-            'supervisor_id', m.supervisor_id,
-            'supervisor_first_name', supervisor.first_name,
-            'supervisor_last_name', supervisor.last_name
-        ) AS supervisor,
-        ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                    'department_id', d.department_id,
-                    'department_name', d.department_name
-        )) FILTER (WHERE d.department_id IS NOT NULL) AS departments,
-        ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                    'operative_id', operatives.employee_id,
-                    'operative_first_name', operatives.first_name,
-                    'operative_last_name', operatives.last_name,
-                    'involvement_summary', em.involvement_summary
-        )) FILTER (WHERE operatives.employee_id IS NOT NULL) AS operatives,
-        ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                    'origin_id', o.origin_id,
-                    'origin_name', o.origin_name
-        )) FILTER (WHERE o.origin_id IS NOT NULL) AS origins,
-        ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                    'specimen_id', s.specimen_id,
-                    'specimen_name', s.specimen_name,
-                    'involvement_summary', sm.involvement_summary
-        )) FILTER (WHERE s.specimen_id IS NOT NULL) AS specimens
+        m.description
     FROM 
         missions m
-    LEFT JOIN employees commander ON commander.employee_id = m.commander_id
-    LEFT JOIN employees supervisor ON supervisor.employee_id = m.supervisor_id
-    LEFT JOIN employee_missions em ON em.mission_id = m.mission_id
-    LEFT JOIN employees operatives ON operatives.employee_id = em.employee_id
-    LEFT JOIN mission_origins mo ON mo.mission_id = m.mission_id
-    LEFT JOIN origins o ON o.origin_id = mo.origin_id
-    LEFT JOIN specimen_missions sm ON sm.mission_id = m.mission_id
-    LEFT JOIN specimens s ON s.specimen_id = sm.specimen_id
-    LEFT JOIN department_missions dm ON dm.mission_id = m.mission_id
-    LEFT JOIN departments d ON d.department_id = dm.department_id
     WHERE 
         m.mission_id IN (SELECT mm.mission_id FROM matched_missions mm)
         OR m.mission_id IN (SELECT mc.mission_id FROM matched_commanders mc)
-        OR m.mission_id IN (SELECT ms.mission_id FROM matched_supervisors ms)
-    GROUP BY 
-        m.mission_id, 
-        commander.first_name, 
-        commander.last_name, 
-        supervisor.first_name, 
-        supervisor.last_name;
+        OR m.mission_id IN (SELECT ms.mission_id FROM matched_supervisors ms);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -297,15 +208,8 @@ CREATE OR REPLACE FUNCTION search_specimen_details(text)
 RETURNS TABLE (
     specimen_id VARCHAR(8),
     specimen_name TEXT,
-    origin_id VARCHAR(8),
-    mission_id VARCHAR(8),
     threat_level REAL,
-    acquisition_date DATE,
-    notes JSONB,
-    description TEXT,
-    containment_statuses JSONB[],
-    missions JSONB[],
-    researchers JSONB[]
+    acquisition_date DATE
 ) AS $$
 BEGIN
 RETURN QUERY WITH matched_specimens AS (
@@ -339,39 +243,15 @@ matched_researchers AS (
 SELECT 
     s.specimen_id,
     s.specimen_name,
-    s.origin_id,
-    s.mission_id,
     s.threat_level,
-    s.acquisition_date,
-    s.notes,
-    s.description,
-    ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                'containment_status_id', cs.containment_status_id,
-                'containment_status_name', cs.status_name
-    )) FILTER (WHERE cs.containment_status_id IS NOT NULL) AS containment_statuses,
-    ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                'mission_id', m.mission_id,
-                'mission_name', m.mission_name,
-                'involvement_summary', sm.involvement_summary
-    )) FILTER (WHERE m.mission_id IS NOT NULL) AS missions,
-    ARRAY_AGG(DISTINCT JSONB_BUILD_OBJECT(
-                'researcher_id', researcher.department_id,
-                'researcher_first_name', researcher.first_name,
-                'researcher_last_name', researcher.last_name
-    )) FILTER (WHERE researcher.employee_id IS NOT NULL) AS researchers
+    s.acquisition_date
 FROM 
     specimens s
-LEFT JOIN specimen_containment_statuses scs ON s.specimen_id = scs.specimen_id
-LEFT JOIN containment_statuses cs ON cs.containment_status_id = scs.containment_status_id
-LEFT JOIN specimen_missions sm ON sm.specimen_id = s.specimen_id
-LEFT JOIN missions m ON m.mission_id = sm.mission_id
-LEFT JOIN researcher_specimens rs ON rs.specimen_id = s.specimen_id
-LEFT JOIN employees researcher ON researcher.employee_id = rs.employee_id
+
 WHERE 
     s.specimen_id IN (SELECT ms.specimen_id FROM matched_specimens ms)
     OR s.specimen_id IN (SELECT mm.specimen_id FROM matched_missions mm)
-    OR s.specimen_id IN (SELECT mr.specimen_id FROM matched_researchers mr)
-GROUP BY 
-    s.specimen_id;
+    OR s.specimen_id IN (SELECT mr.specimen_id FROM matched_researchers mr);
+
 END;
 $$ LANGUAGE plpgsql;
