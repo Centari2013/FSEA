@@ -1,6 +1,11 @@
 from .imports import *
 from ..models.sqlalchemy_models import DepartmentMission
 
+DepartmentMissionModel = api.model('DepartmentMission', {
+    'department_id': fields.Integer(required=True, description='Department unique identifier'),
+    'mission_id': fields.String(required=True, description='Mission unique identifier')
+})
+
 class AssociateMissionWithDepartment(Resource):
     def post(self, department_id):
         parser = reqparse.RequestParser()

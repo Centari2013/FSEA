@@ -1,6 +1,14 @@
 from .imports import *
 from ..models.sqlalchemy_models import SpecimenMedicalRecord
 
+SpecimenMedicalRecordModel = api.model('SpecimenMedicalRecord', {
+    'specimen_id': fields.String(required=True, description='Specimen unique identifier'),
+    'bloodtype': fields.String(description='Blood type of the specimen', nullable=True),
+    'sex': fields.String(description='Sex of the specimen', nullable=True),
+    'kilograms': fields.Float(description='Weight of the specimen in kilograms', nullable=True),
+    'notes': fields.Raw(description='JSONB field for additional notes', nullable=True)
+})
+
 class GetSpecimenMedicalRecord(Resource):
     def get(self, specimen_id):
         medical_record = SpecimenMedicalRecord.query.get(specimen_id)

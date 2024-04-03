@@ -2,6 +2,16 @@ from .imports import *
 from ..models.sqlalchemy_models import Employee
 
 
+EmployeeModel = api.model('Employee', {
+    'employee_id': fields.String(description='Employee unique identifier'),
+    'department_id': fields.Integer(required=True, description='Identifier of the department the employee belongs to'),
+    'first_name': fields.String(required=True, description='First name of the employee'),
+    'last_name': fields.String(required=True, description='Last name of the employee'),
+    'start_date': fields.Date(required=True, description='Start date of employment'),
+    'end_date': fields.Date(description='End date of employment, if applicable', nullable=True),
+    'notes': fields.Raw(description='JSONB field for additional notes', nullable=True)
+})
+
 class PostEmployee(Resource):
     def post(self):
         parser = reqparse.RequestParser()

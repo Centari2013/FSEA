@@ -2,6 +2,12 @@ from .imports import *
 from ..models.sqlalchemy_models import ContainmentStatus  
 
 
+ContainmentStatusModel = api.model('ContainmentStatus', {
+    'containment_status_id': fields.Integer(description='The containment status unique identifier'),
+    'status_name': fields.String(required=True, description='The name of the containment status'),
+    'description': fields.String(required=True, description='A description of the containment status')
+})
+
 class PostContainmentStatus(Resource):
     def post(self):
         parser = reqparse.RequestParser()

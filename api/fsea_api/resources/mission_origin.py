@@ -1,6 +1,11 @@
 from .imports import *
 from ..models.sqlalchemy_models import MissionOrigin
 
+MissionOriginModel = api.model('MissionOrigin', {
+    'mission_id': fields.String(required=True, description='The unique identifier of the mission'),
+    'origin_id': fields.String(required=True, description='The unique identifier of the origin'),
+})
+
 class AssociateOriginWithMission(Resource):
     def post(self, mission_id):
         parser = reqparse.RequestParser()
