@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import ContainmentStatus  
+from ..models.sqlalchemy_models import ContainmentStatus  
 
 
 class PostContainmentStatus(Resource):

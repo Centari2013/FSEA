@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import Employee
+from ..models.sqlalchemy_models import Employee
 
 
 class PostEmployee(Resource):

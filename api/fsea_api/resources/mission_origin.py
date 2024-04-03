@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import MissionOrigin
+from ..models.sqlalchemy_models import MissionOrigin
 
 class AssociateOriginWithMission(Resource):
     def post(self, mission_id):

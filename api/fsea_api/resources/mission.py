@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import Mission
+from ..models.sqlalchemy_models import Mission
 
 
 class PostMission(Resource):

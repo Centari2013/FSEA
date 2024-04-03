@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import EmployeeMission
+from ..models.sqlalchemy_models import EmployeeMission
 
 class AddEmployeeToMission(Resource):
     def post(self, mission_id):

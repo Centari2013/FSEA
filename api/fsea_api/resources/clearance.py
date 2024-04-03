@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import Clearance  
+from ..models.sqlalchemy_models import Clearance  
 
 class PostClearance(Resource):
     def post(self):

@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import Designation 
+from ..models.sqlalchemy_models import Designation 
 
 
 class PostDesignation(Resource):

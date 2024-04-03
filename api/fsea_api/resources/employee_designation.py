@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import EmployeeDesignation
+from ..models.sqlalchemy_models import EmployeeDesignation
 
 class AssociateDesignationWithEmployee(Resource):
     def post(self, employee_id):

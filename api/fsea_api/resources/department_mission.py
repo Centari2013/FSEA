@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import DepartmentMission
+from ..models.sqlalchemy_models import DepartmentMission
 
 class AssociateMissionWithDepartment(Resource):
     def post(self, department_id):
