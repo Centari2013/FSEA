@@ -1,13 +1,6 @@
 from .imports import *
 from ..models.sqlalchemy_models import Origin
 
-OriginModel = api.model('Origin', {
-    'origin_id': fields.String(required=True, description='The unique identifier of the origin'),
-    'origin_name': fields.String(required=True, description='The name of the origin'),
-    'discovery_date': fields.Date(required=True, description='The date the origin was discovered'),
-    'description': fields.String(required=True, description='A description of the origin'),
-    'notes': fields.String(description='Additional notes on the origin'),
-})
 
 
 class PostOrigin(Resource):

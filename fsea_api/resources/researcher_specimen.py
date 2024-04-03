@@ -2,10 +2,7 @@ from .imports import *
 from ..models.sqlalchemy_models import ResearcherSpecimen
 
 
-ResearcherSpecimenModel = api.model('ResearcherSpecimen', {
-    'employee_id': fields.String(required=True, description='Employee unique identifier, acting as the researcher'),
-    'specimen_id': fields.String(required=True, description='Specimen unique identifier')
-})
+
 
 class AssociateResearcherWithSpecimen(Resource):
     def post(self, specimen_id):

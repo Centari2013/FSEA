@@ -2,10 +2,6 @@ from .imports import *
 from ..models.sqlalchemy_models import EmployeeDesignation
 
 
-EmployeeDesignationModel = api.model('EmployeeDesignation', {
-    'employee_id': fields.String(required=True, description='Employee ID'),
-    'designation_id': fields.Integer(required=True, description='Designation ID')
-})
 
 class AssociateDesignationWithEmployee(Resource):
     def post(self, employee_id):

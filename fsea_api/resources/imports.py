@@ -1,4 +1,3 @@
-from flask_restx import Resource, reqparse, fields
+from flask_restful import Resource, reqparse
 from sqlalchemy.exc import SQLAlchemyError
 from .. import db  
-from .. import api
