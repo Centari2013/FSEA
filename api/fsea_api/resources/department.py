@@ -2,12 +2,7 @@ from .imports import *
 from ..models.sqlalchemy_models import Department 
 
 
-DepartmentModel = api.model('Department', {
-    'department_id': fields.Integer(description='Department unique identifier'),
-    'department_name': fields.String(required=True, description='Name of the department'),
-    'director_id': fields.String(description='Employee ID of the department director', nullable=True),
-    'description': fields.String(description='A description of the department', nullable=True)
-})
+
 
 
 class PostDepartment(Resource):

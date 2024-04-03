@@ -2,16 +2,6 @@ from .imports import *
 from ..models.sqlalchemy_models import EmployeeMedicalRecord
 
 
-EmployeeMedicalRecordModel = api.model('EmployeeMedicalRecord', {
-    'employee_id': fields.String(description='Employee unique identifier'),
-    'dob': fields.Date(required=True, description='Date of birth'),
-    'bloodtype': fields.String(description='Blood type', nullable=True),
-    'sex': fields.String(description='Sex', nullable=True),
-    'kilograms': fields.Float(description='Weight in kilograms', nullable=True),
-    'height_cm': fields.Float(description='Height in centimeters', nullable=True),
-    'notes': fields.Raw(description='JSONB field for additional notes', nullable=True)
-})
-
 
 class GetEmployeeMedicalRecord(Resource):
     def get(self, employee_id):

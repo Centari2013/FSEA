@@ -1,11 +1,6 @@
 from .imports import *
 from ..models.sqlalchemy_models import EmployeeMission
 
-EmployeeMissionModel = api.model('EmployeeMission', {
-    'employee_id': fields.String(required=True, description='Employee unique identifier'),
-    'mission_id': fields.String(required=True, description='Mission unique identifier'),
-    'involvement_summary': fields.String(description='Summary of the employee\'s involvement in the mission', nullable=True)
-})
 
 class AddEmployeeToMission(Resource):
     def post(self, mission_id):

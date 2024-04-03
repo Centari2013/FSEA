@@ -5,20 +5,9 @@ from .imports import *
 from ..models.sqlalchemy_models import Credential, EmployeeSession
 from werkzeug.security import generate_password_hash as hash_password, check_password_hash as verify_password
 
-CredentialModel = api.model('Credential', {
-    'employee_id': fields.String(required=True, description='The unique identifier of the employee'),
-    'username': fields.String(description='The username associated with the employee'),
-    'password': fields.String(description='The password associated with the employee'),
-    'login_attempts': fields.Integer(default=0, description='The number of login attempts'),
-})
 
 
-EmployeeSessionModel = api.model('EmployeeSession', {
-    'session_id': fields.String(description='Session unique identifier'),
-    'employee_id': fields.String(required=True, description='Associated employee ID'),
-    'created': fields.DateTime(description='Session creation timestamp'),
-    'expires': fields.DateTime(description='Session expiration timestamp')
-})
+
 
 class UpdateCredentials(Resource):
     def patch(self, employee_id):

@@ -1,10 +1,7 @@
 from .imports import *
 from ..models.sqlalchemy_models import EmployeeClearance
 
-EmployeeClearanceModel = api.model('EmployeeClearance', {
-    'employee_id': fields.String(required=True, description='Employee ID'),
-    'clearance_id': fields.Integer(required=True, description='Clearance ID')
-})
+
 
 class AssociateClearanceWithEmployee(Resource):
     def post(self, employee_id):

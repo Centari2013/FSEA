@@ -2,12 +2,6 @@ from .imports import *
 from ..models.sqlalchemy_models import Designation 
 
 
-DesignationModel = api.model('Designation', {
-    'designation_id': fields.Integer(description='Designation unique identifier'),
-    'designation_name': fields.String(required=True, description='Name of the designation'),
-    'abbreviation': fields.String(required=True, description='Abbreviation of the designation')
-})
-
 class PostDesignation(Resource):
     def post(self):
         parser = reqparse.RequestParser()
