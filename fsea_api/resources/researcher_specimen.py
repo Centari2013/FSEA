@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import ResearcherSpecimen
+from ..models.sqlalchemy_models import ResearcherSpecimen
 
 class AssociateResearcherWithSpecimen(Resource):
     def post(self, specimen_id):

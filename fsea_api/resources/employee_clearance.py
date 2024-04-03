@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import EmployeeClearance
+from ..models.sqlalchemy_models import EmployeeClearance
 
 class AssociateClearanceWithEmployee(Resource):
     def post(self, employee_id):

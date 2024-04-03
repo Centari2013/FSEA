@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import SpecimenMedicalRecord
+from ..models.sqlalchemy_models import SpecimenMedicalRecord
 
 class GetSpecimenMedicalRecord(Resource):
     def get(self, specimen_id):

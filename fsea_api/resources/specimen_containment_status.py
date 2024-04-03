@@ -1,5 +1,5 @@
 from .imports import *
-from .. models import SpecimenContainmentStatus
+from ..models.sqlalchemy_models import SpecimenContainmentStatus
 
 class AssociateContainmentStatusWithSpecimen(Resource):
     def post(self, specimen_id):

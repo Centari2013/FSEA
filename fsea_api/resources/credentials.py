@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from flask import jsonify
 from .imports import *
-from ..models import Credential, EmployeeSession
+from ..models.sqlalchemy_models import Credential, EmployeeSession
 from werkzeug.security import generate_password_hash as hash_password, check_password_hash as verify_password
 
 

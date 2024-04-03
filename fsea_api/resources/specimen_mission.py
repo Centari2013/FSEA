@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import SpecimenMission
+from ..models.sqlalchemy_models import SpecimenMission
 
 class AddSpecimenMission(Resource):
     def post(self, specimen_id):

@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import Department 
+from ..models.sqlalchemy_models import Department 
 
 
 class PostDepartment(Resource):

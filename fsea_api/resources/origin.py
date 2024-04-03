@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import Origin
+from ..models.sqlalchemy_models import Origin
 
 class PostOrigin(Resource):
     def post(self):

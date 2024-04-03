@@ -1,5 +1,5 @@
 from .imports import *
-from ..models import EmployeeMedicalRecord
+from ..models.sqlalchemy_models import EmployeeMedicalRecord
 
 class GetEmployeeMedicalRecord(Resource):
     def get(self, employee_id):
