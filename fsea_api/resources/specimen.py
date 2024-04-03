@@ -1,6 +1,19 @@
 from .imports import *
 from ..models.sqlalchemy_models import Specimen
 
+
+SpecimenModel = api.model('Specimen', {
+    'specimen_id': fields.String(required=True, description='The unique identifier of the specimen'),
+    'specimen_name': fields.String(required=True, description='The name of the specimen'),
+    'origin_id': fields.String(description='The unique identifier of the origin associated with this specimen'),
+    'mission_id': fields.String(description='The unique identifier of the mission associated with this specimen'),
+    'threat_level': fields.Float(required=True, description='The threat level of the specimen', min=0, max=10),
+    'acquisition_date': fields.Date(required=True, description='The date the specimen was acquired'),
+    'notes': fields.String(description='Additional notes on the specimen'),
+    'description': fields.String(description='A description of the specimen'),
+})
+
+
 class PostSpecimen(Resource):
     def post(self):
         parser = reqparse.RequestParser()

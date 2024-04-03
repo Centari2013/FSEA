@@ -1,6 +1,12 @@
 from .imports import *
 from ..models.sqlalchemy_models import SpecimenContainmentStatus
 
+
+SpecimenContainmentStatusModel = api.model('SpecimenContainmentStatus', {
+    'specimen_id': fields.String(required=True, description='Specimen unique identifier'),
+    'containment_status_id': fields.Integer(required=True, description='Containment status unique identifier')
+})
+
 class AssociateContainmentStatusWithSpecimen(Resource):
     def post(self, specimen_id):
         parser = reqparse.RequestParser()

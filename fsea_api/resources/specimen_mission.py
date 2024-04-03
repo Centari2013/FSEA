@@ -1,6 +1,13 @@
 from .imports import *
 from ..models.sqlalchemy_models import SpecimenMission
 
+
+SpecimenMissionModel = api.model('SpecimenMission', {
+    'specimen_id': fields.String(required=True, description='Specimen unique identifier'),
+    'mission_id': fields.String(required=True, description='Mission unique identifier'),
+    'involvement_summary': fields.String(description='Summary of the specimen\'s involvement in the mission', nullable=True)
+})
+
 class AddSpecimenMission(Resource):
     def post(self, specimen_id):
         parser = reqparse.RequestParser()

@@ -2,6 +2,18 @@ from .imports import *
 from ..models.sqlalchemy_models import Mission
 
 
+
+MissionModel = api.model('Mission', {
+    'mission_id': fields.String(description='Mission unique identifier'),
+    'mission_name': fields.String(required=True, description='Name of the mission'),
+    'start_date': fields.Date(description='Mission start date', nullable=True),
+    'end_date': fields.Date(description='Mission end date', nullable=True),
+    'commander_id': fields.String(description='Commander employee ID', nullable=True),
+    'supervisor_id': fields.String(description='Supervisor employee ID', nullable=True),
+    'description': fields.String(required=True, description='A description of the mission'),
+    'notes': fields.Raw(description='JSONB field for additional notes', nullable=True)
+})
+
 class PostMission(Resource):
     def post(self):
         parser = reqparse.RequestParser()
