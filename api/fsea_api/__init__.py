@@ -92,6 +92,7 @@ api.add_resource(GetResearchersBySpecimen, '/specimens/<string:specimen_id>/rese
 
 
 # Other
+api.add_resource(SearchEmployeeDetails, '/search')
 api.add_resource(Login, '/login')
 api.add_resource(GetSpecimensForContainmentStatus, '/containment_statuses/<int:containment_status_id>/specimens') 
 
