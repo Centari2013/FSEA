@@ -46,17 +46,30 @@ class Login(Resource):
 
         # Assuming the Credential model has a username field
         user = Credential.query.filter_by(username=data['username']).first()
+        print(user.password)
+        if user:
+            if verify_password(user.password, data['password']):
+                if user.login_attempts < 3:
+                    user.login_attempts = 0
+                    db.session.commit()
+                    # User is authenticated; create a session
+                    new_session = EmployeeSession(
+                        session_id=str(uuid4()),
+                        employee_id=user.employee_id
+                    )
+                    db.session.add(new_session)
+                    db.session.commit()
 
-        if user and verify_password(data['password'], user.password):
-            # User is authenticated; create a session
-            new_session = EmployeeSession(
-                session_id=str(uuid4()),
-                employee_id=user.employee_id
-            )
-            db.session.add(new_session)
-            db.session.commit()
+                    # Return the session ID as the token
+                    return jsonify({'token': new_session.session_id})
+                else:
+                    return {'message': 'Account Locked. Contact admin.'}, 429
+            else:
+                user.login_attempts += 1
+                db.session.commit()
+                return {'message': 'Invalid credentials'}, 401
 
-            # Return the session ID as the token
-            return jsonify({'token': new_session.session_id})
         else:
             return {'message': 'Invalid credentials'}, 401
+        
+        #E7449700
