@@ -4,7 +4,7 @@ from flask import jsonify
 from .imports import *
 from ..models.sqlalchemy_models import Credential, EmployeeSession
 from werkzeug.security import generate_password_hash as hash_password, check_password_hash as verify_password
-
+from datetime import datetime, timezone
 
 
 
@@ -46,7 +46,6 @@ class Login(Resource):
 
         # Assuming the Credential model has a username field
         user = Credential.query.filter_by(username=data['username']).first()
-        print(user.password)
         if user:
             if verify_password(user.password, data['password']):
                 if user.login_attempts < 3:
@@ -61,7 +60,8 @@ class Login(Resource):
                     db.session.commit()
 
                     # Return the session ID as the token
-                    return jsonify({'token': new_session.session_id})
+                    return jsonify({'token': new_session.session_id,
+                                    "employee_id": new_session.employee_id})
                 else:
                     return {'message': 'Account Locked. Contact admin.'}, 429
             else:
@@ -72,4 +72,23 @@ class Login(Resource):
         else:
             return {'message': 'Invalid credentials'}, 401
         
-        #E7449700
+    
+class ValidateToken(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('token', type=str, required=True, help="Token cannot be blank.")
+        data = parser.parse_args()
+
+        # Retrieve the session using the token
+        session = EmployeeSession.query.filter_by(session_id=data['token']).first()
+
+        # Check if the session exists and has not expired
+        if session:
+            if session.expires > datetime.now(timezone.utc):
+                return jsonify({'valid': True, 'message': 'Token is valid.'})
+            else:
+                return {'valid': False, 'message': 'Invalid or expired token'}, 401
+
+        else:
+            # If no session is found or the token has expired
+            return {'valid': False, 'message': 'Invalid or expired token'}, 401
