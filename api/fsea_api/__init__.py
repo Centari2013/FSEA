@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, Blueprint
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 
@@ -8,9 +9,13 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI")
 db = SQLAlchemy(app)
-api = Api(app)
+
+api_bp = Blueprint('api', __name__, url_prefix='/api')
+api = Api(api_bp)
+app.register_blueprint(api_bp)
 
 
 from fsea_api.resources import *
