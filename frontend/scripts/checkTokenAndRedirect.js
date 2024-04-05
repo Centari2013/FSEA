@@ -29,7 +29,7 @@ async function verifyToken(token) {
     }
   }
   
-async function checkSessionOnLoad() {
+export async function checkSessionOnLoad() {
   const token = localStorage.getItem('sessionToken');
   if (token) {
     const result = await verifyToken(token);

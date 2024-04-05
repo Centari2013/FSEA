@@ -1,0 +1,36 @@
+.logo {
+  max-width: 100px; /* Adjust based on your logo size */
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 auto; /* Center the logo horizontally */
+}
+
+/* Hover Effect */
+.nav-link:hover, .nav-link.active {
+  color: rgb(94, 136, 150) !important; /* Text color changes to light blue on hover and remains for active */
+  background: transparent !important;
+}
+
+.search-bar {
+  width: 40%; /* or any other size */
+  margin-right: 10px;
+}
+
+.btn:hover {
+  background: rgb(84, 88, 92);
+}
+
+
+body {
+  min-height: 100vh;
+}
+.sidebar {
+  min-height: 100vh;
+  max-width: 12vw;
+}
+.search-bar-container {
+  padding: 1rem;
+}
+
+#searchForm {
+  max-width: 100%; /* Ensures form doesn't stretch beyond its container */
+}

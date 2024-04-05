@@ -1,0 +1,53 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+}
+.login-form-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+    width: 100%;
+    max-width: 400px;
+}
+.form-logo {
+    max-width: 100px; /* Adjust based on your logo size */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+    margin: 0 auto 2rem auto; /* Center the logo horizontally and add margin */
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+.form-label {
+    display: block;
+    margin-bottom: .5rem;
+}
+.form-control {
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+#loginForm button[type="submit"] {
+    width: 100%;
+    padding: .375rem .75rem;
+    margin-top: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+}
+#loginForm button[type="submit"]:hover {
+    background-color: #0056b3;
+}
