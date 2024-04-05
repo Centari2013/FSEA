@@ -29,6 +29,7 @@ api.add_resource(GetContainmentStatus, '/containment_statuses/<int:containment_s
 api.add_resource(PatchContainmentStatus, '/containment_statuses/<int:containment_status_id>')
 api.add_resource(DeleteContainmentStatus, '/containment_statuses/<int:containment_status_id>')
 
+api.add_resource(GetAllDepartments, '/departments')
 api.add_resource(PostDepartment, '/departments')
 api.add_resource(GetDepartment, '/departments/<int:department_id>')
 api.add_resource(PatchDepartment, '/departments/<int:department_id>')

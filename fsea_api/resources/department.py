@@ -34,6 +34,18 @@ class GetDepartment(Resource):
                 'description': department.description
             }, 200
         return {'message': 'Department not found'}, 404
+    
+class GetAllDepartments(Resource):
+    def get(self):
+        departments = Department.query.all()
+        if departments:
+            return [{
+                'department_id': department.department_id,
+                'department_name': department.department_name,
+                'director_id': department.director_id,
+                'description': department.description
+            } for department in departments], 200
+        return {'message': 'Departments not found'}, 404
 
 class PatchDepartment(Resource):
     def patch(self, department_id):
