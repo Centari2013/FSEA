@@ -5,7 +5,7 @@ export function loadDepartmentDirectory() {
       .then(response => response.json())
       .then(departments => {
         const cardsContainer = document.createElement('div');
-        cardsContainer.id = "departmentCardsContainer";
+        cardsContainer.id = "CardsContainer";
         cardsContainer.className = "row row-cols-1 g-4 justify-content-center";
   
         departments.forEach(department => {

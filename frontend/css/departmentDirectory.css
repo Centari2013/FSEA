@@ -1,24 +1,36 @@
-#departmentCardsContainer .card {
+#CardsContainer .card {
     /* Makes the card more horizontally rectangular */
     min-height: 150px; /* Adjust based on your content */
   }
   
-  #departmentCardsContainer .col {
+  #CardsContainer .col {
     max-width: 100%; /* 100% on small screens */
     display: flex;
     justify-content: center; /* This will help center the cards */
   }
   
   /* Optional: Adjust card content spacing */
-  #departmentCardsContainer .card-body {
+  #CardsContainer .card-body {
     padding: 1.25rem; /* Increase padding */
   }
   
   /* Adjusting the width and margin of cards for larger viewports, if needed */
   @media (min-width: 768px) {
-    #departmentCardsContainer .col {
+    #CardsContainer .col {
       /* You can adjust this if you want some maximum width on larger screens */
       max-width: 90%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .sidebar {
+      position: static; /* Default positioning */
+      height: auto;
+      overflow-y: visible;
+    }
+  
+    .col {
+      margin-left: 0; /* Remove the margin for smaller screens */
     }
   }
 
@@ -31,4 +43,6 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   
-  
+  .col {
+    margin-left: 4%; /* Adjust this value based on the actual width of your sidebar */
+  }

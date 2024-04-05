@@ -24,8 +24,12 @@ body {
   min-height: 100vh;
 }
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   min-height: 100vh;
   max-width: 12vw;
+  overflow-y: auto;
 }
 .search-bar-container {
   padding: 1rem;
