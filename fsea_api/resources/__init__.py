@@ -17,4 +17,4 @@ from .credentials import *
 from .department_mission import *
 from . employee_mission import *
 from .researcher_specimen import *
-from .search import SearchEmployeeDetails
+from .search import SearchAllDetails
