@@ -35,8 +35,10 @@ async function checkSessionOnLoad() {
     const result = await verifyToken(token);
     if (!result.valid) {
       window.location.href = '/login.html';
+    }else{
+      document.body.style.visibility = 'visible';
     }
-    document.body.style.visibility = 'visible';
+
   
   } else {
     window.location.href = '/login.html';

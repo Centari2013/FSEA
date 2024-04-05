@@ -1,5 +1,16 @@
+/* Hover Effect */
+.nav-link:hover, .nav-link.active {
+  color: lightblue !important; /* Text color changes to light blue on hover and remains for active */
+  background: transparent !important;
+}
+
+
+body {
+  min-height: 100vh;
+}
 .sidebar {
-    flex: 0 0 250px; /* Adjust based on your sidebar width preference */
-    min-height: 100vh; /* Full height of the viewport */
-    padding: 20px; /* Or as per your design */
-  }
+  min-height: 100vh;
+}
+.search-bar-container {
+  padding: 1rem;
+}
