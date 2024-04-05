@@ -1,27 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Employee Dashboard</title>
-  <style>
-    body { visibility: hidden; }
-  </style>
-    
-  <script src="scripts/checkTokenAndRedirect.js" type="module"></script>
-  <!-- Add CSS links if necessary -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Directory</title>
+<script type="module" src="index.js"></script>
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 <body>
-  <div class="employee-dashboard">
-    <h1>Employee Dashboard</h1>
-    <h2>Welcome, Jane Doe</h2>
-    <p>Department: Research and Development</p>
-    <p>Designations: Senior Researcher, Project Lead</p>
-    <h3>Missions Involved:</h3>
-    <ul>
-      <li>Mission Mars</li>
-      <li>Mission Venus</li>
-    </ul>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Employees Directory</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Departments Directory</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Missions Directory</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Specimens Directory</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Document Search</a>
+          </li>
+          
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Welcome to the Employee Directory!</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <button type="button" class="btn btn-sm btn-outline-secondary">Start Your Search</button>
+        </div>
+      </div>
+      <p>Find company employees and access documents.</p>
+    </main>
   </div>
-  <!-- Add JavaScript files if necessary -->
+
+  <!-- Footer -->
+  <footer class="footer mt-auto py-3">
+    
+  </footer>
+</div>
+
+<!-- Bootstrap 5 JS bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </body>
 </html>
