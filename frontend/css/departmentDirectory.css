@@ -1,0 +1,34 @@
+#departmentCardsContainer .card {
+    /* Makes the card more horizontally rectangular */
+    min-height: 150px; /* Adjust based on your content */
+  }
+  
+  #departmentCardsContainer .col {
+    max-width: 100%; /* 100% on small screens */
+    display: flex;
+    justify-content: center; /* This will help center the cards */
+  }
+  
+  /* Optional: Adjust card content spacing */
+  #departmentCardsContainer .card-body {
+    padding: 1.25rem; /* Increase padding */
+  }
+  
+  /* Adjusting the width and margin of cards for larger viewports, if needed */
+  @media (min-width: 768px) {
+    #departmentCardsContainer .col {
+      /* You can adjust this if you want some maximum width on larger screens */
+      max-width: 90%;
+    }
+  }
+
+  .clickable-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+  }
+  .clickable-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  

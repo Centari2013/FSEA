@@ -1,4 +1,5 @@
 import {checkSessionOnLoad} from './checkTokenAndRedirect.js'
+import { loadDepartmentDirectory } from './departmentDirectory.js';
 document.addEventListener("DOMContentLoaded", function() {
 
     var searchForm = document.getElementById('searchForm');
@@ -22,21 +23,28 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
             // Add active class to clicked item
-            this.classList.add('active');
-
-            const contentId = this.getAttribute('href').substring(1); // Assuming 'href' contains an identifier.
-            loadContentIntoMainArea(contentId);
+            setActiveNavLink(this);
         });
     });
-
+    const savedContentId = localStorage.getItem('activeNavLink');
+    if (savedContentId) {
+        const navItemToActivate = document.querySelector(`.nav-item a[href="#${savedContentId}"]`);
+        if (navItemToActivate) {
+            setActiveNavLink(navItemToActivate);
+        }
+    }
     // Automatically load content for "Home" and mark it as active
     const homeNavItem = document.querySelector('.nav-item a[href="#"]'); // Adjust the selector as needed
     if(homeNavItem) {
-        homeNavItem.classList.add('active'); // Set "Home" as active
-        const homeContentId = homeNavItem.getAttribute('href').substring(1);
-        loadContentIntoMainArea(homeContentId); // Load "Home" content
+        setActiveNavLink(homeNavItem);
     }
 });
+
+function setActiveNavLink (item) {
+    item.classList.add('active');
+    const itemContentId = item.getAttribute('href').substring(1);
+    loadContentIntoMainArea(itemContentId);
+}
 
 // Define the performSearch function
 function performSearch(query) {
@@ -48,9 +56,14 @@ function performSearch(query) {
 function loadContentIntoMainArea(contentId) {
     const mainContentArea = document.getElementById('main-content');
     mainContentArea.innerHTML = ''; // Clear existing content
-  
-    // Fetch new content based on 'contentId' and append it to 'mainContentArea'
-    // This is where you'd make an AJAX call or load content directly, depending on your app's structure
-    // For demonstration, simply setting placeholder text
-    mainContentArea.textContent = `Content for ${contentId}`;
+    
+    switch(contentId) {
+        case 'departmentDirectory':
+            mainContentArea.innerHTML = '';
+            loadDepartmentDirectory();
+        default:
+            mainContentArea.innerHTML = '';
+            
+    }
+    
 }
