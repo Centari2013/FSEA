@@ -18,11 +18,13 @@ def format_tsquery(search_input):
     # Return the formatted tsquery string
     return tsquery
 
+
+# Assuming 'engine' is already created and imported from your configuration
+
 def search_employee_details(search_query):
-    sql = text("SELECT * FROM search_employee_details(:query)")
-
-    result = db.engine.execute(sql, query=search_query).fetchall()
-
+    with engine.connect() as connection:
+        sql = text("SELECT * FROM search_employee_details(:query)")
+        result = connection.execute(sql, {'query': search_query}).mappings().all()
     return [{
             'employee_id': row['employee_id'],
             'first_name': row['first_name'],
@@ -32,13 +34,10 @@ def search_employee_details(search_query):
             'relevancy': row['relevancy']
         } for row in result]
 
-    
-
 def search_department_details(search_query):
-    sql = text("SELECT * FROM search_department_details(:query)")
-
-    result = db.engine.execute(sql, query=search_query).fetchall()
-
+    with engine.connect() as connection:
+        sql = text("SELECT * FROM search_department_details(:query)")
+        result = connection.execute(sql, {'query': search_query}).mappings().all()
     return [{
         'department_id': row['department_id'],
         'department_name': row['department_name'],
@@ -47,12 +46,10 @@ def search_department_details(search_query):
         'relevancy': row['relevancy']
     } for row in result]
 
-
 def search_origin_details(search_query):
-    sql = text("SELECT * FROM search_origin_details(:query)")
-
-    result = db.engine.execute(sql, query=search_query).fetchall()
-
+    with engine.connect() as connection:
+        sql = text("SELECT * FROM search_origin_details(:query)")
+        result = connection.execute(sql, {'query': search_query}).mappings().all()
     return [{
         'origin_id': row['origin_id'],
         'origin_name': row['origin_name'],
@@ -61,12 +58,10 @@ def search_origin_details(search_query):
         'relevancy': row['relevancy']
     } for row in result]
 
-
 def search_mission_details(search_query):
-    sql = text("SELECT * FROM search_mission_details(:query)")
-
-    result = db.engine.execute(sql, query=search_query).fetchall()
-
+    with engine.connect() as connection:
+        sql = text("SELECT * FROM search_mission_details(:query)")
+        result = connection.execute(sql, {'query': search_query}).mappings().all()
     return [{
         'mission_id': row['mission_id'],
         'mission_name': row['mission_name'],
@@ -76,12 +71,10 @@ def search_mission_details(search_query):
         'relevancy': row['relevancy']
     } for row in result]
 
-
 def search_specimen_details(search_query):
-    sql = text("SELECT * FROM search_specimen_details(:query)")
-    
-    result = db.engine.execute(sql, query=search_query).fetchall()
-
+    with engine.connect() as connection:
+        sql = text("SELECT * FROM search_specimen_details(:query)")
+        result = connection.execute(sql, {'query': search_query}).mappings().all()
     return [{
         'specimen_id': row['specimen_id'],
         'specimen_name': row['specimen_name'],
@@ -89,6 +82,7 @@ def search_specimen_details(search_query):
         'acquisition_date': row['acquisition_date'],
         'relevancy': row['relevancy']
     } for row in result]
+
    
 
 def sort_and_consolidate_results(results):
@@ -126,8 +120,8 @@ def sort_and_consolidate_results(results):
     return sorted(consolidated_results, key=lambda x: x['relevancy']) # sort by relevancy
 
 
-class SearchEmployeeDetails(Resource):
-    def get(self):
+class SearchAllDetails(Resource):
+    def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('query', type=str, required=True, help="Search query cannot be blank.")
         args = parser.parse_args()
@@ -166,6 +160,7 @@ class SearchEmployeeDetails(Resource):
                 return {'message': 'No results found for the given search query.'}, 404
             
         except Exception as e:
+            print(e)
             return {'message': f'Query failed. Error: {str(e)}'}, 500
                 
 

@@ -1,5 +1,7 @@
-import {checkSessionOnLoad} from './checkTokenAndRedirect.js'
+import {checkSessionOnLoad} from './auth/checkTokenAndRedirect.js'
 import { loadDepartmentDirectory } from './departmentDirectory.js';
+import { performSearch } from './search/search.js';
+
 document.addEventListener("DOMContentLoaded", function() {
 
     var searchForm = document.getElementById('searchForm');
@@ -46,12 +48,7 @@ function setActiveNavLink (item) {
     loadContentIntoMainArea(itemContentId);
 }
 
-// Define the performSearch function
-function performSearch(query) {
-    console.log("Performing search for:", query);
-    // Implement your search logic here
-    // This could involve making an AJAX request, updating the DOM with search results, etc.
-}
+
 
 function loadContentIntoMainArea(contentId) {
     const mainContentArea = document.getElementById('main-content');

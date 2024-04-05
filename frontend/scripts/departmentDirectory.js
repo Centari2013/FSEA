@@ -1,4 +1,5 @@
 const api = import.meta.env.VITE_API_ENDPOINT;
+import { departmentDirectoryCard } from "./search/cardTemplates";
 
 export function loadDepartmentDirectory() {
     fetch(`${api}/departments`)
@@ -9,18 +10,7 @@ export function loadDepartmentDirectory() {
         cardsContainer.className = "row row-cols-1 g-4 justify-content-center";
   
         departments.forEach(department => {
-          const departmentCardHtml = `
-            <div class="col">
-              <a href="${department.url}" class="text-decoration-none">
-                <div class="card h-100 clickable-card">
-                    <div class="card-body">
-                        <h5 class="card-title">${department.department_name}</h5>
-                        <p class="card-text">${department.description || "No description available."}</p>
-                    </div>
-                </div>
-              </a>
-            </div>
-          `;
+          const departmentCardHtml = departmentDirectoryCard(department);
 
           cardsContainer.innerHTML += departmentCardHtml;
         });
