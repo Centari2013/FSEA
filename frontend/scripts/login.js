@@ -1,4 +1,4 @@
-const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+const api = import.meta.env.VITE_API_ENDPOINT;
 
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
@@ -13,9 +13,9 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         username,
         password
     };
-    console.log(apiEndpoint);
+   
     // Sending the payload to the API endpoint using Fetch
-    fetch(`${apiEndpoint}/login`, {
+    fetch(`${api}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

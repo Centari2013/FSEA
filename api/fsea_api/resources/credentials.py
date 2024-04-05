@@ -84,7 +84,7 @@ class ValidateToken(Resource):
 
         # Check if the session exists and has not expired
         if session:
-            if session.expires > datetime.now(timezone.utc):
+            if session.expires > datetime.now(tz=None):
                 return jsonify({'valid': True, 'message': 'Token is valid.'})
             else:
                 return {'valid': False, 'message': 'Invalid or expired token'}, 401
