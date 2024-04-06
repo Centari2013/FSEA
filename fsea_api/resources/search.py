@@ -53,7 +53,7 @@ def search_origin_details(search_query):
     return [{
         'origin_id': row['origin_id'],
         'origin_name': row['origin_name'],
-        'discovery_date': row['discovery_date'],
+        'discovery_date': row['discovery_date'].isoformat() if row['discovery_date'] else None,
         'description': row['description'],
         'relevancy': row['relevancy']
     } for row in result]
@@ -65,8 +65,8 @@ def search_mission_details(search_query):
     return [{
         'mission_id': row['mission_id'],
         'mission_name': row['mission_name'],
-        'start_date': row['start_date'],
-        'end_date': row['end_date'],
+        'start_date': row['start_date'].isoformat() if row['start_date'] else None,
+        'end_date': row['end_date'].isoformat() if row['end_date'] else None,
         'description': row['description'],
         'relevancy': row['relevancy']
     } for row in result]
@@ -79,7 +79,7 @@ def search_specimen_details(search_query):
         'specimen_id': row['specimen_id'],
         'specimen_name': row['specimen_name'],
         'threat_level': row['threat_level'],
-        'acquisition_date': row['acquisition_date'],
+        'acquisition_date': row['acquisition_date'].isoformat() if row['acquisition_date'] else None,
         'relevancy': row['relevancy']
     } for row in result]
 
