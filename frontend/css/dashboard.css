@@ -30,11 +30,36 @@ body {
   min-height: 100vh;
   max-width: 12vw;
   overflow-y: auto;
+  z-index: 1000;
 }
 .search-bar-container {
   padding: 1rem;
 }
 
+
+.search-and-pagination-container {
+  border-bottom: 1px solid lightgray;
+  max-width: 100%;
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0; /* Adjust this value if you have a top navbar or similar */
+  background-color: white; /* Or any color that matches your design */
+  z-index: 500; /* Ensure it stays above other content */
+}
+
+
 #searchForm {
   max-width: 100%; /* Ensures form doesn't stretch beyond its container */
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    position: static; /* Default positioning */
+    height: auto;
+    overflow-y: visible;
+  }
+
+  .col {
+    margin-left: 0; /* Remove the margin for smaller screens */
+  }
 }

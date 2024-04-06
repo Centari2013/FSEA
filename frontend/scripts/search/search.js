@@ -1,4 +1,4 @@
-import { employeeCard, specimenCard, departmentCard, missionCard, originCard} from "./cardTemplates";
+import { employeeCard, specimenCard, departmentCard, missionCard, originCard, noResultsCard} from "./cardTemplates";
 const api = import.meta.env.VITE_API_ENDPOINT;
 // Define the performSearch function
 export function performSearch(query) {
@@ -17,13 +17,17 @@ export function performSearch(query) {
     })
     .then(response => response.json())
     .then(results => {
-        console.log(results);
         const cardsContainer = document.createElement('div');
         cardsContainer.id = "CardsContainer";
         cardsContainer.className = "row row-cols-1 g-4 justify-content-center";
 
         const mainContentArea = document.getElementById('main-content');
         mainContentArea.innerHTML = ''; // Clear existing content
+        if (results["results"]) {
+            results["results"].sort(function (first, second) {return first["relevancy"] - second["relevancy"]})
+        
+
+        
         var entityCard = null;
         results["results"].forEach(result => {
 
@@ -53,6 +57,10 @@ export function performSearch(query) {
         });
 
         mainContentArea.appendChild(cardsContainer);
+        }else{
+            showNoResultsMessage(cardsContainer);
+        }
+        
 
 
     })
@@ -62,4 +70,10 @@ export function performSearch(query) {
     });
     // Implement your search logic here
     // This could involve making an AJAX request, updating the DOM with search results, etc.
+}
+
+function showNoResultsMessage(div) {
+    div.innerHTML += noResultsCard();
+    const mainContent = document.getElementById('main-content');
+    mainContent.appendChild(div);
 }
