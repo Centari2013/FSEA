@@ -1,4 +1,4 @@
-import { employeeCard, specimenCard, departmentCard, missionCard, originCard, noResultsCard} from "./cardTemplates";
+import { employeeCard, specimenCard, departmentCard, missionCard, originCard, noResultsCard, cardContainer} from "./cardTemplates";
 const api = import.meta.env.VITE_API_ENDPOINT;
 // Define the performSearch function
 export function performSearch(query) {
@@ -17,10 +17,7 @@ export function performSearch(query) {
     })
     .then(response => response.json())
     .then(results => {
-        const cardsContainer = document.createElement('div');
-        cardsContainer.id = "CardsContainer";
-        cardsContainer.className = "row row-cols-1 g-4 justify-content-center";
-
+        const cardsContainer = cardContainer();
         const mainContentArea = document.getElementById('main-content');
         mainContentArea.innerHTML = ''; // Clear existing content
         if (results["results"]) {

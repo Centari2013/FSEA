@@ -1,3 +1,10 @@
+export function cardContainer() {
+    const cardsContainer = document.createElement('div');
+    cardsContainer.id = "CardsContainer";
+    cardsContainer.className = "row row-cols-1 g-4 justify-content-center";
+    return cardsContainer;
+}
+
 export function noResultsCard() {
     return `
     <div class="col">
@@ -13,7 +20,7 @@ export function noResultsCard() {
 
 export function employeeCard(employee) {
     return `
-    <div class="col">
+    <div class="col-8 col-sm-10 col-md-10">
         <a href="/employee/${employee.employee_id}" class="text-decoration-none">
             <div class="card h-100 clickable-card">
                 <div class="card-body">
@@ -32,7 +39,7 @@ export function employeeCard(employee) {
 
 export function departmentCard(department) {
     return `
-    <div class="col">
+    <div class="col-8 col-sm-10 col-md-10">
         <a href="/department/${department.department_id}" class="text-decoration-none">
             <div class="card h-100 clickable-card">
                 <div class="card-body">
@@ -51,7 +58,7 @@ export function departmentCard(department) {
 
 export function missionCard(mission) {
     return `
-    <div class="col">
+    <div class="col-8 col-sm-10 col-md-10">
         <a href="/mission/${mission.mission_id}" class="text-decoration-none">
             <div class="card h-100 clickable-card">
                 <div class="card-body">
@@ -71,7 +78,7 @@ export function missionCard(mission) {
 
 export function specimenCard(specimen) {
     return `
-    <div class="col">
+    <div class="col-8 col-sm-10 col-md-10">
         <a href="/specimen/${specimen.specimen_id}" class="text-decoration-none">
             <div class="card h-100 clickable-card">
                 <div class="card-body">
@@ -90,7 +97,7 @@ export function specimenCard(specimen) {
 
 export function originCard(origin) {
     return `
-    <div class="col">
+    <div class="col-8 col-sm-10 col-md-10">
         <a href="/origin/${origin.origin_id}" class="text-decoration-none">
             <div class="card h-100 clickable-card">
                 <div class="card-body">
@@ -110,7 +117,7 @@ export function originCard(origin) {
 
 export function departmentDirectoryCard(department) {
     return `
-    <div class="col">
+    <div class="col-8 col-sm-10 col-md-10">
         <a href="${department.url}" class="text-decoration-none">
             <div class="card h-100 clickable-card">
                 <div class="card-body">
