@@ -1,11 +1,14 @@
 const api = import.meta.env.VITE_API_ENDPOINT;
-import { cardContainer, departmentDirectoryCard } from "./search/cardTemplates";
+import { cardContainer, departmentDirectoryCard, titleCard } from "./search/cardTemplates";
 
-export function loadDepartmentDirectory() {
+export function loadEmployeeDirectory() {
     fetch(`${api}/departments`)
       .then(response => response.json())
       .then(departments => {
         const cardsContainer = cardContainer();
+
+        
+        cardsContainer.innerHTML += titleCard("Departments");
   
         departments.forEach(department => {
           const departmentCardHtml = departmentDirectoryCard(department);

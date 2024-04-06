@@ -130,3 +130,17 @@ export function departmentDirectoryCard(department) {
     `;
 }
 
+export function titleCard(title) {
+    return `
+    <div class="col-12"> <!-- Ensures full width, aligning with the grid used for cards -->
+        <div class="card h-100">
+            <div class="card-body">
+                <h4 class="card-title text-center">${title}</h4>
+                <!-- No card-text needed as this is a title -->
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+

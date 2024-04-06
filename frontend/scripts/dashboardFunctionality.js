@@ -1,5 +1,5 @@
 import {checkSessionOnLoad} from './auth/checkTokenAndRedirect.js'
-import { loadDepartmentDirectory } from './departmentDirectory.js';
+import { loadEmployeeDirectory } from './employeeDirectory.js';
 import { performSearch } from './search/search.js';
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -55,9 +55,9 @@ function loadContentIntoMainArea(contentId) {
     mainContentArea.innerHTML = ''; // Clear existing content
     
     switch(contentId) {
-        case 'departmentDirectory':
+        case 'employeeDirectory':
             mainContentArea.innerHTML = '';
-            loadDepartmentDirectory();
+            loadEmployeeDirectory();
         default:
             mainContentArea.innerHTML = '';
             
