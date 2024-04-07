@@ -19,6 +19,7 @@ export function noResultsCard() {
 }
 
 export function employeeCard(employee) {
+    const designationString = employee.designations.map(d => d.designation_name).join(', ')
     return `
     <div class="col-8 col-sm-10 col-md-10">
         <a href="/employee/${employee.employee_id}" class="text-decoration-none">
@@ -28,7 +29,7 @@ export function employeeCard(employee) {
                     <p class="card-text">
                         <strong>Employee ID:</strong> ${employee.employee_id}<br>
                         <strong>Department:</strong> ${employee.department}<br>
-                        <strong>Designations:</strong> ${employee.designations}
+                        <strong>Designations:</strong> ${designationString}
                     </p>
                 </div>
             </div>
