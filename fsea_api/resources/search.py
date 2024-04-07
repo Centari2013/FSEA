@@ -117,7 +117,7 @@ def sort_and_consolidate_results(results):
             new_entry['relevancy'] = avg_relevancy
             consolidated_results.append(new_entry)
 
-    return sorted(consolidated_results, key=lambda x: x['relevancy']) # sort by relevancy
+    return sorted(consolidated_results, key=lambda x: x['relevancy'], reverse=True) # sort by relevancy
 
 
 class SearchAllDetails(Resource):
@@ -151,10 +151,9 @@ class SearchAllDetails(Resource):
                 specimen['type'] = 'S'  # S for Specimen
                         
             raw_results = employees + departments + origins + missions + specimens
+            if raw_results:
 
-            sorted_results = sort_and_consolidate_results(raw_results)
-
-            if sorted_results:
+                sorted_results = sort_and_consolidate_results(raw_results)
                 return {'results': sorted_results}, 200
             else:
                 return {'message': 'No results found for the given search query.'}, 404
