@@ -1,0 +1,119 @@
+/* General Page Styles */
+.container.mt-4 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+    color: #333;
+}
+
+p, li {
+    color: #555;
+}
+
+/* Clearances and Missions Sections */
+h3 {
+    margin-top: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul li {
+    padding: 8px 0;
+}
+
+ul li:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+/* Medical Data Section */
+#medicalDataCollapse .card-body {
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+}
+
+/* Missions Table */
+.table {
+    margin-top: 15px;
+}
+
+.table thead th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+/* Collapsible Section Button */
+.btn-link {
+    padding: 0;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.btn-link:hover, .btn-link:focus {
+    text-decoration: none;
+    color: #0056b3;
+}
+
+/* Additional Styling */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .table tr {
+        margin-bottom: 15px;
+    }
+
+    .table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+}

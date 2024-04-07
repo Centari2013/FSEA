@@ -20,16 +20,46 @@ class PostDesignation(Resource):
             return {'message': 'Failed to create new designation. The server encountered an error.'}, 500
 
 
-class GetDesignation(Resource):
-    def get(self, designation_id):
-        designation = Designation.query.get(designation_id)
-        if designation:
-            return {
-                'designation_id': designation.designation_id,
-                'designation_name': designation.designation_name,
-                'abbreviation': designation.abbreviation
-            }, 200
-        return {'message': 'Designation not found'}, 404
+class GetDesignationsList(Resource):
+    def get(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('ids', action='split')  # 'split' will split the comma-separated string into a list
+            args = parser.parse_args()
+            print(args)
+
+            designation_ids = args['ids']
+            if not designation_ids:
+                return {'message': 'No designation IDs provided'}, 400
+            
+        
+            # Assuming designation_ids is a list of strings, converting them to integers
+            designation_ids = [int(id) for id in designation_ids]
+            
+            # Querying for multiple IDs using SQLAlchemy .filter() and .in_()
+            designations = Designation.query.filter(Designation.designation_id.in_(designation_ids)).all()
+            
+            if designations:
+                return [
+                    {
+                        'designation_id': designation.designation_id,
+                        'designation_name': designation.designation_name,
+                        'abbreviation': designation.abbreviation
+                    } for designation in designations
+                ], 200
+            else:
+                return {'message': 'Designations not found'}, 404
+
+        except ValueError as ve:
+            print(f"Error converting designation IDs to integers: {ve}")
+            return {'message': f"Invalid designation ID format: {ve}"}, 400
+        except SQLAlchemyError as sae:
+            print(f"Database query error: {sae}")
+            return {'message': 'Internal server error. Please try again later.'}, 500
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+            return {'message': 'Internal server error. Please try again later.'}, 500
+
 
 class PatchDesignation(Resource):
     def patch(self, designation_id):

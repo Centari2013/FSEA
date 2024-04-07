@@ -2,6 +2,9 @@
 .card.threat-medium { border-left: 5px solid yellow; }
 .card.threat-low { border-left: 5px solid green; }
 
+
+
+
 .clickable-card:hover {
     transform: scale(1.02);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -37,4 +40,10 @@
     /* You can adjust this if you want some maximum width on larger screens */
     max-width: 90%;
   }
+}
+.selectable-text {
+  user-select: text;
+  -webkit-user-select: text; /* Safari */
+  -moz-user-select: text; /* Firefox */
+  -ms-user-select: text; /* Internet Explorer/Edge */
 }

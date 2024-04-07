@@ -8,7 +8,7 @@ export function cardContainer() {
 export function noResultsCard() {
     return `
     <div class="col">
-        <div class="card h-100 clickable-card">
+        <div class="card h-100 clickable-card" data-type="no-results">
             <div class="card-body">
                 <p class="card-text">We couldn't find any results matching your query.</p>
                 <p class="card-text">Please try again with different keywords or check back later.</p>
@@ -22,8 +22,8 @@ export function employeeCard(employee) {
     const designationString = employee.designations.map(d => d.designation_name).join(', ')
     return `
     <div class="col-8 col-sm-10 col-md-10">
-        <a href="/employee/${employee.employee_id}" class="text-decoration-none">
-            <div class="card h-100 clickable-card">
+        <a data-href="/employee/${employee.employee_id}" class="text-decoration-none">
+            <div class="card h-100 clickable-card" data-type="employee" data-id=${employee.employee_id}>
                 <div class="card-body">
                     <h5 class="card-title">${employee.first_name} ${employee.last_name}</h5>
                     <p class="card-text">
@@ -42,7 +42,7 @@ export function departmentCard(department) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
         <a href="/department/${department.department_id}" class="text-decoration-none">
-            <div class="card h-100 clickable-card">
+            <div class="card h-100 clickable-card" data-type="department" data-id=${department.department_id}>
                 <div class="card-body">
                     <h5 class="card-title">${department.department_name}</h5>
                     <p class="card-text">
@@ -61,7 +61,7 @@ export function missionCard(mission) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
         <a href="/mission/${mission.mission_id}" class="text-decoration-none">
-            <div class="card h-100 clickable-card">
+            <div class="card h-100 clickable-card" data-type="mission" data-id=${mission.mission_id}>
                 <div class="card-body">
                     <h5 class="card-title">${mission.mission_name}</h5>
                     <p class="card-text">
@@ -81,7 +81,7 @@ export function specimenCard(specimen) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
         <a href="/specimen/${specimen.specimen_id}" class="text-decoration-none">
-            <div class="card h-100 clickable-card">
+            <div class="card h-100 clickable-card" data-type="specimen" data-id=${specimen.specimen_id}>
                 <div class="card-body">
                     <h5 class="card-title">${specimen.name}</h5>
                     <p class="card-text">
@@ -100,7 +100,7 @@ export function originCard(origin) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
         <a href="/origin/${origin.origin_id}" class="text-decoration-none">
-            <div class="card h-100 clickable-card">
+            <div class="card h-100 clickable-card" data-type="origin" data-id=${origin.origin_id}>
                 <div class="card-body">
                     <h5 class="card-title">${origin.origin_name}</h5>
                     <p class="card-text">
@@ -115,12 +115,11 @@ export function originCard(origin) {
     `;
 }
 
-
 export function departmentDirectoryCard(department) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
         <a href="${department.url}" class="text-decoration-none">
-            <div class="card h-100 clickable-card">
+            <div class="card h-100 clickable-card" data-type="department-directory" data-id=${department.department_id}>
                 <div class="card-body">
                     <h5 class="card-title">${department.department_name}</h5>
                     <p class="card-text">${department.description || "No description available."}</p>
@@ -133,15 +132,12 @@ export function departmentDirectoryCard(department) {
 
 export function titleCard(title) {
     return `
-    <div class="col-12"> <!-- Ensures full width, aligning with the grid used for cards -->
-        <div class="card h-100">
+    <div class="col-12">
+        <div class="card h-100" data-type="title">
             <div class="card-body">
                 <h4 class="card-title text-center">${title}</h4>
-                <!-- No card-text needed as this is a title -->
             </div>
         </div>
     </div>
     `;
 }
-
-
