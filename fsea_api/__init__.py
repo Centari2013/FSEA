@@ -4,6 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
+from flask import request
+
+
+
 
 
 load_dotenv()
@@ -16,6 +20,7 @@ db = SQLAlchemy(app)
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 api = Api(api_bp)
 app.register_blueprint(api_bp)
+
 
 
 from fsea_api.resources import *
@@ -39,7 +44,7 @@ api.add_resource(DisassociateMissionFromDepartment, '/departments/<int:departmen
 api.add_resource(GetMissionsForDepartment, '/departments/<int:department_id>/missions')
 
 api.add_resource(PostDesignation, '/designations')
-api.add_resource(GetDesignation, '/designations/<int:designation_id>')
+api.add_resource(GetDesignationsList, '/designations')
 api.add_resource(PatchDesignation, '/designations/<int:designation_id>')
 api.add_resource(DeleteDesignation, '/designations/<int:designation_id>')
 
