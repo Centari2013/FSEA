@@ -36,45 +36,54 @@ CREATE INDEX idx_researcher_specimens_specimen_id ON researcher_specimens(specim
 ALTER TABLE employees
 ADD COLUMN search_vector tsvector
 GENERATED ALWAYS AS (
-    TO_TSVECTOR('english', first_name || ' ' || last_name || ' ' || employee_id)
+    setweight(TO_TSVECTOR('english', first_name), 'A') ||
+    setweight(TO_TSVECTOR('english', last_name), 'A') ||
+    setweight(TO_TSVECTOR('english', employee_id), 'D')
 ) STORED;
 
 ALTER TABLE departments
 ADD COLUMN search_vector tsvector
 GENERATED ALWAYS AS (
-    TO_TSVECTOR('english', department_name || ' ' || COALESCE(director_id, ''))
+    setweight(TO_TSVECTOR('english', department_name), 'A') ||
+    setweight(TO_TSVECTOR('english', COALESCE(director_id, '')), 'A')
 ) STORED;
 
 ALTER TABLE designations
 ADD COLUMN search_vector tsvector
 GENERATED ALWAYS AS (
-    TO_TSVECTOR('english', designation_name || ' ' || abbreviation)
+    setweight(TO_TSVECTOR('english', designation_name), 'A') ||
+    setweight(TO_TSVECTOR('english', abbreviation), 'B')
 ) STORED;
 
 ALTER TABLE missions
 ADD COLUMN search_vector tsvector
 GENERATED ALWAYS AS (
-    TO_TSVECTOR('english', 
-        mission_id || ' ' || 
-        COALESCE(commander_id, '') || ' ' || 
-        COALESCE(supervisor_id, '') || ' ' || 
-        mission_name || ' ' || 
-        COALESCE(description, '') || ' ' || 
-        COALESCE(notes::TEXT, '')
-    )
+    setweight(TO_TSVECTOR('english', mission_id), 'D') ||
+    setweight(TO_TSVECTOR('english', COALESCE(commander_id, '')), 'C') ||
+    setweight(TO_TSVECTOR('english', COALESCE(supervisor_id, '')), 'C') ||
+    setweight(TO_TSVECTOR('english', mission_name), 'A') ||
+    setweight(TO_TSVECTOR('english', COALESCE(description, '')), 'B') ||
+    setweight(TO_TSVECTOR('english', COALESCE(notes::TEXT, '')), 'D')
 ) STORED;
 
 ALTER TABLE specimens
 ADD COLUMN search_vector tsvector
 GENERATED ALWAYS AS (
-    TO_TSVECTOR('english', specimen_id || ' ' || specimen_name || ' ' || COALESCE(description, '') || ' ' || COALESCE(notes::text, ''))
+    setweight(TO_TSVECTOR('english', specimen_id), 'D') ||
+    setweight(TO_TSVECTOR('english', specimen_name), 'A') ||
+    setweight(TO_TSVECTOR('english', COALESCE(description, '')), 'B') ||
+    setweight(TO_TSVECTOR('english', COALESCE(notes::text, '')), 'C')
 ) STORED;
 
 ALTER TABLE origins
 ADD COLUMN search_vector tsvector
 GENERATED ALWAYS AS (
-    TO_TSVECTOR('english', origin_id || ' ' || origin_name || ' ' || description || ' ' || COALESCE(notes::text, ''))
+    setweight(TO_TSVECTOR('english', origin_id), 'D') ||
+    setweight(TO_TSVECTOR('english', origin_name), 'A') ||
+    setweight(TO_TSVECTOR('english', description), 'B') ||
+    setweight(TO_TSVECTOR('english', COALESCE(notes::text, '')), 'C')
 ) STORED;
+
 
 
 CREATE INDEX idx_employees_search_vector ON employees USING GIN(search_vector);
