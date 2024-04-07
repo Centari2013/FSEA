@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault(); // Prevent the default form submission behavior
         checkSessionOnLoad();
         performSearch(searchInput.value); // Execute search with the current input value
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+          
     });
 
 
