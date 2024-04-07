@@ -8,7 +8,7 @@ export function loadEmployeeDirectory() {
         const cardsContainer = cardContainer();
 
         
-        cardsContainer.innerHTML += titleCard("Departments");
+        cardsContainer.innerHTML += titleCard("Employee Departments");
   
         departments.forEach(department => {
           const departmentCardHtml = departmentDirectoryCard(department);

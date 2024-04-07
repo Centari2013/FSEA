@@ -26,29 +26,43 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             checkSessionOnLoad();
             // Remove active class from all items
-            navItems.forEach(function(item) {
-                item.classList.remove('active');
-            });
+            deacticateNavItems();
 
             // Add active class to clicked item
             setActiveNavLink(this);
         });
     });
+
     const savedContentId = localStorage.getItem('activeNavLink');
     if (savedContentId) {
-        const navItemToActivate = document.querySelector(`.nav-item a[href="#${savedContentId}"]`);
+        const navItemToActivate = document.querySelector(`.nav-item a[href="${savedContentId}"]`);
         if (navItemToActivate) {
             setActiveNavLink(navItemToActivate);
         }
+    }else{
+        // Automatically load content for "Home" and mark it as active
+        const homeNavItem = document.querySelector('.nav-item a[href="#"]'); // Adjust the selector as needed
+        if(homeNavItem) {
+            setActiveNavLink(homeNavItem);
+        }
     }
-    // Automatically load content for "Home" and mark it as active
-    const homeNavItem = document.querySelector('.nav-item a[href="#"]'); // Adjust the selector as needed
-    if(homeNavItem) {
-        setActiveNavLink(homeNavItem);
-    }
+    
 });
 
+function deacticateNavItems() {
+    var navItems = document.querySelectorAll('.nav-item a'); // Select all nav-link elements within nav-items
+    navItems.forEach(function(item) {
+        navItems.forEach(function(item) {
+            item.classList.remove('active');
+        });
+    });
+}
+
+
 function setActiveNavLink (item) {
+    deacticateNavItems();
+    console.log(item.getAttribute('href'));
+    localStorage.setItem('activeNavLink', item.getAttribute('href'));
     item.classList.add('active');
     const itemContentId = item.getAttribute('href').substring(1);
     loadContentIntoMainArea(itemContentId);
@@ -70,3 +84,4 @@ function loadContentIntoMainArea(contentId) {
     }
     
 }
+
