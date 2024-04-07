@@ -37,7 +37,7 @@ class GetDepartment(Resource):
     
 class GetAllDepartments(Resource):
     def get(self):
-        departments = Department.query.all()
+        departments = Department.query.order_by(Department.department_name).all()
         if departments:
             return [{
                 'department_id': department.department_id,
