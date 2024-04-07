@@ -24,29 +24,33 @@ class GetDesignationsList(Resource):
     def get(self):
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('ids', action='split')  # 'split' will split the comma-separated string into a list
+            parser.add_argument('ids', action='split', location='args')  # 'split' will split the comma-separated string into a list
             args = parser.parse_args()
-            print(args)
 
-            designation_ids = args['ids']
+            if type(args['ids']) is not list:
+                designation_ids = [args['ids']]
             if not designation_ids:
                 return {'message': 'No designation IDs provided'}, 400
             
         
             # Assuming designation_ids is a list of strings, converting them to integers
             designation_ids = [int(id) for id in designation_ids]
+            print(designation_ids)
             
             # Querying for multiple IDs using SQLAlchemy .filter() and .in_()
             designations = Designation.query.filter(Designation.designation_id.in_(designation_ids)).all()
-            
+            print(designations)
             if designations:
-                return [
+                designation_list = [
                     {
                         'designation_id': designation.designation_id,
                         'designation_name': designation.designation_name,
                         'abbreviation': designation.abbreviation
                     } for designation in designations
-                ], 200
+                ]
+
+                return {"designations": designation_list}, 200
+
             else:
                 return {'message': 'Designations not found'}, 404
 
