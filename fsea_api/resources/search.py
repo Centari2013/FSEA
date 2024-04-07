@@ -85,7 +85,7 @@ def search_specimen_details(search_query):
 
    
 
-def sort_and_consolidate_results(results):
+def consolidate_results(results):
     # Step 1: Fill relevancy_temp with all relevancy values for each ID
     relevancy_temp = {}
     for r in results:
@@ -117,7 +117,13 @@ def sort_and_consolidate_results(results):
             new_entry['relevancy'] = avg_relevancy
             consolidated_results.append(new_entry)
 
-    return sorted(consolidated_results, key=lambda x: x['relevancy'], reverse=True) # sort by relevancy
+
+    return consolidated_results
+
+def sortResults(results):
+    type_priority = {'D': 1, 'E': 2, 'O': 3, 'M': 4, 'S': 5}
+    return sorted(results, key=lambda x: (-x['relevancy'], type_priority[x['type']]))
+
 
 
 class SearchAllDetails(Resource):
@@ -153,7 +159,7 @@ class SearchAllDetails(Resource):
             raw_results = employees + departments + origins + missions + specimens
             if raw_results:
 
-                sorted_results = sort_and_consolidate_results(raw_results)
+                sorted_results = sortResults(consolidate_results(raw_results))
                 return {'results': sorted_results}, 200
             else:
                 return {'message': 'No results found for the given search query.'}, 404
