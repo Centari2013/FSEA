@@ -21,33 +21,30 @@ export function performSearch(query) {
         const mainContentArea = document.getElementById('main-content');
         mainContentArea.innerHTML = ''; // Clear existing content
         if (results["results"]) {
-            results["results"].sort(function (first, second) {return first["relevancy"] - second["relevancy"]})
-        
 
-        
-        var entityCard = null;
-        results["results"].forEach(result => {
+            var entityCard = null;
+            results["results"].forEach(result => {
 
-          
-            switch(result.type) {
-                case 'E':
-                    entityCard = employeeCard(result);
-                    break;
-                case 'S':
-                    entityCard = specimenCard(result);
-                    break;
-                case 'O':
-                    entityCard = originCard(result);
-                    break;
-                case 'M':
-                    entityCard = missionCard(result);
-                    break;
-                case 'D':
-                    entityCard = departmentCard(result);
-                    break;
-                default:
-                    throw new Error(`Unsupported entity type: ${result.type}`);
-            }
+            
+                switch(result.type) {
+                    case 'E':
+                        entityCard = employeeCard(result);
+                        break;
+                    case 'S':
+                        entityCard = specimenCard(result);
+                        break;
+                    case 'O':
+                        entityCard = originCard(result);
+                        break;
+                    case 'M':
+                        entityCard = missionCard(result);
+                        break;
+                    case 'D':
+                        entityCard = departmentCard(result);
+                        break;
+                    default:
+                        throw new Error(`Unsupported entity type: ${result.type}`);
+                }
 
 
             cardsContainer.innerHTML += entityCard;
