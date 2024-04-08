@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const clearanceIds = clearanceIdsResponse.clearances.map(item => item.clearance_id);
         const clearances = await emp_api.fetchClearanceData(clearanceIds);
 
+        console.log(missions)
+
         // Generate the HTML content for employee details
         const employeeContent = generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department);
         
@@ -36,11 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         employeeDetailsContainer.innerHTML = `<p>Error loading employee details.</p>`;
     }
 });
-
-
-
-
-
 
 
 
@@ -74,7 +71,7 @@ function generateEmployeeContent(employeeData, designationDetails, missions, med
         <ul>${medicalNotesContent}</ul>
     `;
     const clearancesContent = clearances.clearances.map(clearance => `<li><strong>${clearance.clearance_name}:</strong> ${clearance.description}</li>`).join('');
-
+    
     return `
         <h2>Employee Details</h2>
         <p><strong>ID:</strong> ${employeeData.employee_id}</p>
