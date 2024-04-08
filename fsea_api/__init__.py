@@ -25,7 +25,7 @@ app.register_blueprint(api_bp)
 
 from fsea_api.resources import *
 api.add_resource(PostClearance, '/clearances')
-api.add_resource(GetClearance, '/clearances/<int:clearance_id>')
+api.add_resource(GetClearances, '/clearances')
 api.add_resource(PatchClearance, '/clearances/<int:clearance_id>')
 api.add_resource(DeleteClearance, '/clearances/<int:clearance_id>')
 
@@ -66,7 +66,7 @@ api.add_resource(GetMissionsByEmployee, '/employees/<string:employee_id>/mission
 api.add_resource(GetSpecimensByResearcher, '/employees/<string:employee_id>/specimens')
 
 api.add_resource(PostMission, '/missions')
-api.add_resource(GetMission, '/missions/<string:mission_id>')
+api.add_resource(GetMissions, '/missions')
 api.add_resource(PatchMission, '/missions/<string:mission_id>')
 api.add_resource(DeleteMission, '/missions/<string:mission_id>')
 api.add_resource(AssociateOriginWithMission, '/missions/<string:mission_id>/origins')

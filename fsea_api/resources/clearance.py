@@ -17,16 +17,27 @@ class PostClearance(Resource):
             print(e)
             return {'message': 'Failed to create new clearance. The server encountered an error.'}, 500
 
-class GetClearance(Resource):
-    def get(self, clearance_id):
-        clearance = Clearance.query.get(clearance_id)
-        if clearance:
-            return {
-                'clearance_id': clearance.clearance_id,
+class GetClearances(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('ids', action='split', location='args')  # 'split' will split the comma-separated string into a list
+        args = parser.parse_args()
+
+        if type(args['ids']) is not list:
+            clearance_ids = [args['ids']]
+        if not clearance_ids:
+            return {'message': 'No designation IDs provided'}, 400
+        
+        clearances = Clearance.query.filter(Clearance.clearance_id.in_(clearance_ids)).all()
+        
+        if clearance_ids:
+            clearance_list = [
+                {'clearance_id': clearance.clearance_id,
                 'clearance_name': clearance.clearance_name,
-                'description': clearance.description
-            }, 200
-        return {'message': 'Clearance not found'}, 404
+                'description': clearance.description} for clearance in clearances]
+            
+            return {"clearances": clearance_list}, 200
+        return {'message': 'Clearances not found'}, 404
 
 class PatchClearance(Resource):
     def patch(self, clearance_id):
