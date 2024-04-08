@@ -35,11 +35,10 @@ class GetDesignationsList(Resource):
         
             # Assuming designation_ids is a list of strings, converting them to integers
             designation_ids = [int(id) for id in designation_ids]
-            print(designation_ids)
             
             # Querying for multiple IDs using SQLAlchemy .filter() and .in_()
             designations = Designation.query.filter(Designation.designation_id.in_(designation_ids)).all()
-            print(designations)
+            
             if designations:
                 designation_list = [
                     {

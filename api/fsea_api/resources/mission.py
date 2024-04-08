@@ -28,22 +28,27 @@ class PostMission(Resource):
 
 
 
-class GetMission(Resource):
-    def get(self, mission_id):
-        mission = Mission.query.get(mission_id)
-        if mission:
-            return {
-                'mission_id': mission.mission_id,
+class GetMissions(Resource):
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('ids', action='split', location='args')  # 'split' will split the comma-separated string into a list
+        args = parser.parse_args()
+
+        if type(args['ids']) is not list:
+            mission_ids = [args['ids']]
+        if not mission_ids:
+            return {'message': 'No designation IDs provided'}, 400
+        
+        missions = Mission.query.filter(Mission.mission_id.in_(mission_ids)).all()
+        
+        if mission_ids:
+            mission_list = [
+                {'mission_id': mission.mission_id,
                 'mission_name': mission.mission_name,
-                'start_date': mission.start_date.isoformat() if mission.start_date else None,
-                'end_date': mission.end_date.isoformat() if mission.end_date else None,
-                'commander_id': mission.commander_id,
-                'supervisor_id': mission.supervisor_id,
-                'description': mission.description,
-                'notes': mission.notes,  # Assuming direct JSON storage and serialization
-                'created': mission.created.isoformat(),
-                'updated': mission.updated.isoformat() if mission.updated else None
-            }, 200
+                'description': mission.description} for mission in missions]
+            
+            return {"missions": mission_list}, 200
+        return {'message': 'Missions not found'}, 404
         return {'message': 'Mission not found'}, 404
 
 

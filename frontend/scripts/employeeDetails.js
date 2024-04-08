@@ -1,4 +1,6 @@
-const api = import.meta.env.VITE_API_ENDPOINT;
+import * as emp_api from "./api_access/employee";
+import { fetchDepartmentData } from "./api_access/department";
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     const employeeDetailsContainer = document.getElementById('employeeDetailsContainer');
@@ -8,21 +10,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!employee_id) return;
 
     try {
-        const employeeData = await fetchEmployeeData(employee_id);
+        const employeeData = await emp_api.fetchEmployeeData(employee_id);
         // Fetch designation IDs for the employee and then the details
-        const designationIdsResponse = await fetchEmployeeDesignationIds(employee_id);
+        const designationIdsResponse = await emp_api.fetchEmployeeDesignationIds(employee_id);
         const designationIds = designationIdsResponse.designations.map(item => item.designation_id);
-        const designationDetails = await fetchDesignationDetails(designationIds);
+        const designationDetails = await emp_api.fetchDesignationDetails(designationIds);
+        const department = await fetchDepartmentData(employeeData.department_id);
 
-        const missions = await fetchEmployeeMissions(employee_id);
-        const medicalRecords = await fetchEmployeeMedicalRecord(employee_id);
-        const clearances = await fetchEmployeeClearances(employee_id);
+        const missionIdsResponse = await emp_api.fetchEmployeeMissionIds(employee_id);
+        const missionIds = missionIdsResponse.missions.map(item => item.mission_id);
+        const missions = await emp_api.fetchEmployeeMissionData(missionIds);
+        const medicalRecords = await emp_api.fetchEmployeeMedicalRecord(employee_id);
+        const clearanceIdsResponse = await emp_api.fetchEmployeeClearances(employee_id);
+        const clearanceIds = clearanceIdsResponse.clearances.map(item => item.clearance_id);
+        const clearances = await emp_api.fetchClearanceData(clearanceIds);
 
         // Generate the HTML content for employee details
-        const employeeContent = generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances);
+        const employeeContent = generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department);
         
         // Insert the generated content into the page
         employeeDetailsContainer.innerHTML = employeeContent;
+        setToggle();
     } catch (error) {
         console.error('Error fetching employee data:', error);
         employeeDetailsContainer.innerHTML = `<p>Error loading employee details.</p>`;
@@ -30,58 +38,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 
-async function fetchEmployeeData(employee_id) {
-    const response = await fetch(`${api}/employees/${employee_id}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-    });
-    if (!response.ok) throw new Error('Failed to fetch employee data');
-    return response.json();
-}
-
-async function fetchDesignationDetails(designationIds) {
-    // Join the IDs into a comma-separated string
-    console.log(designationIds);
-    const idsParam = designationIds.join(',');
-    const response = await fetch(`${api}/designations?ids=${idsParam}`, { method: 'GET' });
-    if (!response.ok) throw new Error('Failed to fetch designation details');
-    return response.json();
-}
-
-async function fetchEmployeeDesignationIds(employee_id) {
-    const response = await fetch(`${api}/employees/${employee_id}/designations`, { 
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-    });
-    if (!response.ok) throw new Error('Failed to fetch employee designation IDs');
-    return response.json(); // This should return an array of objects, e.g., [{designation_id: 1}, {designation_id: 2}]
-}
 
 
 
-async function fetchEmployeeMissions(employee_id) {
-    const response = await fetch(`${api}/employees/${employee_id}/missions`, { method: 'GET' });
-    if (!response.ok) throw new Error('Failed to fetch employee missions');
-    return response.json();
-}
 
-async function fetchEmployeeMedicalRecord(employee_id) {
-    const response = await fetch(`${api}/employees/${employee_id}/medical_record`, { method: 'GET' });
-    if (!response.ok) throw new Error('Failed to fetch employee medical record');
-    return response.json();
-}
 
-async function fetchEmployeeClearances(employee_id) {
-    const response = await fetch(`${api}/employees/${employee_id}/clearances`, { method: 'GET' });
-    if (!response.ok) throw new Error('Failed to fetch employee clearances');
-    return response.json();
-}
 
-function generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances) {
+function generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department) {
     // Convert designation details to readable formats for display
-    const designationNames = designationDetails.map(d => `${d.designation_name} (${d.abbreviation})`).join(', ');
-
-    const missionsContent = missions.map(mission => `
+    const designationNames = designationDetails.designations.map(d => `${d.designation_name} (${d.abbreviation})`).join(', ');
+    
+    const missionsContent = missions.missions.map(mission => `
         <tr>
             <td>${mission.mission_id}</td>
             <td>${mission.mission_name}</td>
@@ -89,24 +56,33 @@ function generateEmployeeContent(employeeData, designationDetails, missions, med
         </tr>
     `).join('');
 
-    // Assuming the medicalRecords and clearances data structures are directly compatible with how you want to display them
-    const medicalDataContent = `
-        <p>Blood type: ${medicalRecords.bloodtype}</p>
-        <p>Height: ${medicalRecords.height_cm} cm</p>
-        <p>Weight: ${medicalRecords.kilograms} kg</p>
-        <p>Notes: ${medicalRecords.notes ? medicalRecords.notes : 'None'}</p>
-    `;
+    const employeeNotesContent = employeeData.notes && employeeData.notes.length > 0
+    ? employeeData.notes.map(noteObj => `<li><strong>${noteObj.timestamp}:</strong>&nbsp;&nbsp;&nbsp;&nbsp; ${noteObj.note}</li>`).join('')
+    : '<li>None</li>';
 
-    const clearancesContent = clearances.map(clearance => `<li>${clearance.clearance_name}: ${clearance.description}</li>`).join('');
+
+    const medicalNotesContent = medicalRecords.notes && medicalRecords.notes.length > 0 
+    ? medicalRecords.notes.map(noteObj => `<li><strong>${noteObj.timestamp}:</strong>&nbsp;&nbsp;&nbsp;&nbsp; ${noteObj.note}</li>`).join('')
+    : '<li>None</li>';
+
+
+    const medicalDataContent = `
+        <p><strong>Blood type:</strong> ${medicalRecords.bloodtype}</p>
+        <p><strong>Height:</strong> ${medicalRecords.height_cm} cm</p>
+        <p><strong>Weight:</strong> ${medicalRecords.kilograms} kg</p>
+        <p><strong>Notes:</strong></p>
+        <ul>${medicalNotesContent}</ul>
+    `;
+    const clearancesContent = clearances.clearances.map(clearance => `<li><strong>${clearance.clearance_name}:</strong> ${clearance.description}</li>`).join('');
 
     return `
         <h2>Employee Details</h2>
         <p><strong>ID:</strong> ${employeeData.employee_id}</p>
         <p><strong>Name:</strong> ${employeeData.first_name} ${employeeData.last_name}</p>
-        <p><strong>Department:</strong> ${employeeData.department_name}</p>
+        <p><strong>Department:</strong> ${department.department_name}</p>
         <p><strong>Designation(s):</strong> ${designationNames}</p>
         <p><strong>Start Date:</strong> ${employeeData.start_date}</p>
-        <p><strong>Notes:</strong> ${employeeData.notes ? employeeData.notes : 'None'}</p>
+        <ul><strong>Notes:</strong> ${employeeNotesContent}</ul>
         
         <!-- Clearance Section -->
         <h3>Clearances</h3>
@@ -126,11 +102,33 @@ function generateEmployeeContent(employeeData, designationDetails, missions, med
         </table>
         
         <!-- Medical Data Section -->
-        <h3>Medical Data <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#medicalDataCollapse" aria-expanded="false" aria-controls="medicalDataCollapse">Toggle</button></h3>
+        <h3>Medical Data 
+            <button id="toggleMedicalDataButton" class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#medicalDataCollapse" aria-expanded="false" aria-controls="medicalDataCollapse">
+                See More
+            </button>
+        </h3>
         <div class="collapse" id="medicalDataCollapse">
             <div class="card card-body">
                 ${medicalDataContent}
             </div>
         </div>
+
     `;
 }
+
+function setToggle() {
+    const medicalDataCollapse = document.getElementById('medicalDataCollapse');
+    const toggleButton = document.getElementById('toggleMedicalDataButton');
+
+    // Listen for the 'show.bs.collapse' event - when the collapsible starts to show
+    medicalDataCollapse.addEventListener('show.bs.collapse', () => {
+        toggleButton.textContent = 'See Less';
+    });
+
+    // Listen for the 'hide.bs.collapse' event - when the collapsible starts to hide
+    medicalDataCollapse.addEventListener('hide.bs.collapse', () => {
+        toggleButton.textContent = 'See More';
+    });
+}
+
+
