@@ -2,6 +2,7 @@ from .imports import *
 from sqlalchemy import text
 
 
+
 def format_tsquery(search_input):
     """
     Takes a user input string intended for search, tokenizes it,
@@ -84,7 +85,6 @@ def search_specimen_details(search_query):
     } for row in result]
 
    
-
 def consolidate_results(results):
     # Step 1: Fill relevancy_temp with all relevancy values for each ID
     relevancy_temp = {}
@@ -100,29 +100,34 @@ def consolidate_results(results):
     for r in results:
         id_key = next((key for key in r if key.endswith('_id')), None)
         if id_key:
+            
             id_value = r[id_key]
             if id_value not in seen_ids:
                 unique_results.append(r)
                 seen_ids.add(id_value)
-    
+    for r in relevancy_temp:
+        print(r,relevancy_temp[r])
     # Step 3: Fill consolidated_results using the de-duplicated list and relevancy_temp
     consolidated_results = []
     for r in unique_results:
         id_key = next((key for key in r if key.endswith('_id')), None)
         if id_key:
             id_value = r[id_key]
-            avg_relevancy = sum(relevancy_temp[id_value]) / len(relevancy_temp[id_value])
+            # Use max relevancy score instead of averaging
+            max_relevancy = sum(relevancy_temp[id_value])
             # Create a new dictionary for the consolidated result
             new_entry = r.copy()
-            new_entry['relevancy'] = avg_relevancy
+            new_entry['relevancy'] = max_relevancy
             consolidated_results.append(new_entry)
-
 
     return consolidated_results
 
+
+
 def sortResults(results):
-    type_priority = {'D': 1, 'E': 2, 'O': 3, 'M': 4, 'S': 5}
-    return sorted(results, key=lambda x: (-x['relevancy'], type_priority[x['type']]))
+    type_priority = {'D': 1, 'E': 2, 'O': 3, 'M': 2, 'S': 3}
+    p = sorted(results, key=lambda x: (type_priority[x['type']], -x['relevancy']))
+    return p
 
 
 
@@ -131,6 +136,7 @@ class SearchAllDetails(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('query', type=str, required=True, help="Search query cannot be blank.")
         args = parser.parse_args()
+        print(args)
 
         search_query = format_tsquery(args['query'])
 
