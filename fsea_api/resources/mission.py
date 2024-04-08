@@ -34,8 +34,11 @@ class GetMissions(Resource):
         parser.add_argument('ids', action='split', location='args')  # 'split' will split the comma-separated string into a list
         args = parser.parse_args()
 
-        if type(args['ids']) is not list:
+        if not isinstance(args['ids'], list):
             mission_ids = [args['ids']]
+        
+        mission_ids = args['ids'].split(',') if args['ids'] else []
+
         if not mission_ids:
             return {'message': 'No designation IDs provided'}, 400
         
@@ -49,7 +52,6 @@ class GetMissions(Resource):
             
             return {"missions": mission_list}, 200
         return {'message': 'Missions not found'}, 404
-        return {'message': 'Mission not found'}, 404
 
 
 class PatchMission(Resource):

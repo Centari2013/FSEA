@@ -105,8 +105,7 @@ def consolidate_results(results):
             if id_value not in seen_ids:
                 unique_results.append(r)
                 seen_ids.add(id_value)
-    for r in relevancy_temp:
-        print(r,relevancy_temp[r])
+
     # Step 3: Fill consolidated_results using the de-duplicated list and relevancy_temp
     consolidated_results = []
     for r in unique_results:
@@ -136,7 +135,6 @@ class SearchAllDetails(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('query', type=str, required=True, help="Search query cannot be blank.")
         args = parser.parse_args()
-        print(args)
 
         search_query = format_tsquery(args['query'])
 

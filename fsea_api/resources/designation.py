@@ -26,7 +26,7 @@ class GetDesignationsList(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('ids', action='split', location='args')  # 'split' will split the comma-separated string into a list
             args = parser.parse_args()
-
+            
             if type(args['ids']) is not list:
                 designation_ids = [args['ids']]
             if not designation_ids:
