@@ -17,7 +17,7 @@ export async function fetchDesignationDetails(designationIds) {
     if (!response.ok) {
         if (response.status === 404) {
             console.log('No designations found for employee');
-            return [];
+            return {"designations": []};
         }
         throw new Error('Failed to fetch designation details');
     }
@@ -40,7 +40,7 @@ export async function fetchEmployeeMissionIds(employee_id) {
     if (!response.ok){
         if (response.status === 404){
             console.log('No missions found for employee');
-            return [];
+            return {"missions": []};
         }
 
         throw new Error('Failed to fetch employee missions');
@@ -56,7 +56,7 @@ export async function fetchEmployeeMissionData(missionIds) {
     if (!response.ok) {
         if (response.status === 404) {
             console.log('No missions found for employee');
-            return [];
+            return {"missions": []};
         }
         throw new Error('Failed to fetch mission details');
     }

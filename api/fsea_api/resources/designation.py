@@ -52,16 +52,9 @@ class GetDesignationsList(Resource):
 
             else:
                 return {'message': 'Designations not found'}, 404
-
-        except ValueError as ve:
-            print(f"Error converting designation IDs to integers: {ve}")
-            return {'message': f"Invalid designation ID format: {ve}"}, 400
-        except SQLAlchemyError as sae:
-            print(f"Database query error: {sae}")
-            return {'message': 'Internal server error. Please try again later.'}, 500
         except Exception as e:
             print(f"Unexpected error: {e}")
-            return {'message': 'Internal server error. Please try again later.'}, 500
+            return {'message': 'Internal server error. Please try again later.'}, 404
 
 
 class PatchDesignation(Resource):

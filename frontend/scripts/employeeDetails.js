@@ -13,19 +13,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const employeeData = await emp_api.fetchEmployeeData(employee_id);
         // Fetch designation IDs for the employee and then the details
         const designationIdsResponse = await emp_api.fetchEmployeeDesignationIds(employee_id);
-        const designationIds = designationIdsResponse.designations.map(item => item.designation_id);
+        const designationIds = designationIdsResponse.length > 0 ? designationIdsResponse.designations.map(item => item.designation_id): [];
         const designationDetails = await emp_api.fetchDesignationDetails(designationIds);
         const department = await fetchDepartmentData(employeeData.department_id);
 
         const missionIdsResponse = await emp_api.fetchEmployeeMissionIds(employee_id);
-        const missionIds = missionIdsResponse.missions.map(item => item.mission_id);
+        console.log(missionIdsResponse)
+
+        const missionIds = missionIdsResponse.missions.length > 0 ? missionIdsResponse.missions.map(item => item.mission_id): [];
         const missions = await emp_api.fetchEmployeeMissionData(missionIds);
         const medicalRecords = await emp_api.fetchEmployeeMedicalRecord(employee_id);
         const clearanceIdsResponse = await emp_api.fetchEmployeeClearances(employee_id);
         const clearanceIds = clearanceIdsResponse.clearances.map(item => item.clearance_id);
         const clearances = await emp_api.fetchClearanceData(clearanceIds);
-
-        console.log(missions)
 
         // Generate the HTML content for employee details
         const employeeContent = generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department);
