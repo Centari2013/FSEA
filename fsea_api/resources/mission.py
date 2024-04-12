@@ -39,8 +39,6 @@ class GetMissions(Resource):
         
         mission_ids = args['ids'].split(',') if args['ids'] else []
 
-        if not mission_ids:
-            return {'message': 'No designation IDs provided'}, 400
         
         missions = Mission.query.filter(Mission.mission_id.in_(mission_ids)).all()
         
