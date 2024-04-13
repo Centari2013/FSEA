@@ -49,7 +49,7 @@ function generateEmployeeContent(employeeData, designationDetails, missions, med
         <tr>
             <td>${mission.mission_id}</td>
             <td>${mission.mission_name}</td>
-            <td>${mission.involvement_summary}</td>
+            <td>${mission.involvement_summary ? mission.involvement_summary: ""}</td>
         </tr>
     `).join('');
 
