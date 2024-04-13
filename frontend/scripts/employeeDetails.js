@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const clearances = await emp_api.fetchClearanceData(clearanceIds);
 
         // Generate the HTML content for employee details
-        const employeeContent = generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department);
+        const employeeContent = generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department, missionIdsResponse.missions);
         
         // Insert the generated content into the page
         employeeDetailsContainer.innerHTML = employeeContent;
@@ -41,17 +41,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-function generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department) {
+function generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department, missionInvolvementSummaries) {
     // Convert designation details to readable formats for display
     const designationNames = designationDetails.designations.map(d => `${d.designation_name} (${d.abbreviation})`).join(', ');
     
-    const missionsContent = missions.missions.map(mission => `
+    const missionsContent = missions.missions.map(mission => {
+        const summary = missionInvolvementSummaries.find(m => m.mission_id === mission.mission_id);
+
+        return `
         <tr>
             <td>${mission.mission_id}</td>
             <td>${mission.mission_name}</td>
-            <td>${mission.involvement_summary ? mission.involvement_summary: ""}</td>
-        </tr>
-    `).join('');
+            <td>${summary ? summary.involvement_summary: ""}</td>
+        </tr>`;
+    }).join('');
 
     const employeeNotesContent = employeeData.notes && employeeData.notes.length > 0
     ? employeeData.notes.map(noteObj => `<li><strong>${noteObj.timestamp}:</strong>&nbsp;&nbsp;&nbsp;&nbsp; ${noteObj.note}</li>`).join('')
