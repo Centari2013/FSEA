@@ -106,14 +106,12 @@ function generateEmployeeContent(employeeData, designationDetails, missions, med
     </button>
     <h2>Employee Details</h2>
     <p><strong>ID:</strong> ${employeeData.employee_id}</p>
-    <!-- More content here -->
-</div>
-        <h2>Employee Details</h2>
-        <p><strong>ID:</strong> ${employeeData.employee_id}</p>
-        <p><strong>Name:</strong> ${employeeData.first_name} ${employeeData.last_name}</p>
+    <p><strong>Name:</strong> ${employeeData.first_name} ${employeeData.last_name}</p>
         <p><strong>Department:</strong> ${department.department_name}</p>
         <p><strong>Designation(s):</strong> ${designationNames}</p>
         <p><strong>Start Date:</strong> ${employeeData.start_date}</p>
+    </div>
+        
         
         <!-- Clearances Section -->
         <h3>Clearances 
