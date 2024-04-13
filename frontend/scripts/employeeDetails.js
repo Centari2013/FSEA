@@ -1,8 +1,9 @@
 import * as emp_api from "./api_access/employee";
 import { fetchDepartmentData } from "./api_access/department";
-
+import { setWindowOpener } from "./utility";
 
 document.addEventListener('DOMContentLoaded', async () => {
+    setWindowOpener();
     const employeeDetailsContainer = document.getElementById('employeeDetailsContainer');
     const urlParams = new URLSearchParams(window.location.search);
     const employee_id = urlParams.get('employee_id');
