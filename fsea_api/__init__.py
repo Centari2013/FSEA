@@ -3,13 +3,16 @@ from flask_graphql import GraphQLView
 import graphdoc
 from flask_cors import CORS
 from dotenv import load_dotenv
+import logging
 import os
 
 
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True, expose_headers=['Content-Type'], logs=True)
+
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -18,14 +21,12 @@ db = SQLAlchemy(app)
 
 from .schema import schema 
 # Set up the GraphQL endpoint
-app.add_url_rule(
-    '/api/graphql',
-    view_func=GraphQLView.as_view(
-        'graphql',
-        schema=schema,
-        graphiql=True  # Set to False in production
-    )
-)
+
+
+@app.route('/api/graphql', methods=['GET', 'POST'])
+def graphql_server():
+    view = GraphQLView.as_view('graphql', schema=schema, graphiql=True)
+    return view()
 
 @app.route('/api/docs')
 def graphql_docs():
