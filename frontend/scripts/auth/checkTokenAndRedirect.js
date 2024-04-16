@@ -1,16 +1,27 @@
 
 async function verifyToken(token) {
     const api = import.meta.env.VITE_API_ENDPOINT; // Adjust this URL to your actual API endpoint
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    const body = JSON.stringify({ token: token });
+    
+    const query = `
+      mutation {
+       validateToken($token: String!){
+          valid
+        }
+      }`
+      const variables = {
+        token: token
+      }
   
     try {
-      const response = await fetch(`${api}/token/verify`, {
+      const response = await fetch((api), {
         method: 'POST',
-        headers: headers,
-        body: body,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: query,
+          variables: variables // Send variables separately from the query
+      }),
       });
   
       if (!response.ok) {
@@ -21,7 +32,7 @@ async function verifyToken(token) {
   
       // Assuming the server responds with JSON data
       const data = await response.json();
-      return data; // This will be an object like { valid: true, message: 'Token is valid.' } or { valid: false, message: 'Invalid or expired token' }
+      return data.data; // This will be an object like { valid: true, message: 'Token is valid.' } or { valid: false, message: 'Invalid or expired token' }
   
     } catch (error) {
       console.error('Error verifying token:', error);

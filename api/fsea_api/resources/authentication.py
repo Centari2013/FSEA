@@ -48,9 +48,11 @@ class Login(graphene.Mutation):
     class Arguments:
         username = graphene.String(required=True)
         password = graphene.String(required=True)
+        employee_id = graphene.String(required=False)
 
     token = graphene.String()
     message = graphene.String()
+    employee_id = graphene.String()
 
     def mutate(self, info, username, password):
         user = Credential.query.filter_by(username=username).first()
@@ -61,7 +63,7 @@ class Login(graphene.Mutation):
                 new_session = EmployeeSession(session_id=str(uuid4()), employee_id=user.employee_id)
                 db.session.add(new_session)
                 db.session.commit()
-                return Login(token=new_session.session_id, message="Login successful.")
+                return Login(token=new_session.session_id, message="Login successful.", employee_id=user.employee_id)
             else:
                 return Login(message="Account locked. Contact admin.")
         else:
