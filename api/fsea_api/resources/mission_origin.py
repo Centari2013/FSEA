@@ -1,54 +1,64 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import MissionOrigin
 
+class MissionOriginType(SQLAlchemyObjectType):
+    class Meta:
+        model = MissionOrigin
+        interfaces = (graphene.relay.Node,)
 
+class AssociateOriginWithMission(graphene.Mutation):
+    class Arguments:
+        mission_id = graphene.String(required=True)
+        origin_id = graphene.String(required=True)
 
-class AssociateOriginWithMission(Resource):
-    def post(self, mission_id):
-        parser = reqparse.RequestParser()
-        parser.add_argument('origin_id', type=str, required=True, help="Origin ID cannot be blank.")
-        data = parser.parse_args()
+    success = graphene.Boolean()
+    message = graphene.String()
 
-        association = MissionOrigin(mission_id=mission_id, origin_id=data['origin_id'])
+    def mutate(self, info, mission_id, origin_id):
+        association = MissionOrigin(mission_id=mission_id, origin_id=origin_id)
         try:
             db.session.add(association)
             db.session.commit()
-            return {'message': 'Origin associated with mission successfully'}, 201
-        except SQLAlchemyError as e:
+            return AssociateOriginWithMission(success=True, message="Origin associated with mission successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to associate origin with mission. Error: {str(e)}'}, 500
+            return AssociateOriginWithMission(success=False, message=f"Failed to associate origin with mission. Error: {str(e)}")
 
+class DisassociateOriginFromMission(graphene.Mutation):
+    class Arguments:
+        mission_id = graphene.String(required=True)
+        origin_id = graphene.String(required=True)
 
-class DisassociateOriginFromMission(Resource):
-    def delete(self, mission_id, origin_id):
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, mission_id, origin_id):
         association = MissionOrigin.query.filter_by(mission_id=mission_id, origin_id=origin_id).first()
         if association:
             try:
                 db.session.delete(association)
                 db.session.commit()
-                return {'message': 'Origin disassociated from mission successfully'}, 200
-            except SQLAlchemyError as e:
+                return DisassociateOriginFromMission(success=True, message="Origin disassociated from mission successfully")
+            except Exception as e:
                 db.session.rollback()
-                return {'message': f'Failed to disassociate origin from mission. Error: {str(e)}'}, 500
+                return DisassociateOriginFromMission(success=False, message=f"Failed to disassociate origin from mission. Error: {str(e)}")
         else:
-            return {'message': 'Association not found'}, 404
+            return DisassociateOriginFromMission(success=False, message="Association not found")
 
+class MissionOriginQuery(graphene.ObjectType):
+    origins_for_mission = graphene.List(graphene.String, mission_id=graphene.String(required=True))
+    missions_for_origin = graphene.List(graphene.String, origin_id=graphene.String(required=True))
 
-class GetOriginsForMission(Resource):
-    def get(self, mission_id):
+    def resolve_origins_for_mission(self, info, mission_id):
         associations = MissionOrigin.query.filter_by(mission_id=mission_id).all()
-        if associations:
-            origins = [{'origin_id': assoc.origin_id} for assoc in associations]
-            return {'origins': origins}, 200
-        else:
-            return {'message': 'No origins found for this mission'}, 404
+        return [assoc.origin_id for assoc in associations]
 
-
-class GetMissionsForOrigin(Resource):
-    def get(self, origin_id):
+    def resolve_missions_for_origin(self, info, origin_id):
         associations = MissionOrigin.query.filter_by(origin_id=origin_id).all()
-        if associations:
-            missions = [{'mission_id': assoc.mission_id} for assoc in associations]
-            return {'missions': missions}, 200
-        else:
-            return {'message': 'No missions found for this origin'}, 404
+        return [assoc.mission_id for assoc in associations]
+
+class MissionOriginMutation(graphene.ObjectType):
+    associate_origin_with_mission = AssociateOriginWithMission.Field()
+    disassociate_origin_from_mission = DisassociateOriginFromMission.Field()
+
+

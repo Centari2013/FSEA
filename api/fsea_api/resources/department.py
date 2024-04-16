@@ -1,92 +1,93 @@
-from .imports import *
-from ..models.sqlalchemy_models import Department 
+from .config import *
+from ..models.sqlalchemy_models import Department
 
+class DepartmentType(SQLAlchemyObjectType):
+    class Meta:
+        model = Department
+        interfaces = (graphene.relay.Node,)
 
+class CreateDepartment(graphene.Mutation):
+    class Arguments:
+        department_name = graphene.String(required=True)
+        description = graphene.String()
+        director_id = graphene.Int()
 
+    department = graphene.Field(lambda: DepartmentType)
+    success = graphene.Boolean()
+    message = graphene.String()
 
-
-class PostDepartment(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('department_name', type=str, required=True, help="Department name cannot be blank.")
-        parser.add_argument('description', type=str, help="Optional: Description.")
-        parser.add_argument('director_id', type=str, help="Optional: Director Id.")
-        data = parser.parse_args()
-        new_department = Department(**data)
+    def mutate(self, info, department_name, description=None, director_id=None):
+        new_department = Department(department_name=department_name, description=description, director_id=director_id)
         try:
             db.session.add(new_department)
             db.session.commit()
-            return {'department_id': new_department.department_id}, 201
-        except SQLAlchemyError as e:
+            return CreateDepartment(department=new_department, success=True, message="Department created successfully")
+        except Exception as e:
             db.session.rollback()
-            print(e)
-            return {'message': 'Failed to create new department. The server encountered an error.'}, 500
+            return CreateDepartment(success=False, message="Failed to create new department. Error: " + str(e))
 
+class UpdateDepartment(graphene.Mutation):
+    class Arguments:
+        department_id = graphene.Int(required=True)
+        department_name = graphene.String()
+        description = graphene.String()
+        director_id = graphene.Int()
 
-class GetDepartment(Resource):
-    def get(self, department_id):
-        department = Department.query.get(department_id)
-        if department:
-            return {
-                'department_id': department.department_id,
-                'department_name': department.department_name,
-                'director_id': department.director_id,
-                'description': department.description
-            }, 200
-        return {'message': 'Department not found'}, 404
-    
-class GetAllDepartments(Resource):
-    def get(self):
-        departments = Department.query.order_by(Department.department_name).all()
-        if departments:
-            return [{
-                'department_id': department.department_id,
-                'department_name': department.department_name,
-                'director_id': department.director_id,
-                'description': department.description
-            } for department in departments], 200
-        return {'message': 'Departments not found'}, 404
+    department = graphene.Field(lambda: DepartmentType)
+    success = graphene.Boolean()
+    message = graphene.String()
 
-class PatchDepartment(Resource):
-    def patch(self, department_id):
+    def mutate(self, info, department_id, department_name=None, description=None, director_id=None):
         department = Department.query.get(department_id)
         if not department:
-            return {'message': 'Department not found'}, 404
-        
-        parser = reqparse.RequestParser()
-        parser.add_argument('department_name', type=str, required=False, help="Optional: New department name.")
-        parser.add_argument('description', type=str, required=False, help="Optional: New description.")
-        parser.add_argument('director_id', type=str, help="Optional: Director Id.")
-        data = parser.parse_args()
+            return UpdateDepartment(success=False, message="Department not found")
 
-        if data['department_name']:
-            department.department_name = data['department_name']
-        if data['description']:
-            department.description = data['description']
-        if data['director_id']:
-            department.director_id = data['director_id']
+        if department_name:
+            department.department_name = department_name
+        if description:
+            department.description = description
+        if director_id:
+            department.director_id = director_id
 
         try:
             db.session.commit()
-            return {'message': 'Department updated successfully'}, 200
-        except SQLAlchemyError as e:
+            return UpdateDepartment(department=department, success=True, message="Department updated successfully")
+        except Exception as e:
             db.session.rollback()
-            print(e)
-            return {'message': 'Failed to update department. The server encountered an error.'}, 500
+            return UpdateDepartment(success=False, message="Failed to update department. Error: " + str(e))
 
+class DeleteDepartment(graphene.Mutation):
+    class Arguments:
+        department_id = graphene.Int(required=True)
 
-class DeleteDepartment(Resource):
-    def delete(self, department_id):
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, department_id):
         department = Department.query.get(department_id)
         if not department:
-            return {'message': 'Department not found'}, 404
+            return DeleteDepartment(success=False, message="Department not found")
 
         try:
             db.session.delete(department)
             db.session.commit()
-            return {'message': 'Department deleted successfully'}, 200
-        except SQLAlchemyError as e:
+            return DeleteDepartment(success=True, message="Department deleted successfully")
+        except Exception as e:
             db.session.rollback()
-            print(e)
-            return {'message': 'Failed to delete department. The server encountered an error.'}, 500
+            return DeleteDepartment(success=False, message="Failed to delete department. Error: " + str(e))
+
+class DepartmentQuery(graphene.ObjectType):
+    all_departments = graphene.List(DepartmentType)
+    department = graphene.Field(DepartmentType, department_id=graphene.Int(required=True))
+
+    def resolve_all_departments(self, info):
+        return Department.query.all()
+
+    def resolve_department(self, info, department_id):
+        return Department.query.get(department_id)
+
+class DepartmentMutation(graphene.ObjectType):
+    create_department = CreateDepartment.Field()
+    update_department = UpdateDepartment.Field()
+    delete_department = DeleteDepartment.Field()
 

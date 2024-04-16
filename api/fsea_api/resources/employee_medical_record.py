@@ -1,66 +1,77 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import EmployeeMedicalRecord
+from datetime import datetime
 
+class EmployeeMedicalRecordType(SQLAlchemyObjectType):
+    class Meta:
+        model = EmployeeMedicalRecord
+        interfaces = (graphene.relay.Node,)
 
+class GetEmployeeMedicalRecord(graphene.ObjectType):
+    class Arguments:
+        employee_id = graphene.Int(required=True)
 
-class GetEmployeeMedicalRecord(Resource):
-    def get(self, employee_id):
-        medical_record = EmployeeMedicalRecord.query.get(employee_id)
-        if medical_record:
-            return {
-                'employee_id': medical_record.employee_id,
-                'dob': medical_record.dob.isoformat(),
-                'bloodtype': medical_record.bloodtype,
-                'sex': medical_record.sex,
-                'kilograms': medical_record.kilograms,
-                'height_cm': medical_record.height_cm,
-                'notes': medical_record.notes, 
-                'created': medical_record.created.isoformat(),
-                'updated': medical_record.updated.isoformat() if medical_record.updated else None
-            }, 200
-        return {'message': 'Medical record not found'}, 404
+    medical_record = graphene.Field(EmployeeMedicalRecordType)
 
-class PatchEmployeeMedicalRecord(Resource):
-    def patch(self, employee_id):
+    def resolve_medical_record(self, info, employee_id):
+        return EmployeeMedicalRecord.query.get(employee_id)
+
+class UpdateEmployeeMedicalRecord(graphene.Mutation):
+    class Arguments:
+        employee_id = graphene.Int(required=True)
+        dob = graphene.Date()
+        bloodtype = graphene.String()
+        sex = graphene.String()
+        kilograms = graphene.Float()
+        height_cm = graphene.Float()
+        notes = graphene.String()
+
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, employee_id, **kwargs):
         medical_record = EmployeeMedicalRecord.query.get(employee_id)
         if not medical_record:
-            return {'message': 'Medical record not found'}, 404
+            return UpdateEmployeeMedicalRecord(success=False, message="Medical record not found")
 
-        parser = reqparse.RequestParser()
-        parser.add_argument('dob', type=str, store_missing=False) 
-        parser.add_argument('bloodtype', type=str, store_missing=False, choices=('A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-', 'V-', 'V+', 'BF', 'undefined'))
-        parser.add_argument('sex', type=str, store_missing=False, choices=('m', 'f', 'inter', 'unknown', 'undefined'))
-        parser.add_argument('kilograms', type=float, store_missing=False)
-        parser.add_argument('height_cm', type=float, store_missing=False)
-        parser.add_argument('notes', type=str, store_missing=False) 
-        data = parser.parse_args()
-
-        for key, value in data.items():
-            setattr(medical_record, key, value)
+        for key, value in kwargs.items():
+            if value is not None:
+                setattr(medical_record, key, value)
 
         try:
-            medical_record.updated = db.func.current_timestamp()
+            medical_record.updated = datetime.utcnow()
             db.session.commit()
-            return {'message': 'Medical record updated successfully'}, 200
-        except SQLAlchemyError as e:
+            return UpdateEmployeeMedicalRecord(success=True, message="Medical record updated successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to update medical record. Error: {str(e)}'}, 500
+            return UpdateEmployeeMedicalRecord(success=False, message=f"Failed to update medical record. Error: {str(e)}")
 
-class DeleteEmployeeMedicalRecord(Resource):
-    def delete(self, employee_id):
+class DeleteEmployeeMedicalRecord(graphene.Mutation):
+    class Arguments:
+        employee_id = graphene.Int(required=True)
+
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, employee_id):
         medical_record = EmployeeMedicalRecord.query.get(employee_id)
         if not medical_record:
-            return {'message': 'Medical record not found'}, 404
+            return DeleteEmployeeMedicalRecord(success=False, message="Medical record not found")
 
         try:
             db.session.delete(medical_record)
             db.session.commit()
-            return {'message': 'Medical record deleted successfully'}, 200
-        except SQLAlchemyError as e:
+            return DeleteEmployeeMedicalRecord(success=True, message="Medical record deleted successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to delete medical record. Error: {str(e)}'}, 500
+            return DeleteEmployeeMedicalRecord(success=False, message=f"Failed to delete medical record. Error: {str(e)}")
 
+class EmployeeMedicalQuery(graphene.ObjectType):
+    employee_medical_record = graphene.Field(EmployeeMedicalRecordType, employee_id=graphene.Int(required=True))
+    resolve_employee_medical_record = GetEmployeeMedicalRecord.resolve_medical_record
 
-
+class EmployeeMedicalMutation(graphene.ObjectType):
+    update_employee_medical_record = UpdateEmployeeMedicalRecord.Field()
+    delete_employee_medical_record = DeleteEmployeeMedicalRecord.Field()
 
 

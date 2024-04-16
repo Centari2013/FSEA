@@ -1,84 +1,115 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import Employee
 
+class EmployeeType(SQLAlchemyObjectType):
+    class Meta:
+        model = Employee
+        interfaces = (graphene.relay.Node,)
 
+class CreateEmployee(graphene.Mutation):
+    class Arguments:
+        employee_id = graphene.String(required=True)
+        department_id = graphene.Int(required=True)
+        first_name = graphene.String(required=True)
+        last_name = graphene.String(required=True)
+        start_date = graphene.Date(required=True)
+        end_date = graphene.Date()
+        notes = graphene.String()
 
+    employee = graphene.Field(EmployeeType)
+    success = graphene.Boolean()
+    message = graphene.String()
 
-class PostEmployee(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('employee_id', type=str, required=True, help="Employee ID cannot be blank.")
-        parser.add_argument('department_id', type=int, required=True, help="Department ID cannot be blank.")
-        parser.add_argument('first_name', type=str, required=True, help="First name cannot be blank.")
-        parser.add_argument('last_name', type=str, required=True, help="Last name cannot be blank.")
-        parser.add_argument('start_date', type=str, required=True, help="Start date cannot be blank.")  # Consider using a custom date type
-        parser.add_argument('end_date', type=str, store_missing=False)  # Optional, use store_missing=False to exclude from parsed args if not provided
-        parser.add_argument('notes', type=str, store_missing=False)  # Optional, JSON string, validate and parse in your logic
-        data = parser.parse_args()
-
-        new_employee = Employee(**data)
+    def mutate(self, info, employee_id, department_id, first_name, last_name, start_date, end_date=None, notes=None):
+        new_employee = Employee(
+            employee_id=employee_id,
+            department_id=department_id,
+            first_name=first_name,
+            last_name=last_name,
+            start_date=start_date,
+            end_date=end_date,
+            notes=notes
+        )
         try:
             db.session.add(new_employee)
             db.session.commit()
-            return {'employee_id': new_employee.employee_id}, 201
-        except SQLAlchemyError as e:
+            return CreateEmployee(employee=new_employee, success=True, message="New employee created successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': 'Failed to create new employee. The server encountered an error.'}, 500
+            return CreateEmployee(success=False, message=f"Failed to create new employee. Error: {str(e)}")
 
+class UpdateEmployee(graphene.Mutation):
+    class Arguments:
+        employee_id = graphene.String(required=True)
+        department_id = graphene.Int()
+        first_name = graphene.String()
+        last_name = graphene.String()
+        start_date = graphene.Date()
+        end_date = graphene.Date()
+        notes = graphene.String()
 
-class GetEmployee(Resource):
-    def get(self, employee_id):
-        employee = Employee.query.get(employee_id)
-        if employee:
-            return {
-                'employee_id': employee.employee_id,
-                'department_id': employee.department_id,
-                'first_name': employee.first_name,
-                'last_name': employee.last_name,
-                'start_date': employee.start_date.isoformat(), 
-                'end_date': employee.end_date.isoformat() if employee.end_date else None,
-                'notes': employee.notes,  
-                'created': employee.created.isoformat(),
-                'updated': employee.updated.isoformat() if employee.updated else None
-            }, 200
-        return {'message': 'Employee not found'}, 404
-    
-class PatchEmployee(Resource):
-    def patch(self, employee_id):
+    employee = graphene.Field(EmployeeType)
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, employee_id, department_id=None, first_name=None, last_name=None, start_date=None, end_date=None, notes=None):
         employee = Employee.query.get(employee_id)
         if not employee:
-            return {'message': 'Employee not found'}, 404
+            return UpdateEmployee(success=False, message="Employee not found")
 
-        parser = reqparse.RequestParser()
-        parser.add_argument('department_id', type=int)
-        parser.add_argument('first_name', type=str)
-        parser.add_argument('last_name', type=str)
-        parser.add_argument('start_date', type=str)  
-        parser.add_argument('end_date', type=str, store_missing=False)  
-        parser.add_argument('notes', type=str, store_missing=False) 
-        data = parser.parse_args()
-
-        for key, value in data.items():
-            setattr(employee, key, value)
+        if department_id:
+            employee.department_id = department_id
+        if first_name:
+            employee.first_name = first_name
+        if last_name:
+            employee.last_name = last_name
+        if start_date:
+            employee.start_date = start_date
+        if end_date:
+            employee.end_date = end_date
+        if notes:
+            employee.notes = notes
 
         try:
             db.session.commit()
-            return {'message': 'Employee updated successfully'}, 200
-        except SQLAlchemyError as e:
+            return UpdateEmployee(employee=employee, success=True, message="Employee updated successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to update employee. Error: {str(e)}'}, 500
+            return UpdateEmployee(success=False, message=f"Failed to update employee. Error: {str(e)}")
 
+class DeleteEmployee(graphene.Mutation):
+    class Arguments:
+        employee_id = graphene.String(required=True)
 
-class DeleteEmployee(Resource):
-    def delete(self, employee_id):
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, employee_id):
         employee = Employee.query.get(employee_id)
         if not employee:
-            return {'message': 'Employee not found'}, 404
+            return DeleteEmployee(success=False, message="Employee not found")
 
         try:
             db.session.delete(employee)
             db.session.commit()
-            return {'message': 'Employee deleted successfully'}, 200
-        except SQLAlchemyError as e:
+            return DeleteEmployee(success=True, message="Employee deleted successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to delete employee. Error: {str(e)}'}, 500
+            return DeleteEmployee(success=False, message=f"Failed to delete employee. Error: {str(e)}")
+
+class EmployeeQuery(graphene.ObjectType):
+    employee = graphene.Field(EmployeeType, employee_id=graphene.String(required=True))
+    all_employees = graphene.List(EmployeeType)
+
+    def resolve_employee(self, info, employee_id):
+        return Employee.query.get(employee_id)
+
+    def resolve_all_employees(self, info):
+        return Employee.query.all()
+
+class EmployeeMutation(graphene.ObjectType):
+    create_employee = CreateEmployee.Field()
+    update_employee = UpdateEmployee.Field()
+    delete_employee = DeleteEmployee.Field()
+
+

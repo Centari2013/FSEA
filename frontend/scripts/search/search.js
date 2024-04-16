@@ -1,13 +1,14 @@
 import { employeeCard, specimenCard, departmentCard, missionCard, originCard, noResultsCard, cardContainer} from "./cardTemplates";
 const api = import.meta.env.VITE_API_ENDPOINT;
-// Define the performSearch function
-export function performSearch(query) {
+
+export function performSearch(query, page = 1) {
     console.log("Performing search for:", query);
     const payload = {
-        "query": query
+        "query": query,
+        "page": page,  // Added page number to the payload
+        "pageSize": 25  // Assuming pageSize is constant, adjust as necessary
     };
 
-    // Sending the payload to the API endpoint using Fetch
     fetch(`${api}/search`, {
         method: 'POST',
         headers: {
@@ -19,86 +20,57 @@ export function performSearch(query) {
     .then(results => {
         const cardsContainer = cardContainer();
         const mainContentArea = document.getElementById('main-content');
-        mainContentArea.innerHTML = ''; // Clear existing content
-        if (results["results"]) {
-
-            var entityCard = null;
+        mainContentArea.innerHTML = '';
+        if (results["results"] && results["results"].length) {
             results["results"].forEach(result => {
-
-            
-                switch(result.type) {
-                    case 'E':
-                        entityCard = employeeCard(result);
-                        break;
-                    case 'S':
-                        entityCard = specimenCard(result);
-                        break;
-                    case 'O':
-                        entityCard = originCard(result);
-                        break;
-                    case 'M':
-                        entityCard = missionCard(result);
-                        break;
-                    case 'D':
-                        entityCard = departmentCard(result);
-                        break;
-                    default:
-                        throw new Error(`Unsupported entity type: ${result.type}`);
-                }
-
-
-            cardsContainer.innerHTML += entityCard;
-        });
-
-        mainContentArea.appendChild(cardsContainer);
-        document.querySelectorAll('.clickable-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const card_type = card.getAttribute('data-type');
-                const id = card.getAttribute('data-id');
-                
-                switch (card_type) {
-                    case 'employee':
-                        window.open(`/employeeDetails.html?employee_id=${id}`, '_blank');
-                        break;
-                    case 'department':
-                        window.open(`/departmentDetails.html?department_id=${id}`, '_blank');
-                        break;
-                    case 'mission':
-                        window.open(`/missionDetails.html?mission_id=${id}`, '_blank');
-                        break;
-                    case 'specimen':
-                        window.open(`/specimenDetails.html?specimen_id=${id}`, '_blank');
-                        break;
-                    case 'origin':
-                        window.open(`/originDetails.html?origin_id=${id}`, '_blank');
-                        break;
-                    case 'department-directory':
-                        window.open(`/departmentDirectoryDetails.html?department_id=${id}`, '_blank');
-                        break;
-                    default:
-                        console.log('Unknown type');
-                }
-                
+                let entityCard = entityCardFactory(result);
+                cardsContainer.innerHTML += entityCard;
             });
-        });
-        
-        }else{
+
+            mainContentArea.appendChild(cardsContainer);
+            setupEventListeners();
+
+            // Setup pagination controls
+            if (results["totalPages"]) {
+                setupPagination(results["totalPages"], page);
+            }
+        } else {
             showNoResultsMessage(cardsContainer);
         }
-        
-
-
     })
     .catch(error => {
-        // Handle any errors that occurred during the fetch
         console.error('Error:', error);
     });
-    // Implement your search logic here
-    // This could involve making an AJAX request, updating the DOM with search results, etc.
 }
 
-function showNoResultsMessage(div) {
-    div.innerHTML += noResultsCard();
-    const mainContent = document.getElementById('main-content');
-    mainContent.appendChild(div);
+function entityCardFactory(result) {
+    switch(result.type) {
+        case 'E': return employeeCard(result);
+        case 'S': return specimenCard(result);
+        case 'O': return originCard(result);
+        case 'M': return missionCard(result);
+        case 'D': return departmentCard(result);
+        default: throw new Error(`Unsupported entity type: ${result.type}`);
+    }
+}
+
+function setupEventListeners() {
+    document.querySelectorAll('.clickable-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const card_type = card.getAttribute('data-type');
+            const id = card.getAttribute('data-id');
+            openDetailsPage(card_type, id);
+        });
+    });
+}
+
+function openDetailsPage(card_type, id) {
+    switch (card_type) {
+        case 'employee': window.open(`/employeeDetails.html?employee_id=${id}`, '_blank'); break;
+        case 'department': window.open(`/departmentDetails.html?department_id=${id}`, '_blank'); break;
+        case 'mission': window.open(`/missionDetails.html?mission_id=${id}`, '_blank'); break;
+        case 'specimen': window.open(`/specimenDetails.html?specimen_id=${id}`, '_blank'); break;
+        case 'origin': window.open(`/originDetails.html?origin_id=${id}`, '_blank'); break;
+        default: console.log('Unknown type');
+    }
 }

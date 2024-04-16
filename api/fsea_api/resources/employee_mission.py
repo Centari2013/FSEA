@@ -1,62 +1,73 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import EmployeeMission
 
+class EmployeeMissionType(SQLAlchemyObjectType):
+    class Meta:
+        model = EmployeeMission
+        interfaces = (graphene.relay.Node,)
 
-class AddEmployeeToMission(Resource):
-    def post(self, mission_id):
-        parser = reqparse.RequestParser()
-        parser.add_argument('employee_id', type=str, required=True, help="Employee ID cannot be blank.")
-        parser.add_argument('involvement_summary', type=str, required=False, help="Optional: Involvement summary.")
-        data = parser.parse_args()
+class AddEmployeeToMission(graphene.Mutation):
+    class Arguments:
+        mission_id = graphene.String(required=True)
+        employee_id = graphene.String(required=True)
+        involvement_summary = graphene.String()
 
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, mission_id, employee_id, involvement_summary=None):
         new_link = EmployeeMission(
-            employee_id=data['employee_id'],
+            employee_id=employee_id,
             mission_id=mission_id,
-            involvement_summary=data.get('involvement_summary')
+            involvement_summary=involvement_summary
         )
         try:
             db.session.add(new_link)
             db.session.commit()
-            return {'message': 'Employee added to mission successfully'}, 201
-        except SQLAlchemyError as e:
+            return AddEmployeeToMission(success=True, message="Employee added to mission successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to add employee to mission. Error: {str(e)}'}, 500
+            return AddEmployeeToMission(success=False, message=f"Failed to add employee to mission. Error: {str(e)}")
 
+class RemoveEmployeeFromMission(graphene.Mutation):
+    class Arguments:
+        mission_id = graphene.String(required=True)
+        employee_id = graphene.String(required=True)
 
-class GetMissionsByEmployee(Resource):
-    def get(self, employee_id):
-        links = EmployeeMission.query.filter_by(employee_id=employee_id).all()
-        if links:
-            missions = [{
-                'mission_id': link.mission_id,
-                'involvement_summary': link.involvement_summary
-            } for link in links]
-            return {'missions': missions}, 200
-        else:
-            return {'message': 'No missions found for this employee'}, 404
+    success = graphene.Boolean()
+    message = graphene.String()
 
-class GetEmployeesByMission(Resource):
-    def get(self, mission_id):
-        links = EmployeeMission.query.filter_by(mission_id=mission_id).all()
-        if links:
-            employees = [{
-                'employee_id': link.employee_id,
-                'involvement_summary': link.involvement_summary
-            } for link in links]
-            return {'employees': employees}, 200
-        else:
-            return {'message': 'No employees found for this mission'}, 404
-
-
-class RemoveEmployeeFromMission(Resource):
-    def delete(self, employee_id, mission_id):
+    def mutate(self, info, mission_id, employee_id):
         link = EmployeeMission.query.filter_by(employee_id=employee_id, mission_id=mission_id).first()
         if link:
             try:
                 db.session.delete(link)
                 db.session.commit()
-                return {'message': 'Employee removed from mission successfully'}, 200
-            except SQLAlchemyError as e:
-                db.session.rollback
+                return RemoveEmployeeFromMission(success=True, message="Employee removed from mission successfully")
+            except Exception as e:
+                db.session.rollback()
+                return RemoveEmployeeFromMission(success=False, message=f"Failed to remove employee from mission. Error: {str(e)}")
+        else:
+            return RemoveEmployeeFromMission(success=False, message="Association not found")
+
+class EmployeeMissionQuery(graphene.ObjectType):
+    missions_by_employee = graphene.List(
+        EmployeeMissionType,
+        employee_id=graphene.String(required=True)
+    )
+    employees_by_mission = graphene.List(
+        EmployeeMissionType,
+        mission_id=graphene.String(required=True)
+    )
+
+    def resolve_missions_by_employee(self, info, employee_id):
+        return EmployeeMission.query.filter_by(employee_id=employee_id).all()
+
+    def resolve_employees_by_mission(self, info, mission_id):
+        return EmployeeMission.query.filter_by(mission_id=mission_id).all()
+
+class EmployeeMissionMutation(graphene.ObjectType):
+    add_employee_to_mission = AddEmployeeToMission.Field()
+    remove_employee_from_mission = RemoveEmployeeFromMission.Field()
 
 

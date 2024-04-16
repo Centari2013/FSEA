@@ -1,90 +1,115 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import Specimen
+from datetime import datetime
 
+class SpecimenType(SQLAlchemyObjectType):
+    class Meta:
+        model = Specimen
+        interfaces = (graphene.relay.Node,)
 
+class CreateSpecimen(graphene.Mutation):
+    class Arguments:
+        specimen_id = graphene.String(required=True)
+        specimen_name = graphene.String(required=True)
+        origin_id = graphene.String()
+        mission_id = graphene.String()
+        threat_level = graphene.Float(required=True)
+        acquisition_date = graphene.Date(required=True)
+        notes = graphene.String()
+        description = graphene.String()
 
-class PostSpecimen(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('specimen_id', type=str, required=True, help="Specimen ID cannot be blank.")
-        parser.add_argument('specimen_name', type=str, required=True, help="Specimen name cannot be blank.")
-        parser.add_argument('origin_id', type=str, store_missing=False)
-        parser.add_argument('mission_id', type=str, store_missing=False)
-        parser.add_argument('threat_level', type=float, required=True, help="Threat level must be between 0 and 10.", choices=range(11))
-        parser.add_argument('acquisition_date', type=str, required=True, help="Acquisition date cannot be blank.")  # Consider using a custom date type
-        parser.add_argument('notes', type=str, store_missing=False)  # Optional, JSON string
-        parser.add_argument('description', type=str, store_missing=False)
-        data = parser.parse_args()
+    specimen = graphene.Field(SpecimenType)
+    success = graphene.Boolean()
+    message = graphene.String()
 
-        new_specimen = Specimen(**data)
+    def mutate(self, info, specimen_id, specimen_name, threat_level, acquisition_date, origin_id=None, mission_id=None, notes=None, description=None):
+        new_specimen = Specimen(
+            specimen_id=specimen_id,
+            specimen_name=specimen_name,
+            origin_id=origin_id,
+            mission_id=mission_id,
+            threat_level=threat_level,
+            acquisition_date=acquisition_date,
+            notes=notes,
+            description=description
+        )
         try:
             db.session.add(new_specimen)
             db.session.commit()
-            return {'specimen_id': new_specimen.specimen_id}, 201
-        except SQLAlchemyError as e:
+            return CreateSpecimen(specimen=new_specimen, success=True, message="New specimen created successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to create new specimen. Error: {str(e)}'}, 500
+            return CreateSpecimen(success=False, message=f"Failed to create new specimen. Error: {str(e)}")
 
+class UpdateSpecimen(graphene.Mutation):
+    class Arguments:
+        specimen_id = graphene.String(required=True)
+        specimen_name = graphene.String()
+        origin_id = graphene.String()
+        mission_id = graphene.String()
+        threat_level = graphene.Float()
+        acquisition_date = graphene.Date()
+        notes = graphene.String()
+        description = graphene.String()
 
-class GetSpecimen(Resource):
-    def get(self, specimen_id):
-        specimen = Specimen.query.get(specimen_id)
-        if specimen:
-            return {
-                'specimen_id': specimen.specimen_id,
-                'specimen_name': specimen.specimen_name,
-                'origin_id': specimen.origin_id,
-                'mission_id': specimen.mission_id,
-                'threat_level': specimen.threat_level,
-                'acquisition_date': specimen.acquisition_date.isoformat(),
-                'notes': specimen.notes,
-                'description': specimen.description,
-                'created': specimen.created.isoformat(),
-                'updated': specimen.updated.isoformat() if specimen.updated else None
-            }, 200
-        return {'message': 'Specimen not found'}, 404
+    specimen = graphene.Field(SpecimenType)
+    success = graphene.Boolean()
+    message = graphene.String()
 
-
-class PatchSpecimen(Resource):
-    def patch(self, specimen_id):
+    def mutate(self, info, specimen_id, specimen_name=None, origin_id=None, mission_id=None, threat_level=None, acquisition_date=None, notes=None, description=None):
         specimen = Specimen.query.get(specimen_id)
         if not specimen:
-            return {'message': 'Specimen not found'}, 404
+            return UpdateSpecimen(success=False, message="Specimen not found")
 
-        parser = reqparse.RequestParser()
-        parser.add_argument('specimen_name', type=str, store_missing=False)
-        parser.add_argument('origin_id', type=str, store_missing=False)
-        parser.add_argument('mission_id', type=str, store_missing=False)
-        parser.add_argument('threat_level', type=float, store_missing=False, choices=[*(float(x) for x in range(11))])
-        parser.add_argument('acquisition_date', type=str, store_missing=False)  # Consider using a custom date type
-        parser.add_argument('notes', type=str, store_missing=False)  # Optional, JSON string
-        parser.add_argument('description', type=str, store_missing=False)
-        data = parser.parse_args()
-
-        for key, value in data.items():
-            setattr(specimen, key, value)
+        specimen.specimen_name = specimen_name if specimen_name is not None else specimen.specimen_name
+        specimen.origin_id = origin_id if origin_id is not None else specimen.origin_id
+        specimen.mission_id = mission_id if mission_id is not None else specimen.mission_id
+        specimen.threat_level = threat_level if threat_level is not None else specimen.threat_level
+        specimen.acquisition_date = acquisition_date if acquisition_date is not None else specimen.acquisition_date
+        specimen.notes = notes if notes is not None else specimen.notes
+        specimen.description = description if description is not None else specimen.description
 
         try:
-            specimen.updated = db.func.current_timestamp()  # Update the timestamp
+            specimen.updated = datetime.utcnow()
             db.session.commit()
-            return {'message': 'Specimen updated successfully'}, 200
-        except SQLAlchemyError as e:
+            return UpdateSpecimen(specimen=specimen, success=True, message="Specimen updated successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to update specimen. Error: {str(e)}'}, 500
+            return UpdateSpecimen(success=False, message=f"Failed to update specimen. Error: {str(e)}")
 
+class DeleteSpecimen(graphene.Mutation):
+    class Arguments:
+        specimen_id = graphene.String(required=True)
 
+    success = graphene.Boolean()
+    message = graphene.String()
 
-class DeleteSpecimen(Resource):
-    def delete(self, specimen_id):
+    def mutate(self, info, specimen_id):
         specimen = Specimen.query.get(specimen_id)
         if not specimen:
-            return {'message': 'Specimen not found'}, 404
+            return DeleteSpecimen(success=False, message="Specimen not found")
 
         try:
             db.session.delete(specimen)
             db.session.commit()
-            return {'message': 'Specimen deleted successfully'}, 200
-        except SQLAlchemyError as e:
+            return DeleteSpecimen(success=True, message="Specimen deleted successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to delete specimen. Error: {str(e)}'}, 500
+            return DeleteSpecimen(success=False, message=f"Failed to delete specimen. Error: {str(e)}")
+
+class SpecimenQuery(graphene.ObjectType):
+    specimen = graphene.Field(SpecimenType, specimen_id=graphene.String(required=True))
+    all_specimens = graphene.List(SpecimenType)
+
+    def resolve_specimen(self, info, specimen_id):
+        return Specimen.query.get(specimen_id)
+
+    def resolve_all_specimens(self, info):
+        return Specimen.query.all()
+
+class SpecimenMutation(graphene.ObjectType):
+    create_specimen = CreateSpecimen.Field()
+    update_specimen = UpdateSpecimen.Field()
+    delete_specimen = DeleteSpecimen.Field()
+
 

@@ -1,54 +1,82 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import DepartmentMission
 
+class DepartmentMissionType(SQLAlchemyObjectType):
+    class Meta:
+        model = DepartmentMission
+        interfaces = (graphene.relay.Node,)
 
+class AssociateMissionWithDepartment(graphene.Mutation):
+    class Arguments:
+        department_id = graphene.Int(required=True)
+        mission_id = graphene.Int(required=True)
 
-class AssociateMissionWithDepartment(Resource):
-    def post(self, department_id):
-        parser = reqparse.RequestParser()
-        parser.add_argument('mission_id', type=str, required=True, help="Mission ID cannot be blank.")
-        data = parser.parse_args()
+    success = graphene.Boolean()
+    message = graphene.String()
 
-        new_association = DepartmentMission(department_id=department_id, mission_id=data['mission_id'])
+    def mutate(self, info, department_id, mission_id):
+        new_association = DepartmentMission(department_id=department_id, mission_id=mission_id)
         try:
             db.session.add(new_association)
             db.session.commit()
-            return {'message': 'Mission associated with department successfully'}, 201
-        except SQLAlchemyError as e:
+            return AssociateMissionWithDepartment(success=True, message="Mission associated with department successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to associate mission with department. Error: {str(e)}'}, 500
+            return AssociateMissionWithDepartment(success=False, message=f"Failed to associate mission with department. Error: {str(e)}")
 
+class DisassociateMissionFromDepartment(graphene.Mutation):
+    class Arguments:
+        department_id = graphene.Int(required=True)
+        mission_id = graphene.Int(required=True)
 
-class DisassociateMissionFromDepartment(Resource):
-    def delete(self, department_id, mission_id):
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, department_id, mission_id):
         association = DepartmentMission.query.filter_by(department_id=department_id, mission_id=mission_id).first()
         if association:
             try:
                 db.session.delete(association)
                 db.session.commit()
-                return {'message': 'Mission disassociated from department successfully'}, 200
-            except SQLAlchemyError as e:
+                return DisassociateMissionFromDepartment(success=True, message="Mission disassociated from department successfully")
+            except Exception as e:
                 db.session.rollback()
-                return {'message': f'Failed to disassociate mission from department. Error: {str(e)}'}, 500
+                return DisassociateMissionFromDepartment(success=False, message=f"Failed to disassociate mission from department. Error: {str(e)}")
         else:
-            return {'message': 'Department-mission association not found'}, 404
+            return DisassociateMissionFromDepartment(success=False, message="Department-mission association not found")
 
+class GetMissionsForDepartment(graphene.ObjectType):
+    class Arguments:
+        department_id = graphene.Int(required=True)
 
-class GetMissionsForDepartment(Resource):
-    def get(self, department_id):
+    missions = graphene.List(graphene.String)
+
+    def resolve_missions(self, info, department_id):
         associations = DepartmentMission.query.filter_by(department_id=department_id).all()
         if associations:
-            missions = [{'mission_id': assoc.mission_id} for assoc in associations]
-            return {'missions': missions}, 200
+            return [assoc.mission_id for assoc in associations]
         else:
-            return {'message': 'No missions found for this department'}, 404
+            return None
 
+class GetDepartmentsForMission(graphene.ObjectType):
+    class Arguments:
+        mission_id = graphene.Int(required=True)
 
-class GetDepartmentsForMission(Resource):
-    def get(self, mission_id):
+    departments = graphene.List(graphene.String)
+
+    def resolve_departments(self, info, mission_id):
         associations = DepartmentMission.query.filter_by(mission_id=mission_id).all()
         if associations:
-            departments = [{'department_id': assoc.department_id} for assoc in associations]
-            return {'departments': departments}, 200
+            return [assoc.department_id for assoc in associations]
         else:
-            return {'message': 'No departments found for this mission'}, 404
+            return None
+
+class DepartmentMissionMutation(graphene.ObjectType):
+    associate_mission_with_department = AssociateMissionWithDepartment.Field()
+    disassociate_mission_from_department = DisassociateMissionFromDepartment.Field()
+
+class DepartmentMissionQuery(graphene.ObjectType):
+    get_missions_for_department = graphene.Field(GetMissionsForDepartment, department_id=graphene.Int(required=True))
+    get_departments_for_mission = graphene.Field(GetDepartmentsForMission, mission_id=graphene.Int(required=True))
+
+
