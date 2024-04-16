@@ -1,79 +1,84 @@
-from .imports import *
-from ..models.sqlalchemy_models import Clearance  
+from .config import *
+from ..models.sqlalchemy_models import Clearance
 
-class PostClearance(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('clearance_name', type=str, required=True, help="Clearance name cannot be blank.")
-        parser.add_argument('description', type=str, required=True, help="Description cannot be blank.")
-        data = parser.parse_args()
-        new_clearance = Clearance(**data)
-        try:
-            db.session.add(new_clearance)
-            db.session.commit()
-            return {'clearance_id': new_clearance.clearance_id}, 201
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            print(e)
-            return {'message': 'Failed to create new clearance. The server encountered an error.'}, 500
 
-class GetClearances(Resource):
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('ids', action='split', location='args')  # 'split' will split the comma-separated string into a list
-        args = parser.parse_args()
+class ClearanceType(SQLAlchemyObjectType):
+    class Meta:
+        model = Clearance
+        interfaces = (graphene.relay.Node,)
 
-        if type(args['ids']) is not list:
-            clearance_ids = [args['ids']]
-        if not clearance_ids:
-            return {'message': 'No designation IDs provided'}, 400
-        
-        clearances = Clearance.query.filter(Clearance.clearance_id.in_(clearance_ids)).all()
-        
-        if clearance_ids:
-            clearance_list = [
-                {'clearance_id': clearance.clearance_id,
-                'clearance_name': clearance.clearance_name,
-                'description': clearance.description} for clearance in clearances]
-            
-            return {"clearances": clearance_list}, 200
-        return {'message': 'Clearances not found'}, 404
+class ClearanceQuery(graphene.ObjectType):
+    node = graphene.relay.Node.Field()
+    get_clearances = graphene.List(ClearanceType, ids=graphene.List(graphene.Int))
 
-class PatchClearance(Resource):
-    def patch(self, clearance_id):
+    def resolve_get_clearances(self, info, ids=None):
+        query = ClearanceType.get_query(info)
+        if ids:
+            query = query.filter(Clearance.clearance_id.in_(ids))
+        return query.all()
+
+
+class CreateClearance(graphene.Mutation):
+    class Arguments:
+        clearance_name = graphene.String(required=True)
+        description = graphene.String(required=True)
+
+    clearance = graphene.Field(ClearanceType)
+
+    def mutate(self, info, clearance_name, description):
+        new_clearance = Clearance(clearance_name=clearance_name, description=description)
+        db.session.add(new_clearance)
+        db.session.commit()
+        return CreateClearance(clearance=new_clearance)
+
+class UpdateClearance(graphene.Mutation):
+    class Arguments:
+        clearance_id = graphene.Int(required=True)
+        clearance_name = graphene.String()
+        description = graphene.String()
+
+    clearance = graphene.Field(ClearanceType)
+
+    def mutate(self, info, clearance_id, clearance_name=None, description=None):
         clearance = Clearance.query.get(clearance_id)
-        if not clearance:
-            return {'message': 'Clearance not found'}, 404
+        if clearance is None:
+            raise Exception('No clearance found with id {}'.format(clearance_id))
+
+        if clearance_name:
+            clearance.clearance_name = clearance_name
+        if description:
+            clearance.description = description
         
-        parser = reqparse.RequestParser()
-        parser.add_argument('clearance_name', type=str, required=False, help="Optional: New clearance name.")
-        parser.add_argument('description', type=str, required=False, help="Optional: New description.")
-        data = parser.parse_args()
+        db.session.commit()
+        return UpdateClearance(clearance=clearance)
 
-        if data['clearance_name']:
-            clearance.clearance_name = data['clearance_name']
-        if data['description']:
-            clearance.description = data['description']
+class DeleteClearance(graphene.Mutation):
+    class Arguments:
+        clearance_id = graphene.Int(required=True)
 
-        try:
-            db.session.commit()
-            return {'message': 'Clearance updated successfully'}, 200
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            print(e)
-            return {'message': 'Failed to update clearance. The server encountered an error.'}, 500
+    status = graphene.String()
 
-class DeleteClearance(Resource):
-    def delete(self, clearance_id):
+    def mutate(self, info, clearance_id):
         clearance = Clearance.query.get(clearance_id)
-        if not clearance:
-            return {'message': 'Clearance not found'}, 404
+        if clearance is None:
+            raise Exception('No clearance found with id {}'.format(clearance_id))
 
-        try:
-            db.session.delete(clearance)
-            db.session.commit()
-            return {'message': 'Clearance deleted successfully'}, 200
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            print(e)
-            return {'message': 'Failed to delete clearance. The server encountered an error.'}, 500
+        db.session.delete(clearance)
+        db.session.commit()
+        return DeleteClearance(status="Clearance deleted successfully")
+    
+
+class ClearanceQuery(graphene.ObjectType):
+    all_clearances = graphene.List(ClearanceType)
+    clearance = graphene.Field(ClearanceType, clearance_id=graphene.Int(required=True))
+
+    def resolve_all_clearances(self, info):
+        return Clearance.query.all()
+
+    def resolve_clearance(self, info, clearance_id):
+        return Clearance.query.get(clearance_id)
+
+class ClearanceMutation(graphene.ObjectType):
+    create_clearance = CreateClearance.Field()
+    update_clearance = UpdateClearance.Field()
+    delete_clearance = DeleteClearance.Field()

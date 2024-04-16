@@ -1,44 +1,68 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import EmployeeClearance
 
+class EmployeeClearanceType(SQLAlchemyObjectType):
+    class Meta:
+        model = EmployeeClearance
+        interfaces = (graphene.relay.Node,)
 
+class AssociateClearanceWithEmployee(graphene.Mutation):
+    class Arguments:
+        employee_id = graphene.Int(required=True)
+        clearance_id = graphene.Int(required=True)
 
-class AssociateClearanceWithEmployee(Resource):
-    def post(self, employee_id):
-        parser = reqparse.RequestParser()
-        parser.add_argument('clearance_id', type=int, required=True, help="Clearance ID cannot be blank.")
-        data = parser.parse_args()
+    success = graphene.Boolean()
+    message = graphene.String()
 
-        # Assuming a model EmployeeClearance exists that represents this relationship
-        new_association = EmployeeClearance(employee_id=employee_id, clearance_id=data['clearance_id'])
+    def mutate(self, info, employee_id, clearance_id):
+        new_association = EmployeeClearance(employee_id=employee_id, clearance_id=clearance_id)
         try:
             db.session.add(new_association)
             db.session.commit()
-            return {'message': 'Clearance associated with employee successfully'}, 201
-        except SQLAlchemyError as e:
+            return AssociateClearanceWithEmployee(success=True, message="Clearance associated with employee successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to associate clearance with employee. Error: {str(e)}'}, 500
+            return AssociateClearanceWithEmployee(success=False, message=f"Failed to associate clearance with employee. Error: {str(e)}")
 
+class DisassociateClearanceFromEmployee(graphene.Mutation):
+    class Arguments:
+        employee_id = graphene.Int(required=True)
+        clearance_id = graphene.Int(required=True)
 
-class DisassociateClearanceFromEmployee(Resource):
-    def delete(self, employee_id, clearance_id):
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, employee_id, clearance_id):
         association = EmployeeClearance.query.filter_by(employee_id=employee_id, clearance_id=clearance_id).first()
         if association:
             try:
                 db.session.delete(association)
                 db.session.commit()
-                return {'message': 'Clearance disassociated from employee successfully'}, 200
-            except SQLAlchemyError as e:
+                return DisassociateClearanceFromEmployee(success=True, message="Clearance disassociated from employee successfully")
+            except Exception as e:
                 db.session.rollback()
-                return {'message': f'Failed to disassociate clearance from employee. Error: {str(e)}'}, 500
+                return DisassociateClearanceFromEmployee(success=False, message=f"Failed to disassociate clearance from employee. Error: {str(e)}")
         else:
-            return {'message': 'Association not found'}, 404
+            return DisassociateClearanceFromEmployee(success=False, message="Association not found")
 
+class GetEmployeeClearances(graphene.ObjectType):
+    class Arguments:
+        employee_id = graphene.Int(required=True)
 
-class GetEmployeeClearances(Resource):
-    def get(self, employee_id):
+    clearances = graphene.List(graphene.Int)
+
+    def resolve_clearances(self, info, employee_id):
         clearances = EmployeeClearance.query.filter_by(employee_id=employee_id).all()
         if clearances:
-            return {'clearances': [{'clearance_id': clearance.clearance_id} for clearance in clearances]}, 200
+            return [clearance.clearance_id for clearance in clearances]
         else:
-            return {'message': 'No clearances found for the given employee'}, 404
+            return []
+
+class EmployeeClearanceQuery(graphene.ObjectType):
+    employee_clearances = graphene.Field(GetEmployeeClearances, employee_id=graphene.Int(required=True))
+
+class EmployeeClearanceMutation(graphene.ObjectType):
+    associate_clearance_with_employee = AssociateClearanceWithEmployee.Field()
+    disassociate_clearance_from_employee = DisassociateClearanceFromEmployee.Field()
+
+

@@ -1,178 +1,84 @@
-from .imports import *
-from sqlalchemy import text
+import graphene
+from graphene_sqlalchemy import SQLAlchemyObjectType
+from sqlalchemy import create_engine, text
+from datetime import datetime
+from ..models.sqlalchemy_models import Employee, Department, Origin, Mission, Specimen
 
+# Setup SQLAlchemy connection (update with your actual database URI)
+engine = create_engine('postgresql://username:password@localhost/mydatabase')
 
+class EmployeeType(SQLAlchemyObjectType):
+    class Meta:
+        model = Employee
+
+class DepartmentType(SQLAlchemyObjectType):
+    class Meta:
+        model = Department
+
+class OriginType(SQLAlchemyObjectType):
+    class Meta:
+        model = Origin
+
+class MissionType(SQLAlchemyObjectType):
+    class Meta:
+        model = Mission
+
+class SpecimenType(SQLAlchemyObjectType):
+    class Meta:
+        model = Specimen
+
+class SearchResult(graphene.ObjectType):
+    entity_type = graphene.String()
+    data = graphene.JSONString()
+    relevancy = graphene.Float()
 
 def format_tsquery(search_input):
-    """
-    Takes a user input string intended for search, tokenizes it,
-    and formats it as a tsquery string for PostgreSQL.
-    """
     tokens = search_input.split()
-    
-    # Escape single quotes (basic SQL injection prevention)
     escaped_tokens = [token.replace("'", "''") for token in tokens]
-    
-    # Join tokens with the '&' operator for tsquery
-    tsquery = ' & '.join(escaped_tokens)
-    
-    # Return the formatted tsquery string
-    return tsquery
+    return ' & '.join(escaped_tokens)
 
-
-# Assuming 'engine' is already created and imported from your configuration
-
-def search_employee_details(search_query):
+def perform_search(sql_query, query_param):
     with engine.connect() as connection:
-        sql = text("SELECT * FROM search_employee_details(:query)")
-        result = connection.execute(sql, {'query': search_query}).mappings().all()
-    return [{
-            'employee_id': row['employee_id'],
-            'first_name': row['first_name'],
-            'last_name': row['last_name'],
-            'department': row['department'],
-            'designations': row['designations'],
-            'relevancy': row['relevancy']
-        } for row in result]
+        sql = text(sql_query)
+        result = connection.execute(sql, {'query': query_param}).mappings().all()
+    return result
 
-def search_department_details(search_query):
-    with engine.connect() as connection:
-        sql = text("SELECT * FROM search_department_details(:query)")
-        result = connection.execute(sql, {'query': search_query}).mappings().all()
-    return [{
-        'department_id': row['department_id'],
-        'department_name': row['department_name'],
-        'director': row['director'],
-        'description': row['description'],
-        'relevancy': row['relevancy']
-    } for row in result]
+class Search(graphene.Mutation):
+    class Arguments:
+        query = graphene.String(required=True)
 
-def search_origin_details(search_query):
-    with engine.connect() as connection:
-        sql = text("SELECT * FROM search_origin_details(:query)")
-        result = connection.execute(sql, {'query': search_query}).mappings().all()
-    return [{
-        'origin_id': row['origin_id'],
-        'origin_name': row['origin_name'],
-        'discovery_date': row['discovery_date'].isoformat() if row['discovery_date'] else None,
-        'description': row['description'],
-        'relevancy': row['relevancy']
-    } for row in result]
+    results = graphene.List(SearchResult)
 
-def search_mission_details(search_query):
-    with engine.connect() as connection:
-        sql = text("SELECT * FROM search_mission_details(:query)")
-        result = connection.execute(sql, {'query': search_query}).mappings().all()
-    return [{
-        'mission_id': row['mission_id'],
-        'mission_name': row['mission_name'],
-        'start_date': row['start_date'].isoformat() if row['start_date'] else None,
-        'end_date': row['end_date'].isoformat() if row['end_date'] else None,
-        'description': row['description'],
-        'relevancy': row['relevancy']
-    } for row in result]
+    def mutate(self, info, query):
+        formatted_query = format_tsquery(query)
 
-def search_specimen_details(search_query):
-    with engine.connect() as connection:
-        sql = text("SELECT * FROM search_specimen_details(:query)")
-        result = connection.execute(sql, {'query': search_query}).mappings().all()
-    return [{
-        'specimen_id': row['specimen_id'],
-        'specimen_name': row['specimen_name'],
-        'threat_level': row['threat_level'],
-        'acquisition_date': row['acquisition_date'].isoformat() if row['acquisition_date'] else None,
-        'relevancy': row['relevancy']
-    } for row in result]
+        # Define your search SQL commands
+        search_commands = {
+            'employee': ("SELECT * FROM search_employee_details(:query)", EmployeeType),
+            'department': ("SELECT * FROM search_department_details(:query)", DepartmentType),
+            'origin': ("SELECT * FROM search_origin_details(:query)", OriginType),
+            'mission': ("SELECT * FROM search_mission_details(:query)", MissionType),
+            'specimen': ("SELECT * FROM search_specimen_details(:query)", SpecimenType),
+        }
 
-   
-def consolidate_results(results):
-    # Step 1: Fill relevancy_temp with all relevancy values for each ID
-    relevancy_temp = {}
-    for r in results:
-        id_key = next((key for key in r if key.endswith('_id')), None)
-        if id_key:
-            id_value = r[id_key]
-            relevancy_temp.setdefault(id_value, []).append(r['relevancy'])
-    
-    # Step 2: Remove duplicates from results based on unique IDs
-    seen_ids = set()
-    unique_results = []
-    for r in results:
-        id_key = next((key for key in r if key.endswith('_id')), None)
-        if id_key:
-            
-            id_value = r[id_key]
-            if id_value not in seen_ids:
-                unique_results.append(r)
-                seen_ids.add(id_value)
+        results = []
+        for key, (sql, gtype) in search_commands.items():
+            for row in perform_search(sql, formatted_query):
+                # Convert SQLAlchemy results to JSON-like data, assuming SQLAlchemy model fields match the dict keys
+                data = {field: getattr(row, field, None) for field in row._fields}
+                # Handle special types like dates
+                if 'discovery_date' in data and data['discovery_date']:
+                    data['discovery_date'] = data['discovery_date'].isoformat()
+                if 'start_date' in data and data['start_date']:
+                    data['start_date'] = data['start_date'].isoformat()
+                if 'end_date' in data and data['end_date']:
+                    data['end_date'] = data['end_date'].isoformat()
 
-    # Step 3: Fill consolidated_results using the de-duplicated list and relevancy_temp
-    consolidated_results = []
-    for r in unique_results:
-        id_key = next((key for key in r if key.endswith('_id')), None)
-        if id_key:
-            id_value = r[id_key]
-            # Use max relevancy score instead of averaging
-            max_relevancy = sum(relevancy_temp[id_value])
-            # Create a new dictionary for the consolidated result
-            new_entry = r.copy()
-            new_entry['relevancy'] = max_relevancy
-            consolidated_results.append(new_entry)
+                results.append(SearchResult(entity_type=key, data=data, relevancy=row.get('relevancy', 0)))
 
-    return consolidated_results
+        return Search(results=results)
+
+class SearchMutation(graphene.ObjectType):
+    search = Search.Field()
 
 
-
-def sortResults(results):
-    type_priority = {'D': 1, 'E': 2, 'O': 3, 'M': 2, 'S': 3}
-    p = sorted(results, key=lambda x: (type_priority[x['type']], -x['relevancy']))
-    return p
-
-
-
-class SearchAllDetails(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('query', type=str, required=True, help="Search query cannot be blank.")
-        args = parser.parse_args()
-
-        search_query = format_tsquery(args['query'])
-
-        try:
-            employees = search_employee_details(search_query)
-            departments = search_department_details(search_query)
-            origins = search_origin_details(search_query)
-            missions = search_mission_details(search_query)
-            specimens = search_specimen_details(search_query)
-
-            for employee in employees:
-                employee['type'] = 'E'  # E for Employee
-
-            for department in departments:
-                department['type'] = 'D'  # D for Department
-
-            for origin in origins:
-                origin['type'] = 'O'  # O for Origin
-
-            for mission in missions:
-                mission['type'] = 'M'  # M for Mission
-
-            for specimen in specimens:
-                specimen['type'] = 'S'  # S for Specimen
-                        
-            raw_results = employees + departments + origins + missions + specimens
-            if raw_results:
-
-                sorted_results = sortResults(consolidate_results(raw_results))
-                return {'results': sorted_results}, 200
-            else:
-                return {'message': 'No results found for the given search query.'}, 404
-            
-        except Exception as e:
-            print(e)
-            return {'message': f'Query failed. Error: {str(e)}'}, 500
-                
-
-
-        
-        

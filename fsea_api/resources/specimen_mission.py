@@ -1,54 +1,66 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import SpecimenMission
 
+class SpecimenMissionType(SQLAlchemyObjectType):
+    class Meta:
+        model = SpecimenMission
+        interfaces = (graphene.relay.Node,)
 
-class AddSpecimenMission(Resource):
-    def post(self, specimen_id):
-        parser = reqparse.RequestParser()
-        parser.add_argument('mission_id', type=str, required=True, help="Mission ID cannot be blank.")
-        parser.add_argument('involvement_summary', type=str, required=True, help="Involvement summary cannot be blank.")
-        data = parser.parse_args()
+class AddSpecimenToMission(graphene.Mutation):
+    class Arguments:
+        specimen_id = graphene.Int(required=True)
+        mission_id = graphene.Int(required=True)
+        involvement_summary = graphene.String(required=True)
 
-        new_link = SpecimenMission(specimen_id=specimen_id, mission_id=data['mission_id'], involvement_summary=data['involvement_summary'])
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, specimen_id, mission_id, involvement_summary):
+        new_link = SpecimenMission(specimen_id=specimen_id, mission_id=mission_id, involvement_summary=involvement_summary)
         try:
             db.session.add(new_link)
             db.session.commit()
-            return {'message': 'Specimen associated with mission successfully'}, 201
-        except SQLAlchemyError as e:
+            return AddSpecimenToMission(success=True, message="Specimen associated with mission successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to add specimen to mission. Error: {str(e)}'}, 500
+            return AddSpecimenToMission(success=False, message=f"Failed to add specimen to mission. Error: {str(e)}")
 
+class RemoveSpecimenFromMission(graphene.Mutation):
+    class Arguments:
+        specimen_id = graphene.Int(required=True)
+        mission_id = graphene.Int(required=True)
 
-class DeleteSpecimenMission(Resource):
-    def delete(self, specimen_id, mission_id):
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, specimen_id, mission_id):
         link = SpecimenMission.query.filter_by(specimen_id=specimen_id, mission_id=mission_id).first()
         if link:
             try:
                 db.session.delete(link)
                 db.session.commit()
-                return {'message': 'Specimen disassociated from mission successfully'}, 200
-            except SQLAlchemyError as e:
+                return RemoveSpecimenFromMission(success=True, message="Specimen disassociated from mission successfully")
+            except Exception as e:
                 db.session.rollback()
-                return {'message': f'Failed to remove specimen from mission. Error: {str(e)}'}, 500
+                return RemoveSpecimenFromMission(success=False, message=f"Failed to remove specimen from mission. Error: {str(e)}")
         else:
-            return {'message': 'Specimen-mission association not found'}, 404
+            return RemoveSpecimenFromMission(success=False, message="Specimen-mission association not found")
+
+class SpecimenMissionQuery(graphene.ObjectType):
+    missions_for_specimen = graphene.List(
+        SpecimenMissionType, 
+        specimen_id=graphene.Int(required=True), 
+        resolver=lambda self, info, specimen_id: SpecimenMission.query.filter_by(specimen_id=specimen_id).all()
+    )
+
+    specimens_for_mission = graphene.List(
+        SpecimenMissionType, 
+        mission_id=graphene.Int(required=True), 
+        resolver=lambda self, info, mission_id: SpecimenMission.query.filter_by(mission_id=mission_id).all()
+    )
+
+class SpecimenMissionMutation(graphene.ObjectType):
+    add_specimen_to_mission = AddSpecimenToMission.Field()
+    remove_specimen_from_mission = RemoveSpecimenFromMission.Field()
 
 
-class GetMissionsForSpecimen(Resource):
-    def get(self, specimen_id):
-        links = SpecimenMission.query.filter_by(specimen_id=specimen_id).all()
-        if links:
-            missions = [{'mission_id': link.mission_id, 'involvement_summary': link.involvement_summary} for link in links]
-            return {'missions': missions}, 200
-        else:
-            return {'message': 'No missions found for this specimen'}, 404
-
-
-class GetSpecimensForMission(Resource):
-    def get(self, mission_id):
-        links = SpecimenMission.query.filter_by(mission_id=mission_id).all()
-        if links:
-            specimens = [{'specimen_id': link.specimen_id, 'involvement_summary': link.involvement_summary} for link in links]
-            return {'specimens': specimens}, 200
-        else:
-            return {'message': 'No specimens found for this mission'}, 404

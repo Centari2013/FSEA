@@ -1,20 +1,20 @@
-from .clearance import *
-from .containmentStatus import *
-from .department import *
-from .designation import *
-from .employee import *
-from .employee_clearance import *
-from .employee_designation import *
-from .employee_medical_record import *
-from .mission import *
-from .origin import *
-from .mission_origin import *
-from .specimen import *
-from .specimen_containment_status import *
-from .specimen_medical_record import *
-from .specimen_mission import *
-from .credentials import *
-from .department_mission import *
-from . employee_mission import *
-from .researcher_specimen import *
-from .search import SearchAllDetails
+from .clearance import ClearanceQuery, ClearanceMutation
+from .containment_status import ContainmentStatusMutation, ContainmentStatusQuery
+from .department import DepartmentQuery, DepartmentMutation
+from .designation import DesignationMutation, DesignationQuery
+from .employee import EmployeeMutation, EmployeeQuery
+from .employee_clearance import EmployeeClearanceMutation, EmployeeClearanceQuery
+from .employee_designation import EmployeeDesignationMutation, EmployeeDesignationQuery
+from .employee_medical_record import EmployeeMedicalMutation, EmployeeMedicalQuery
+from .mission import MissionMutation, MissionQuery
+from .origin import OriginMutation, OriginQuery
+from .mission_origin import MissionOriginQuery, MissionOriginMutation
+from .specimen import SpecimenMutation, SpecimenQuery
+from .specimen_containment_status import SpecimenContainmentStatusQuery, SpecimenContainmentStatusMutation
+from .specimen_medical_record import SpecimenMedicalMutation, SpecimenMedicalQuery
+from .specimen_mission import SpecimenMissionMutation, SpecimenMissionQuery
+from .authentication import AuthMutation, AuthQuery
+from .department_mission import DepartmentMissionMutation, DepartmentMissionQuery
+from . employee_mission import EmployeeMissionMutation, EmployeeMissionQuery
+from .researcher_specimen import ResearcherSpecimenMutation, ResearcherSpecimenQuery
+from .search import SearchMutation

@@ -1,56 +1,64 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import SpecimenContainmentStatus
 
+class SpecimenContainmentStatusType(SQLAlchemyObjectType):
+    class Meta:
+        model = SpecimenContainmentStatus
+        interfaces = (graphene.relay.Node,)
 
+class AssociateContainmentStatusWithSpecimen(graphene.Mutation):
+    class Arguments:
+        specimen_id = graphene.Int(required=True)
+        containment_status_id = graphene.Int(required=True)
 
-class AssociateContainmentStatusWithSpecimen(Resource):
-    def post(self, specimen_id):
-        parser = reqparse.RequestParser()
-        parser.add_argument('containment_status_id', type=int, required=True, help="Containment status ID cannot be blank.")
-        data = parser.parse_args()
+    success = graphene.Boolean()
+    message = graphene.String()
 
-        new_association = SpecimenContainmentStatus(specimen_id=specimen_id, containment_status_id=data['containment_status_id'])
+    def mutate(self, info, specimen_id, containment_status_id):
+        new_association = SpecimenContainmentStatus(specimen_id=specimen_id, containment_status_id=containment_status_id)
         try:
             db.session.add(new_association)
             db.session.commit()
-            return {'message': 'Containment status associated with specimen successfully'}, 201
-        except SQLAlchemyError as e:
+            return AssociateContainmentStatusWithSpecimen(success=True, message="Containment status associated with specimen successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to associate containment status with specimen. Error: {str(e)}'}, 500
+            return AssociateContainmentStatusWithSpecimen(success=False, message=f"Failed to associate containment status with specimen. Error: {str(e)}")
 
+class DisassociateContainmentStatusFromSpecimen(graphene.Mutation):
+    class Arguments:
+        specimen_id = graphene.Int(required=True)
+        containment_status_id = graphene.Int(required=True)
 
-class DisassociateContainmentStatusFromSpecimen(Resource):
-    def delete(self, specimen_id, containment_status_id):
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, specimen_id, containment_status_id):
         association = SpecimenContainmentStatus.query.filter_by(specimen_id=specimen_id, containment_status_id=containment_status_id).first()
         if association:
             try:
                 db.session.delete(association)
                 db.session.commit()
-                return {'message': 'Containment status disassociated from specimen successfully'}, 200
-            except SQLAlchemyError as e:
+                return DisassociateContainmentStatusFromSpecimen(success=True, message="Containment status disassociated from specimen successfully")
+            except Exception as e:
                 db.session.rollback()
-                return {'message': f'Failed to disassociate containment status from specimen. Error: {str(e)}'}, 500
+                return DisassociateContainmentStatusFromSpecimen(success=False, message=f"Failed to disassociate containment status from specimen. Error: {str(e)}")
         else:
-            return {'message': 'Association not found'}, 404
+            return DisassociateContainmentStatusFromSpecimen(success=False, message="Association not found")
 
+class SpecimenContainmentStatusQuery(graphene.ObjectType):
+    containment_statuses_for_specimen = graphene.List(graphene.Int, specimen_id=graphene.Int(required=True))
+    specimens_for_containment_status = graphene.List(graphene.Int, containment_status_id=graphene.Int(required=True))
 
-class GetContainmentStatusesForSpecimen(Resource):
-    def get(self, specimen_id):
+    def resolve_containment_statuses_for_specimen(self, info, specimen_id):
         associations = SpecimenContainmentStatus.query.filter_by(specimen_id=specimen_id).all()
-        if associations:
-            statuses = [{'containment_status_id': assoc.containment_status_id} for assoc in associations]
-            return {'containment_statuses': statuses}, 200
-        else:
-            return {'message': 'No containment statuses found for this specimen'}, 404
+        return [assoc.containment_status_id for assoc in associations]
 
-
-class GetSpecimensForContainmentStatus(Resource):
-    def get(self, containment_status_id):
+    def resolve_specimens_for_containment_status(self, info, containment_status_id):
         associations = SpecimenContainmentStatus.query.filter_by(containment_status_id=containment_status_id).all()
-        if associations:
-            specimens = [{'specimen_id': assoc.specimen_id} for assoc in associations]
-            return {'specimens': specimens}, 200
-        else:
-            return {'message': 'No specimens found for this containment status'}, 404
+        return [assoc.specimen_id for assoc in associations]
+
+class SpecimenContainmentStatusMutation(graphene.ObjectType):
+    associate_containment_status_with_specimen = AssociateContainmentStatusWithSpecimen.Field()
+    disassociate_containment_status_from_specimen = DisassociateContainmentStatusFromSpecimen.Field()
 
 

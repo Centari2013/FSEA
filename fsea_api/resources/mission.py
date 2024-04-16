@@ -1,97 +1,115 @@
-from .imports import *
+from .config import *
 from ..models.sqlalchemy_models import Mission
+from datetime import datetime
 
+class MissionType(SQLAlchemyObjectType):
+    class Meta:
+        model = Mission
+        interfaces = (graphene.relay.Node,)
 
+class CreateMission(graphene.Mutation):
+    class Arguments:
+        mission_id = graphene.String(required=True)
+        mission_name = graphene.String(default_value="NAME-PENDING")
+        start_date = graphene.Date()
+        end_date = graphene.Date()
+        commander_id = graphene.String()
+        supervisor_id = graphene.String()
+        description = graphene.String(required=True)
+        notes = graphene.String()
 
+    mission = graphene.Field(MissionType)
+    success = graphene.Boolean()
+    message = graphene.String()
 
-class PostMission(Resource):
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('mission_id', type=str, required=True, help="Mission ID cannot be blank.")
-        parser.add_argument('mission_name', type=str, required=False, default='NAME-PENDING', help="Optional: Mission name.")
-        parser.add_argument('start_date', type=str, store_missing=False)  # Consider using a custom date type
-        parser.add_argument('end_date', type=str, store_missing=False)  # Consider using a custom date type
-        parser.add_argument('commander_id', type=str, store_missing=False)
-        parser.add_argument('supervisor_id', type=str, store_missing=False)
-        parser.add_argument('description', type=str, required=True, help="Description cannot be blank.")
-        parser.add_argument('notes', type=str, store_missing=False)  # Optional, JSON string
-        data = parser.parse_args()
-
-        new_mission = Mission(**data)
+    def mutate(self, info, mission_id, description, mission_name=None, start_date=None, end_date=None, commander_id=None, supervisor_id=None, notes=None):
+        new_mission = Mission(
+            mission_id=mission_id,
+            mission_name=mission_name,
+            start_date=start_date,
+            end_date=end_date,
+            commander_id=commander_id,
+            supervisor_id=supervisor_id,
+            description=description,
+            notes=notes
+        )
         try:
             db.session.add(new_mission)
             db.session.commit()
-            return {'mission_id': new_mission.mission_id}, 201
-        except SQLAlchemyError as e:
+            return CreateMission(mission=new_mission, success=True, message="New mission created successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to create new mission. Error: {str(e)}'}, 500
+            return CreateMission(success=False, message=f"Failed to create new mission. Error: {str(e)}")
 
+class UpdateMission(graphene.Mutation):
+    class Arguments:
+        mission_id = graphene.String(required=True)
+        mission_name = graphene.String()
+        start_date = graphene.Date()
+        end_date = graphene.Date()
+        commander_id = graphene.String()
+        supervisor_id = graphene.String()
+        description = graphene.String()
+        notes = graphene.String()
 
+    mission = graphene.Field(MissionType)
+    success = graphene.Boolean()
+    message = graphene.String()
 
-class GetMissions(Resource):
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('ids', action='split', location='args')  # 'split' will split the comma-separated string into a list
-        args = parser.parse_args()
-
-        if not isinstance(args['ids'], list):
-            mission_ids = [args['ids']]
-        
-        mission_ids = args['ids'].split(',') if args['ids'] else []
-
-        
-        missions = Mission.query.filter(Mission.mission_id.in_(mission_ids)).all()
-        
-        if mission_ids:
-            mission_list = [
-                {'mission_id': mission.mission_id,
-                'mission_name': mission.mission_name,
-                'description': mission.description} for mission in missions]
-            
-            return {"missions": mission_list}, 200
-        return {'message': 'Missions not found'}, 404
-
-
-class PatchMission(Resource):
-    def patch(self, mission_id):
+    def mutate(self, info, mission_id, mission_name=None, start_date=None, end_date=None, commander_id=None, supervisor_id=None, description=None, notes=None):
         mission = Mission.query.get(mission_id)
         if not mission:
-            return {'message': 'Mission not found'}, 404
+            return UpdateMission(success=False, message="Mission not found")
 
-        parser = reqparse.RequestParser()
-        parser.add_argument('mission_name', type=str, store_missing=False)
-        parser.add_argument('start_date', type=str, store_missing=False)  # Optional, consider using a custom date type
-        parser.add_argument('end_date', type=str, store_missing=False)  # Optional
-        parser.add_argument('commander_id', type=str, store_missing=False)
-        parser.add_argument('supervisor_id', type=str, store_missing=False)
-        parser.add_argument('description', type=str, store_missing=False)
-        parser.add_argument('notes', type=str, store_missing=False)  # Optional, JSON string
-        data = parser.parse_args()
-
-        for key, value in data.items():
-            setattr(mission, key, value)
+        mission.mission_name = mission_name if mission_name is not None else mission.mission_name
+        mission.start_date = start_date if start_date is not None else mission.start_date
+        mission.end_date = end_date if end_date is not None else mission.end_date
+        mission.commander_id = commander_id if commander_id is not None else mission.commander_id
+        mission.supervisor_id = supervisor_id if supervisor_id is not None else mission.supervisor_id
+        mission.description = description if description is not None else mission.description
+        mission.notes = notes if notes is not None else mission.notes
 
         try:
-            mission.updated = db.func.current_timestamp()  # Update the timestamp
+            mission.updated = datetime.utcnow()
             db.session.commit()
-            return {'message': 'Mission updated successfully'}, 200
-        except SQLAlchemyError as e:
+            return UpdateMission(mission=mission, success=True, message="Mission updated successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to update mission. Error: {str(e)}'}, 500
+            return UpdateMission(success=False, message=f"Failed to update mission. Error: {str(e)}")
 
+class DeleteMission(graphene.Mutation):
+    class Arguments:
+        mission_id = graphene.String(required=True)
 
-class DeleteMission(Resource):
-    def delete(self, mission_id):
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    def mutate(self, info, mission_id):
         mission = Mission.query.get(mission_id)
         if not mission:
-            return {'message': 'Mission not found'}, 404
+            return DeleteMission(success=False, message="Mission not found")
 
         try:
             db.session.delete(mission)
             db.session.commit()
-            return {'message': 'Mission deleted successfully'}, 200
-        except SQLAlchemyError as e:
+            return DeleteMission(success=True, message="Mission deleted successfully")
+        except Exception as e:
             db.session.rollback()
-            return {'message': f'Failed to delete mission. Error: {str(e)}'}, 500
+            return DeleteMission(success=False, message=f"Failed to delete mission. Error: {str(e)}")
+
+class MissionQuery(graphene.ObjectType):
+    mission = graphene.Field(MissionType, mission_id=graphene.String(required=True))
+    all_missions = graphene.List(MissionType)
+
+    def resolve_mission(self, info, mission_id):
+        return Mission.query.get(mission_id)
+
+    def resolve_all_missions(self, info):
+        return Mission.query.all()
+
+class MissionMutation(graphene.ObjectType):
+    create_mission = CreateMission.Field()
+    update_mission = UpdateMission.Field()
+    delete_mission = DeleteMission.Field()
 
 
