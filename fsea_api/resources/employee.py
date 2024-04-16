@@ -99,13 +99,16 @@ class DeleteEmployee(graphene.Mutation):
 
 class EmployeeQuery(graphene.ObjectType):
     employee = graphene.Field(EmployeeType, employee_id=graphene.String(required=True))
-    all_employees = graphene.List(EmployeeType)
+    all_employees = graphene.List(EmployeeType, department_id=graphene.Int(required=False))
 
     def resolve_employee(self, info, employee_id):
         return Employee.query.get(employee_id)
 
-    def resolve_all_employees(self, info):
-        return Employee.query.all()
+    def resolve_all_employees(self, info, department_id=None):
+        query = Employee.query
+        if department_id:
+            query = query.filter(Employee.department_id == department_id)
+        return query.all()
 
 class EmployeeMutation(graphene.ObjectType):
     create_employee = CreateEmployee.Field()
