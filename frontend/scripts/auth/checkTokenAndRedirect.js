@@ -3,8 +3,8 @@ async function verifyToken(token) {
     const api = import.meta.env.VITE_API_ENDPOINT; // Adjust this URL to your actual API endpoint
     
     const query = `
-      mutation {
-       validateToken($token: String!){
+      mutation ValidateToken($token: String!){
+       validateToken(token: $token){
           valid
         }
       }`

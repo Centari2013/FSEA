@@ -2,8 +2,18 @@ const api = import.meta.env.VITE_API_ENDPOINT;
 import { cardContainer, departmentDirectoryCard, titleCard } from "./search/cardTemplates";
 
 export function loadEmployeeDirectory() {
-    fetch(`${api}/departments`)
-      .then(response => response.json())
+    fetch(api, { method: 'GET', 
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        query: `query {
+            allDepartments{
+                departmentName
+            }
+        }`
+    })})
+      .then(response => response.json().data.data)
       .then(departments => {
         const cardsContainer = cardContainer();
 

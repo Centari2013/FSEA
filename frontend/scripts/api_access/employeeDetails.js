@@ -1,11 +1,22 @@
 const api = import.meta.env.VITE_API_ENDPOINT;
 export async function fetchEmployeeData(employee_id) {
-    const response = await fetch(`${api}/employees/${employee_id}`, {
+    const response = await fetch(api, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `query {
+                employee(employeeId: String!) {
+                    departmenId
+                    firstName
+                    lastName
+                    startDate
+                    endDate
+                }
+            }`
+        }),
     });
     if (!response.ok) throw new Error('Failed to fetch employee data');
-    return response.json();
+    return response.json().data.data;
 }
 
 export async function fetchDesignationDetails(designationIds) {
