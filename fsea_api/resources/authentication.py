@@ -3,6 +3,8 @@ from ..models.sqlalchemy_models import Credential, EmployeeSession
 from werkzeug.security import generate_password_hash as hash_password, check_password_hash as verify_password
 from datetime import datetime, timezone
 from uuid import uuid4
+import pytz
+utc = pytz.UTC
 
 class CredentialType(SQLAlchemyObjectType):
     class Meta:
@@ -56,6 +58,7 @@ class Login(graphene.Mutation):
 
     def mutate(self, info, username, password):
         user = Credential.query.filter_by(username=username).first()
+       
         if user and verify_password(user.password, password):
             if user.login_attempts < 3:
                 user.login_attempts = 0
@@ -63,6 +66,7 @@ class Login(graphene.Mutation):
                 new_session = EmployeeSession(session_id=str(uuid4()), employee_id=user.employee_id)
                 db.session.add(new_session)
                 db.session.commit()
+                
                 return Login(token=new_session.session_id, message="Login successful.", employee_id=user.employee_id)
             else:
                 return Login(message="Account locked. Contact admin.")
@@ -81,7 +85,7 @@ class ValidateToken(graphene.Mutation):
 
     def mutate(self, info, token):
         session = EmployeeSession.query.filter_by(session_id=token).first()
-        if session and session.expires > datetime.now(tz=timezone.utc):
+        if session and utc.localize(session.expires) > utc.localize(datetime.now()):
             return ValidateToken(valid=True, message="Token is valid.")
         else:
             return ValidateToken(valid=False, message="Invalid or expired token")

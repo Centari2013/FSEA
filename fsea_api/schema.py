@@ -16,7 +16,7 @@ class Mutation(
     EmployeeMutation, EmployeeClearanceMutation, EmployeeDesignationMutation, EmployeeMedicalMutation,
     MissionMutation, OriginMutation, MissionOriginMutation, SpecimenMutation, SpecimenContainmentStatusMutation,
     SpecimenMedicalMutation, SpecimenMissionMutation, AuthMutation, DepartmentMissionMutation,
-    EmployeeMissionMutation, ResearcherSpecimenMutation, graphene.ObjectType):
+    EmployeeMissionMutation, ResearcherSpecimenMutation, SearchMutation, graphene.ObjectType):
     
     pass
 
