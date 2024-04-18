@@ -1,31 +1,14 @@
 import graphene
-from graphene_sqlalchemy import SQLAlchemyObjectType
+import json
 from sqlalchemy import create_engine, text
-from datetime import datetime
-from ..models.sqlalchemy_models import Employee, Department, Origin, Mission, Specimen
+import os
+from dotenv import load_dotenv
 
-# Setup SQLAlchemy connection (update with your actual database URI)
-engine = create_engine('postgresql://username:password@localhost/mydatabase')
+load_dotenv()
 
-class EmployeeType(SQLAlchemyObjectType):
-    class Meta:
-        model = Employee
+engine = create_engine(os.getenv("DATABASE_URI"))
 
-class DepartmentType(SQLAlchemyObjectType):
-    class Meta:
-        model = Department
 
-class OriginType(SQLAlchemyObjectType):
-    class Meta:
-        model = Origin
-
-class MissionType(SQLAlchemyObjectType):
-    class Meta:
-        model = Mission
-
-class SpecimenType(SQLAlchemyObjectType):
-    class Meta:
-        model = Specimen
 
 class SearchResult(graphene.ObjectType):
     entity_type = graphene.String()
@@ -40,7 +23,7 @@ def format_tsquery(search_input):
 def perform_search(sql_query, query_param):
     with engine.connect() as connection:
         sql = text(sql_query)
-        result = connection.execute(sql, {'query': query_param}).mappings().all()
+        result = connection.execute(sql, {'query': query_param}).all()
     return result
 
 class Search(graphene.Mutation):
@@ -51,34 +34,26 @@ class Search(graphene.Mutation):
 
     def mutate(self, info, query):
         formatted_query = format_tsquery(query)
-
-        # Define your search SQL commands
         search_commands = {
-            'employee': ("SELECT * FROM search_employee_details(:query)", EmployeeType),
-            'department': ("SELECT * FROM search_department_details(:query)", DepartmentType),
-            'origin': ("SELECT * FROM search_origin_details(:query)", OriginType),
-            'mission': ("SELECT * FROM search_mission_details(:query)", MissionType),
-            'specimen': ("SELECT * FROM search_specimen_details(:query)", SpecimenType),
+            'E': "SELECT * FROM search_employee_details(:query)",
+            'D': "SELECT * FROM search_department_details(:query)",
+            'O': "SELECT * FROM search_origin_details(:query)",
+            'M': "SELECT * FROM search_mission_details(:query)",
+            'S': "SELECT * FROM search_specimen_details(:query)"
         }
 
         results = []
-        for key, (sql, gtype) in search_commands.items():
+        for key, sql in search_commands.items():
             for row in perform_search(sql, formatted_query):
-                # Convert SQLAlchemy results to JSON-like data, assuming SQLAlchemy model fields match the dict keys
-                data = {field: getattr(row, field, None) for field in row._fields}
-                # Handle special types like dates
-                if 'discovery_date' in data and data['discovery_date']:
-                    data['discovery_date'] = data['discovery_date'].isoformat()
-                if 'start_date' in data and data['start_date']:
-                    data['start_date'] = data['start_date'].isoformat()
-                if 'end_date' in data and data['end_date']:
-                    data['end_date'] = data['end_date'].isoformat()
-
-                results.append(SearchResult(entity_type=key, data=data, relevancy=row.get('relevancy', 0)))
+                data = dict(row)  # Convert row to a dictionary directly
+                # Process dates and other types as needed
+                for date_field in ['discovery_date', 'start_date', 'end_date']:
+                    if date_field in data and data[date_field]:
+                        data[date_field] = data[date_field].isoformat()
+                
+                results.append(SearchResult(entity_type=key, data=data, relevancy=row['relevancy']))
 
         return Search(results=results)
 
 class SearchMutation(graphene.ObjectType):
     search = Search.Field()
-
-

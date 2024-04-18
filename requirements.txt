@@ -19,6 +19,7 @@ MarkupSafe==2.1.5
 promise==2.3
 psycopg2-binary==2.9.9
 python-dotenv==1.0.1
+pytz==2024.1
 singledispatch==3.7.0
 six==1.16.0
 SQLAlchemy==1.4.52
