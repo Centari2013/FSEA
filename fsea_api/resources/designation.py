@@ -74,13 +74,15 @@ class DeleteDesignation(graphene.Mutation):
 
 class DesignationQuery(graphene.ObjectType):
     all_designations = graphene.List(DesignationType)
-    designation = graphene.Field(DesignationType, designation_id=graphene.Int(required=True))
+    designations = graphene.List(DesignationType, designation_ids=graphene.List(graphene.Int, required=True))
 
     def resolve_all_designations(self, info):
+        # Return all designations
         return Designation.query.all()
 
-    def resolve_designation(self, info, designation_id):
-        return Designation.query.get(designation_id)
+    def resolve_designations(self, info, designation_ids):
+        # Query for designations with IDs in the provided list
+        return Designation.query.filter(Designation.id.in_(designation_ids)).all()
 
 class DesignationMutation(graphene.ObjectType):
     create_designation = CreateDesignation.Field()

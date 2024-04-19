@@ -8,7 +8,7 @@ class EmployeeDesignationType(SQLAlchemyObjectType):
 
 class AssociateDesignationWithEmployee(graphene.Mutation):
     class Arguments:
-        employee_id = graphene.Int(required=True)
+        employee_id = graphene.String(required=True)
         designation_id = graphene.Int(required=True)
 
     success = graphene.Boolean()
@@ -26,7 +26,7 @@ class AssociateDesignationWithEmployee(graphene.Mutation):
 
 class DisassociateDesignationFromEmployee(graphene.Mutation):
     class Arguments:
-        employee_id = graphene.Int(required=True)
+        employee_id = graphene.String(required=True)
         designation_id = graphene.Int(required=True)
 
     success = graphene.Boolean()
@@ -47,19 +47,21 @@ class DisassociateDesignationFromEmployee(graphene.Mutation):
 
 class GetEmployeeDesignations(graphene.ObjectType):
     class Arguments:
-        employee_id = graphene.Int(required=True)
+        employee_id = graphene.String(required=True)
 
     designations = graphene.List(graphene.Int)
 
     def resolve_designations(self, info, employee_id):
+        print(employee_id)
         associations = EmployeeDesignation.query.filter_by(employee_id=employee_id).all()
+        print(associations)
         if associations:
             return [association.designation_id for association in associations]
         else:
             return []
 
 class EmployeeDesignationQuery(graphene.ObjectType):
-    employee_designations = graphene.Field(GetEmployeeDesignations, employee_id=graphene.Int(required=True))
+    employee_designations = graphene.Field(GetEmployeeDesignations, employee_id=graphene.String(required=True))
 
 class EmployeeDesignationMutation(graphene.ObjectType):
     associate_designation_with_employee = AssociateDesignationWithEmployee.Field()
