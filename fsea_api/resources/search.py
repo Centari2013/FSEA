@@ -52,7 +52,8 @@ class Search(graphene.Mutation):
                         data[date_field] = data[date_field].isoformat()
                 
                 results.append(SearchResult(entity_type=key, data=data, relevancy=row['relevancy']))
-
+        type_priority = {'D': 1, 'E': 2, 'O': 3, 'M': 4, 'S': 5}
+        results = sorted(results, key=lambda x: (type_priority[x.entity_type], x.relevancy))
         return Search(results=results)
 
 class SearchMutation(graphene.ObjectType):
