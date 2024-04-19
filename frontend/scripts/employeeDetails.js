@@ -1,5 +1,5 @@
 import * as emp_api from "./api_access/employee";
-import { fetchDepartmentData } from "./api_access/department";
+import { fetchDepartmentData } from "./api_access/departmentDetails";
 import { setWindowOpener } from "./utility";
 
 document.addEventListener('DOMContentLoaded', async () => {

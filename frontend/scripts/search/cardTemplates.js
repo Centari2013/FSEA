@@ -19,7 +19,7 @@ export function noResultsCard() {
 }
 
 export function employeeCard(employee) {
-    console.log(employee)
+
     const designationString = employee.designations ? employee.designations.map(d => d.designation_name).join(', '): "";
     return `
     <div class="col-8 col-sm-10 col-md-10">
@@ -40,6 +40,7 @@ export function employeeCard(employee) {
 }
 
 export function departmentCard(department) {
+    console.log(department)
     return `
     <div class="col-8 col-sm-10 col-md-10">
         <a href="/department/${department.department_id}" class="text-decoration-none">
@@ -48,7 +49,7 @@ export function departmentCard(department) {
                     <h5 class="card-title">${department.department_name}</h5>
                     <p class="card-text">
                         <strong>Department ID:</strong> ${department.department_id}<br>
-                        <strong>Director:</strong> ${department.director}<br>
+                        <strong>Director:</strong> ${department.director.first_name} ${department.director.last_name}<br>
                         ${department.description || "No description available."}
                     </p>
                 </div>
@@ -119,10 +120,10 @@ export function originCard(origin) {
 export function departmentDirectoryCard(department) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
-        <a href="${department.url}" class="text-decoration-none">
-            <div class="card h-100 clickable-card" data-type="department-directory" data-id=${department.department_id}>
+        <a href="/department/" class="text-decoration-none">
+            <div class="card h-100 clickable-card" data-type="department" data-id=${department.departmentId}>
                 <div class="card-body">
-                    <h5 class="card-title">${department.department_name}</h5>
+                    <h5 class="card-title">${department.departmentName}</h5>
                     <p class="card-text">${department.description || "No description available."}</p>
                 </div>
             </div>

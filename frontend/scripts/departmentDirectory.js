@@ -1,7 +1,8 @@
 const api = import.meta.env.VITE_API_ENDPOINT;
 import { cardContainer, departmentDirectoryCard, titleCard } from "./search/cardTemplates";
+import { setupEventListeners } from "./search/clickableCardsFunctionality";
 
-export function loadEmployeeDirectory() {
+export function loadDepartmentDirectory() {
     fetch(api, { method: 'POST', 
     headers: {
         'Content-Type': 'application/json'
@@ -29,6 +30,7 @@ export function loadEmployeeDirectory() {
   
         const mainContentArea = document.getElementById('main-content');
         mainContentArea.appendChild(cardsContainer);
+        setupEventListeners();
       })
       .catch(error => {
         console.error('Error loading department directory:', error);
