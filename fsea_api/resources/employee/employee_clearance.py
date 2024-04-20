@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import EmployeeClearance
+from ..config import *
+from ...models.sqlalchemy_models import EmployeeClearance
 
 class EmployeeClearanceType(SQLAlchemyObjectType):
     class Meta:

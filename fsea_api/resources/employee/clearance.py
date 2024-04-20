@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import Clearance
+from ..config import *
+from ...models.sqlalchemy_models import Clearance
 
 
 class ClearanceType(SQLAlchemyObjectType):

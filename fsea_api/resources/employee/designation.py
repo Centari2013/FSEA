@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import Designation
+from ..config import *
+from ...models.sqlalchemy_models import Designation
 
 class DesignationType(SQLAlchemyObjectType):
     class Meta:

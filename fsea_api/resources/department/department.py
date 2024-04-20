@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import Department
+from ..config import *
+from ...models.sqlalchemy_models import Department
 
 class DepartmentType(SQLAlchemyObjectType):
     class Meta:

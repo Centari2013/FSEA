@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import Mission
+from ..config import *
+from ...models.sqlalchemy_models import Mission
 from datetime import datetime
 
 class MissionType(SQLAlchemyObjectType):
@@ -98,11 +98,11 @@ class DeleteMission(graphene.Mutation):
             return DeleteMission(success=False, message=f"Failed to delete mission. Error: {str(e)}")
 
 class MissionQuery(graphene.ObjectType):
-    mission = graphene.Field(MissionType, mission_id=graphene.String(required=True))
+    missions = graphene.List(MissionType, mission_ids=graphene.List(graphene.String, required=True))
     all_missions = graphene.List(MissionType)
 
-    def resolve_mission(self, info, mission_id):
-        return Mission.query.get(mission_id)
+    def resolve_missions(self, info, mission_ids):
+        return Mission.query.filter(Mission.mission_id.in_(mission_ids)).all()
 
     def resolve_all_missions(self, info):
         return Mission.query.all()

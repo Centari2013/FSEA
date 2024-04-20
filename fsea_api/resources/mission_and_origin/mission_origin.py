@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import MissionOrigin
+from ..config import *
+from ...models.sqlalchemy_models import MissionOrigin
 
 class MissionOriginType(SQLAlchemyObjectType):
     class Meta:

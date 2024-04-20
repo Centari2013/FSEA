@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import ContainmentStatus  
+from ..config import *
+from ...models.sqlalchemy_models import ContainmentStatus  
 
 
 class ContainmentStatusType(SQLAlchemyObjectType):

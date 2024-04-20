@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import EmployeeDesignation
+from ..config import *
+from ...models.sqlalchemy_models import EmployeeDesignation
 
 class EmployeeDesignationType(SQLAlchemyObjectType):
     class Meta:
