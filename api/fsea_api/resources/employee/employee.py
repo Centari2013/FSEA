@@ -1,19 +1,38 @@
 from ..config import *
-from ...models.sqlalchemy_models import Employee
-from .employee_mission import EmployeeMissionQuery, EmployeeMissionType
-from ..mission_and_origin.mission import MissionQuery, MissionType
+from ...models.sqlalchemy_models import Employee, EmployeeMission, Designation, EmployeeDesignation, Department, EmployeeMedicalRecord
+from .employee_mission import EmployeeMissionType
+from ..department.department import DepartmentType
+from .employee_medical_record import EmployeeMedicalRecordType
+
+from .designation import DesignationType
 
 class EmployeeType(SQLAlchemyObjectType):
     class Meta:
         model = Employee
         interfaces = (graphene.relay.Node,)
     
+    department = graphene.Field(lambda: DepartmentType)
     missions = graphene.List(EmployeeMissionType)
+    designations = graphene.List(DesignationType)
+    medical_record = graphene.Field(lambda: EmployeeMedicalRecordType)
+
+    def resolve_department(self, info):
+        return Department.query.get(self.department_id)
 
     def resolve_missions(self, info):
-        print(self.employee_id)
-        
-        return EmployeeMissionQuery.resolve_missions_by_employee(self, info, self.employee_id)
+        print(EmployeeMission.query.filter_by(employee_id=self.employee_id).all())
+        return EmployeeMission.query.filter_by(employee_id=self.employee_id).all()
+       
+    def resolve_designations(self, info):
+        designation_ids = [d[0] for d in (EmployeeDesignation.query
+                           .filter_by(employee_id=self.employee_id)
+                           .with_entities(EmployeeDesignation.designation_id)
+                           .all())]
+        designations = Designation.query.filter(Designation.designation_id.in_(designation_ids)).all()
+        return designations
+    
+    def resolve_medical_record(self, info):
+        return EmployeeMedicalRecord.query.get(self.employee_id)
 
 class CreateEmployee(graphene.Mutation):
     class Arguments:
