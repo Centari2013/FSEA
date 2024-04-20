@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import SpecimenContainmentStatus
+from ..config import *
+from ...models.sqlalchemy_models import SpecimenContainmentStatus
 
 class SpecimenContainmentStatusType(SQLAlchemyObjectType):
     class Meta:

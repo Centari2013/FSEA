@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import EmployeeMission
+from ..config import *
+from ...models.sqlalchemy_models import EmployeeMission
 
 class EmployeeMissionType(SQLAlchemyObjectType):
     class Meta:

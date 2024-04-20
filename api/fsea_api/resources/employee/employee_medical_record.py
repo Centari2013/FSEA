@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import EmployeeMedicalRecord
+from ..config import *
+from ...models.sqlalchemy_models import EmployeeMedicalRecord
 from datetime import datetime
 
 class EmployeeMedicalRecordType(SQLAlchemyObjectType):

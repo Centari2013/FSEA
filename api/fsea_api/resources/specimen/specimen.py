@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import Specimen
+from ..config import *
+from ...models.sqlalchemy_models import Specimen
 from datetime import datetime
 
 class SpecimenType(SQLAlchemyObjectType):

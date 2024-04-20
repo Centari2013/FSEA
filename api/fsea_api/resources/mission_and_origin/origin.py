@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import Origin
+from ..config import *
+from ...models.sqlalchemy_models import Origin
 from datetime import datetime
 
 class OriginType(SQLAlchemyObjectType):

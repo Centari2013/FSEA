@@ -1,10 +1,19 @@
-from .config import *
-from ..models.sqlalchemy_models import Employee
+from ..config import *
+from ...models.sqlalchemy_models import Employee
+from .employee_mission import EmployeeMissionQuery, EmployeeMissionType
+from ..mission_and_origin.mission import MissionQuery, MissionType
 
 class EmployeeType(SQLAlchemyObjectType):
     class Meta:
         model = Employee
         interfaces = (graphene.relay.Node,)
+    
+    missions = graphene.List(EmployeeMissionType)
+
+    def resolve_missions(self, info):
+        print(self.employee_id)
+        
+        return EmployeeMissionQuery.resolve_missions_by_employee(self, info, self.employee_id)
 
 class CreateEmployee(graphene.Mutation):
     class Arguments:
@@ -109,6 +118,7 @@ class EmployeeQuery(graphene.ObjectType):
         if department_id:
             query = query.filter(Employee.department_id == department_id)
         return query.all()
+    
 
 class EmployeeMutation(graphene.ObjectType):
     create_employee = CreateEmployee.Field()

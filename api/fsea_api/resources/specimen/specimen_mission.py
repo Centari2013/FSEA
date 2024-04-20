@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import SpecimenMission
+from ..config import *
+from ...models.sqlalchemy_models import SpecimenMission
 
 class SpecimenMissionType(SQLAlchemyObjectType):
     class Meta:

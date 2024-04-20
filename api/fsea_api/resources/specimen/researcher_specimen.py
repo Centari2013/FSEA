@@ -1,5 +1,5 @@
-from .config import *
-from ..models.sqlalchemy_models import ResearcherSpecimen
+from ..config import *
+from ...models.sqlalchemy_models import ResearcherSpecimen
 
 class ResearcherSpecimenType(SQLAlchemyObjectType):
     class Meta:
