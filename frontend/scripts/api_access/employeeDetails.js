@@ -6,13 +6,39 @@ export async function fetchEmployeeData(employee_id) {
         body: JSON.stringify({
             query: `
                 query Employee($employeeId: String!){
-                    employee(employeeId: $employeeId) {
-                        departmentId
+                    employee(employeeId: $employeeId){
+                        employeeId
                         firstName
                         lastName
+                        department{
+                          departmentName
+                        }
+                        medicalRecord {
+                          dob
+                          bloodtype
+                          sex
+                          kilograms
+                          heightCm
+                          notes
+                        }
                         startDate
                         endDate
-                    }
+                        clearances{
+                          clearanceName
+                          description
+                        }
+                        missions {
+                          missionId
+                          missionName
+                          involvementSummary
+                        }
+                        notes
+                        designations {
+                          designationName
+                          abbreviation
+                        }
+                        
+                      }
                 }`,
             variables: {employeeId: employee_id}
         }),

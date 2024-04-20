@@ -1,10 +1,22 @@
 from ..config import *
-from ...models.sqlalchemy_models import Employee, EmployeeMission, Designation, EmployeeDesignation, Department, EmployeeMedicalRecord, Clearance, EmployeeClearance
-from .employee_mission import EmployeeMissionType
+from ...models.sqlalchemy_models import Employee, EmployeeMission, Designation, EmployeeDesignation, Department, EmployeeMedicalRecord, Clearance, EmployeeClearance, Mission
 from ..department.department import DepartmentType
 from .employee_medical_record import EmployeeMedicalRecordType
 from .clearance import ClearanceType
 from .designation import DesignationType
+
+
+class CustomEmployeeMissionType(SQLAlchemyObjectType):
+    class Meta:
+        model = EmployeeMission
+        interfaces = (graphene.relay.Node,)
+    mission_name = graphene.String()
+
+    def resolve_mission_name(self, info):
+        # Utilize the relationship to get the mission name
+        return self.mission.mission_name if self.mission else None
+
+
 
 class EmployeeType(SQLAlchemyObjectType):
     class Meta:
@@ -13,7 +25,7 @@ class EmployeeType(SQLAlchemyObjectType):
     
     department = graphene.Field(lambda: DepartmentType)
     clearances = graphene.List(lambda: ClearanceType)
-    missions = graphene.List(lambda: EmployeeMissionType)
+    missions = graphene.List(lambda: CustomEmployeeMissionType)
     designations = graphene.List(lambda: DesignationType)
     medical_record = graphene.Field(lambda: EmployeeMedicalRecordType)
 
@@ -28,8 +40,7 @@ class EmployeeType(SQLAlchemyObjectType):
         return Clearance.query.filter(Clearance.clearance_id.in_(clearance_ids)).all()
 
     def resolve_missions(self, info):
-        print(EmployeeMission.query.filter_by(employee_id=self.employee_id).all())
-        return EmployeeMission.query.filter_by(employee_id=self.employee_id).all()
+        return EmployeeMission.query.filter(EmployeeMission.employee_id == self.employee_id).all()
        
     def resolve_designations(self, info):
         designation_ids = [d[0] for d in (EmployeeDesignation.query

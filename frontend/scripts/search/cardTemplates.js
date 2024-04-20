@@ -20,11 +20,11 @@ export function noResultsCard() {
 
 export function employeeCard(employee) {
 
-    const designationString = employee.designations ? employee.designations.map(d => d.designation_name).join(', '): "";
+    const designationString = employee.designations ? employee.designations.map(d => d.abbreviation).join(', '): "";
     return `
     <div class="col-8 col-sm-10 col-md-10">
-        <a data-href="/employee/${employee.employee_id}" class="text-decoration-none">
-            <div class="card h-100 clickable-card" data-type="employee" data-id=${employee.employeeId}>
+        <a  class="text-decoration-none">
+            <div class="card h-100 clickable-card" data-type="employee" data-id=${employee.employee_id}>
                 <div class="card-body">
                     <h5 class="card-title">${employee.first_name} ${employee.last_name}</h5>
                     <p class="card-text">

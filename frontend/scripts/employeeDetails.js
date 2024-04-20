@@ -1,5 +1,4 @@
-import * as emp_api from "./api_access/employee";
-import { fetchDepartmentData } from "./api_access/departmentDetails";
+import { fetchEmployeeData } from "./api_access/employeeDetails";
 import { setWindowOpener } from "./utility";
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -11,25 +10,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!employee_id) return;
 
     try {
-        const employeeData = await emp_api.fetchEmployeeData(employee_id);
-        // Fetch designation IDs for the employee and then the details
-        const designationIdsResponse = await emp_api.fetchEmployeeDesignationIds(employee_id);
-        const designationIds = designationIdsResponse.length > 0 ? designationIdsResponse.designations.map(item => item.designation_id): [];
-        const designationDetails = await emp_api.fetchDesignationDetails(designationIds);
-        const department = await fetchDepartmentData(employeeData.department_id);
-
-        const missionIdsResponse = await emp_api.fetchEmployeeMissionIds(employee_id);
-        console.log(missionIdsResponse)
-
-        const missionIds = missionIdsResponse.missions.length > 0 ? missionIdsResponse.missions.map(item => item.mission_id): [];
-        const missions = await emp_api.fetchEmployeeMissionData(missionIds);
-        const medicalRecords = await emp_api.fetchEmployeeMedicalRecord(employee_id);
-        const clearanceIdsResponse = await emp_api.fetchEmployeeClearances(employee_id);
-        const clearanceIds = clearanceIdsResponse.clearances.map(item => item.clearance_id);
-        const clearances = await emp_api.fetchClearanceData(clearanceIds);
+        const employeeData = await fetchEmployeeData(employee_id);
+        console.log(employeeData);
+      
+    
 
         // Generate the HTML content for employee details
-        const employeeContent = generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department, missionIdsResponse.missions);
+        const employeeContent = generateEmployeeContent(employeeData);
         
         // Insert the generated content into the page
         employeeDetailsContainer.innerHTML = employeeContent;
@@ -69,36 +56,38 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-function generateEmployeeContent(employeeData, designationDetails, missions, medicalRecords, clearances, department, missionInvolvementSummaries) {
-    const designationNames = designationDetails.designations.map(d => `${d.designation_name} (${d.abbreviation})`).join(', ');
+function generateEmployeeContent(employeeData) {
 
-    const missionsContent = missions.missions.map(mission => {
-        const summary = missionInvolvementSummaries.find(m => m.mission_id === mission.mission_id);
+    const missionsContent = employeeData.missions.map(mission => {
+        
         return `
             <tr>
-                <td>${mission.mission_id}</td>
-                <td>${mission.mission_name}</td>
-                <td>${summary ? summary.involvement_summary: ""}</td>
+                <td>${mission.missionId}</td>
+                <td>${mission.missionName}</td>
+                <td>${mission.involvementSummary ? mission.involvementSummary: ""}</td>
             </tr>`;
     }).join('');
 
-    const medicalNotesContent = medicalRecords.notes && medicalRecords.notes.length > 0 
-    ? medicalRecords.notes.map(noteObj => `<li><strong>${noteObj.timestamp}:</strong>&nbsp;&nbsp;&nbsp;&nbsp; ${noteObj.note}</li>`).join('')
-    : '<li>None</li>';
+    const medicalRecord = employeeData.medicalRecord;
+    const medicalNotesContent = medicalRecord.notes && medicalRecord.notes.length > 0
+        ? JSON.parse(medicalRecord.notes).map(noteObj => `<li><strong>${noteObj.timestamp}:</strong>&nbsp;&nbsp;&nbsp;&nbsp;${noteObj.note}</li>`).join('')
+        : '<li>None</li>';
+
 
     const medicalDataContent = `
         <div class="collapse" id="medicalDataCollapse">
             <div class="card card-body">
-                <p><strong>Blood type:</strong> ${medicalRecords.bloodtype}</p>
-                <p><strong>Height:</strong> ${medicalRecords.height_cm} cm</p>
-                <p><strong>Weight:</strong> ${medicalRecords.kilograms} kg</p>
+                <p><strong>Blood type:</strong> ${medicalRecord.bloodtype}</p>
+                <p><strong>Height:</strong> ${medicalRecord.heightCm} cm</p>
+                <p><strong>Weight:</strong> ${medicalRecord.kilograms} kg</p>
                 <p><strong>Notes:</strong></p>
                 <ul>${medicalNotesContent}</ul>
             </div>
         </div>`;
 
-    const clearancesContent = clearances.clearances.map(clearance => `<li><strong>${clearance.clearance_name}:</strong> ${clearance.description}</li>`).join('');
+    const clearancesContent = employeeData.clearances.map(clearance => `<li><strong>${clearance.clearanceName}:</strong> ${clearance.description}</li>`).join('');
 
+    const designationNames = employeeData.designations.map(d => `${d.designationName} (${d.abbreviation})`).join(', ');
     return `
 
     <div style="position: relative;">
@@ -106,11 +95,12 @@ function generateEmployeeContent(employeeData, designationDetails, missions, med
         Generate PDF
     </button>
     <h2>Employee Details</h2>
-    <p><strong>ID:</strong> ${employeeData.employee_id}</p>
-    <p><strong>Name:</strong> ${employeeData.first_name} ${employeeData.last_name}</p>
-        <p><strong>Department:</strong> ${department.department_name}</p>
+    <p><strong>ID:</strong> ${employeeData.employeeId}</p>
+    <p><strong>Name:</strong> ${employeeData.firstName} ${employeeData.lastName}</p>
+        <p><strong>Department:</strong> ${employeeData.department.departmentName}</p>
         <p><strong>Designation(s):</strong> ${designationNames}</p>
-        <p><strong>Start Date:</strong> ${employeeData.start_date}</p>
+        <p><strong>Start Date:</strong> ${employeeData.startDate}</p>
+        <p><strong>End Date:</strong> ${employeeData.endDate}</p>
     </div>
         
         
