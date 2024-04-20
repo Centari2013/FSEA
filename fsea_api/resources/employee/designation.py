@@ -82,7 +82,7 @@ class DesignationQuery(graphene.ObjectType):
 
     def resolve_designations(self, info, designation_ids):
         # Query for designations with IDs in the provided list
-        return Designation.query.filter(Designation.id.in_(designation_ids)).all()
+        return Designation.query.filter(Designation.designation_id.in_(designation_ids)).all()
 
 class DesignationMutation(graphene.ObjectType):
     create_designation = CreateDesignation.Field()
