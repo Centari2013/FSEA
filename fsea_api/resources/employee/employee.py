@@ -1,9 +1,9 @@
 from ..config import *
-from ...models.sqlalchemy_models import Employee, EmployeeMission, Designation, EmployeeDesignation, Department, EmployeeMedicalRecord
+from ...models.sqlalchemy_models import Employee, EmployeeMission, Designation, EmployeeDesignation, Department, EmployeeMedicalRecord, Clearance, EmployeeClearance
 from .employee_mission import EmployeeMissionType
 from ..department.department import DepartmentType
 from .employee_medical_record import EmployeeMedicalRecordType
-
+from .clearance import ClearanceType
 from .designation import DesignationType
 
 class EmployeeType(SQLAlchemyObjectType):
@@ -12,12 +12,20 @@ class EmployeeType(SQLAlchemyObjectType):
         interfaces = (graphene.relay.Node,)
     
     department = graphene.Field(lambda: DepartmentType)
-    missions = graphene.List(EmployeeMissionType)
-    designations = graphene.List(DesignationType)
+    clearances = graphene.List(lambda: ClearanceType)
+    missions = graphene.List(lambda: EmployeeMissionType)
+    designations = graphene.List(lambda: DesignationType)
     medical_record = graphene.Field(lambda: EmployeeMedicalRecordType)
 
     def resolve_department(self, info):
         return Department.query.get(self.department_id)
+
+    def resolve_clearances(self, info):
+        clearance_ids = [c[0] for c in (EmployeeClearance.query
+                                        .filter_by(employee_id=self.employee_id)
+                                        .with_entities(EmployeeClearance.clearance_id)
+                                        .all())]
+        return Clearance.query.filter(Clearance.clearance_id.in_(clearance_ids)).all()
 
     def resolve_missions(self, info):
         print(EmployeeMission.query.filter_by(employee_id=self.employee_id).all())
