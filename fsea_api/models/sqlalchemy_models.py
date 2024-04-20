@@ -82,7 +82,15 @@ class EmployeeMedicalRecord(db.Model):
     notes = db.Column(JSONB)
     created = db.Column(db.TIMESTAMP, default=db.func.current_timestamp())
     updated = db.Column(db.TIMESTAMP)
-    
+
+
+
+class EmployeeMission(db.Model):
+    __tablename__ = 'employee_missions'
+    employee_id = db.Column(db.String(8), db.ForeignKey('employees.employee_id'), primary_key=True)
+    mission_id = db.Column(db.String(8), db.ForeignKey('missions.mission_id'), primary_key=True)
+    involvement_summary = db.Column(db.Text)
+    mission = db.relationship('Mission', back_populates='employee_missions', foreign_keys=[mission_id])
 
 class Mission(db.Model):
     __tablename__ = 'missions'
@@ -96,6 +104,8 @@ class Mission(db.Model):
     notes = db.Column(JSONB)
     created = db.Column(db.TIMESTAMP, default=db.func.current_timestamp())
     updated = db.Column(db.TIMESTAMP)
+
+    employee_missions = db.relationship('EmployeeMission', back_populates='mission', foreign_keys=[EmployeeMission.mission_id])
 
 
 class Origin(db.Model):
@@ -174,11 +184,6 @@ class DepartmentMission(db.Model):
     mission_id = db.Column(db.String(8), db.ForeignKey('missions.mission_id'), primary_key=True)
 
 
-class EmployeeMission(db.Model):
-    __tablename__ = 'employee_missions'
-    employee_id = db.Column(db.String(8), db.ForeignKey('employees.employee_id'), primary_key=True)
-    mission_id = db.Column(db.String(8), db.ForeignKey('missions.mission_id'), primary_key=True)
-    involvement_summary = db.Column(db.Text)
 
 
 class ResearcherSpecimen(db.Model):
