@@ -1,7 +1,8 @@
 from ..config import *
-from ...models.sqlalchemy_models import Specimen, SpecimenContainmentStatus, ContainmentStatus
+from ...models.sqlalchemy_models import Specimen, SpecimenContainmentStatus, ContainmentStatus, Employee, ResearcherSpecimen
 from datetime import datetime
 from .containment_status import ContainmentStatusType
+from ..employee.employee import EmployeeType
 
 class SpecimenType(SQLAlchemyObjectType):
     class Meta:
@@ -9,14 +10,21 @@ class SpecimenType(SQLAlchemyObjectType):
         interfaces = (graphene.relay.Node,)
     
     containment_statuses = graphene.List(lambda: ContainmentStatusType)
+    researchers = graphene.List(lambda: EmployeeType)
 
     def resolve_containment_statuses(self, info):
         status_ids = [c[0] for c in SpecimenContainmentStatus.query\
                         .filter_by(specimen_id=self.specimen_id)\
                         .with_entities(SpecimenContainmentStatus.containment_status_id)\
                         .all()]
-        print(status_ids)
-        
+        return ContainmentStatus.query.filter(ContainmentStatus.containment_status_id.in_(status_ids)).all()
+    
+    def resolve_researchers(self, info):
+        employee_ids = [r[0] for r in ResearcherSpecimen.query\
+                        .filter_by(specimen_id=self.specimen_id)\
+                        .with_entities(ResearcherSpecimen.employee_id)\
+                        .all()]
+        return Employee.query.filter(Employee.employee_id.in_(employee_ids)).all()
 
 class CreateSpecimen(graphene.Mutation):
     class Arguments:
