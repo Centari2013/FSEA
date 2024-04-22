@@ -1,11 +1,22 @@
 from ..config import *
-from ...models.sqlalchemy_models import Specimen
+from ...models.sqlalchemy_models import Specimen, SpecimenContainmentStatus, ContainmentStatus
 from datetime import datetime
+from .containment_status import ContainmentStatusType
 
 class SpecimenType(SQLAlchemyObjectType):
     class Meta:
         model = Specimen
         interfaces = (graphene.relay.Node,)
+    
+    containment_statuses = graphene.List(lambda: ContainmentStatusType)
+
+    def resolve_containment_statuses(self, info):
+        status_ids = [c[0] for c in SpecimenContainmentStatus.query\
+                        .filter_by(specimen_id=self.specimen_id)\
+                        .with_entities(SpecimenContainmentStatus.containment_status_id)\
+                        .all()]
+        print(status_ids)
+        
 
 class CreateSpecimen(graphene.Mutation):
     class Arguments:
