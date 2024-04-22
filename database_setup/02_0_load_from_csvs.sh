@@ -50,6 +50,9 @@ SET session_replication_role = DEFAULT;
 -- specimens.csv -> specimens
 \copy specimens(specimen_id, specimen_name, origin_id, mission_id, threat_level, acquisition_date, notes, description) FROM 'specimens.csv' DELIMITER ',' CSV HEADER;
 
+-- specimen_containment_statuses.csv -> specimen_containment_statuses
+\copy specimen_containment_statuses(specimen_id, containment_status_id) FROM 'specimen_containment_statuses.csv' DELIMITER ',' CSV HEADER;
+
 -- mission_origins.csv -> mission_origins
 \copy mission_origins(mission_id, origin_id) FROM 'mission_origins.csv' DELIMITER ',' CSV HEADER;
 
