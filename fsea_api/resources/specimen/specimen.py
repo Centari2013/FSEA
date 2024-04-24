@@ -1,8 +1,9 @@
 from ..config import *
-from ...models.sqlalchemy_models import Specimen, SpecimenContainmentStatus, ContainmentStatus, Employee, ResearcherSpecimen
+from ...models.sqlalchemy_models import Specimen, SpecimenContainmentStatus, ContainmentStatus, Employee, ResearcherSpecimen, SpecimenMedicalRecord
 from datetime import datetime
 from .containment_status import ContainmentStatusType
 from ..employee.employee import EmployeeType
+from .specimen_medical_record import SpecimenMedicalRecordType
 
 class SpecimenType(SQLAlchemyObjectType):
     class Meta:
@@ -11,6 +12,7 @@ class SpecimenType(SQLAlchemyObjectType):
     
     containment_statuses = graphene.List(lambda: ContainmentStatusType)
     researchers = graphene.List(lambda: EmployeeType)
+    medical_record = graphene.Field(lambda: SpecimenMedicalRecordType)
 
     def resolve_containment_statuses(self, info):
         status_ids = [c[0] for c in SpecimenContainmentStatus.query\
@@ -25,6 +27,9 @@ class SpecimenType(SQLAlchemyObjectType):
                         .with_entities(ResearcherSpecimen.employee_id)\
                         .all()]
         return Employee.query.filter(Employee.employee_id.in_(employee_ids)).all()
+    
+    def resolve_medical_record(self, info):
+        return SpecimenMedicalRecord.query.get(self.specimen_id)
 
 class CreateSpecimen(graphene.Mutation):
     class Arguments:
