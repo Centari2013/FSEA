@@ -92,6 +92,14 @@ class EmployeeMission(db.Model):
     involvement_summary = db.Column(db.Text)
     mission = db.relationship('Mission', back_populates='employee_missions', foreign_keys=[mission_id])
 
+
+class DepartmentMission(db.Model):
+    __tablename__ = 'department_missions'
+    department_id = db.Column(db.Integer, db.ForeignKey('departments.department_id'), primary_key=True)
+    mission_id = db.Column(db.String(8), db.ForeignKey('missions.mission_id'), primary_key=True)
+    mission = db.relationship('Mission', back_populates='department_missions', foreign_keys=[mission_id])
+
+
 class Mission(db.Model):
     __tablename__ = 'missions'
     mission_id = db.Column(db.String(8), primary_key=True)
@@ -106,6 +114,7 @@ class Mission(db.Model):
     updated = db.Column(db.TIMESTAMP)
 
     employee_missions = db.relationship('EmployeeMission', back_populates='mission', foreign_keys=[EmployeeMission.mission_id])
+    department_missions = db.relationship('DepartmentMission', back_populates='mission', foreign_keys=[DepartmentMission.mission_id])
 
 
 class Origin(db.Model):
@@ -177,11 +186,6 @@ class Credential(db.Model):
     created = db.Column(db.TIMESTAMP, default=db.func.current_timestamp())
     updated = db.Column(db.TIMESTAMP)
 
-
-class DepartmentMission(db.Model):
-    __tablename__ = 'department_missions'
-    department_id = db.Column(db.Integer, db.ForeignKey('departments.department_id'), primary_key=True)
-    mission_id = db.Column(db.String(8), db.ForeignKey('missions.mission_id'), primary_key=True)
 
 
 
