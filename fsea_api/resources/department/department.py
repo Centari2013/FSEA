@@ -1,10 +1,67 @@
 from ..config import *
-from ...models.sqlalchemy_models import Department
+from ...models.sqlalchemy_models import Department, Employee, DepartmentMission, EmployeeDesignation, Designation
+from ..employee.designation import DesignationType
+
+class CustomEmployeeType(graphene.ObjectType):
+    employee_id = graphene.String()
+    first_name = graphene.String()
+    last_name = graphene.String()
+    designations = graphene.List(lambda: DesignationType)
+
+    def resolve_designations(self, info):
+        designation_ids = [d[0] for d in (EmployeeDesignation.query
+                           .filter_by(employee_id=self.employee_id)
+                           .with_entities(EmployeeDesignation.designation_id)
+                           .all())]
+        designations = Designation.query.filter(Designation.designation_id.in_(designation_ids)).all()
+        return designations
+
+class CustomDepartmentMissionType(SQLAlchemyObjectType):
+    class Meta:
+        model = DepartmentMission
+        interfaces = (graphene.relay.Node,)
+        exclude_fields = ('department_id')
+    mission_name = graphene.String()
+
+    def resolve_mission_name(self, info):
+        # Utilize the relationship to get the mission name
+        return self.mission.mission_name if self.mission else None
 
 class DepartmentType(SQLAlchemyObjectType):
     class Meta:
         model = Department
         interfaces = (graphene.relay.Node,)
+        exclude_fields = ('director_id')
+    
+    director = graphene.Field(lambda: CustomEmployeeType)
+    missions = graphene.List(CustomDepartmentMissionType)
+    employees = graphene.List(CustomEmployeeType)
+
+    def resolve_director(self, info):
+        # Assuming Employee is imported from your SQLAlchemy model definitions
+        employee = Employee.query.get(self.director_id)
+        
+        return CustomEmployeeType(
+            employee_id=employee.employee_id,
+            first_name=employee.first_name,
+            last_name=employee.last_name
+        )
+       
+    
+    def resolve_missions(self, info):
+        return DepartmentMission.query.filter(DepartmentMission.department_id == self.department_id).all()
+    
+    def resolve_employees(self, info):
+        employees = Employee.query.filter(Employee.department_id == self.department_id).all()
+        
+        return [
+            CustomEmployeeType(
+                employee_id=emp.employee_id,
+                first_name=emp.first_name,
+                last_name=emp.last_name
+            ) for emp in employees
+        ]
+    
 
 class CreateDepartment(graphene.Mutation):
     class Arguments:
