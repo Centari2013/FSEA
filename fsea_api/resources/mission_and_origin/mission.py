@@ -1,11 +1,92 @@
 from ..config import *
-from ...models.sqlalchemy_models import Mission
+from ...models.sqlalchemy_models import Mission, EmployeeDesignation, Designation, Employee, Origin, EmployeeMission, DepartmentMission, MissionOrigin, Mission, Department
+from ..employee.designation import DesignationType
 from datetime import datetime
 
+
+class MissionCustomOriginType(graphene.ObjectType):
+    origin_id = graphene.String()
+    origin_name = graphene.String()
+class MissionCustomDepartmentType(graphene.ObjectType):
+    department_id = graphene.Int()
+    department_name = graphene.String()
+
+class MissionCustomEmployeeType(graphene.ObjectType):
+    employee_id = graphene.String()
+    first_name = graphene.String()
+    last_name = graphene.String()
+    designations = graphene.List(lambda: DesignationType)
+
+    def resolve_designations(self, info):
+        designation_ids = [d[0] for d in (EmployeeDesignation.query
+                           .filter_by(employee_id=self.employee_id)
+                           .with_entities(EmployeeDesignation.designation_id)
+                           .all())]
+        designations = Designation.query.filter(Designation.designation_id.in_(designation_ids)).all()
+        return designations
 class MissionType(SQLAlchemyObjectType):
     class Meta:
         model = Mission
         interfaces = (graphene.relay.Node,)
+        exclude_fields = ('commander_id', 'supervisor_id')
+    
+    commander = graphene.Field(MissionCustomEmployeeType)
+    supervisor = graphene.Field(MissionCustomEmployeeType)
+    employees = graphene.List(MissionCustomEmployeeType)
+    departments = graphene.List(MissionCustomDepartmentType)
+    origins = graphene.List(MissionCustomOriginType)
+    
+    def resolve_commander(self, info):
+        commander = Employee.query.get(self.commander_id)
+        if commander:
+            return MissionCustomEmployeeType(
+                employee_id=commander.employee_id,
+                first_name=commander.first_name,
+                last_name=commander.last_name
+            )
+        return None
+
+    def resolve_supervisor(self, info):
+        supervisor = Employee.query.get(self.supervisor_id)
+        if supervisor:
+            return MissionCustomEmployeeType(
+                employee_id=supervisor.employee_id,
+                first_name=supervisor.first_name,
+                last_name=supervisor.last_name
+            )
+        return None
+
+    def resolve_employees(self, info):
+        employee_missions = EmployeeMission.query.filter_by(mission_id=self.mission_id).all()
+        employees = [Employee.query.get(em.employee_id) for em in employee_missions]
+        return [
+            MissionCustomEmployeeType(
+                employee_id=emp.employee_id,
+                first_name=emp.first_name,
+                last_name=emp.last_name
+            ) for emp in employees if emp
+        ]
+
+    def resolve_departments(self, info):
+        department_missions = DepartmentMission.query.filter_by(mission_id=self.mission_id).all()
+        departments = [Department.query.get(dm.department_id) for dm in department_missions]
+        return [
+            MissionCustomDepartmentType(
+                department_id=dept.department_id,
+                department_name=dept.department_name
+            ) for dept in departments if dept
+        ]
+
+    def resolve_origins(self, info):
+        mission_origins = MissionOrigin.query.filter_by(mission_id=self.mission_id).all()
+        origins = [Origin.query.get(mo.origin_id) for mo in mission_origins]
+        return [
+            MissionCustomOriginType(
+                origin_id=origin.origin_id,
+                origin_name=origin.origin_name
+            ) for origin in origins if origin
+        ]
+
 
 class CreateMission(graphene.Mutation):
     class Arguments:
