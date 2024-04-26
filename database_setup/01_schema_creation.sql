@@ -27,7 +27,8 @@ CREATE TABLE resources (
     resource_id SERIAL PRIMARY KEY,
     resource_name TEXT NOT NULL,
     resource_type TEXT NOT NULL,
-    description TEXT
+    description TEXT,
+    CHECK (resource_type IN ('column', 'table'))
 );
 
 CREATE TABLE clearance_resource_access (
@@ -38,7 +39,8 @@ CREATE TABLE clearance_resource_access (
     updated TIMESTAMP WITHOUT TIME ZONE,
     PRIMARY KEY (clearance_id, resource_id),
     FOREIGN KEY (clearance_id) REFERENCES clearances(clearance_id),
-    FOREIGN KEY (resource_id) REFERENCES resources(resource_id)
+    FOREIGN KEY (resource_id) REFERENCES resources(resource_id),
+    CHECK (access_type IN ('read', 'write'))
 );
 
 

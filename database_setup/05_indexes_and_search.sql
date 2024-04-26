@@ -34,8 +34,8 @@ CREATE INDEX idx_researcher_specimens_specimen_id ON researcher_specimens(specim
 
 
 -- Indexes for other
-CREATE INDEX idx_clearance_resources_clearance_id ON clearance_resources(clearance_id);
-CREATE INDEX idx_clearance_resources_resource_id ON clearance_resources(resource_id);
+CREATE INDEX idx_clearance_resources_clearance_id ON clearance_resource_access(clearance_id);
+CREATE INDEX idx_clearance_resources_resource_id ON clearance_resource_access(resource_id);
 
 -- TSVECTORS
 ALTER TABLE employees
