@@ -69,7 +69,7 @@ SET session_replication_role = DEFAULT;
 \copy researcher_specimens(employee_id, specimen_id) FROM 'researcher_specimens.csv' DELIMITER ',' CSV HEADER;
 
 -- resources.csv -> resources
-\copy resources(resource_id, resource_name) FROM 'researcher_specimens.csv' DELIMITER ',' CSV HEADER;
+\copy resources(resource_id, resource_name, resource_type, description) FROM 'resources.csv' DELIMITER ',' CSV HEADER;
 
 -- clearance_resource_access.csv -> clearance_resource_access
 \copy clearance_resource_access(clearance_id, resource_id, access_type) FROM 'clearance_resource_access.csv' DELIMITER ',' CSV HEADER;
