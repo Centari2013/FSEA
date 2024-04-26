@@ -16,11 +16,14 @@ CSV Upload Order:
 9. employee_medical_records.csv -> employee_medical_records
 10. missions.csv -> missions
 11. specimens.csv -> specimens
-12. mission_origins.csv -> mission_origins
-13. specimen_medical_records.csv -> specimen_medical_records
-14. department_missions.csv -> department_missions
-15. employee_missions.csv -> employee_missions
-16. researcher_specimens.csv -> researcher_specimens
+12. specimen_containment_statuses -> specimen_containment_statuses
+13. mission_origins.csv -> mission_origins
+14. specimen_medical_records.csv -> specimen_medical_records
+15. department_missions.csv -> department_missions
+16. employee_missions.csv -> employee_missions
+17. researcher_specimens.csv -> researcher_specimens
+18. resources.csv -> resources
+19. clearance_resource_access.csv -> clearance_resource_access
 */
 
 
