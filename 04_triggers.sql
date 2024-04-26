@@ -33,6 +33,11 @@ CREATE OR REPLACE TRIGGER update_credentials_modified
     FOR EACH ROW
     EXECUTE FUNCTION update_modified_column();
 
+CREATE OR REPLACE TRIGGER update_clearance_resource_access_modified
+    BEFORE UPDATE ON clearance_resource_access
+    FOR EACH ROW
+    EXECUTE FUNCTION update_modified_column();
+
 CREATE OR REPLACE TRIGGER create_employee_records
     AFTER INSERT ON employees
     FOR EACH ROW

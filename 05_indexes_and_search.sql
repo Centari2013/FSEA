@@ -9,6 +9,7 @@ CREATE INDEX idx_employee_designations_employee_id ON employee_designations(empl
 CREATE INDEX idx_employee_missions_mission_id ON employee_missions(mission_id);
 CREATE INDEX idx_employee_missions_employee_id ON employee_missions(employee_id);
 
+
 -- Indexes for missions and related tables
 CREATE INDEX idx_missions_commander_id ON missions(commander_id);
 CREATE INDEX idx_missions_supervisor_id ON missions(supervisor_id);
@@ -31,6 +32,10 @@ CREATE INDEX idx_department_missions_mission_id ON department_missions(mission_i
 CREATE INDEX idx_researcher_specimens_employee_id ON researcher_specimens(employee_id);
 CREATE INDEX idx_researcher_specimens_specimen_id ON researcher_specimens(specimen_id);
 
+
+-- Indexes for other
+CREATE INDEX idx_clearance_resources_clearance_id ON clearance_resources(clearance_id);
+CREATE INDEX idx_clearance_resources_resource_id ON clearance_resources(resource_id);
 
 -- TSVECTORS
 ALTER TABLE employees
