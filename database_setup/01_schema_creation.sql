@@ -23,6 +23,24 @@ CREATE TABLE designations (
     abbreviation VARCHAR(5) NOT NULL
 );
 
+CREATE TABLE resources (
+    resource_id SERIAL PRIMARY KEY,
+    resource_name TEXT NOT NULL,
+    resource_type TEXT NOT NULL,
+    description TEXT
+);
+
+CREATE TABLE clearance_resource_access (
+    clearance_id INTEGER,
+    resource_id INTEGER,
+    access_type TEXT NOT NULL,
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP WITHOUT TIME ZONE,
+    PRIMARY KEY (clearance_id, resource_id),
+    FOREIGN KEY (clearance_id) REFERENCES clearances(clearance_id),
+    FOREIGN KEY (resource_id) REFERENCES resources(resource_id)
+);
+
 
 
 CREATE TABLE employees (
