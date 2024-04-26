@@ -40,7 +40,7 @@ CREATE TABLE clearance_resource_access (
     PRIMARY KEY (clearance_id, resource_id),
     FOREIGN KEY (clearance_id) REFERENCES clearances(clearance_id),
     FOREIGN KEY (resource_id) REFERENCES resources(resource_id),
-    CHECK (access_type IN ('read', 'write'))
+    CHECK (access_type IN ('read', 'write', 'read_write'))
 );
 
 
