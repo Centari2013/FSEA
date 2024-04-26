@@ -1,11 +1,22 @@
 from ..config import *
-from ...models.sqlalchemy_models import Origin
+from ...models.sqlalchemy_models import Origin, Mission, MissionOrigin
 from datetime import datetime
+from .mission import MissionType
+
 
 class OriginType(SQLAlchemyObjectType):
     class Meta:
         model = Origin
         interfaces = (graphene.relay.Node,)
+
+    missions = graphene.List(MissionType)
+    
+    def resolve_missions(self, info):
+        mission_ids = [m[0] for m in MissionOrigin.query.filter_by(origin_id=self.origin_id)\
+                                    .with_entities(MissionOrigin.mission_id)\
+                                    .all()]
+        return Mission.query.filter(Mission.mission_id.in_(mission_ids)).all()
+
 
 class CreateOrigin(graphene.Mutation):
     class Arguments:
