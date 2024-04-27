@@ -26,6 +26,7 @@ def perform_search(sql_query, query_param):
         result = connection.execute(sql, {'query': query_param}).all()
     return result
 
+
 class Search(graphene.Mutation):
     class Arguments:
         query = graphene.String(required=True)
@@ -47,7 +48,7 @@ class Search(graphene.Mutation):
             for row in perform_search(sql, formatted_query):
                 data = dict(row)  # Convert row to a dictionary directly
                 # Process dates and other types as needed
-                for date_field in ['discovery_date', 'start_date', 'end_date']:
+                for date_field in ['discovery_date', 'start_date', 'end_date', 'acquisition_date']:
                     if date_field in data and data[date_field]:
                         data[date_field] = data[date_field].isoformat()
                 
