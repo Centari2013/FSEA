@@ -43,7 +43,7 @@ export function departmentCard(department) {
     console.log(department)
     return `
     <div class="col-8 col-sm-10 col-md-10">
-        <a href="/department/${department.department_id}" class="text-decoration-none">
+        <a class="text-decoration-none">
             <div class="card h-100 clickable-card" data-type="department" data-id=${department.department_id}>
                 <div class="card-body">
                     <h5 class="card-title">${department.department_name}</h5>
@@ -62,7 +62,7 @@ export function departmentCard(department) {
 export function missionCard(mission) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
-        <a href="/mission/${mission.mission_id}" class="text-decoration-none">
+        <a class="text-decoration-none">
             <div class="card h-100 clickable-card" data-type="mission" data-id=${mission.mission_id}>
                 <div class="card-body">
                     <h5 class="card-title">${mission.mission_name}</h5>
@@ -82,7 +82,7 @@ export function missionCard(mission) {
 export function specimenCard(specimen) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
-        <a href="/specimen/${specimen.specimen_id}" class="text-decoration-none">
+        <a class="text-decoration-none">
             <div class="card h-100 clickable-card" data-type="specimen" data-id=${specimen.specimen_id}>
                 <div class="card-body">
                     <h5 class="card-title">${specimen.name}</h5>
@@ -101,7 +101,7 @@ export function specimenCard(specimen) {
 export function originCard(origin) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
-        <a href="/origin/${origin.origin_id}" class="text-decoration-none">
+        <a class="text-decoration-none">
             <div class="card h-100 clickable-card" data-type="origin" data-id=${origin.origin_id}>
                 <div class="card-body">
                     <h5 class="card-title">${origin.origin_name}</h5>
@@ -120,7 +120,7 @@ export function originCard(origin) {
 export function departmentDirectoryCard(department) {
     return `
     <div class="col-8 col-sm-10 col-md-10">
-        <a href="/department/" class="text-decoration-none">
+        <a class="text-decoration-none">
             <div class="card h-100 clickable-card" data-type="department" data-id=${department.departmentId}>
                 <div class="card-body">
                     <h5 class="card-title">${department.departmentName}</h5>
