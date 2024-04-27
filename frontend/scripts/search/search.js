@@ -19,7 +19,7 @@ export function performSearch(query, page = 1) {
         //"pageSize": 25  // Assuming pageSize is constant, adjust as necessary
     };
 
-    fetch(`${api}`, {
+    fetch(api, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

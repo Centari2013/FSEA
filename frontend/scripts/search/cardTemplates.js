@@ -85,7 +85,7 @@ export function specimenCard(specimen) {
         <a class="text-decoration-none">
             <div class="card h-100 clickable-card" data-type="specimen" data-id=${specimen.specimen_id}>
                 <div class="card-body">
-                    <h5 class="card-title">${specimen.name}</h5>
+                    <h5 class="card-title">${specimen.specimen_name}</h5>
                     <p class="card-text">
                         <strong>Specimen ID:</strong> ${specimen.specimen_id}<br>
                         <strong>Threat Level:</strong> ${specimen.threat_level}<br>
