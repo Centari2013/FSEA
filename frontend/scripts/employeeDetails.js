@@ -1,5 +1,5 @@
 import { fetchEmployeeData } from "./api_access/employeeDetails";
-import { setWindowOpener } from "./utility";
+import { setWindowOpener,setToggle} from "./utility";
 
 document.addEventListener('DOMContentLoaded', async () => {
     setWindowOpener();
@@ -144,7 +144,7 @@ function generateEmployeeContent(employeeData) {
     `;
 }
 
-function collectDataForPDF(employeeData, designationDetails, missions, medicalRecords, clearances, department) {
+export function collectDataForPDF(employeeData, designationDetails, missions, medicalRecords, clearances, department) {
     const jsonData = {
         employeeData,
         designationDetails,
@@ -154,23 +154,6 @@ function collectDataForPDF(employeeData, designationDetails, missions, medicalRe
         department
     };
     return jsonData;
-}
-
-
-function setToggle() {
-    // Find all collapsible elements with buttons linked to them
-    document.querySelectorAll('.btn-link[data-bs-toggle="collapse"]').forEach(button => {
-        const targetId = button.getAttribute('data-bs-target');
-        const collapseElement = document.querySelector(targetId);
-
-        collapseElement.addEventListener('show.bs.collapse', () => {
-            button.textContent = 'See Less'; // Change button text to "See Less" when expanded
-        });
-
-        collapseElement.addEventListener('hide.bs.collapse', () => {
-            button.textContent = 'See More'; // Change back to "See More" when collapsed
-        });
-    });
 }
 
 
