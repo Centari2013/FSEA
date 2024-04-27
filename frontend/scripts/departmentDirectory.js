@@ -10,6 +10,7 @@ export function loadDepartmentDirectory() {
     body: JSON.stringify({
         query: `query {
             allDepartments{
+                departmentId
                 departmentName
                 description
             }
