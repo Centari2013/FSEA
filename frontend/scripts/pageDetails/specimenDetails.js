@@ -1,5 +1,5 @@
-import { fetchSpecimenDetails } from "./api_access/specimenDetails";
-import { setWindowOpener, setToggle } from "./utility";
+import { fetchSpecimenDetails } from "../api_access/specimenDetails";
+import { setWindowOpener, setToggle } from "../utility";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);

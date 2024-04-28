@@ -1,5 +1,5 @@
-import { fetchMissionDetails } from "./api_access/missionDetails";
-import { setWindowOpener, setToggle } from "./utility";
+import { fetchMissionDetails } from "../api_access/missionDetails";
+import { setWindowOpener, setToggle } from "../utility";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);

@@ -1,7 +1,8 @@
 import { checkSessionOnLoad } from './auth/checkTokenAndRedirect.js'
-import { loadDepartmentDirectory } from './directoryScripts/departmentDirectory.js';
+import { loadDepartmentDirectory } from './directories/departmentDirectory.js';
 import { performSearch } from './search/search.js';
-import { loadSpecimenDirectory } from './directoryScripts/specimenDirectory.js';
+import { loadSpecimenDirectory } from './directories/specimenDirectory.js';
+import { loadOriginDirectory } from './directories/originDirectory.js';
 import { showPaginationButtons } from './utility.js';
 
 document.addEventListener("DOMContentLoaded", function() {

@@ -1,5 +1,5 @@
-import { fetchDepartmentDetails } from "./api_access/departmentDetails";
-import { setToggle, setWindowOpener } from "./utility";
+import { fetchDepartmentDetails } from "../api_access/departmentDetails";
+import { setToggle, setWindowOpener } from "../utility";
 
 document.addEventListener('DOMContentLoaded', async () => {
     setWindowOpener();
