@@ -94,9 +94,8 @@ function generateEmployeeContent(employeeData) {
     <button id="generatePDFButton" style="position: absolute; top: 0; right: 0; margin: 10px;" class="btn btn-primary">
         Generate PDF
     </button>
-    <h2>Employee Details</h2>
-    <p><strong>ID:</strong> ${employeeData.employeeId}</p>
-    <p><strong>Name:</strong> ${employeeData.firstName} ${employeeData.lastName}</p>
+        <h2>${employeeData.firstName} ${employeeData.lastName}</h2>
+        <p><strong>Employee ID:</strong> ${employeeData.employeeId}</p>
         <p><strong>Department:</strong> ${employeeData.department.departmentName}</p>
         <p><strong>Designation(s):</strong> ${designationNames}</p>
         <p><strong>Start Date:</strong> ${employeeData.startDate}</p>
