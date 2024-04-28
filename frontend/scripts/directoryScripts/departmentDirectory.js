@@ -1,7 +1,7 @@
 const api = import.meta.env.VITE_API_ENDPOINT;
-import { cardContainer} from "./search/cardTemplates";
+import { cardContainer} from "../search/cardTemplates";
 import { departmentDirectoryCard, titleCard } from "./directoryCardTemplates";
-import { setupEventListeners } from "./search/clickableCardsFunctionality";
+import { setupEventListeners } from "../search/clickableCardsFunctionality";
 
 export function loadDepartmentDirectory() {
     fetch(api, { method: 'POST', 

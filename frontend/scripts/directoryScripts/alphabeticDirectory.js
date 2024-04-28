@@ -1,5 +1,5 @@
-import { directoryEntityCardFactory } from "./utility";
-import { cardContainer } from "./search/cardTemplates";
+import { directoryEntityCardFactory } from "../utility";
+import { cardContainer } from "../search/cardTemplates";
 import { titleCard } from "./directoryCardTemplates";
 
 export function createAlphabeticDirectory(entities, sortKey, entityType, directoryTitle) {

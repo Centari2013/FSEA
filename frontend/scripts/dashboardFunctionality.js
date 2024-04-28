@@ -1,7 +1,7 @@
 import { checkSessionOnLoad } from './auth/checkTokenAndRedirect.js'
-import { loadDepartmentDirectory } from './departmentDirectory.js';
+import { loadDepartmentDirectory } from './directoryScripts/departmentDirectory.js';
 import { performSearch } from './search/search.js';
-import { loadSpecimenDirectory } from './specimenDirectory.js';
+import { loadSpecimenDirectory } from './directoryScripts/specimenDirectory.js';
 import { showPaginationButtons } from './utility.js';
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -88,6 +88,10 @@ function loadContentIntoMainArea(contentId) {
         case 'specimenDirectory':
             mainContentArea.innerHTML = '';
             loadSpecimenDirectory();
+            break;
+        case 'originDirectory':
+            mainContentArea.innerHTML = '';
+            loadOriginDirectory();
             break;
         default:
             mainContentArea.innerHTML = '';

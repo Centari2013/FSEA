@@ -1,5 +1,5 @@
 import { employeeCard, specimenCard, departmentCard, missionCard, originCard} from "./search/cardTemplates";
-import { employeeDirectoryCard, specimenDirectoryCard, originDirectoryCard, departmentDirectoryCard } from "./directoryCardTemplates" ;
+import { employeeDirectoryCard, specimenDirectoryCard, originDirectoryCard, departmentDirectoryCard } from "./directoryScripts/directoryCardTemplates" ;
 export function setWindowOpener(){
     if (window.history.length <= 1) { // If this page is the only entry in the history
         window.history.pushState(null, null, window.location.href); // Modify history state

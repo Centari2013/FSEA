@@ -1,5 +1,5 @@
 const api = import.meta.env.VITE_API_ENDPOINT;
-import { setupEventListeners } from "./search/clickableCardsFunctionality";
+import { setupEventListeners } from "../search/clickableCardsFunctionality";
 import { createAlphabeticDirectory } from "./alphabeticDirectory";
 
 export function loadSpecimenDirectory() {
