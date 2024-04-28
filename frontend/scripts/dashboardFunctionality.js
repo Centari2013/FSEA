@@ -1,8 +1,11 @@
-import {checkSessionOnLoad} from './auth/checkTokenAndRedirect.js'
+import { checkSessionOnLoad } from './auth/checkTokenAndRedirect.js'
 import { loadDepartmentDirectory } from './departmentDirectory.js';
 import { performSearch } from './search/search.js';
+import { loadSpecimenDirectory } from './specimenDirectory.js';
+import { showPaginationButtons } from './utility.js';
 
 document.addEventListener("DOMContentLoaded", function() {
+    showPaginationButtons(false);
 
     var searchForm = document.getElementById('searchForm');
     var searchInput = document.getElementById('search-bar');
@@ -49,6 +52,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
 });
 
+
+
 function deacticateNavItems() {
     var navItems = document.querySelectorAll('.nav-item a'); // Select all nav-link elements within nav-items
     navItems.forEach(function(item) {
@@ -71,6 +76,7 @@ function setActiveNavLink (item) {
 
 
 function loadContentIntoMainArea(contentId) {
+    showPaginationButtons(false);
     const mainContentArea = document.getElementById('main-content');
     mainContentArea.innerHTML = ''; // Clear existing content
     
@@ -78,8 +84,14 @@ function loadContentIntoMainArea(contentId) {
         case 'departmentDirectory':
             mainContentArea.innerHTML = '';
             loadDepartmentDirectory();
+            break;
+        case 'specimenDirectory':
+            mainContentArea.innerHTML = '';
+            loadSpecimenDirectory();
+            break;
         default:
             mainContentArea.innerHTML = '';
+            break;
             
     }
     

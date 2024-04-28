@@ -1,5 +1,6 @@
-import { employeeCard, specimenCard, departmentCard, missionCard, originCard, noResultsCard, cardContainer} from "./cardTemplates";
+import {cardContainer} from "./cardTemplates";
 import { setupEventListeners } from "./clickableCardsFunctionality";
+import { entityCardFactory, showPaginationButtons } from "../utility";
 const api = import.meta.env.VITE_API_ENDPOINT;
 
 let allResults = [];  // This will store all fetched results
@@ -37,17 +38,6 @@ export function performSearch(query) {
 }
 
 
-function entityCardFactory(result) {
-    const data = result.data;
-    switch(result.entityType) {
-        case 'E': return employeeCard(data);
-        case 'S': return specimenCard(data);
-        case 'O': return originCard(data);
-        case 'M': return missionCard(data);
-        case 'D': return departmentCard(data);
-        default: throw new Error(`Unsupported entity type: ${result.entityType}`);
-    }
-}
 
 const RESULTS_PER_PAGE = 25;
 
@@ -81,26 +71,54 @@ let currentPage = 1;
 let currentFilter = '';
 
 export function setupPagination(totalPages, currentPage) {
-  const paginationContainer = document.querySelector('.pagination');
-  paginationContainer.innerHTML = `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-    <a class="page-link" href="#" data-page="${currentPage - 1}">Previous</a></li>`;
+    const paginationContainer = document.querySelector('.pagination');
+    // Ensure the container is empty before setting up new pagination
+    paginationContainer.innerHTML = '';
 
-  for (let i = 1; i <= totalPages; i++) {
-    paginationContainer.innerHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-      <a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
-  }
+    // Create and append 'Previous' button
+    paginationContainer.appendChild(createPageItem(currentPage - 1, currentPage === 1, 'Previous', 'prevPage'));
 
-  paginationContainer.innerHTML += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-    <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a></li>`;
+    // Create and append page number buttons
+    for (let i = 1; i <= totalPages; i++) {
+        paginationContainer.appendChild(createPageItem(i, i === currentPage, i.toString()));
+    }
 
-  // Add event listeners to all pagination links
-  Array.from(paginationContainer.querySelectorAll('a')).forEach(link => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      const page = parseInt(event.target.getAttribute('data-page'), 10);
-      changePage(page);
+    // Create and append 'Next' button
+    paginationContainer.appendChild(createPageItem(currentPage + 1, currentPage === totalPages, 'Next', 'nextPage'));
+
+    // Now that all elements are added to the DOM, add event listeners
+    Array.from(paginationContainer.querySelectorAll('a')).forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const page = parseInt(event.target.getAttribute('data-page'), 10);
+            changePage(page);
+        });
     });
-  });
+
+    showPaginationButtons(true);
+}
+
+// Helper function to create page items
+function createPageItem(page, isDisabled, text, id = null) {
+    const li = document.createElement('li');
+    li.className = `page-item ${isDisabled ? 'disabled' : ''}`;
+
+    const a = document.createElement('a');
+    a.className = 'page-link';
+    a.href = '#';
+    a.textContent = text;
+    a.setAttribute('data-page', page);
+    if (id) a.id = id; // Set specific IDs for Previous and Next buttons
+
+    if (!isDisabled) {
+        a.addEventListener('click', (event) => {
+            event.preventDefault();
+            changePage(parseInt(a.getAttribute('data-page'), 10));
+        });
+    }
+
+    li.appendChild(a);
+    return li;
 }
 
 
@@ -113,4 +131,4 @@ export function showNoResultsMessage(container) {
 function changePage(page) {
     currentPage = page;
     displayResults(currentPage); // Update display based on the new page number
-  }
+}

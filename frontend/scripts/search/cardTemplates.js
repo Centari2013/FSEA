@@ -117,21 +117,6 @@ export function originCard(origin) {
     `;
 }
 
-export function departmentDirectoryCard(department) {
-    return `
-    <div class="col-8 col-sm-10 col-md-10">
-        <a class="text-decoration-none">
-            <div class="card h-100 clickable-card" data-type="department" data-id=${department.departmentId}>
-                <div class="card-body">
-                    <h5 class="card-title">${department.departmentName}</h5>
-                    <p class="card-text">${department.description || "No description available."}</p>
-                </div>
-            </div>
-        </a>
-    </div>
-    `;
-}
-
 export function titleCard(title) {
     return `
     <div class="col-12">
