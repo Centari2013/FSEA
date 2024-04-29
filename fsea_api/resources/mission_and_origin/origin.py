@@ -1,7 +1,8 @@
 from ..config import *
-from ...models.sqlalchemy_models import Origin, Mission, MissionOrigin
+from ...models.sqlalchemy_models import Origin, Mission, MissionOrigin, Specimen
 from datetime import datetime
 from .mission import MissionType
+from ..specimen.specimen import SpecimenType
 
 
 class OriginType(SQLAlchemyObjectType):
@@ -10,12 +11,16 @@ class OriginType(SQLAlchemyObjectType):
         interfaces = (graphene.relay.Node,)
 
     missions = graphene.List(MissionType)
+    specimens = graphene.List(SpecimenType)
     
     def resolve_missions(self, info):
         mission_ids = [m[0] for m in MissionOrigin.query.filter_by(origin_id=self.origin_id)\
                                     .with_entities(MissionOrigin.mission_id)\
                                     .all()]
         return Mission.query.filter(Mission.mission_id.in_(mission_ids)).all()
+    
+    def resolve_specimens(self, info):
+        return Specimen.query.filter(Specimen.origin_id==self.origin_id).all()
 
 
 class CreateOrigin(graphene.Mutation):
