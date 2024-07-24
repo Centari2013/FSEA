@@ -1,0 +1,11 @@
+# Dockerfile for API
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY api/requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+
+COPY api /app
+
+CMD ["python3", "run.py"]
