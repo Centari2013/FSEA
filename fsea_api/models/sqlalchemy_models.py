@@ -12,6 +12,29 @@ class Clearance(db.Model):
     clearance_name = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text, nullable=False)
 
+class Resource(db.Model):
+    __tablename__ = 'resources'
+    resource_id = db.Column(db.Integer, primary_key=True)
+    resource_name = db.Column(db.Text, nullable=False)
+    resource_type = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=True)
+
+    __table_args__ = (
+        db.CheckConstraint("resource_type IN ('column', 'table')", name='check_resource_type'),
+    )
+
+class ClearanceResourceAccess(db.Model):
+    __tablename__ = 'clearance_resource_access'
+    
+    clearance_id = db.Column(db.Integer, db.ForeignKey('clearances.clearance_id'), primary_key=True)
+    resource_id = db.Column(db.Integer, db.ForeignKey('resources.resource_id'), primary_key=True)
+    access_type = db.Column(db.Text, nullable=False)
+    created = db.Column(db.DateTime, default=db.func.current_timestamp())
+    updated = db.Column(db.DateTime, nullable=True)
+    
+    __table_args__ = (
+        db.CheckConstraint("access_type IN ('read', 'write', 'read_write')", name='check_access_type'),
+    )
 
 class ContainmentStatus(db.Model):
     __tablename__ = 'containment_statuses'

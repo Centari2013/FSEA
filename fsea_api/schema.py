@@ -7,7 +7,7 @@ class Query(
     EmployeeQuery, EmployeeClearanceQuery, EmployeeDesignationQuery, EmployeeMedicalQuery,
     MissionQuery, OriginQuery, MissionOriginQuery, SpecimenQuery, SpecimenContainmentStatusQuery,
     SpecimenMedicalQuery, SpecimenMissionQuery, AuthQuery, DepartmentMissionQuery,
-    EmployeeMissionQuery, ResearcherSpecimenQuery, graphene.ObjectType):
+    EmployeeMissionQuery, ResearcherSpecimenQuery, ResourceQuery, ClearanceResourceAccessQuery, graphene.ObjectType):
     
     pass
 
@@ -16,7 +16,8 @@ class Mutation(
     EmployeeMutation, EmployeeClearanceMutation, EmployeeDesignationMutation, EmployeeMedicalMutation,
     MissionMutation, OriginMutation, MissionOriginMutation, SpecimenMutation, SpecimenContainmentStatusMutation,
     SpecimenMedicalMutation, SpecimenMissionMutation, AuthMutation, DepartmentMissionMutation,
-    EmployeeMissionMutation, ResearcherSpecimenMutation, SearchMutation, graphene.ObjectType):
+    EmployeeMissionMutation, ResearcherSpecimenMutation, ResourceMutation, ClearanceResourceAccessMutation,
+    SearchMutation, graphene.ObjectType):
     
     pass
 
