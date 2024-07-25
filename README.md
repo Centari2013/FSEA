@@ -28,15 +28,15 @@ Password: admin
 ### Built With
 <!-- List any MAJOR libraries/frameworks (e.g. React, Tailwind) with links to their homepages. -->
 **Frontend**
-- ViteJS
+- [ViteJS](https://vitejs.dev/)
 
 **API**
-- Flask
-- GraphQL
-- SQLAlchemy
+- [Flask](https://flask.palletsprojects.com/en/3.0.x/)
+- [Graphene](https://docs.graphene-python.org/en/latest/) (GraphQL)
+- [SQLAlchemy](https://docs.sqlalchemy.org/en/20/)
 
 **Database**
-- PostgreSQL
+- [PostgreSQL](https://www.postgresql.org/)
 
 
 
