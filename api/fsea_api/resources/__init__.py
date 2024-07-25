@@ -1,4 +1,6 @@
 from .employee.clearance import ClearanceQuery, ClearanceMutation
+from .employee.resource import ResourceQuery, ResourceMutation
+from .employee.clearance_resource_access import ClearanceResourceAccessQuery, ClearanceResourceAccessMutation
 from .specimen.containment_status import ContainmentStatusMutation, ContainmentStatusQuery
 from .department.department import DepartmentQuery, DepartmentMutation
 from .employee.designation import DesignationMutation, DesignationQuery
