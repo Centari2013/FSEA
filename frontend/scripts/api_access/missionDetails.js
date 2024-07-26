@@ -1,11 +1,8 @@
-const api = import.meta.env.VITE_API_ENDPOINT;
-export async function fetchMissionDetails(mission_ids) {
-    const response = await fetch(api, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            query: `
-                query Missions($mission_ids: [String]!){
+import { client } from "./apollo_client";
+import { gql } from "@apollo/client/core";
+
+
+const query = gql`query Missions($mission_ids: [String]!){
                     missions(missionIds: $mission_ids){
                         missionId
                         missionName
@@ -37,11 +34,17 @@ export async function fetchMissionDetails(mission_ids) {
                           lastName
                         }
                       }
-                }`,
-            variables: {mission_ids: mission_ids}
-        }),
+                }`
+
+export async function fetchMissionDetails(mission_ids) {
+  try {
+    const result = await client.query({
+      query: query,
+      variables: { mission_ids: mission_ids}
     });
-    if (!response.ok) throw new Error('Failed to fetch mission data');
-    const jsonResponse = await response.json();
-    return jsonResponse.data.missions;
+    return result.data.missions;
+  } catch (error) {
+    console.error('GraphQL query error:', error);
+    throw error;
+  }
 }

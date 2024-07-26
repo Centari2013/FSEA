@@ -37,6 +37,7 @@ class DepartmentType(SQLAlchemyObjectType):
     missions = graphene.List(CustomDepartmentMissionType)
     employees = graphene.List(CustomEmployeeType)
 
+
     def resolve_director(self, info):
         # Assuming Employee is imported from your SQLAlchemy model definitions
         employee = Employee.query.get(self.director_id)
@@ -47,7 +48,6 @@ class DepartmentType(SQLAlchemyObjectType):
             last_name=employee.last_name
         )
        
-    
     def resolve_missions(self, info):
         return DepartmentMission.query.filter(DepartmentMission.department_id == self.department_id).all()
     

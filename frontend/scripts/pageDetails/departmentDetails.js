@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const departmentData = await fetchDepartmentDetails(departmentId);
 
+
         const departmentContent = generateDepartmentContent(departmentData);
         departmentDetailsContainer.innerHTML = departmentContent;
         setToggle();
@@ -22,6 +23,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function generateDepartmentContent(departmentData) {
+    console.log('Generating content for:', departmentData);
+    if (!departmentData.missions || !Array.isArray(departmentData.missions)) {
+        console.error('Missions data is invalid:', departmentData.missions);
+        return `<p>Error: Invalid missions data.</p>`;
+    }
     const missionsContent = departmentData.missions.map(mission => `
         <tr>
             <td>${mission.missionId}</td>
@@ -29,7 +35,7 @@ function generateDepartmentContent(departmentData) {
         </tr>
     `).join('');
 
-    departmentData.employees.sort(function(a, b) {
+    departmentData.employees.toSorted(function(a, b) {
         var textA = a.lastName.toUpperCase();
         var textB = b.lastName.toUpperCase();
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;

@@ -1,10 +1,8 @@
-const api = import.meta.env.VITE_API_ENDPOINT;
-export async function fetchEmployeeData(employee_id) {
-    const response = await fetch(api, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            query: `
+import { client } from "./apollo_client";
+import { gql } from "@apollo/client/core";
+
+
+const query = gql`
                 query Employee($employeeId: String!){
                     employee(employeeId: $employeeId){
                         employeeId
@@ -39,11 +37,18 @@ export async function fetchEmployeeData(employee_id) {
                         }
                         
                       }
-                }`,
-            variables: {employeeId: employee_id}
-        }),
+                }`
+
+export async function fetchEmployeeData(employee_id) {
+  try {
+    const result = await client.query({
+      query: query,
+      variables: { employeeId: employee_id }
     });
-    if (!response.ok) throw new Error('Failed to fetch employee data');
-    const jsonResponse = await response.json();
-    return jsonResponse.data.employee;
+    return result.data.employee;
+  } catch (error) {
+    console.error('GraphQL query error:', error);
+    throw error;
+  }
 }
+  
