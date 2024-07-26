@@ -1,11 +1,8 @@
-const api = import.meta.env.VITE_API_ENDPOINT;
+import { client } from "./apollo_client";
+import { gql } from "@apollo/client/core";
 
-export async function fetchOriginDetails(originId) {
-    const response = await fetch(api, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            query: `
+
+const query = gql`
                 query Origin($originId: String!) {
                     origin(originId: $originId){
                         originId
@@ -26,12 +23,19 @@ export async function fetchOriginDetails(originId) {
                         }
                         
                       }
-                }`,
-            variables: { originId: originId }
-        }),
-    });
+                }`
 
-    if (!response.ok) throw new Error('Failed to fetch origin details');
-    const jsonResponse = await response.json();
-    return jsonResponse.data.origin;
+export async function fetchOriginDetails(origin_id) {
+  try {
+    const result = await client.query({
+      query: query,
+      variables: { originId: origin_id}
+    });
+    return result.data.origin;
+  } catch (error) {
+    console.error('GraphQL query error:', error);
+    throw error;
+  }
 }
+  
+

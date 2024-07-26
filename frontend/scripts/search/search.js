@@ -1,42 +1,35 @@
 import {cardContainer} from "./cardTemplates";
 import { setupEventListeners } from "./clickableCardsFunctionality";
 import { entityCardFactory, showPaginationButtons } from "../utility";
-const api = import.meta.env.VITE_API_ENDPOINT;
+import { client } from "../api_access/apollo_client";
+import { gql } from "@apollo/client/core";
 
 let allResults = [];  // This will store all fetched results
 
-export function performSearch(query) {
-    console.log("Performing search for:", query);
-    const payload = {
-        "query": `
-            mutation Search($query: String!) {
-                search(query: $query) {
-                    results {
-                        entityType
-                        data
-                    }
-                }
-            }`,
-        "variables": { query: query }
-    };
+const SEARCH_MUTATION = gql`
+    mutation Search($query: String!) {
+        search(query: $query) {
+            results {
+                entityType
+                data
+            }
+        }
+    }
+`;
 
-    fetch(api, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-    })
-    .then(response => response.json())
-    .then(({data: {search: {results}}}) => {
+export async function performSearch(query) {
+    console.log("Performing search for:", query);
+    try {
+        const { data: { search: { results } } } = await client.mutate({
+            mutation: SEARCH_MUTATION,
+            variables: { query: query }
+        });
         allResults = results; // Store all results
         displayResults(1);  // Display the first page
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Error:', error);
-    });
+    }
 }
-
 
 
 const RESULTS_PER_PAGE = 25;

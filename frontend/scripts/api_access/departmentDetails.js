@@ -29,12 +29,16 @@ const query = gql`
         }
   }`
 
-export async function fetchDepartmentDetails(department_id) {
-  const result = await client
-    .query({
+export async function fetchDepartmentDetails(departmentId) {
+  try {
+    const result = await client.query({
       query: query,
-      variables: {department_id: department_id}
+      variables: { departmentId: departmentId }
     });
-  console.log(result);
- 
+    return result.data.department;
+  } catch (error) {
+    console.error('GraphQL query error:', error);
+    throw error;
+  }
 }
+  

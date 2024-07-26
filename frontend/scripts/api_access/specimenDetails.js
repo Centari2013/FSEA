@@ -1,11 +1,8 @@
-const api = import.meta.env.VITE_API_ENDPOINT;
+import { client } from "./apollo_client";
+import { gql } from "@apollo/client/core";
 
-export async function fetchSpecimenDetails(specimenId) {
-    const response = await fetch(api, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            query: `
+
+const query = gql`
                 query Specimen($specimenId: String!) {
                     specimen(specimenId: $specimenId){
                         specimenId
@@ -25,12 +22,19 @@ export async function fetchSpecimenDetails(specimenId) {
                             lastName
                         }
                     }
-                }`,
-            variables: { specimenId: specimenId }
-        }),
-    });
+                }`
 
-    if (!response.ok) throw new Error('Failed to fetch specimen details');
-    const jsonResponse = await response.json();
-    return jsonResponse.data.specimen;
+export async function fetchSpecimenDetails(specimen_id) {
+  try {
+    const result = await client.query({
+      query: query,
+      variables: { specimenId: specimen_id }
+    });
+    return result.data.specimen;
+  } catch (error) {
+    console.error('GraphQL query error:', error);
+    throw error;
+  }
 }
+  
+
