@@ -1,7 +1,7 @@
 import {cardContainer} from "./cardTemplates";
 import { setupEventListeners } from "./clickableCardsFunctionality";
 import { entityCardFactory, showPaginationButtons } from "../utility";
-import { client } from "../api_access/apollo_client";
+import { client } from "../../apollo_client";
 import { gql } from "@apollo/client/core";
 
 let allResults = [];  // This will store all fetched results

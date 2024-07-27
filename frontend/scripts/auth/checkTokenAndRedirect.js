@@ -1,4 +1,4 @@
-import { client } from "../api_access/apollo_client";
+import { client } from "../../apollo_client";
 import { gql } from "@apollo/client/core";
 const VALIDATE_TOKEN_MUTATION = gql`
   mutation ValidateToken($token: String!) {

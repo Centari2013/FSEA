@@ -7,21 +7,21 @@ def getEmployeePermissions(info):
     request = info.context
     
     if request:
-        employee_id = request.headers.get('employee_id')
+        employee_id = request.headers.get('x-employee-id')
      
         if not employee_id:
-            raise Exception('Employee ID not found in headers', request.headers)
-    if employee_id.is_anonymous:
+            raise Exception('Employee ID not found in headers')
+    if employee_id is None:
         raise Exception('Authentication credentials were not provided')
     
     # Retrieve clearance_ids for the given employee_id
-    user_clearance_ids = EmployeeClearance.query.filter_by(employee_id=employee_id).all()
-    user_clearance_ids = [id_ for id_, in user_clearance_ids] 
+    user_clearance_ids = [c.clearance_id for c in EmployeeClearance.query.filter_by(employee_id=employee_id).all()]
+    
 
     with engine.connect() as connection:
         # Create a join query
-        j = join(CRA, Resource, CRA.resource_id == Resource.id)
-        query = select([Resource.resource_name, CRA.resource_type, Resource.access_type]).select_from(j).where(CRA.clearance_id.in_(user_clearance_ids))
+        j = join(CRA, Resource, CRA.resource_id == Resource.resource_id)
+        query = select([Resource.resource_name, Resource.resource_type, CRA.access_type]).select_from(j).where(CRA.clearance_id.in_(user_clearance_ids))
         result = connection.execute(query)
         return [":".join([r[0],r[1],r[2]]) for r in result]
 

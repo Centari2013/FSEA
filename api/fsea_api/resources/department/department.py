@@ -37,7 +37,7 @@ class DepartmentType(SQLAlchemyObjectType):
     missions = graphene.List(CustomDepartmentMissionType)
     employees = graphene.List(CustomEmployeeType)
 
-
+    @has_permissions_or("departments:table:read","departments:table:read_write")
     def resolve_director(self, info):
         # Assuming Employee is imported from your SQLAlchemy model definitions
         employee = Employee.query.get(self.director_id)
