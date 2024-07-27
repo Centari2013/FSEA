@@ -5,12 +5,11 @@ from ..models.sqlalchemy_models import EmployeeClearance, Resource, ClearanceRes
 
 def getEmployeePermissions(info):
     request = info.context
-    
     if request:
         employee_id = request.headers.get('x-employee-id')
      
         if not employee_id:
-            raise Exception('Employee ID not found in headers')
+            raise Exception('Employee ID not found in context')
     if employee_id is None:
         raise Exception('Authentication credentials were not provided')
     
@@ -64,16 +63,13 @@ possible_permissions = [
     "departments:table:read_write",
     "designations:table:read_write",
     "documents:table:read",
-    "documents:table:read",
     "documents:table:read_write",
     "employee_designations:table:read_write",
     "employee_medical_records:table:read_write",
-    "employee_medical_records:table:write",
     "employee_missions:table:read_write",
     "employee_notes:column:read_write",
     "employee_sessions:table:read",
     "employee_sessions:table:read_write",
-    "employees:table:read",
     "employees:table:read",
     "employees:table:read_write",
     "missions:table:read",
@@ -86,7 +82,6 @@ possible_permissions = [
     "specimen_containment_statuses:table:read_write",
     "specimen_medical_records:table:read_write",
     "specimen_missions:table:read_write",
-    "specimens:table:read_write",
     "specimens:table:read_write",
     "specimen_threat_level:column:read_write"
 ]

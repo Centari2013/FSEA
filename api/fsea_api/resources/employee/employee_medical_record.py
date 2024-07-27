@@ -13,6 +13,7 @@ class GetEmployeeMedicalRecord(graphene.ObjectType):
 
     medical_record = graphene.Field(EmployeeMedicalRecordType)
 
+    @has_permissions_or("employee_medical_records:table:read", "employee_medical_records:table:read_write")
     def resolve_medical_record(self, info, employee_id):
         return EmployeeMedicalRecord.query.get(employee_id)
 
@@ -29,6 +30,7 @@ class UpdateEmployeeMedicalRecord(graphene.Mutation):
     success = graphene.Boolean()
     message = graphene.String()
 
+    @has_permission("employee_medical_records:table:read_write")
     def mutate(self, info, employee_id, **kwargs):
         medical_record = EmployeeMedicalRecord.query.get(employee_id)
         if not medical_record:
@@ -53,6 +55,7 @@ class DeleteEmployeeMedicalRecord(graphene.Mutation):
     success = graphene.Boolean()
     message = graphene.String()
 
+    @has_permissions_or("employee_medical_records:table:write", "employee_medical_records:table:read_write")
     def mutate(self, info, employee_id):
         medical_record = EmployeeMedicalRecord.query.get(employee_id)
         if not medical_record:

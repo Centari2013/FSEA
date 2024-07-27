@@ -15,6 +15,7 @@ class CreateDesignation(graphene.Mutation):
     success = graphene.Boolean()
     message = graphene.String()
 
+    @has_permission("designations:table:read_write")
     def mutate(self, info, designation_name, abbreviation):
         new_designation = Designation(designation_name=designation_name, abbreviation=abbreviation)
         try:
@@ -35,6 +36,7 @@ class UpdateDesignation(graphene.Mutation):
     success = graphene.Boolean()
     message = graphene.String()
 
+    @has_permission("designations:table:read_write")
     def mutate(self, info, designation_id, designation_name=None, abbreviation=None):
         designation = Designation.query.get(designation_id)
         if not designation:
@@ -59,6 +61,7 @@ class DeleteDesignation(graphene.Mutation):
     success = graphene.Boolean()
     message = graphene.String()
 
+    @has_permission("designations:table:read_write")
     def mutate(self, info, designation_id):
         designation = Designation.query.get(designation_id)
         if not designation:
