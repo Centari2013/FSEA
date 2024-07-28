@@ -35,6 +35,7 @@ export async function fetchDepartmentDetails(departmentId) {
       query: query,
       variables: { departmentId: departmentId }
     });
+    console.log(result)
     return result.data.department;
   } catch (error) {
     console.error('GraphQL query error:', error);

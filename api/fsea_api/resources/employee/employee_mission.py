@@ -15,7 +15,6 @@ class AddEmployeeToMission(graphene.Mutation):
     success = graphene.Boolean()
     message = graphene.String()
 
-    @has_permission("employee_missions:table:read_write")
     def mutate(self, info, mission_id, employee_id, involvement_summary=None):
         new_link = EmployeeMission(
             employee_id=employee_id,
@@ -38,7 +37,6 @@ class RemoveEmployeeFromMission(graphene.Mutation):
     success = graphene.Boolean()
     message = graphene.String()
 
-    @has_permission("employee_missions:table:read_write")
     def mutate(self, info, mission_id, employee_id):
         link = EmployeeMission.query.filter_by(employee_id=employee_id, mission_id=mission_id).first()
         if link:

@@ -14,7 +14,7 @@ class AssociateDesignationWithEmployee(graphene.Mutation):
     success = graphene.Boolean()
     message = graphene.String()
 
-    @has_permission("employee_designations:table:read_write")
+   
     def mutate(self, info, employee_id, designation_id):
         new_association = EmployeeDesignation(employee_id=employee_id, designation_id=designation_id)
         try:
@@ -33,7 +33,7 @@ class DisassociateDesignationFromEmployee(graphene.Mutation):
     success = graphene.Boolean()
     message = graphene.String()
 
-    @has_permission("employee_designations:table:read_write")
+    
     def mutate(self, info, employee_id, designation_id):
         association = EmployeeDesignation.query.filter_by(employee_id=employee_id, designation_id=designation_id).first()
         if association:

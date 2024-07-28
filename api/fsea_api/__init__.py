@@ -3,7 +3,7 @@ from flask_graphql import GraphQLView
 import graphdoc
 from flask_cors import CORS
 from dotenv import load_dotenv
-import logging
+from .middleware import PermissionsMiddleware
 import os
 
 
@@ -23,9 +23,14 @@ from .schema import schema
 # Set up the GraphQL endpoint
 
 
-@app.route('/api/graphql', methods=['GET', 'POST'])
+@app.route('/api/graphql', methods=['POST'])
 def graphql_server():
-    view = GraphQLView.as_view('graphql', schema=schema, graphiql=True)
+    view = GraphQLView.as_view(
+        'graphql', 
+        schema=schema, 
+        graphiql=True, 
+        middleware=[PermissionsMiddleware()]
+    )
     return view()
 
 @app.route('/api/docs')
