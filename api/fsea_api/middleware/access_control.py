@@ -1,67 +1,69 @@
+import re
 from dataclasses import field
 from sqlalchemy import join, select
 from functools import lru_cache
 from graphql.execution.base import ResolveInfo
-from graphql import GraphQLNonNull, GraphQLObjectType
+from graphql import GraphQLFloat, GraphQLNonNull, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLID
 
+# Permissions dictionaries
 TABLE_PERMISSIONS = {
-    "departmenttype": {
+    "department.*": {
         "read": ["departments:table:read", "departments:table:read_write"],
         "write": ["departments:table:read_write"]
     },
-    "documents": {
+    "document.*": {
         "read": ["documents:table:read", "documents:table:read_write"],
         "write": ["documents:table:read_write"]
     },
-    "employee_designations": {
+    "employeedesignation.*": {
         "read": ["employee_designations:table:read_write"],
         "write": ["employee_designations:table:read_write"]
     },
-    "employeemedicalrecordtype": {
+    "employeemedicalrecord.*": {
         "read": ["employee_medical_records:table:read_write"],
         "write": ["employee_medical_records:table:read_write"]
     },
-    "employeemissiontype": {
+    ".*employeemission.*": {
         "read": ["employee_missions:table:read_write"],
         "write": ["employee_missions:table:read_write"]
     },
-    "employee_sessions": {
+    "employeesession.*": {
         "read": ["employee_sessions:table:read", "employee_sessions:table:read_write"],
         "write": ["employee_sessions:table:read_write"]
     },
-    "employeetype": {
+    "employee.*": {
         "read": ["employees:table:read", "employees:table:read_write"],
         "write": ["employees:table:read_write"]
     },
-    "missiontype": {
+    "mission.*": {
         "read": ["missions:table:read", "missions:table:read_write"],
         "write": ["missions:table:read_write"]
     },
-    "missionorigintype": {
+    "missionorigin.*": {
         "read": ["mission_origins:table:read_write"],
         "write": ["mission_origins:table:read_write"]
     },
-    "origintype": {
+    "origin.*": {
         "read": ["origins:table:read", "origins:table:read_write"],
         "write": ["origins:table:read_write"]
     },
-    "researcherspecimentype": {
+    "researcherspecimen.*": {
         "read": ["researcher_specimens:table:read_write"],
         "write": ["researcher_specimens:table:read_write"]
     },
-    "specimencontainmentstatustype": {
+    "specimencontainmentstatus.*": {
         "read": ["specimen_containment_statuses:table:read_write"],
         "write": ["specimen_containment_statuses:table:read_write"]
     },
-    "specimenmedicalrecordtype": {
+    "specimenmedicalrecord.*": {
         "read": ["specimen_medical_records:table:read_write"],
         "write": ["specimen_medical_records:table:read_write"]
     },
-    "specimenmissiontype": {
+    "specimenmission.*": {
         "read": ["specimen_missions:table:read_write"],
         "write": ["specimen_missions:table:read_write"]
     },
-    "specimentype": {
+    "specimen.*": {
         "read": ["specimens:table:read_write"],
         "write": ["specimens:table:read_write"]
     }
@@ -82,7 +84,38 @@ FIELD_PERMISSIONS = {
     }
 }
 
+def find_matching_permission_key(parent_type, permissions_dict):
+    for key in permissions_dict:
+        if re.search(key, parent_type):
+            return key
+    return None
 
+
+def extract_employee_id(info):
+    request = info.context
+    if not request:
+        raise Exception('Request context not found')
+
+    employee_id = request.headers.get('x-employee-id')
+    if not employee_id:
+        raise Exception('Employee ID not found in context')
+
+    return employee_id
+
+@lru_cache(maxsize=128)
+def get_employee_permissions_cached(employee_id):
+    return get_employee_permissions(employee_id)
+
+def get_employee_permissions(employee_id):
+    from ..models.sqlalchemy_models import EmployeeClearance, Resource, ClearanceResourceAccess as CRA
+    from ..resources.config import engine
+
+    user_clearance_ids = [c.clearance_id for c in EmployeeClearance.query.filter_by(employee_id=employee_id).all()]
+    with engine.connect() as connection:
+        j = join(CRA, Resource, CRA.resource_id == Resource.resource_id)
+        query = select([Resource.resource_name, Resource.resource_type, CRA.access_type]).select_from(j).where(CRA.clearance_id.in_(user_clearance_ids))
+        result = connection.execute(query)
+        return {":".join([r.resource_name, r.resource_type, r.access_type]) for r in result}
 
 class PermissionsMiddleware:
     def resolve(self, next, root, info: ResolveInfo, **args):
@@ -109,9 +142,10 @@ class PermissionsMiddleware:
         # Determine the required permissions based on the operation type
         required_permission_type = 'read' if operation_type == 'query' else 'write'
 
-        # Check table-level permissions
-        if parent_type in TABLE_PERMISSIONS:
-            required_permissions = TABLE_PERMISSIONS[parent_type].get(required_permission_type, [])
+        # Check table-level permissions using regex matching
+        matching_key = find_matching_permission_key(parent_type, TABLE_PERMISSIONS)
+        if matching_key:
+            required_permissions = TABLE_PERMISSIONS[matching_key].get(required_permission_type, [])
             if not any(permission in employee_permissions for permission in required_permissions):
                 request.permission_cache[cache_key] = False
                 return self.handle_access_denied(info, request, parent_type, field_name)
@@ -131,70 +165,48 @@ class PermissionsMiddleware:
     def handle_access_denied(self, info, request, parent_type, field_name):
         if parent_type not in request.access_denied_fields:
             request.access_denied_fields[parent_type] = []
-        request.access_denied_fields[parent_type].append(field_name)
+        if not request.access_denied_fields[parent_type]:
+            request.access_denied_fields[parent_type].append(field_name)
         
-        # Handle non-nullable field gracefully by returning a default value
-        field_type = info.return_type
-        if isinstance(field_type, GraphQLNonNull):
-            field_type = field_type.of_type  # Get the underlying type
+        return self.create_placeholder_object(info.return_type)
 
-        # Check if it's a custom GraphQL object
-        if isinstance(field_type, GraphQLObjectType):
-            return self.create_placeholder_object(field_type)
-
-        # Determine a default value based on the type
-        if field_type.name == 'String':
-            return "Access Denied"
-        elif field_type.name == 'Int':
-            return -1  # or any other placeholder value
-        elif field_type.name == 'Float':
-            return -1.0  # or any other placeholder value
-        elif field_type.name == 'Boolean':
-            return False  # or any other placeholder value
-        else:
-            return None
-    
     def create_placeholder_object(self, object_type):
-        placeholder = {}
-        for field_name, field in object_type.fields.items():
-            field_type = field.type
-            if isinstance(field_type, GraphQLNonNull):
-                field_type = field_type.of_type  # Get the underlying type
+        # Handle GraphQLNonNull type
+        if isinstance(object_type, GraphQLNonNull):
+            object_type = object_type.of_type  # Get the underlying type
 
-            if field_type.name == 'String':
-                placeholder[field_name] = "Access Denied"
-            elif field_type.name == 'Int':
-                placeholder[field_name] = -1
-            elif field_type.name == 'Float':
-                placeholder[field_name] = -1.0
-            elif field_type.name == 'Boolean':
-                placeholder[field_name] = False
-            else:
-                placeholder[field_name] = None
+        # Handle primitive types
+        if object_type in [GraphQLString, GraphQLInt, GraphQLFloat, GraphQLBoolean, GraphQLID]:
+            return self.get_primitive_placeholder(object_type)
+
+        placeholder = {}
+
+        # Check if object_type has fields attribute
+        if hasattr(object_type, 'fields'):
+            for field_name, field in object_type.fields.items():
+                field_type = field.type
+                if isinstance(field_type, GraphQLNonNull):
+                    field_type = field_type.of_type  # Get the underlying type
+
+                placeholder[field_name] = self.redact_string(field_name)  # Redact the field name
+
         return placeholder
 
-@lru_cache(maxsize=128)
-def get_employee_permissions_cached(employee_id):
-    return get_employee_permissions(employee_id)
+    def get_primitive_placeholder(self, object_type):
+        if object_type == GraphQLString:
+            return self.redact_string("string")
+        elif object_type == GraphQLInt:
+            return 0
+        elif object_type == GraphQLFloat:
+            return 0.0
+        elif object_type == GraphQLBoolean:
+            return False
+        elif object_type == GraphQLID:
+            return self.redact_string("id")
+        else:
+            raise TypeError(f"Unsupported GraphQL type: {object_type}")
 
-def get_employee_permissions(employee_id):
-    from ..models.sqlalchemy_models import EmployeeClearance, Resource, ClearanceResourceAccess as CRA
-    from ..resources.config import engine
-
-    user_clearance_ids = [c.clearance_id for c in EmployeeClearance.query.filter_by(employee_id=employee_id).all()]
-    with engine.connect() as connection:
-        j = join(CRA, Resource, CRA.resource_id == Resource.resource_id)
-        query = select([Resource.resource_name, Resource.resource_type, CRA.access_type]).select_from(j).where(CRA.clearance_id.in_(user_clearance_ids))
-        result = connection.execute(query)
-        return {":".join([r.resource_name, r.resource_type, r.access_type]) for r in result}
-
-def extract_employee_id(info):
-    request = info.context
-    if not request:
-        raise Exception('Request context not found')
-
-    employee_id = request.headers.get('x-employee-id')
-    if not employee_id:
-        raise Exception('Employee ID not found in context')
-
-    return employee_id
+    def redact_string(self, data, redaction_char='█'):
+        if not isinstance(data, str):
+            raise TypeError(f"Expected data to be a string, got {type(data)}")
+        return ''.join(redaction_char for _ in data)

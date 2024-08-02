@@ -1,3 +1,12 @@
+export function accessDeniedCard() {
+    return `
+        <div class="collapse" id="accessDeniedCollapse">
+            <div class="card card-body">
+                <p><strong>Access Denied</strong> 
+            </div>
+        </div>`;
+}
+
 export function cardContainer() {
     const cardsContainer = document.createElement('div');
     cardsContainer.id = "CardsContainer";

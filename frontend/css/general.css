@@ -37,8 +37,8 @@ ul li:not(:last-child) {
 }
 
 
-/* Medical Data Section */
-#medicalDataCollapse .card-body {
+/* Collapsible Cards */
+#medicalDataCollapse #AccessDeniedCollapse .card-body {
     background-color: #f9f9f9;
     border: 1px solid #eaeaea;
     border-radius: 5px;

@@ -67,10 +67,10 @@ function generateEmployeeContent(employeeData) {
                 <td>${mission.involvementSummary ? mission.involvementSummary: ""}</td>
             </tr>`;
     }).join('');
-
+    const medicalNotes = JSON.parse(employeeData.medicalRecord.notes);
     const medicalRecord = employeeData.medicalRecord;
-    const medicalNotesContent = medicalRecord.notes && medicalRecord.notes.length > 0
-        ? JSON.parse(medicalRecord.notes).map(noteObj => `<li><strong>${noteObj.timestamp}:</strong>&nbsp;&nbsp;&nbsp;&nbsp;${noteObj.note}</li>`).join('')
+    const medicalNotesContent = medicalNotes && (Object.keys(medicalNotes).length !== 0)
+        ? medicalNotes.map(noteObj => `<li><strong>${noteObj.timestamp}:</strong>&nbsp;&nbsp;&nbsp;&nbsp;${noteObj.note}</li>`).join('')
         : '<li>None</li>';
 
 
