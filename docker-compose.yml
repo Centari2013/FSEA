@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile.api
     ports:
-      - "5000:5000"  # Adjust the ports as needed
+      - "4000:4000"  # Adjust the ports as needed
 
 
   frontend:
