@@ -2,7 +2,9 @@
   "type": "module",
   "dependencies": {
     "@apollo/client": "^3.12.8",
+    "@tailwindcss/vite": "^4.0.0",
     "@vitejs/plugin-vue": "^5.2.1",
+    "autoprefixer": "^10.4.20",
     "dotenv": "^16.4.7",
     "graphql": "^16.10.0",
     "graphql-tag": "^2.12.6",

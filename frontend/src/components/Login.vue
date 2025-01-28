@@ -1,13 +1,13 @@
 <template>
-    <div class="login-form-container">
+    <div class="login-form-container h-full w-full rounded-xl shadow shadow-black flex flex-col justify-center items-center space-y-4">
         <img src="../assets/fsea_logo.png" alt="FSEA Logo" class="form-logo">
-        <div id="loginForm">
-            <div class="form-group">
+        <div id="loginForm" class="space-y-4">
+            <div class="form-group flex flex-col items-start">
                 <label for="username" class="form-label">Username:</label>
                 <input v-model="username" type="text" id="username" name="username" required class="form-control">
             </div>
             
-            <div class="form-group">
+            <div class="form-group flex flex-col items-start">
                 <label for="password" class="form-label">Password:</label>
                 <input v-model="password" type="password" id="password" name="password" required class="form-control">
             </div>
@@ -68,7 +68,3 @@ export default {
     }
 }
 </script>
-
-<style>
-
-</style>
