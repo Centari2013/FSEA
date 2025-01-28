@@ -1,18 +1,20 @@
 <template>
     <div class="login-form-container h-full w-full rounded-xl shadow shadow-black flex flex-col justify-center items-center space-y-4">
+        <!-- TODO: Replace logo with vector version -->
         <img src="../assets/fsea_logo.png" alt="FSEA Logo" class="form-logo">
-        <div id="loginForm" class="space-y-4">
-            <div class="form-group flex flex-col items-start">
+        <div id="loginForm" class="space-y-3 w-5/6">
+            <div class="form-group flex flex-col items-start h-1/3 w-full space-y-2">
                 <label for="username" class="form-label">Username:</label>
-                <input v-model="username" type="text" id="username" name="username" required class="form-control">
+                <input v-model="username" type="text" id="username" name="username" required class="form-control h-1/2 w-full rounded-sm p-2 border-1">
             </div>
             
-            <div class="form-group flex flex-col items-start">
+            <div class="form-group flex flex-col items-start h-1/3 w-full space-y-2">
                 <label for="password" class="form-label">Password:</label>
-                <input v-model="password" type="password" id="password" name="password" required class="form-control">
+                <input v-model="password" type="password" id="password" name="password" required class="form-control h-1/2 w-full rounded-sm p-2 border-1">
             </div>
             
-            <button @click.prevent="submitLogin">Log In</button>
+            <div></div>
+            <button @click.prevent="submitLogin" class="w-full my-2">Log In</button>
         </div>
     </div>
 </template>
