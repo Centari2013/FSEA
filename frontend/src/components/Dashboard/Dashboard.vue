@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-6 h-full w-full">
+  <div class="grid grid-cols-6 h-screen w-full overflow-hidden">
     <!-- Sidebar -->
     <div class="h-full pt-4 col-span-1 flex flex-col shadow-[2px_0px_5px_0px_rgba(0,0,0)]">
       <div class="h-1/8 mx-auto">
@@ -16,7 +16,7 @@
     </div>
     <!-- Main Content -->
     <div class="col-span-5">
-      <div class="shadow-[3px_1px_5px_0px_rgba(0,0,0)] p-4">
+      <div class="shadow-[3px_1px_5px_0px_rgba(0,0,0)] p-4 sticky top-0">
         <!-- Search Bar with Button -->
         <div class="">
           <form id="search-form" class="space-x-2">
@@ -33,7 +33,7 @@
           </ul>
         </nav>
       </div>
-      <div id="main-content">
+      <div id="main-content" class="h-screen overflow-auto">
         <!-- Content will be loaded here -->
          <ResultsContainer :results="preparedResults" :RESULTS_PER_PAGE="RESULTS_PER_PAGE" ref="results-conatiner"/>
       </div>

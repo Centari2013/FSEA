@@ -1,5 +1,5 @@
 <template>
-  <div id="CardsContainer" class="flex flex-col justify-center">
+  <div id="CardsContainer" class="flex flex-col justify-center pb-40">
     <template v-for="obj in results">
       <div class="">
         <a  class="">
