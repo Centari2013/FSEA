@@ -50,6 +50,7 @@ Password: admin
 - database search
 
 ### Planned
+- **SWITCHING TO VUE AND TAILWIND**
 - dashboard graphs/metrics
 - access control
 - page editing
