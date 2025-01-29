@@ -1,4 +1,4 @@
-import { employeeCard, specimenCard, departmentCard, missionCard, originCard} from "./search/cardTemplates";
+import { employeeCard, specimenCard, departmentCard, missionCard, originCard} from "./pagination/cardTemplates";
 import { employeeDirectoryCard, specimenDirectoryCard, originDirectoryCard, departmentDirectoryCard } from "./directories/directoryCardTemplates" ;
 export function setWindowOpener(){
     if (window.history.length <= 1) { // If this page is the only entry in the history
