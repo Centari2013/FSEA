@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme{
+  --color-button: #99a9f8;
+  --color-text-hover: #535bf2;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -17,7 +22,7 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #99a9f8;
   text-decoration: inherit;
 }
 a:hover {
