@@ -1,13 +1,9 @@
 <script setup>
-import Login from './components/Login.vue';
+import LoginPage from './components/LoginPage.vue';
+import Dashboard from './components/Dashboard/Dashboard.vue'
 </script>
 
 <template>
-  <div class="h-full w-full flex justify-center items-center">
-    <div class="h-1/2 w-3/11">
-      <Login/>
-    </div>
-  </div>
-  
+      <Dashboard/>
 </template>
 

@@ -1,4 +1,4 @@
-import {cardContainer} from "./cardTemplates";
+import { cardContainer } from "./cardTemplates";
 import { setupEventListeners } from "./clickableCardsFunctionality";
 import { entityCardFactory, showPaginationButtons } from "../utility";
 import { client } from "../api_access/apollo_client";
