@@ -44,7 +44,7 @@
 <script>
 import { client } from '../../../scripts/api_access/apollo_client';
 import { gql } from "@apollo/client/core";
-import setupPagination from '../../../scripts/pagination'
+
 export default {
   props: {
     query: {
@@ -52,7 +52,6 @@ export default {
       required: true,
     }
   },
-  inject: [ 'getPaginationContainer' ],
   data() {
     return {
       totalPages: 1,
@@ -92,13 +91,17 @@ export default {
       }else {
         this.$emit("setDisablePrev", false);
       }
+  
+      this.$emit("pageChanged", newPage);
+    },
+    totalPages(newTotalPages){
+      this.$emit("newTotalPages", newTotalPages);
       
     }
 
   },
   methods: {
     async performSearch() {
-      this.currentPage = 1;
       const query = this.query.trim()
       if (query.length === 0) return;
       try {
@@ -109,15 +112,15 @@ export default {
           this.rawResults = results; // Store all results
           this.prepareResults();
           this.totalPages = Math.ceil(this.rawResults.length / this.RESULTS_PER_PAGE);
-          this.setupPagination();
+
+          // force watch trigger without moving emits into this function
+          this.currentPage = null; 
+          this.$nextTick(() => { 
+            this.currentPage = 1; 
+          });
+
       } catch (error) {
           console.error('Error:', error);
-      }
-    },
-    setupPagination(){
-      const paginationContainer = this.getPaginationContainer();
-      if (paginationContainer) {
-        setupPagination(this, paginationContainer);
       }
     },
     prepareResults() {
@@ -141,7 +144,6 @@ export default {
     changePage(page) {
       this.currentPage = page;
       this.prepareResults(); // Update display based on the new page number
-      this.setupPagination();
     },
 
     getDesignationString(employee){

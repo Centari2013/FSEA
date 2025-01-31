@@ -43,6 +43,8 @@
          @setHidePagination="setHidePagination"
          @setDisableNext="setDisableNext"
          @setDisablePrev="setDisablePrev"
+         @newTotalPages="handleNewTotalPages"
+         @pageChanged="handlePageChanged"
          />
       </div>
     </div>
@@ -55,6 +57,8 @@
 <script>
 import MenuButton from './MenuButton.vue';
 import SearchContainer from "./views/SearchContainer.vue";
+import setupPagination from '../../scripts/pagination'
+import { computed } from 'vue';
 
 export default {
   components: { MenuButton, SearchContainer },
@@ -64,18 +68,26 @@ export default {
       hidePagination: true,
       disablePrev: true,
       disableNext: true,
+      currentPage: 1,
+      totalPages: 0,
       RESULTS_PER_PAGE: 25,
     }
 
   },
-  provide() {
-    return {
-      getPaginationContainer: () => this.$refs.paginationContainer.$el,
-    }
-  },
   methods: {
     performSearch() {
       this.$refs.SearchContainer.performSearch();
+    },
+    setupPagination(){
+      setupPagination(this);
+    },
+    handleNewTotalPages(newTotalPages){
+      this.totalPages = newTotalPages;
+      this.setupPagination();
+    },
+    handlePageChanged(newPage){
+      this.currentPage = newPage;
+      this.setupPagination();
     },
     changePage(page){
       this.$refs.SearchContainer.changePage(page);
