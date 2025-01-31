@@ -27,17 +27,23 @@
         <!-- Pagination -->
         <nav>
           <ul class="flex justify-center">
-            <li class="prev" :class="isPrevDisabled() ? 'disabled' : ''" @click.prevent="!isPrevDisabled() ? changePage(currentPage - 1) : null" id="prevPage">Previous</li>
+            <li class="prev" :hidden="hidePagination" :class="disablePrev ? 'disabled' : ''" @click.prevent="!disablePrev ? changePage(currentPage - 1) : null" id="prevPage">Previous</li>
               <div ref="paginationContainer" class=" flex justify-center">
                 <!-- Dynamically insert page numbers here -->
               </div>
-            <li class="next" :class="isNextDisabled() ? 'disabled' : ''" @click.prevent="!isNextDisabled() ? changePage(currentPage + 1) : null" id="nextPage">Next</li>
+            <li class="next" :hidden="hidePagination" :class="disableNext ? 'disabled' : ''" @click.prevent="!disableNext ? changePage(currentPage + 1) : null" id="nextPage">Next</li>
           </ul>
         </nav>
       </div>
-      <div ref="mainContent" class="h-screen overflow-auto">
+      <div ref="mainContent" class="h-screen">
         <!-- Content will be loaded here -->
-         <ResultsContainer :results="preparedResults" :RESULTS_PER_PAGE="RESULTS_PER_PAGE" ref="results-conatiner"/>
+         <SearchContainer ref="SearchContainer"
+         :query="query"
+         :RESULTS_PER_PAGE="RESULTS_PER_PAGE"
+         @setHidePagination="setHidePagination"
+         @setDisableNext="setDisableNext"
+         @setDisablePrev="setDisablePrev"
+         />
       </div>
     </div>
     
@@ -47,81 +53,41 @@
 </template>
 
 <script>
-import { client } from "../../scripts/api_access/apollo_client";
-import { gql } from "@apollo/client/core";
 import MenuButton from './MenuButton.vue';
-import ResultsContainer from "./ResultsContainer.vue";
-import setupPagination from "../../scripts/pagination";
+import SearchContainer from "./views/SearchContainer.vue";
 
 export default {
-  components: { MenuButton, ResultsContainer },
+  components: { MenuButton, SearchContainer },
   data() {
     return {
-      totalPages: 0,
-      rawResults: [],
-      preparedResults: [],
       query: '',
-      SEARCH_MUTATION: gql`
-        mutation Search($query: String!) {
-            search(query: $query) {
-                results {
-                    entityType
-                    data
-                }
-            }
-        }
-    `,
-    currentPage: 1,
-    RESULTS_PER_PAGE: 25,
+      hidePagination: true,
+      disablePrev: true,
+      disableNext: true,
+      RESULTS_PER_PAGE: 25,
     }
 
   },
+  provide() {
+    return {
+      getPaginationContainer: () => this.$refs.paginationContainer.$el,
+    }
+  },
   methods: {
-    async performSearch() {
-      this.currentPage = 1;
-      this.query = this.query.trim()
-      if (this.query.length === 0) return;
-      try {
-          const { data: { search: { results } } } = await client.mutate({
-              mutation: this.SEARCH_MUTATION,
-              variables: { query: this.query }
-          });
-          this.rawResults = results; // Store all results
-          this.prepareResults();
-          this.totalPages = Math.ceil(this.rawResults.length / this.RESULTS_PER_PAGE);
-          setupPagination(this);
-      } catch (error) {
-          console.error('Error:', error);
-      }
+    performSearch() {
+      this.$refs.SearchContainer.performSearch();
     },
-    prepareResults() {
-      this.$refs.mainContent.scrollTo({ top: 0, behavior: "smooth" });
-      this.preparedResults = []; // clear prepared results
-      const startIndex = (this.currentPage - 1) * this.RESULTS_PER_PAGE;
-      const endIndex = startIndex + this.RESULTS_PER_PAGE;
-      const pageResults = this.rawResults.slice(startIndex, endIndex);
-
-      if (pageResults.length) {
-        pageResults.forEach(result => {
-            if (typeof result.data === 'string') {
-                result.data = JSON.parse(result.data); // Parse it to a JavaScript object
-
-            }
-            result = { "entityType": result.entityType, ...result.data } // flatten data for ease of use
-            this.preparedResults.push(result);
-          });
-      }
+    changePage(page){
+      this.$refs.SearchContainer.changePage(page);
     },
-    changePage(page) {
-      this.currentPage = page;
-      this.prepareResults(); // Update display based on the new page number
-      setupPagination(this);
+    setHidePagination(bool){
+      this.hidePagination = bool;
     },
-    isNextDisabled(){
-      return this.currentPage === this.totalPages;
+    setDisableNext(bool){
+      this.disableNext = bool;
     },
-    isPrevDisabled(){
-      return this.currentPage === 1;
+    setDisablePrev(bool){
+      this.disablePrev = bool;
     }
   }
 }

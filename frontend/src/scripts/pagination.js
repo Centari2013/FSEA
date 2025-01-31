@@ -1,18 +1,18 @@
-export default function setupPagination(dash) {
-    const totalPages = dash.totalPages;
-    const paginationContainer = dash.$refs.paginationContainer;
+export default function setupPagination(searchContainer, paginationContainer) {
+    console.log(typeof paginationContainer)
+    const totalPages = searchContainer.totalPages;
     // Ensure the container is empty before setting up new pagination
     paginationContainer.innerHTML = '';
 
     // Create and append page number buttons
     for (let i = 1; i <= totalPages; i++) {
-        paginationContainer.appendChild(createPageItem(dash, i, i === dash.currentPage, i.toString()));
+        paginationContainer.appendChild(createPageItem(searchContainer, i, i === searchContainer.currentPage, i.toString()));
     }
 
 }
 
 // Helper function to create page items
-function createPageItem(dash, page, isDisabled, text, id = null) {
+function createPageItem(searchContainer, page, isDisabled, text, id = null) {
     const li = document.createElement('li');
     li.className = `page-item${isDisabled ? ' disabled' : ''}`;
     li.textContent = text;
@@ -22,7 +22,7 @@ function createPageItem(dash, page, isDisabled, text, id = null) {
     if (!isDisabled) {
         li.addEventListener('click', (event) => {
             event.preventDefault();
-            dash.changePage(parseInt(li.getAttribute('data-page'), 10));
+            searchContainer.changePage(parseInt(li.getAttribute('data-page'), 10));
         });
     }
     return li;
