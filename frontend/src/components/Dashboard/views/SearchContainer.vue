@@ -1,5 +1,5 @@
 <template>
-  <div id="CardsContainer" ref="CardsContainer" class="flex flex-col items-center pb-40 pt-5 space-y-4 overflow-auto">
+  <div id="CardsContainer" ref="CardsContainer" class="flex flex-col items-center pb-40 pt-5 space-y-4 h-full overflow-auto">
     <template v-for="obj in preparedResults">
             <a class="card h-min-[17vh] border-1 rounded-md w-11/12 flex flex-col justify-center hover:shadow-md hover:cursor-pointer hover:scale-103 shadow-black" :data-type="obj.entityType" :class="getThreatCategory(obj.threat_level)">
                 <div class="card-body flex flex-col items-start">
