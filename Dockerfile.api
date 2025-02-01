@@ -8,4 +8,6 @@ RUN pip install -r /app/requirements.txt
 
 COPY api /app
 
-CMD ["python3", "run.py"]
+CMD ["gunicorn", "-w", "1", "-k", "gthread", "--threads", "2", "-b", "0.0.0.0:5000", "run:app"]
+
+
