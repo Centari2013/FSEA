@@ -37,15 +37,15 @@
       </div>
       <div ref="mainContent" class="h-screen">
         <!-- Content will be loaded here -->
-         <SearchContainer ref="SearchContainer"
-         :query="query"
-         :RESULTS_PER_PAGE="RESULTS_PER_PAGE"
-         @setHidePagination="setHidePagination"
-         @setDisableNext="setDisableNext"
-         @setDisablePrev="setDisablePrev"
-         @newTotalPages="handleNewTotalPages"
-         @pageChanged="handlePageChanged"
-         />
+        <CardContainer
+          @setHidePagination="setHidePagination"
+          @setDisableNext="setDisableNext"
+          @setDisablePrev="setDisablePrev"
+          @newTotalPages="handleNewTotalPages"
+          @pageChanged="handlePageChanged"
+        > 
+          <SearchResultCards ref="SearchResultCards" :query="query" :RESULTS_PER_PAGE="RESULTS_PER_PAGE"/>
+        </CardContainer>
       </div>
     </div>
     
@@ -56,12 +56,12 @@
 
 <script>
 import MenuButton from './MenuButton.vue';
-import SearchContainer from "./views/SearchContainer.vue";
-import setupPagination from '../../scripts/pagination'
-import { computed } from 'vue';
+import SearchResultCards from "./views/Results/SearchResultCards.vue";
+import CardContainer from "./views/CardContainer.vue";
+import setupPagination from '../../scripts/pagination';
 
 export default {
-  components: { MenuButton, SearchContainer },
+  components: { MenuButton, SearchResultCards, CardContainer },
   data() {
     return {
       query: '',
@@ -74,9 +74,16 @@ export default {
     }
 
   },
+  emits: [
+    "setHidePagination",
+    "setDisableNext",
+    "setDisablePrev",
+    "newTotalPages",
+    "pageChanged",
+  ],
   methods: {
     performSearch() {
-      this.$refs.SearchContainer.performSearch();
+      this.$refs.SearchResultCards.performSearch();
     },
     setupPagination(){
       setupPagination(this);
@@ -90,7 +97,7 @@ export default {
       this.setupPagination();
     },
     changePage(page){
-      this.$refs.SearchContainer.changePage(page);
+      this.$refs.SearchResultCards.changePage(page);
     },
     setHidePagination(bool){
       this.hidePagination = bool;
