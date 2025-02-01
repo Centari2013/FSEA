@@ -33,3 +33,7 @@ def graphql_docs():
     # Generate HTML documentation
     html = graphdoc.to_doc(schema)
     return Response(html, content_type='text/html')
+
+@app.route('/ping')
+def ping_api():
+    return Response("pong", 200)
