@@ -23,7 +23,14 @@ props: {
 },
 data() {
   return {
-    CURRENT_MUTATION: '',
+    CURRENT_MUTATION: gql`
+    query {
+        allDepartments{
+            departmentId
+            departmentName
+            description
+        }
+    }`,
     
     GET_ALL_DEPARTMENTS_QUERY: gql`
     query {
@@ -52,6 +59,9 @@ watch: {
     switch(newDirectory) {
       case "Department Directory":
         this.CURRENT_MUTATION = this.GET_ALL_DEPARTMENTS_QUERY;
+        break;
+      default:
+        break;
     }
     this.getEntities();
   },
@@ -87,14 +97,13 @@ watch: {
 },
 methods: {
   async getEntities() {
-    const query = this.query.trim()
-    if (query.length === 0) return;
     try {
-        const { data: { search: { results } } } = await client.mutate({
-            mutation: this.CURRENT_MUTATION,
-            variables: { query: query }
+        const { data:  results } = await client.query({
+            query: this.CURRENT_MUTATION,
         });
-        this.rawResults = results; // Store all results
+        const resultKey = Object.keys(results)[0];
+
+        this.rawResults = results[resultKey];
         this.prepareResults();
         this.totalPages = Math.ceil(this.rawResults.length / this.RESULTS_PER_PAGE);
 
@@ -108,6 +117,29 @@ methods: {
         console.error('Error:', error);
     }
   },
+  mapKeytoEntityType(result){
+    let newResult = { ...result }
+    // Determine entity type based on ID prefix
+    for (const key in result) {
+      if (key.endsWith("Id")) {
+        const prefix = key.replace("Id", ""); // Extract the prefix
+        const entityMapping = {
+          employee: "E",
+          specimen: "S",
+          mission: "M",
+          origin: "O",
+          department: "DDir"
+        };
+
+        // Check if prefix matches one of the expected entity types
+        if (entityMapping[prefix]) {
+          newResult.entityType = entityMapping[prefix];
+          break; // Stop once we find the correct ID
+        }
+      }
+    }
+    return newResult;
+  },
   prepareResults() {
     this.preparedResults = []; // clear prepared results
     const startIndex = (this.currentPage - 1) * this.RESULTS_PER_PAGE;
@@ -120,7 +152,7 @@ methods: {
               result.data = JSON.parse(result.data); // Parse it to a JavaScript object
 
           }
-          result = { "entityType": result.entityType, ...result.data } // flatten data for ease of use
+          result = this.mapKeytoEntityType(result);
           this.preparedResults.push(result);
         });
     }

@@ -47,7 +47,8 @@
           @newTotalPages="handleNewTotalPages"
           @pageChanged="handlePageChanged"
         > 
-          <SearchResultCards v-if="!currentMenuItem" ref="SearchResultCards" :query="query" :RESULTS_PER_PAGE="RESULTS_PER_PAGE"/>
+          <SearchResultCards v-if="!currentMenuItem" ref="activeCards" :query="query" :RESULTS_PER_PAGE="RESULTS_PER_PAGE"/>
+          <EntityDirectory v-if="currentMenuItem" ref="activeCards" :currentDirectory="currentMenuItem" :RESULTS_PER_PAGE="RESULTS_PER_PAGE" />
         </CardContainer>
       </div>
     </div>
@@ -62,9 +63,11 @@ import MenuButton from './MenuButton.vue';
 import SearchResultCards from "./views/Results/SearchResultCards.vue";
 import CardContainer from "./views/CardContainer.vue";
 import setupPagination from '../../scripts/pagination';
+import EntityDirectory from './views/Results/EntityDirectory.vue';
+
 
 export default {
-  components: { MenuButton, SearchResultCards, CardContainer },
+  components: { MenuButton, SearchResultCards, CardContainer, EntityDirectory },
   data() {
     return {
       // search vars
@@ -87,7 +90,12 @@ export default {
   methods: {
     performSearch() {
       this.currentMenuItem = null; // show search results
-      this.$refs.SearchResultCards.performSearch();
+      try {
+        this.$refs.activeCards.performSearch(); 
+      } catch (e) {
+        // EntityDirectory does not have the above func
+      }
+      
     },
     setupPagination(){
       setupPagination(this);
@@ -101,7 +109,7 @@ export default {
       this.setupPagination();
     },
     changePage(page){
-      this.$refs.SearchResultCards.changePage(page);
+      this.$refs.activeCards.changePage(page);
     },
     setHidePagination(bool){
       this.hidePagination = bool;
