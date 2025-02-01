@@ -11,6 +11,8 @@
                     <h5 v-if="entity.entityType === 'S'" class="card-title text-xl font-bold">{{ entity.specimen_name }}</h5>
                     <h5 v-if="entity.entityType === 'M'" class="card-title text-xl font-bold">{{entity.mission_name}}</h5>
                     <h5 v-if="entity.entityType === 'O'" class="card-title text-xl font-bold">{{entity.origin_name}}</h5>
+                    <h5 v-if="entity.entityType === 'D'" class="card-title text-xl font-bold">{{entity.department_name}}</h5>
+
                     <!-- Department Directory View -->
                     <h5 v-if="entity.entityType === 'DDir'" class="card-title text-xl font-bold">{{entity.departmentName}}</h5>
 
@@ -38,13 +40,20 @@
                         <div><strong>Origin ID:</strong> {{ entity.origin_id }}</div>
                         <div><strong>Discovery Date:</strong> {{ entity.discovery_date }}</div>
                         {{entity.description || "No description available."}}
-
-
+                        </template>
+                        
+                        <template v-if="entity.entityType === 'D'">
+                        <div><strong>Department ID:</strong> {{entity.department_id}}</div>
+                        <div><strong>Director:</strong> {{ `${entity.director.first_name} ${entity.director.last_name}`}}</div>
+                        {{entity.description || "No description available."}}
+                        </template>
+                        
+                       
                         <!-- Department Directory View -->
                         <template v-if="entity.entityType === 'DDir'">
                           {{entity.description || "No description available."}}
                         </template>
-                        </template>
+                        
                     </p>
                 </div>
               </a>
