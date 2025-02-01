@@ -7,11 +7,14 @@
       </div>
       
       <ul id="menu" class="h-full flex flex-col space-y-4">
-        <MenuButton name="Home"/>
-        <MenuButton name="Department Directory"/>
-        <MenuButton name="Origin Directory"/>
-        <MenuButton name="Specimen Directory"/>
-        <MenuButton name="Document Directory"/>
+        <MenuButton 
+          v-for="item in menuItems" 
+          :key="item" 
+          :name="item" 
+          :selected="currentMenuItem === item"
+          @click="currentMenuItem = item"
+        />
+        
       </ul>
     </div>
     <!-- Main Content -->
@@ -64,6 +67,7 @@ export default {
   components: { MenuButton, SearchResultCards, CardContainer },
   data() {
     return {
+      // search vars
       query: '',
       hidePagination: true,
       disablePrev: true,
@@ -71,16 +75,13 @@ export default {
       currentPage: 1,
       totalPages: 0,
       RESULTS_PER_PAGE: 25,
+
+      // directory selection vars
+      menuItems: ["Home", "Department Directory", "Origin Directory", "Specimen Directory", "Document Directory"],
+      currentMenuItem: "Home",
     }
 
   },
-  emits: [
-    "setHidePagination",
-    "setDisableNext",
-    "setDisablePrev",
-    "newTotalPages",
-    "pageChanged",
-  ],
   methods: {
     performSearch() {
       this.$refs.SearchResultCards.performSearch();
