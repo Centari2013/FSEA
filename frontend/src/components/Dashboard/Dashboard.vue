@@ -47,7 +47,7 @@
           @newTotalPages="handleNewTotalPages"
           @pageChanged="handlePageChanged"
         > 
-          <SearchResultCards ref="SearchResultCards" :query="query" :RESULTS_PER_PAGE="RESULTS_PER_PAGE"/>
+          <SearchResultCards v-if="!currentMenuItem" ref="SearchResultCards" :query="query" :RESULTS_PER_PAGE="RESULTS_PER_PAGE"/>
         </CardContainer>
       </div>
     </div>
@@ -79,11 +79,14 @@ export default {
       // directory selection vars
       menuItems: ["Home", "Department Directory", "Origin Directory", "Specimen Directory", "Document Directory"],
       currentMenuItem: "Home",
+
+      // switch to search var
     }
 
   },
   methods: {
     performSearch() {
+      this.currentMenuItem = null; // show search results
       this.$refs.SearchResultCards.performSearch();
     },
     setupPagination(){
