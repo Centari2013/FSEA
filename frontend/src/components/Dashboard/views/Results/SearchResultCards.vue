@@ -1,18 +1,28 @@
 <template>
-  <LoadSpinner v-if="loading" />
-    <template v-for="obj in preparedResults">
-      <EntityCard :entity="obj" />
-    </template>
+  <CardLoader 
+  ref="CardLoader"
+  :queryType="'mutation'" 
+  :query="SEARCH_MUTATION"
+  :variables="{ query: cleanQuery }"
+  :resultProcessor="prepareResults"
+  :responseParser="parseSearchResults"
+  :RESULTS_PER_PAGE="RESULTS_PER_PAGE"
+  :fetchTrigger="cleanQuery"
+  @setHidePagination="$emit('setHidePagination', $event)"
+  @setDisableNext="$emit('setDisableNext', $event)"
+  @setDisablePrev="$emit('setDisablePrev', $event)"
+  @newTotalPages="$emit('newTotalPages', $event)"
+  @pageChanged="$emit('pageChanged', $event)"
+  @scrollToTop="$emit('scrollToTop', $event)"
+  />
 </template>
 
 <script>
-import { client } from '../../../../scripts/api_access/apollo_client';
 import { gql } from "@apollo/client/core";
-import EntityCard from './EntityCard.vue';
-import LoadSpinner from '../../animations/LoadSpinner.vue';
+import CardLoader from './CardLoader.vue';
 
 export default {
-  components: { EntityCard, LoadSpinner },
+  components: { CardLoader },
   props: {
     query: {
       type: String,
@@ -25,9 +35,7 @@ export default {
   },
   data() {
     return {
-      totalPages: 1,
-      rawResults: [],
-      preparedResults: [],
+      cleanQuery: '',
       SEARCH_MUTATION: gql`
         mutation Search($query: String!) {
             search(query: $query) {
@@ -38,7 +46,6 @@ export default {
             }
         }
     `,
-    currentPage: 1,
     }
   },
   emits: [
@@ -49,65 +56,19 @@ export default {
     "pageChanged",
     "scrollToTop",
   ],
-  watch: {
-    rawResults(newResults){
-      if (newResults.length == 0) {
-        this.$emit("setHidePagination", true);
-      }else {
-        this.$emit("setHidePagination", false);
-      }
-
-      this.$emit("scrollToTop");
-    },
-    currentPage(newPage){
-      if (newPage == this.totalPages){
-        this.$emit("setDisableNext", true);
-      }else {
-        this.$emit("setDisableNext", false);
-      }
-
-      if (newPage == 1){
-        this.$emit("setDisablePrev", true);
-      }else {
-        this.$emit("setDisablePrev", false);
-      }
-  
-      this.$emit("pageChanged", newPage);
-    },
-    totalPages(newTotalPages){
-      this.$emit("newTotalPages", newTotalPages);
-      
-    }
-
-  },
   methods: {
     async performSearch() {
-      const query = this.query.trim()
-      if (query.length === 0) return;
-      try {
-          const { data: { search: { results } } } = await client.mutate({
-              mutation: this.SEARCH_MUTATION,
-              variables: { query: query }
-          });
-          this.rawResults = results; // Store all results
-          this.prepareResults();
-          this.totalPages = Math.ceil(this.rawResults.length / this.RESULTS_PER_PAGE);
-
-          // force watch trigger without moving emits into this function
-          this.currentPage = null; 
-          this.$nextTick(() => { 
-            this.currentPage = 1; 
-          });
-
-      } catch (error) {
-          console.error('Error:', error);
-      }
+      
+      if (this.query.trim().length === 0) return;
+      this.cleanQuery = this.query.trim(); //triggers CardLoader fetch
+    
     },
-    prepareResults() {
-      this.preparedResults = []; // clear prepared results
-      const startIndex = (this.currentPage - 1) * this.RESULTS_PER_PAGE;
-      const endIndex = startIndex + this.RESULTS_PER_PAGE;
-      const pageResults = this.rawResults.slice(startIndex, endIndex);
+    parseSearchResults(data) {
+    // Extracts from nested mutation response
+    return data?.search?.results || [];
+    },
+    prepareResults(pageResults) {
+      let preparedResults = []; // clear prepared results
 
       if (pageResults.length) {
         pageResults.forEach(result => {
@@ -116,14 +77,15 @@ export default {
 
             }
             result = { "entityType": result.entityType, ...result.data } // flatten data for ease of use
-            this.preparedResults.push(result);
+            preparedResults.push(result);
           });
       }
+
+      return preparedResults;
     },
     changePage(page) {
-      this.currentPage = page;
-      this.prepareResults(); // Update display based on the new page number
-    },
+    this.$refs.CardLoader.changePage(page);
+    }
   }
 }
 </script>
