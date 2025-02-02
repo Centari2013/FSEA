@@ -17,6 +17,7 @@
                     <!-- Directory Result Titles -->
                     <h5 v-if="entity.entityType === 'DDir'" class="card-title text-xl font-bold">{{entity.departmentName}}</h5>
                     <h5 v-if="entity.entityType === 'SDir'" class="card-title text-xl font-bold">{{ entity.specimenName }}</h5>
+                    <h5 v-if="entity.entityType === 'ODir'" class="card-title text-xl font-bold">{{entity.originName}}</h5>
 
                     <p class="card-text flex flex-col items-start text-left">
                         <!-- Search Result Card Text -->

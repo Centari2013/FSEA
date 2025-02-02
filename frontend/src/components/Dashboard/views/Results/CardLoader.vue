@@ -53,14 +53,12 @@ export default {
       return this.store.currentPage;
     },
   },
-  emits: ["scrollToTop"],
   watch: {
     fetchTrigger(_data){
       this.fetchData();
     },
     rawResults(newResults) {
       this.store.setHidePagination(newResults.length === 0);
-      this.$emit("scrollToTop");
     },
     currentPage(newPage) {
       this.prepareResults();

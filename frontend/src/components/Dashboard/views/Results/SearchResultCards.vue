@@ -7,7 +7,6 @@
   :resultProcessor="prepareResults"
   :responseParser="parseSearchResults"
   :fetchTrigger="cleanQuery"
-  @scrollToTop="$emit('scrollToTop', $event)"
   />
 </template>
 
@@ -38,7 +37,6 @@ export default {
     `,
     }
   },
-  emits: ["scrollToTop"],
   methods: {
     async performSearch() {
       

@@ -6,7 +6,6 @@
   :resultProcessor="prepareResults"
   :responseParser="parseEntityResults"
   :fetchTrigger="CURRENT_QUERY"
-  @scrollToTop="$emit('scrollToTop', $event)"
   />
 </template>
 
@@ -83,7 +82,6 @@ watch: {
 
 },
 mounted() {
-  console.log(this.currentDirectory)
   this.setQuery(this.currentDirectory);
   this.$refs.CardLoader.fetchData();
 },
