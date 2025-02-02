@@ -61,7 +61,7 @@ export default {
             preparedResults.push(result);
           });
       }
-
+      console.log(preparedResults)
       return preparedResults;
     },
   }

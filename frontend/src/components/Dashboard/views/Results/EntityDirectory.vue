@@ -62,13 +62,6 @@ data() {
         acquisitionDate
       }
     }`,
-    TEST_QUERY: gql`{
-      allClearances{
-        clearanceId
-        clearanceId
-        description
-      }
-    }`,
     
   }
 },
@@ -98,7 +91,7 @@ methods: {
         this.CURRENT_QUERY = this.GET_ALL_SPECIMENS_QUERY;
         break;
       default:
-        this.CURRENT_QUERY = this.TEST_QUERY;
+        this.CURRENT_QUERY = ''; //intentional for now
         break;
     }
   },

@@ -73,7 +73,6 @@ export default {
                 if (loginData.token) {
                     localStorage.setItem('sessionToken', loginData.token);
                     localStorage.setItem('employee_id', loginData.employeeId);
-
                     this.router.push("/dashboard");
                     
                 } 

@@ -12,7 +12,7 @@
           :key="item" 
           :name="item" 
           :selected="currentMenuItem === item"
-          @click="currentMenuItem = item"
+          @click="handleMenuClick(item)"
         />
         
       </ul>
@@ -105,7 +105,10 @@ export default {
     changePage(newPage){
       this.store.setCurrentPage(newPage);
     },
-  
+    handleMenuClick(item){
+      this.currentMenuItem = item;
+      this.store.setTotalPages(0) // reset pagination
+    }
   }
 }
 </script>

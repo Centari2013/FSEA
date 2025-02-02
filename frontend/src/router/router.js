@@ -8,11 +8,11 @@ import EntityDetailsPage from '../components/EntityDetailsPage.vue';
 const routes = [
     { path: '/', component: LoginPage },
     { path: '/dashboard', component: DashboardPage, meta: { requiresAuth: true } },
-    { path: '/employees/:id', component: EntityDetailsPage, meta: { requiresAuth: true } },
-    { path: '/specimens/:id', component: EntityDetailsPage, meta: { requiresAuth: true } },
-    { path: '/origins/:id', component: EntityDetailsPage, meta: { requiresAuth: true } },
-    { path: '/missions/:id', component: EntityDetailsPage, meta: { requiresAuth: true } },
-    { path: '/departments/:id', component: EntityDetailsPage, meta: { requiresAuth: true } },
+    { path: '/employees', name: 'employeeDetails',component: EntityDetailsPage, meta: { requiresAuth: true } },
+    { path: '/specimens', name: 'specimenDetails',component: EntityDetailsPage, meta: { requiresAuth: true } },
+    { path: '/origins', name: 'originDetails',component: EntityDetailsPage, meta: { requiresAuth: true } },
+    { path: '/missions', name: 'missionDetails',component: EntityDetailsPage, meta: { requiresAuth: true } },
+    { path: '/departments', name: 'departmentDetails',component: EntityDetailsPage, meta: { requiresAuth: true } },
 ]
 
 const router = createRouter({
@@ -26,9 +26,8 @@ router.beforeEach(async (to, from, next) => {
     if (authStore.loading) {
       await authStore.verifyToken();
     }
-  
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-      next("/login"); // Redirect to login if not authenticated
+      next("/"); // Redirect to login if not authenticated
     } else {
       next(); // Continue as normal
     }
