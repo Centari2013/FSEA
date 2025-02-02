@@ -1,16 +1,27 @@
 <template>
-  <template v-for="obj in preparedResults">
-    <EntityCard :entity="obj" />
-  </template>
+  <CardLoader 
+  ref="CardLoader"
+  :queryType="'query'" 
+  :query="CURRENT_QUERY"
+  :resultProcessor="prepareResults"
+  :responseParser="parseEntityResults"
+  :RESULTS_PER_PAGE="RESULTS_PER_PAGE"
+  :fetchTrigger="CURRENT_QUERY"
+  @setHidePagination="$emit('setHidePagination', $event)"
+  @setDisableNext="$emit('setDisableNext', $event)"
+  @setDisablePrev="$emit('setDisablePrev', $event)"
+  @newTotalPages="$emit('newTotalPages', $event)"
+  @pageChanged="$emit('pageChanged', $event)"
+  @scrollToTop="$emit('scrollToTop', $event)"
+  />
 </template>
 
 <script>
-import { client } from '../../../../scripts/api_access/apollo_client';
 import { gql } from "@apollo/client/core";
-import EntityCard from './EntityCard.vue';
+import CardLoader from './CardLoader.vue';
 
 export default {
-components: { EntityCard },
+components: { CardLoader },
 props: {
   currentDirectory: {
     type: String,
@@ -23,7 +34,7 @@ props: {
 },
 data() {
   return {
-    CURRENT_MUTATION: gql`
+    CURRENT_QUERY: gql`
     query {
         allDepartments{
             departmentId
@@ -40,10 +51,14 @@ data() {
             description
         }
     }`,
-    currentPage: 1,
-    totalPages: 1,
-    rawResults: [],
-    preparedResults: [],
+    TEST_QUERY: gql`{
+      allClearances{
+        clearanceId
+        clearanceId
+        description
+      }
+    }`,
+    
   }
 },
 emits: [
@@ -56,66 +71,31 @@ emits: [
 ],
 watch: {
   currentDirectory(newDirectory){
+    this.setQuery(newDirectory);
+  },
+
+},
+mounted() {
+  this.setQuery(this.currentDirectory);
+},
+methods: {
+  setQuery(newDirectory){
     switch(newDirectory) {
       case "Department Directory":
-        this.CURRENT_MUTATION = this.GET_ALL_DEPARTMENTS_QUERY;
+        this.CURRENT_QUERY = this.GET_ALL_DEPARTMENTS_QUERY;
         break;
+      case "Home":
+        this.CURRENT_QUERY = this.TEST_QUERY;
+        break
       default:
         break;
     }
-    this.getEntities();
   },
-  rawResults(newResults){
-    if (newResults.length == 0) {
-      this.$emit("setHidePagination", true);
-    }else {
-      this.$emit("setHidePagination", false);
-    }
-
-    this.$emit("scrollToTop");
-  },
-  currentPage(newPage){
-    if (newPage == this.totalPages){
-      this.$emit("setDisableNext", true);
-    }else {
-      this.$emit("setDisableNext", false);
-    }
-
-    if (newPage == 1){
-      this.$emit("setDisablePrev", true);
-    }else {
-      this.$emit("setDisablePrev", false);
-    }
-
-    this.$emit("pageChanged", newPage);
-  },
-  totalPages(newTotalPages){
-    this.$emit("newTotalPages", newTotalPages);
-    
-  }
-
-},
-methods: {
-  async getEntities() {
-    try {
-        const { data:  results } = await client.query({
-            query: this.CURRENT_MUTATION,
-        });
-        const resultKey = Object.keys(results)[0];
-
-        this.rawResults = results[resultKey];
-        this.prepareResults();
-        this.totalPages = Math.ceil(this.rawResults.length / this.RESULTS_PER_PAGE);
-
-        // force watch trigger without moving emits into this function
-        this.currentPage = null; 
-        this.$nextTick(() => { 
-          this.currentPage = 1; 
-        });
-
-    } catch (error) {
-        console.error('Error:', error);
-    }
+  
+  parseEntityResults(data) {
+    // Extracts the first key from the query response
+    const resultKey = Object.keys(data)[0];
+    return data[resultKey] || [];
   },
   mapKeytoEntityType(result){
     let newResult = { ...result }
@@ -140,12 +120,8 @@ methods: {
     }
     return newResult;
   },
-  prepareResults() {
-    this.preparedResults = []; // clear prepared results
-    const startIndex = (this.currentPage - 1) * this.RESULTS_PER_PAGE;
-    const endIndex = startIndex + this.RESULTS_PER_PAGE;
-    const pageResults = this.rawResults.slice(startIndex, endIndex);
-
+  prepareResults(pageResults) {
+    let preparedResults = [];
     if (pageResults.length) {
       pageResults.forEach(result => {
           if (typeof result.data === 'string') {
@@ -153,14 +129,14 @@ methods: {
 
           }
           result = this.mapKeytoEntityType(result);
-          this.preparedResults.push(result);
+          preparedResults.push(result);
         });
     }
+    return preparedResults;
   },
   changePage(page) {
-    this.currentPage = page;
-    this.prepareResults(); // Update display based on the new page number
-  },
+    this.$refs.CardLoader.changePage(page);
+    }
 }
 }
 </script>

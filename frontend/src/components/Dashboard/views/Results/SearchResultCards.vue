@@ -1,4 +1,5 @@
 <template>
+  <LoadSpinner v-if="loading" />
     <template v-for="obj in preparedResults">
       <EntityCard :entity="obj" />
     </template>
@@ -8,9 +9,10 @@
 import { client } from '../../../../scripts/api_access/apollo_client';
 import { gql } from "@apollo/client/core";
 import EntityCard from './EntityCard.vue';
+import LoadSpinner from '../../animations/LoadSpinner.vue';
 
 export default {
-  components: { EntityCard },
+  components: { EntityCard, LoadSpinner },
   props: {
     query: {
       type: String,
