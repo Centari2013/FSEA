@@ -9,16 +9,17 @@ load_dotenv()
 engine = create_engine(os.getenv("DATABASE_URI"))
 
 
-
 class SearchResult(graphene.ObjectType):
     entity_type = graphene.String()
     data = graphene.JSONString()
     relevancy = graphene.Float()
 
+
 def format_tsquery(search_input):
     tokens = search_input.split()
     escaped_tokens = [token.replace("'", "''") for token in tokens]
     return ' & '.join(escaped_tokens)
+
 
 def perform_search(sql_query, query_param):
     with engine.connect() as connection:
@@ -44,18 +45,29 @@ class Search(graphene.Mutation):
         }
 
         results = []
+        seen_data = set()
+
         for key, sql in search_commands.items():
             for row in perform_search(sql, formatted_query):
-                data = dict(row)  # Convert row to a dictionary directly
-                # Process dates and other types as needed
+                data = dict(row)  # Convert row to dictionary
+                
+                # Process dates into ISO format
                 for date_field in ['discovery_date', 'start_date', 'end_date', 'acquisition_date']:
                     if date_field in data and data[date_field]:
                         data[date_field] = data[date_field].isoformat()
-                
-                results.append(SearchResult(entity_type=key, data=data, relevancy=row['relevancy']))
+
+                # duplicate checks
+                data_json = json.dumps(data, sort_keys=True)
+
+                if data_json not in seen_data:
+                    seen_data.add(data_json)  # Store the unique data representation
+                    results.append(SearchResult(entity_type=key, data=data, relevancy=row['relevancy']))
+
         type_priority = {'D': 1, 'E': 2, 'O': 3, 'M': 4, 'S': 5}
-        results = sorted(results, key=lambda x: (type_priority[x.entity_type], x.relevancy))
+        results = sorted(results, key=lambda x: (type_priority[x.entity_type], -x.relevancy))  # Highest relevancy first
+        
         return Search(results=results)
+
 
 class SearchMutation(graphene.ObjectType):
     search = Search.Field()
