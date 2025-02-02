@@ -45,7 +45,7 @@ class Search(graphene.Mutation):
         }
 
         results = []
-        seen_data = set()
+        seen_ids = set()  # 🔥 Track unique ID combinations
 
         for key, sql in search_commands.items():
             for row in perform_search(sql, formatted_query):
@@ -56,13 +56,14 @@ class Search(graphene.Mutation):
                     if date_field in data and data[date_field]:
                         data[date_field] = data[date_field].isoformat()
 
-                # duplicate checks
-                data_json = json.dumps(data, sort_keys=True)
+                # 🔥 Extract all `_id` fields into a tuple
+                id_tuple = tuple(data[field] for field in data if field.endswith("_id"))
 
-                if data_json not in seen_data:
-                    seen_data.add(data_json)  # Store the unique data representation
+                if id_tuple and id_tuple not in seen_ids:
+                    seen_ids.add(id_tuple)  # Store unique ID tuple
                     results.append(SearchResult(entity_type=key, data=data, relevancy=row['relevancy']))
 
+        # 🔥 Sorting priority
         type_priority = {'D': 1, 'E': 2, 'O': 3, 'M': 4, 'S': 5}
         results = sorted(results, key=lambda x: (type_priority[x.entity_type], -x.relevancy))  # Highest relevancy first
         
