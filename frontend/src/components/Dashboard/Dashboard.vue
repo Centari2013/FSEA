@@ -29,26 +29,20 @@
         </div>
         <!-- Pagination -->
         <nav>
-          <ul class="flex justify-center">
-            <li class="prev" :hidden="hidePagination" :class="disablePrev ? 'disabled' : ''" @click.prevent="!disablePrev ? changePage(currentPage - 1) : null" id="prevPage">Previous</li>
+          <ul class="flex justify-center" :hidden="store.hidePagination">
+            <li class="prev" :class="store.disablePrev ? 'disabled' : ''" @click.prevent="!disablePrev ? changePage(store.currentPage - 1) : null" id="prevPage">Previous</li>
               <div ref="paginationContainer" class=" flex justify-center">
                 <!-- Dynamically insert page numbers here -->
               </div>
-            <li class="next" :hidden="hidePagination" :class="disableNext ? 'disabled' : ''" @click.prevent="!disableNext ? changePage(currentPage + 1) : null" id="nextPage">Next</li>
+            <li class="next" :class="store.disableNext ? 'disabled' : ''" @click.prevent="!disableNext ? changePage(store.currentPage + 1) : null" id="nextPage">Next</li>
           </ul>
         </nav>
       </div>
       <div ref="mainContent" class="h-screen">
         <!-- Content will be loaded here -->
-        <CardContainer
-          @setHidePagination="setHidePagination"
-          @setDisableNext="setDisableNext"
-          @setDisablePrev="setDisablePrev"
-          @newTotalPages="handleNewTotalPages"
-          @pageChanged="handlePageChanged"
-        > 
-          <SearchResultCards v-if="!currentMenuItem" ref="activeCards" :query="query" :RESULTS_PER_PAGE="RESULTS_PER_PAGE"/>
-          <EntityDirectory v-if="currentMenuItem" ref="activeCards" :currentDirectory="currentMenuItem" :RESULTS_PER_PAGE="RESULTS_PER_PAGE" />
+        <CardContainer> 
+          <SearchResultCards v-if="!currentMenuItem" ref="activeCards" :query="query"/>
+          <EntityDirectory v-if="currentMenuItem" ref="activeCards" :currentDirectory="currentMenuItem"/>
         </CardContainer>
       </div>
     </div>
@@ -64,7 +58,7 @@ import SearchResultCards from "./views/Results/SearchResultCards.vue";
 import CardContainer from "./views/CardContainer.vue";
 import setupPagination from '../../scripts/pagination';
 import EntityDirectory from './views/Results/EntityDirectory.vue';
-
+import { usePaginationStore } from '../stores/paginationStore';
 
 export default {
   components: { MenuButton, SearchResultCards, CardContainer, EntityDirectory },
@@ -72,20 +66,27 @@ export default {
     return {
       // search vars
       query: '',
-      hidePagination: true,
-      disablePrev: true,
-      disableNext: true,
-      currentPage: 1,
-      totalPages: 0,
-      RESULTS_PER_PAGE: 25,
-
+      store: usePaginationStore(),
       // directory selection vars
       menuItems: ["Home", "Department Directory", "Origin Directory", "Specimen Directory", "Document Directory"],
       currentMenuItem: "Home",
-
-      // switch to search var
     }
-
+  },
+  computed: {
+    totalPages() {
+      return this.store.totalPages;
+    },
+    currentPage() {
+      return this.store.currentPage;
+    }
+  },
+  watch: {
+    totalPages(_new){
+      this.setupPagination();
+    },
+    currentPage(_new){
+      this.setupPagination()
+    }
   },
   methods: {
     performSearch() {
@@ -100,26 +101,11 @@ export default {
     setupPagination(){
       setupPagination(this);
     },
-    handleNewTotalPages(newTotalPages){
-      this.totalPages = newTotalPages;
-      this.setupPagination();
+    
+    changePage(newPage){
+      this.store.setCurrentPage(newPage);
     },
-    handlePageChanged(newPage){
-      this.currentPage = newPage;
-      this.setupPagination();
-    },
-    changePage(page){
-      this.$refs.activeCards.changePage(page);
-    },
-    setHidePagination(bool){
-      this.hidePagination = bool;
-    },
-    setDisableNext(bool){
-      this.disableNext = bool;
-    },
-    setDisablePrev(bool){
-      this.disablePrev = bool;
-    }
+  
   }
 }
 </script>

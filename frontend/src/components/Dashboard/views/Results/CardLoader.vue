@@ -9,6 +9,7 @@
 import { client } from "../../../../scripts/api_access/apollo_client";
 import EntityCard from "./EntityCard.vue";
 import LoadSpinner from "../../animations/LoadSpinner.vue";
+import { usePaginationStore } from "../../../stores/paginationStore";
 
 export default {
   components: { EntityCard, LoadSpinner },
@@ -37,44 +38,35 @@ export default {
       type: Function,
       required: true,
     },
-    RESULTS_PER_PAGE: {
-      type: Number,
-      default: 25
-    }
+    
   },
   data() {
     return {
-      currentPage: 1,
-      totalPages: 1,
+      store: usePaginationStore(),
       rawResults: [],
       preparedResults: [],
       loading: false
-    };
+    }
   },
-  emits: [
-    "setHidePagination",
-    "setDisableNext",
-    "setDisablePrev",
-    "newTotalPages",
-    "pageChanged",
-    "scrollToTop"
-  ],
+  computed: {
+    currentPage() {
+      return this.store.currentPage;
+    },
+  },
+  emits: ["scrollToTop"],
   watch: {
     fetchTrigger(_data){
       this.fetchData();
     },
     rawResults(newResults) {
-      this.$emit("setHidePagination", newResults.length === 0);
+      this.store.setHidePagination(newResults.length === 0);
       this.$emit("scrollToTop");
     },
     currentPage(newPage) {
-      this.$emit("setDisableNext", newPage === this.totalPages);
-      this.$emit("setDisablePrev", newPage === 1);
-      this.$emit("pageChanged", newPage);
+      this.prepareResults();
+      this.store.setDisableNext(newPage === this.store.totalPages)
+      this.store.setDisablePrev(newPage === 1);
     },
-    totalPages(newTotalPages) {
-      this.$emit("newTotalPages", newTotalPages);
-    }
   },
   mounted() {
     this.fetchData();
@@ -93,10 +85,10 @@ export default {
 
         // Use the provided responseParser function to correctly extract results
         this.rawResults = this.responseParser(data);
-        this.totalPages = Math.ceil(this.rawResults.length / this.RESULTS_PER_PAGE);
+        this.store.setTotalPages(Math.ceil(this.rawResults.length / this.store.resultsPerPage));
         this.prepareResults();
 
-        this.$nextTick(() => { this.currentPage = 1; });
+        this.$nextTick(() => { this.store.setCurrentPage(1) });
 
       } catch (error) {
         console.error("GraphQL Error:", error);
@@ -106,16 +98,12 @@ export default {
     },
     prepareResults() {
       if (!Array.isArray(this.rawResults)) return;
-      const startIndex = (this.currentPage - 1) * this.RESULTS_PER_PAGE;
-      const endIndex = startIndex + this.RESULTS_PER_PAGE;
+      const startIndex = (this.store.currentPage - 1) * this.store.resultsPerPage;
+      const endIndex = startIndex + this.store.resultsPerPage;
       const pageResults = this.rawResults.slice(startIndex, endIndex);
 
       this.preparedResults = this.resultProcessor(pageResults);
     },
-    changePage(page) {
-      this.currentPage = page;
-      this.prepareResults();
-    }
   }
 };
 </script>

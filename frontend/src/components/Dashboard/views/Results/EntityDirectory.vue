@@ -5,13 +5,7 @@
   :query="CURRENT_QUERY"
   :resultProcessor="prepareResults"
   :responseParser="parseEntityResults"
-  :RESULTS_PER_PAGE="RESULTS_PER_PAGE"
   :fetchTrigger="CURRENT_QUERY"
-  @setHidePagination="$emit('setHidePagination', $event)"
-  @setDisableNext="$emit('setDisableNext', $event)"
-  @setDisablePrev="$emit('setDisablePrev', $event)"
-  @newTotalPages="$emit('newTotalPages', $event)"
-  @pageChanged="$emit('pageChanged', $event)"
   @scrollToTop="$emit('scrollToTop', $event)"
   />
 </template>
@@ -62,11 +56,6 @@ data() {
   }
 },
 emits: [
-  "setHidePagination",
-  "setDisableNext",
-  "setDisablePrev",
-  "newTotalPages",
-  "pageChanged",
   "scrollToTop",
 ],
 watch: {
@@ -76,7 +65,9 @@ watch: {
 
 },
 mounted() {
+  console.log(this.currentDirectory)
   this.setQuery(this.currentDirectory);
+  this.$refs.CardLoader.fetchData();
 },
 methods: {
   setQuery(newDirectory){
@@ -134,9 +125,6 @@ methods: {
     }
     return preparedResults;
   },
-  changePage(page) {
-    this.$refs.CardLoader.changePage(page);
-    }
 }
 }
 </script>

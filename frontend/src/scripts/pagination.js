@@ -1,12 +1,12 @@
 export default function setupPagination(dashboard) {
-    const totalPages = dashboard.totalPages;
+    const totalPages = dashboard.store.totalPages;
     const paginationContainer = dashboard.$refs.paginationContainer;
     // Ensure the container is empty before setting up new pagination
     paginationContainer.innerHTML = '';
 
     // Create and append page number buttons
     for (let i = 1; i <= totalPages; i++) {
-        paginationContainer.appendChild(createPageItem(dashboard, i, i === dashboard.currentPage, i.toString()));
+        paginationContainer.appendChild(createPageItem(dashboard, i, i === dashboard.store.currentPage, i.toString()));
     }
 
 }
