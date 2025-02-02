@@ -4,8 +4,9 @@
               hover:shadow-md hover:cursor-pointer hover:scale-103 shadow-black 
               transition-transform duration-300 ease-in-out" 
         :data-type="entity.entityType" 
-        :class="getThreatCategory(entity.threat_level)"
-      >  
+        :class="getThreatCategory(entity.threat_level || entity.threatLevel)"
+      >             
+                    <!-- Search Result Card Titles -->
                     <div class="card-body flex flex-col items-start">
                     <h5 v-if="entity.entityType === 'E'" class="card-title text-xl font-bold">{{ `${entity.first_name} ${entity.last_name}`}}</h5>
                     <h5 v-if="entity.entityType === 'S'" class="card-title text-xl font-bold">{{ entity.specimen_name }}</h5>
@@ -13,10 +14,12 @@
                     <h5 v-if="entity.entityType === 'O'" class="card-title text-xl font-bold">{{entity.origin_name}}</h5>
                     <h5 v-if="entity.entityType === 'D'" class="card-title text-xl font-bold">{{entity.department_name}}</h5>
 
-                    <!-- Department Directory View -->
+                    <!-- Directory Result Titles -->
                     <h5 v-if="entity.entityType === 'DDir'" class="card-title text-xl font-bold">{{entity.departmentName}}</h5>
+                    <h5 v-if="entity.entityType === 'SDir'" class="card-title text-xl font-bold">{{ entity.specimenName }}</h5>
 
                     <p class="card-text flex flex-col items-start text-left">
+                        <!-- Search Result Card Text -->
                         <template v-if="entity.entityType === 'E'">
                         <div><strong>Employee ID:</strong> {{ entity.employee_id }}</div>
                         <div><strong>Department:</strong> {{ entity.department }}</div>
@@ -49,9 +52,21 @@
                         </template>
                         
                        
-                        <!-- Department Directory View -->
+                        <!-- Directory Result Card Text -->
                         <template v-if="entity.entityType === 'DDir'">
                           {{entity.description || "No description available."}}
+                        </template>
+
+                        <template v-if="entity.entityType === 'SDir'">
+                        <div><strong>Specimen ID:</strong> {{ entity.specimenId }}</div>
+                        <div><strong>Threat Level:</strong> {{ entity.threatLevel }}</div>
+                        <div><strong>Acquisition Date:</strong> {{ entity.acquisitionDate }}</div>
+                        </template>
+
+                        <template v-if="entity.entityType === 'ODir'">
+                        <div><strong>Origin ID:</strong> {{ entity.originId }}</div>
+                        <div><strong>Discovery Date:</strong> {{ entity.discoveryDate }}</div>
+                        {{entity.description || "No description available."}}
                         </template>
                         
                     </p>

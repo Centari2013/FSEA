@@ -45,6 +45,24 @@ data() {
             description
         }
     }`,
+    GET_ALL_ORIGINS_QUERY: gql`
+    query {
+      allOrigins{
+          originId
+          originName
+          discoveryDate
+          description
+        }
+    }`,
+    GET_ALL_SPECIMENS_QUERY: gql`
+    query {
+      allSpecimens{
+        specimenId
+        specimenName
+        threatLevel
+        acquisitionDate
+      }
+    }`,
     TEST_QUERY: gql`{
       allClearances{
         clearanceId
@@ -75,10 +93,14 @@ methods: {
       case "Department Directory":
         this.CURRENT_QUERY = this.GET_ALL_DEPARTMENTS_QUERY;
         break;
-      case "Home":
-        this.CURRENT_QUERY = this.TEST_QUERY;
-        break
+      case "Origin Directory":
+        this.CURRENT_QUERY = this.GET_ALL_ORIGINS_QUERY;
+        break;
+      case "Specimen Directory":
+        this.CURRENT_QUERY = this.GET_ALL_SPECIMENS_QUERY;
+        break;
       default:
+        this.CURRENT_QUERY = this.TEST_QUERY;
         break;
     }
   },
@@ -95,10 +117,10 @@ methods: {
       if (key.endsWith("Id")) {
         const prefix = key.replace("Id", ""); // Extract the prefix
         const entityMapping = {
-          employee: "E",
-          specimen: "S",
-          mission: "M",
-          origin: "O",
+          //employee: "EDir",
+          specimen: "SDir",
+          //mission: "MDir", 
+          origin: "ODir",
           department: "DDir"
         };
 
