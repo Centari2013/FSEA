@@ -36,7 +36,7 @@ const query = gql`query Missions($mission_ids: [String]!){
                       }
                 }`
 
-export async function fetchMissionDetails(mission_ids) {
+export default async function fetchMissionDetails(mission_ids) {
   try {
     const result = await client.query({
       query: query,

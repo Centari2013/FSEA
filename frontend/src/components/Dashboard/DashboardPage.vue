@@ -40,10 +40,10 @@
       </div>
       <div ref="mainContent" class="h-screen">
         <!-- Content will be loaded here -->
-        <CardContainer> 
+        <ContentContainer> 
           <SearchResultCards v-if="!currentMenuItem" ref="activeCards" :query="query"/>
-          <EntityDirectory v-if="currentMenuItem" ref="activeCards" :currentDirectory="currentMenuItem"/>
-        </CardContainer>
+          <EntityDirectoryCards v-if="currentMenuItem" ref="activeCards" :currentDirectory="currentMenuItem"/>
+        </ContentContainer>
       </div>
     </div>
     
@@ -55,13 +55,13 @@
 <script>
 import MenuButton from './MenuButton.vue';
 import SearchResultCards from "./views/Results/SearchResultCards.vue";
-import CardContainer from "./views/CardContainer.vue";
+import ContentContainer from "./views/ContentContainer.vue";
 import setupPagination from '../../scripts/pagination';
-import EntityDirectory from './views/Results/EntityDirectory.vue';
+import EntityDirectoryCards from './views/Results/EntityDirectoryCards.vue';
 import { usePaginationStore } from '../stores/paginationStore';
 
 export default {
-  components: { MenuButton, SearchResultCards, CardContainer, EntityDirectory },
+  components: { MenuButton, SearchResultCards, ContentContainer, EntityDirectoryCards },
   data() {
     return {
       // search vars

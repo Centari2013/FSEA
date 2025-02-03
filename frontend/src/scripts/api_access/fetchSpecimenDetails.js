@@ -24,7 +24,7 @@ const query = gql`
                     }
                 }`
 
-export async function fetchSpecimenDetails(specimen_id) {
+export default async function fetchSpecimenDetails(specimen_id) {
   try {
     const result = await client.query({
       query: query,

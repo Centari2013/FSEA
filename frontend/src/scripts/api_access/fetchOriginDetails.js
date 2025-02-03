@@ -25,7 +25,7 @@ const query = gql`
                       }
                 }`
 
-export async function fetchOriginDetails(origin_id) {
+export default async function fetchOriginDetails(origin_id) {
   try {
     const result = await client.query({
       query: query,

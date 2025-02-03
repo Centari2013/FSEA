@@ -29,7 +29,7 @@ const query = gql`
         }
   }`
 
-export async function fetchDepartmentDetails(departmentId) {
+export default async function fetchDepartmentDetails(departmentId) {
   try {
     const result = await client.query({
       query: query,

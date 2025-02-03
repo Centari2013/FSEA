@@ -39,7 +39,7 @@ const query = gql`
                       }
                 }`
 
-export async function fetchEmployeeData(employee_id) {
+export default async function fetchEmployeeData(employee_id) {
   try {
     const result = await client.query({
       query: query,

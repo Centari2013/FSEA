@@ -3,7 +3,7 @@ import { useAuthStore } from '../components/stores/authStore';
 
 import LoginPage from '../components/LoginPage.vue';
 import DashboardPage from '../components/Dashboard/DashboardPage.vue';
-import EntityDetailsPage from '../components/EntityDetailsPage.vue';
+import EntityDetailsPage from '../components/EntityDetails/EntityDetailsPage.vue';
 
 const routes = [
     { path: '/', component: LoginPage },
