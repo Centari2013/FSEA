@@ -63,6 +63,14 @@ data() {
         acquisitionDate
       }
     }`,
+    BLOCK_QUERY: gql`
+    query GetDummyData {
+      dummyData {
+        id
+        name
+        description
+      }
+    }`,
     blockFetch: false,
   }
 },
@@ -96,6 +104,7 @@ methods: {
         break;
       default:
         this.blockFetch = true;
+        this.CURRENT_QUERY = this.BLOCK_QUERY;
         break;
     }
   },

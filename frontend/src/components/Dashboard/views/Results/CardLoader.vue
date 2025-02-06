@@ -75,7 +75,10 @@ export default {
     },
   },
   mounted() {
-    this.fetchData();
+    if (!this.blockFetch) {
+      this.fetchData();
+    }
+    
   },
   methods: {
     async fetchData() {
