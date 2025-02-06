@@ -38,6 +38,10 @@ export default {
       type: Function,
       required: true,
     },
+    blockFetch: {
+      type: Boolean,
+      default: false,
+    }
     
   },
   data() {
@@ -55,7 +59,11 @@ export default {
   },
   watch: {
     fetchTrigger(_data){
-      this.fetchData();
+      if (!this.blockFetch){
+        this.fetchData();
+      }else{
+        this.preparedResults = [];
+      }
     },
     rawResults(newResults) {
       this.store.setHidePagination(newResults.length === 0);

@@ -1,25 +1,22 @@
 <template>
-  <ContentContainer class="h-full">
+  <div class="h-full overflow-auto flex flex-col items-center">
     <component :is="component" :id="params.id"
        class="w-11/12 mt-10"
     />
-  </ContentContainer>
+  </div>
        
 </template>
 
 <script>
 import { markRaw } from 'vue';
 import DepartmentDetails from './views/DepartmentDetails.vue';
-import ContentContainer from '../Dashboard/views/ContentContainer.vue';
-
+import EmployeeDetails from './views/EmployeeDetails.vue';
 
 export default {
-  components: { ContentContainer },
   data(){
     return {
       params: JSON.parse(localStorage.getItem('params')),
       component: null,
-     
     }
   },
   mounted(){
@@ -32,6 +29,7 @@ export default {
         this.component = markRaw(DepartmentDetails);
         break;
       case 'E':
+        this.component = markRaw(EmployeeDetails);
         break;
       case 'S':
         break;

@@ -6,6 +6,7 @@
   :resultProcessor="prepareResults"
   :responseParser="parseEntityResults"
   :fetchTrigger="CURRENT_QUERY"
+  :blockFetch="blockFetch"
   />
 </template>
 
@@ -62,7 +63,7 @@ data() {
         acquisitionDate
       }
     }`,
-    
+    blockFetch: false,
   }
 },
 emits: [
@@ -82,16 +83,19 @@ methods: {
   setQuery(newDirectory){
     switch(newDirectory) {
       case "Department Directory":
+        this.blockFetch = false;
         this.CURRENT_QUERY = this.GET_ALL_DEPARTMENTS_QUERY;
         break;
       case "Origin Directory":
+        this.blockFetch = false;
         this.CURRENT_QUERY = this.GET_ALL_ORIGINS_QUERY;
         break;
       case "Specimen Directory":
+        this.blockFetch = false;
         this.CURRENT_QUERY = this.GET_ALL_SPECIMENS_QUERY;
         break;
       default:
-        this.CURRENT_QUERY = ''; //intentional for now
+        this.blockFetch = true;
         break;
     }
   },
