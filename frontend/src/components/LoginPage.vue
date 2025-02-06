@@ -70,17 +70,17 @@ export default {
                 });
 
                 const loginData = result.data.login;
+                console.log(loginData)
                 if (loginData.token) {
                     localStorage.setItem('sessionToken', loginData.token);
                     localStorage.setItem('employee_id', loginData.employeeId);
                     this.router.push("/dashboard");
-                    
-                } 
+                }else{
+                    this.loading = false;
+                    this.loginFailed = true;
+                }
             } catch (error) {
                 console.error("Error during mutation:", error);
-            }finally{
-                this.loading = false;
-                this.loginFailed = true;
             }
     }
 

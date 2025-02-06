@@ -86,11 +86,6 @@ import { useRouter } from 'vue-router';
         required: true
       }
     },
-    data(){
-      return{
-        router: useRouter(),
-      }
-    },
     methods: {
       getDesignationString(){
         return this.entity.designations ? entity.designations.map(d => d.abbreviation).join(', '): ""

@@ -1,50 +1,50 @@
-<template>r
-    <ContentContainer>
-      <!-- Entity details will be inserted here dynamically -->
-      <!-- Department -->
+<template>
+  <ContentContainer class="h-full">
+    <component :is="component" :id="params.id"
+       class="w-11/12 mt-10"
+    />
+  </ContentContainer>
        
-      <LoadSpinner v-if="loading"/>
-    </ContentContainer>
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+import { markRaw } from 'vue';
 import DepartmentDetails from './views/DepartmentDetails.vue';
 import ContentContainer from '../Dashboard/views/ContentContainer.vue';
-import LoadSpinner from '../Dashboard/animations/LoadSpinner.vue';
+
 
 export default {
-  components: { LoadSpinner, ContentContainer, DepartmentDetails },
+  components: { ContentContainer },
   data(){
     return {
-      router: useRouter(),
       params: JSON.parse(localStorage.getItem('params')),
-      entityDetails: null,
-      loading: true,
+      component: null,
+     
     }
   },
   mounted(){
-    switch(this.params.type){
+    this.getEntityDetails();
+  },
+  methods: {
+    getEntityDetails(){
+      switch(this.params.type){
       case 'D':
-        this.entityDetails = await fetchDepartmentDetails(this.params.id);
+        this.component = markRaw(DepartmentDetails);
         break;
       case 'E':
-        this.entityDetails = await fetchEmployeeDetails(this.params.id);
         break;
       case 'S':
-        this.entityDetails = await fetchSpecimenDetails(this.params.id);
         break;
       case 'O':
-        this.entityDetails = await fetchOriginDetails(this.params.id);
         break;
       case 'M':
-        this.entityDetails = await fetchMissionDetails(this.params.id);
         break;
       default:
         break;
     }
 
     this.loading = false;
+    }
   }
 }
 

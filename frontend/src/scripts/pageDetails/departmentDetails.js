@@ -1,7 +1,7 @@
 import { fetchDepartmentDetails } from "../api_access/fetchDepartmentDetails";
 import { setToggle, setWindowOpener } from "../utility";
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMCon tentLoaded', async () => {
     setWindowOpener();
     const departmentDetailsContainer = document.getElementById('departmentDetailsContainer');
     const urlParams = new URLSearchParams(window.location.search);
