@@ -71,7 +71,7 @@ data() {
         description
       }
     }`,
-    blockFetch: false,
+    blockFetch: true,
   }
 },
 emits: [
@@ -85,7 +85,10 @@ watch: {
 },
 mounted() {
   this.setQuery(this.currentDirectory);
-  this.$refs.CardLoader.fetchData();
+  if (!this.blockFetch){
+    this.$refs.CardLoader.fetchData();
+  }
+  
 },
 methods: {
   setQuery(newDirectory){
