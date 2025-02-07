@@ -88,7 +88,7 @@ import { useRouter } from 'vue-router';
     },
     methods: {
       getDesignationString(){
-        return this.entity.designations ? entity.designations.map(d => d.abbreviation).join(', '): ""
+        return this.entity.designations ? this.entity.designations.map(d => d.abbreviation).join(', '): ""
       },
       getThreatCategory(threatLevel) {
         if (threatLevel <= 3) return "border-l-green-500";
