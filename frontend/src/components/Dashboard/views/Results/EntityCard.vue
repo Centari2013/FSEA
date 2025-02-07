@@ -78,7 +78,6 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
   export default {
     props: {
       entity: {
@@ -149,7 +148,7 @@ import { useRouter } from 'vue-router';
         return routeName;
       },
       openDetails(){
-        localStorage.setItem('params', JSON.stringify({id: this.getEntityId(), type: this.getNormalizedEntityType()}))
+        sessionStorage.setItem('params', JSON.stringify({id: this.getEntityId(), type: this.getNormalizedEntityType()}))
         const routeData = this.$router.resolve({name: this.getRouteName()});
         window.open(routeData.href, '_blank');
       }

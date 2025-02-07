@@ -18,7 +18,7 @@ import SpecimenDetails from './views/MissionDetails.vue';
 export default {
   data(){
     return {
-      params: JSON.parse(localStorage.getItem('params')),
+      params: JSON.parse(sessionStorage.getItem('params')),
       component: null,
     }
   },
