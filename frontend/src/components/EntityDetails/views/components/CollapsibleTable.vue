@@ -10,27 +10,19 @@
 
   <!-- Collapsible Content -->
   <div v-if="isExpanded">
-    <table class="table-fixed w-full">
-      <thead>
-        <tr class="h-10 bg-zinc-900">
-          <th class="w-auto pl-2">{{ headerTitles[0] }}</th>
-          <th class="w-auto" v-for="(title, index) in headerTitles.slice(1)" :key="index">{{ title }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(obj, index) in dictArr" :key="index" class="h-10 even:bg-zinc-800 border border-collapse border-l-0 border-r-0">
-          <td class="pl-2">{{ obj[keys[0]] }}</td>
-          <template v-for="(key, index) in keys.slice(1)" :key="index">
-            <td>{{ obj[key] }}</td>
-          </template>
-        </tr>
-      </tbody>
-    </table>
+    <Table 
+   :headerTitles="headerTitles"
+   :keys="keys"
+   :dictArr="dictArr"
+   />
   </div>
 </template>
 
 <script>
+import Table from './Table.vue';
+
 export default {
+  components: {Table},
   props: {
     title: {
       type: String,

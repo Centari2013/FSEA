@@ -3,62 +3,63 @@
   <div v-else
   class="shadow-xl bg-zinc-700 rounded-xl p-10 text-left space-y-5"
   >
-    <h1>{{ employee.firstName}} {{ employee.lastName }}</h1>
-    <p><strong>Employee ID:</strong> {{employee.employeeId}}</p>
-    <p><strong>Department:</strong> {{employee.department.departmentName}}</p>
-    <p><strong>Designation(s):</strong> {{employee.designations.map(d => `${d.designationName} (${d.abbreviation})`).join(', ')}}</p>
-    <p><strong>Start Date:</strong> {{employee.startDate}}</p>
-    <p><strong>End Date:</strong> {{employee.endDate ? employee.endDate: 'N/A'}}</p>
+    <h1>{{ mission.missionName }}</h1>
+    <p><strong>Mission ID:</strong> {{mission.missionId}}</p>
+    <p><strong>Departments Involved:</strong> {{mission.departments.map(dept => dept.departmentName).join(', ')}}</p>
+    <p><strong>Start Date:</strong> {{mission.startDate}}</p>
+    <p><strong>End Date:</strong> {{mission.endDate ? mission.endDate: 'Ongoing'}}</p>
+    <p><strong>Commander:</strong> {{mission.commander.firstName}} {{mission.commander.lastName}}</p>
+    <p><strong>Supervisor:</strong> {{mission.supervisor.firstName}} {{mission.supervisor.lastName}}</p>
+    <p><strong>Description:</strong> {{mission.description}}</p>
 
-    <CollapsibleDiv :title="'Clearances'">
-      <template v-for="c in employee.clearances">
-        <li><strong>{{c.clearanceName}}: </strong> {{c.description}}</li>
-      </template>
-    </CollapsibleDiv>
-    <CollapsibleTable
-    :title="'Missions'"
-    :headerTitles="['Mission ID', 'Mission Name', 'Employee Involvement']"
-    :dictArr="employee.missions"
-    :keys="['missionId', 'missionName', 'involvementSummary']"
-    />
+    <p><strong>Origins:</strong><br>
+        <ul>
+          <li v-for="o in mission.origins"> {{ o.originId }} - {{ o.originName }}</li>
+        </ul>
+    </p>
 
-    <CollapsibleDiv :title="'Medical Data'">
-      <div class="w-11/12 h-11/12 space-y-4 bg-zinc-600 p-5 rounded-xl ">
-        <p><strong>Blood type:</strong> {{employee.medicalRecord.bloodtype}}</p>
-        <p><strong>Height:</strong> {{employee.medicalRecord.heightCm}} cm</p>
-        <p><strong>Weight:</strong> {{employee.medicalRecord.kilograms}} kg</p>
-        <p><strong>Notes:</strong></p>
-        <ul>{{employee.medicalRecord.notes ? employee.medicalRecord.notes : 'N/A'}}</ul>
-      </div>
-    </CollapsibleDiv>
+    <p><strong>Employees Involved:</strong><br>
+        <ul>
+          <li v-for="e in mission.employees">{{e.employeeId}} - {{e.firstName}} {{e.lastName}}</li>
+        </ul>
+    </p>
+
+    <p><strong>Notes</strong><br>
+      <Table
+      :headerTitles="['Timestamp', 'Note']"
+      :keys="['timestamp', 'note']"
+      :dictArr="mission.notes ? JSON.parse(mission.notes) : {}"
+      />
+    </p>
 
   </div>
   
 </template>
 
 <script>
-import fetchEmployeeDetails from '../../../scripts/api_access/fetchEmployeeDetails';
+import fetchMissionDetails from '../../../scripts/api_access/fetchMissionDetails';
 import LoadSpinner from "../../Dashboard/animations/LoadSpinner.vue";
 import CollapsibleTable from "./components/CollapsibleTable.vue";
 import CollapsibleDiv from './components/CollapsibleDiv.vue';
+import Table from './components/Table.vue';
 
 export default {
-  components: { LoadSpinner, CollapsibleTable, CollapsibleDiv },
+  components: { LoadSpinner, CollapsibleTable, CollapsibleDiv, Table },
   props: { id: String },
   data(){
     return {
-      employee: null,
+      mission: null,
       loading: true,
     }
   },
   mounted(){
-    this.fetchEmployeeDetails();
+    this.fetchMissionDetails();
   },
   methods: {
-    async fetchEmployeeDetails(){
-  
-      this.employee = await fetchEmployeeDetails(this.id); 
+    async fetchMissionDetails(){
+      this.mission = await fetchMissionDetails(this.id); 
       this.loading = false;
+      console.log(this.mission)
     }
   }
 };

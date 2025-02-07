@@ -11,6 +11,9 @@
 import { markRaw } from 'vue';
 import DepartmentDetails from './views/DepartmentDetails.vue';
 import EmployeeDetails from './views/EmployeeDetails.vue';
+import MissionDetails from './views/MissionDetails.vue';
+import OriginDetails from './views/OriginDetails.vue';
+import SpecimenDetails from './views/MissionDetails.vue';
 
 export default {
   data(){
@@ -32,10 +35,13 @@ export default {
         this.component = markRaw(EmployeeDetails);
         break;
       case 'S':
+        this.component = markRaw(SpecimenDetails);
         break;
       case 'O':
+        this.component = markRaw(OriginDetails);
         break;
       case 'M':
+        this.component = markRaw(MissionDetails);
         break;
       default:
         break;

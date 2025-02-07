@@ -42,7 +42,8 @@ export default async function fetchMissionDetails(mission_ids) {
       query: query,
       variables: { mission_ids: mission_ids}
     });
-    return result.data.missions;
+    const missions = result.data.missions;
+    return missions.length ? (missions.length > 1 ? missions : missions[0]) : [];
   } catch (error) {
     console.error('GraphQL query error:', error);
     throw error;
