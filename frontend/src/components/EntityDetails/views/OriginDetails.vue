@@ -3,61 +3,59 @@
   <div v-else
   class="shadow-xl bg-zinc-700 rounded-xl p-10 text-left space-y-5"
   >
-    <h1>{{ employee.firstName}} {{ employee.lastName }}</h1>
-    <p><strong>Employee ID:</strong> {{employee.employeeId}}</p>
-    <p><strong>Department:</strong> {{employee.department.departmentName}}</p>
-    <p><strong>Designation(s):</strong> {{employee.designations.map(d => `${d.designationName} (${d.abbreviation})`).join(', ')}}</p>
-    <p><strong>Start Date:</strong> {{employee.startDate}}</p>
-    <p><strong>End Date:</strong> {{employee.endDate ? employee.endDate: 'N/A'}}</p>
+    <h1>{{origin.name}}</h1>
+    <p><strong>Origin ID:</strong> {{origin.originId}}</p>
+    <p><strong>Discovery Date:</strong> {{origin.discoveryDate}}</p>
+    <p><strong>Description:</strong> {{origin.description}}</p>
 
-    <CollapsibleDiv :title="'Clearances'">
-      <template v-for="c in employee.clearances">
-        <li><strong>{{c.clearanceName}}: </strong> {{c.description}}</li>
-      </template>
-    </CollapsibleDiv>
-    <CollapsibleTable
-    :title="'Missions'"
-    :headerTitles="['Mission ID', 'Mission Name', 'Employee Involvement']"
-    :dictArr="employee.missions"
-    :keys="['missionId', 'missionName', 'involvementSummary']"
+    <h3>Missions</h3>
+    <Table
+    :headerTitles="['Mission ID', 'Mission Name', 'Start Date', 'End Date']"
+    :keys="['missionId', 'missionName', 'startDate', 'endDate']"
+    :dictArr="origin.missions"
     />
 
-    <CollapsibleDiv :title="'Medical Data'">
-      <div class="w-11/12 h-11/12 space-y-4 bg-zinc-600 p-5 rounded-xl ">
-        <p><strong>Blood type:</strong> {{employee.medicalRecord.bloodtype}}</p>
-        <p><strong>Height:</strong> {{employee.medicalRecord.heightCm}} cm</p>
-        <p><strong>Weight:</strong> {{employee.medicalRecord.kilograms}} kg</p>
-        <p><strong>Notes:</strong></p>
-        <ul>{{employee.medicalRecord.notes ? employee.medicalRecord.notes : 'N/A'}}</ul>
-      </div>
-    </CollapsibleDiv>
+    <h3>Specimens</h3>
+    <Table
+    :headerTitles="['Specimen ID', 'Specimen Name', 'Acquisition Date']"
+    :keys="['specimenId', 'specimenName', 'acquisitionDate']"
+    :dictArr="origin.specimens"
+    />
 
+    <p><strong>Notes</strong><br>
+      <Table
+      :headerTitles="['Timestamp', 'Note']"
+      :keys="['timestamp', 'note']"
+      :dictArr="origin.notes ? JSON.parse(origin.notes) : []"
+      />
+    </p>
   </div>
   
 </template>
 
 <script>
-import fetchEmployeeDetails from '../../../scripts/api_access/fetchEmployeeDetails';
+import fetchOriginDetails from '../../../scripts/api_access/fetchOriginDetails';
 import LoadSpinner from "../../Dashboard/animations/LoadSpinner.vue";
 import CollapsibleTable from "./components/CollapsibleTable.vue";
 import CollapsibleDiv from './components/CollapsibleDiv.vue';
+import Table from './components/Table.vue';
 
 export default {
-  components: { LoadSpinner, CollapsibleTable, CollapsibleDiv },
+  components: { LoadSpinner, CollapsibleTable, CollapsibleDiv, Table },
   props: { id: String },
   data(){
     return {
-      employee: null,
+      origin: null,
       loading: true,
     }
   },
   mounted(){
-    this.fetchEmployeeDetails();
+    this.fetchOriginDetails();
   },
   methods: {
-    async fetchEmployeeDetails(){
+    async fetchOriginDetails(){
   
-      this.employee = await fetchEmployeeDetails(this.id); 
+      this.origin = await fetchOriginDetails(this.id); 
       this.loading = false;
     }
   }
