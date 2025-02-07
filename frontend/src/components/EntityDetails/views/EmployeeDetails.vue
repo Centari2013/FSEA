@@ -59,7 +59,6 @@ export default {
   
       this.employee = await fetchEmployeeDetails(this.id); 
       this.loading = false;
-      console.log(this.employee)
     }
   }
 };
