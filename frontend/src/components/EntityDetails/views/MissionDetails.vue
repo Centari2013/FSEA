@@ -19,8 +19,10 @@
     </p>
 
     <p><strong>Employees Involved:</strong><br>
-        <ul>
-          <li v-for="e in mission.employees">{{e.employeeId}} - {{e.firstName}} {{e.lastName}}</li>
+        <ul class="space-y-4">
+          <template v-for="e in mission.employees">
+            <hr><li >{{e.employeeId}} - {{e.firstName}} {{e.lastName}}</li>
+          </template>
         </ul>
     </p>
 
@@ -28,7 +30,7 @@
       <Table
       :headerTitles="['Timestamp', 'Note']"
       :keys="['timestamp', 'note']"
-      :dictArr="mission.notes ? JSON.parse(mission.notes) : {}"
+      :dictArr="mission.notes ? JSON.parse(mission.notes) : []"
       />
     </p>
 
