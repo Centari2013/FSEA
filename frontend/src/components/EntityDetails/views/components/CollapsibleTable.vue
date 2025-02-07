@@ -1,6 +1,6 @@
 <template>
   <div class="flex space-x-4 items-center mb-1">
-    <h3 class="text-2xl">{{ title }}</h3>
+    <SectionTitle :title="title"/>
     <div @click="isExpanded = !isExpanded" class="px-3 py-1 text-blue-400 hover:underline cursor-pointer">
       {{ isExpanded ? "See Less" : "See More" }}
     </div>
@@ -20,9 +20,10 @@
 
 <script>
 import Table from './Table.vue';
+import SectionTitle from './SectionTitle.vue';
 
 export default {
-  components: {Table},
+  components: {Table, SectionTitle},
   props: {
     title: {
       type: String,

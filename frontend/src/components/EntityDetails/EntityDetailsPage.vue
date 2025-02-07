@@ -13,7 +13,7 @@ import DepartmentDetails from './views/DepartmentDetails.vue';
 import EmployeeDetails from './views/EmployeeDetails.vue';
 import MissionDetails from './views/MissionDetails.vue';
 import OriginDetails from './views/OriginDetails.vue';
-import SpecimenDetails from './views/MissionDetails.vue';
+import SpecimenDetails from './views/SpecimenDetails.vue';
 
 export default {
   data(){

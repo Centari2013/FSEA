@@ -12,13 +12,14 @@
     <p><strong>Supervisor:</strong> {{mission.supervisor.firstName}} {{mission.supervisor.lastName}}</p>
     <p><strong>Description:</strong> {{mission.description}}</p>
 
-    <p><strong>Origins:</strong><br>
+    <p><SectionTitle :title="'Origins'"/>
         <ul>
           <li v-for="o in mission.origins"> {{ o.originId }} - {{ o.originName }}</li>
         </ul>
     </p>
 
-    <p><strong>Employees Involved:</strong><br>
+    <p>
+    <SectionTitle :title="'Missions'"/>
         <ul class="space-y-4">
           <template v-for="e in mission.employees">
             <hr><li >{{e.employeeId}} - {{e.firstName}} {{e.lastName}}</li>
@@ -26,8 +27,9 @@
         </ul>
     </p>
 
-    <p><strong>Notes</strong><br>
+    <p>
       <Table
+      :title="'Notes'"
       :headerTitles="['Timestamp', 'Note']"
       :keys="['timestamp', 'note']"
       :dictArr="mission.notes ? JSON.parse(mission.notes) : []"
@@ -44,9 +46,10 @@ import LoadSpinner from "../../Dashboard/animations/LoadSpinner.vue";
 import CollapsibleTable from "./components/CollapsibleTable.vue";
 import CollapsibleDiv from './components/CollapsibleDiv.vue';
 import Table from './components/Table.vue';
+import SectionTitle from './components/SectionTitle.vue';
 
 export default {
-  components: { LoadSpinner, CollapsibleTable, CollapsibleDiv, Table },
+  components: { LoadSpinner, CollapsibleTable, CollapsibleDiv, Table, SectionTitle },
   props: { id: String },
   data(){
     return {

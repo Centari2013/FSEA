@@ -1,4 +1,5 @@
-<template>  
+<template> 
+    <SectionTitle :title="title"/>
     <table class="table-fixed w-full">
       <thead>
         <tr class="h-10 bg-zinc-900">
@@ -18,8 +19,14 @@
 </template>
 
 <script>
+import SectionTitle from './SectionTitle.vue';
 export default {
+  components: {SectionTitle},
   props: {
+    title: {
+      type: String, 
+      default: null,
+    },
     headerTitles: {
       type: Array,
       default: () => [],

@@ -3,61 +3,59 @@
   <div v-else
   class="shadow-xl bg-zinc-700 rounded-xl p-10 text-left space-y-5"
   >
-    <h1>{{ employee.firstName}} {{ employee.lastName }}</h1>
-    <p><strong>Employee ID:</strong> {{employee.employeeId}}</p>
-    <p><strong>Department:</strong> {{employee.department.departmentName}}</p>
-    <p><strong>Designation(s):</strong> {{employee.designations.map(d => `${d.designationName} (${d.abbreviation})`).join(', ')}}</p>
-    <p><strong>Start Date:</strong> {{employee.startDate}}</p>
-    <p><strong>End Date:</strong> {{employee.endDate ? employee.endDate: 'N/A'}}</p>
+  <h1>{{specimen.specimenName}}</h1>
+  <p><strong>Specimen ID:</strong> {{specimen.specimenId}}</p>
+  <p><strong>Origin ID:</strong> {{specimen.originId}}</p>
+  <p><strong>Mission ID:</strong> {{specimen.missionId}}</p>
+  <p><strong>Threat Level:</strong> {{specimen.threatLevel}}</p>
+  <p><strong>Acquisition Date:</strong> {{specimen.acquisitionDate}}</p>
+  <p><strong>Description:</strong> {{specimen.description}}</p>
+  <p><strong>Containment Statuses:</strong> {{specimen.containmentStatuses.map(status => status.statusName).join(', ')}}</p>
 
-    <CollapsibleDiv :title="'Clearances'">
-      <template v-for="c in employee.clearances">
-        <li><strong>{{c.clearanceName}}: </strong> {{c.description}}</li>
-      </template>
-    </CollapsibleDiv>
-    <CollapsibleTable
-    :title="'Missions'"
-    :headerTitles="['Mission ID', 'Mission Name', 'Employee Involvement']"
-    :dictArr="employee.missions"
-    :keys="['missionId', 'missionName', 'involvementSummary']"
+  <p>
+  <SectionTitle :title="'Researchers Involved'"/>
+      <ul class="space-y-4">
+        <template v-for="r in specimen.researchers">
+          <hr><li >{{r.employeeId}} - {{r.firstName}} {{r.lastName}}</li>
+        </template>
+      </ul>
+  </p>
+
+  <p>
+    <Table
+    :title="'Notes'"
+    :headerTitles="['Timestamp', 'Note']"
+    :keys="['timestamp', 'note']"
+    :dictArr="specimen.notes ? JSON.parse(specimen.notes) : []"
     />
-
-    <CollapsibleDiv :title="'Medical Data'">
-      <div class="w-11/12 h-11/12 space-y-4 bg-zinc-600 p-5 rounded-xl ">
-        <p><strong>Blood type:</strong> {{employee.medicalRecord.bloodtype}}</p>
-        <p><strong>Height:</strong> {{employee.medicalRecord.heightCm}} cm</p>
-        <p><strong>Weight:</strong> {{employee.medicalRecord.kilograms}} kg</p>
-        <p><strong>Notes:</strong></p>
-        <ul>{{employee.medicalRecord.notes ? employee.medicalRecord.notes : 'N/A'}}</ul>
-      </div>
-    </CollapsibleDiv>
-
-  </div>
+  </p>
   
+  </div>
 </template>
 
 <script>
-import fetchEmployeeDetails from '../../../scripts/api_access/fetchEmployeeDetails';
+import fetchSpecimenDetails from '../../../scripts/api_access/fetchSpecimenDetails';
 import LoadSpinner from "../../Dashboard/animations/LoadSpinner.vue";
-import CollapsibleTable from "./components/CollapsibleTable.vue";
-import CollapsibleDiv from './components/CollapsibleDiv.vue';
+import Table from './components/Table.vue';
+import SectionTitle from './components/SectionTitle.vue';
+
 
 export default {
-  components: { LoadSpinner, CollapsibleTable, CollapsibleDiv },
+  components: { LoadSpinner, Table, SectionTitle },
   props: { id: String },
   data(){
     return {
-      employee: null,
+      specimen: null,
       loading: true,
     }
   },
   mounted(){
-    this.fetchEmployeeDetails();
+    this.fetchSpecimenDetails();
   },
   methods: {
-    async fetchEmployeeDetails(){
+    async fetchSpecimenDetails(){
   
-      this.employee = await fetchEmployeeDetails(this.id); 
+      this.specimen = await fetchSpecimenDetails(this.id); 
       this.loading = false;
     }
   }
