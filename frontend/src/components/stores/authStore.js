@@ -34,7 +34,7 @@ export const useAuthStore = defineStore("auth", {
           this.isAuthenticated = true;
         } else {
           this.isAuthenticated = false;
-          localStorage.removeItem("sessionToken"); // Remove invalid token
+          this.logout();
         }
       } catch (error) {
         console.error("Error verifying token:", error);
@@ -47,7 +47,7 @@ export const useAuthStore = defineStore("auth", {
     logout() {
       this.isAuthenticated = false;
       localStorage.removeItem("sessionToken");
-      window.location.href = "/login"; // Redirect to login page
+      window.location.href = "/"; // Redirect to login page
     },
   },
 });

@@ -38,6 +38,7 @@
 import { gql } from "@apollo/client/core";
 import { client } from "../scripts/api_access/apollo_client";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "./stores/authStore"
 import LoadSpinner from "./Dashboard/animations/LoadSpinner.vue";
 
 export default {
@@ -73,6 +74,11 @@ export default {
                 if (loginData.token) {
                     localStorage.setItem('sessionToken', loginData.token);
                     localStorage.setItem('employee_id', loginData.employeeId);
+
+                    const authStore = useAuthStore();
+                    authStore.isAuthenticated = true;
+                    authStore.loading = false; // if you use it to block guards
+
                     this.router.push("/dashboard");
                 }else{
                     this.loading = false;
