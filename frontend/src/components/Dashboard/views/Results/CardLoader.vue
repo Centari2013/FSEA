@@ -69,7 +69,6 @@ export default {
       this.store.setHidePagination(newResults.length === 0);
     },
     currentPage(newPage) {
-      console.log('poop')
       this.prepareResults();
       this.store.setDisableNext(newPage === this.store.totalPages)
       this.store.setDisablePrev(newPage === 1);
