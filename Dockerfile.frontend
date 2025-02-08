@@ -5,6 +5,10 @@ WORKDIR /app
 
 COPY frontend/package*.json /app/
 
+RUN rm -rf node_modules
+
+RUN rm package-lock.json
+
 RUN npm install
 
 COPY frontend /app
