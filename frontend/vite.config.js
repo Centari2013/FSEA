@@ -17,8 +17,8 @@ export default defineConfig({
     __API_URL__: JSON.stringify(apiUrl),
   },
   server: {
-    allowedHosts: ['fsea-if20.onrender.com'],
     port: 5173,
     host: true, // This allows access from external IPs, useful for Docker
-  }
+  },
+  base: '/FSEA/'
 })
