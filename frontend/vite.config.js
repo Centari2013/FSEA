@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
-import { injectEmployeeIdMiddleware } from './src/scripts/middleware/injectEmployeeIdMiddleware'
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const apiUrl = process.env.VITE_API_URL;
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [

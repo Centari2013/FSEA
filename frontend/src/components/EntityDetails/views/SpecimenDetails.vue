@@ -12,14 +12,14 @@
   <p><strong>Description:</strong> {{specimen.description}}</p>
   <p><strong>Containment Statuses:</strong> {{specimen.containmentStatuses.map(status => status.statusName).join(', ')}}</p>
 
-  <p>
+  <div>
   <SectionTitle :title="'Researchers Involved'"/>
       <ul class="space-y-4">
         <template v-for="r in specimen.researchers">
           <hr><li >{{r.employeeId}} - {{r.firstName}} {{r.lastName}}</li>
         </template>
       </ul>
-  </p>
+    </div>
 
   <p>
     <Table

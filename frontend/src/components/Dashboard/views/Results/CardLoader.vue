@@ -69,6 +69,7 @@ export default {
       this.store.setHidePagination(newResults.length === 0);
     },
     currentPage(newPage) {
+      console.log('poop')
       this.prepareResults();
       this.store.setDisableNext(newPage === this.store.totalPages)
       this.store.setDisablePrev(newPage === 1);
@@ -97,7 +98,9 @@ export default {
         this.store.setTotalPages(Math.ceil(this.rawResults.length / this.store.resultsPerPage));
         this.prepareResults();
 
-        this.$nextTick(() => { this.store.setCurrentPage(1) });
+        this.store.setCurrentPage(999);
+        this.$nextTick(() => { this.store.setCurrentPage(1) }); // force currentPage watcher to fire
+        
 
       } catch (error) {
         console.error("GraphQL Error:", error);

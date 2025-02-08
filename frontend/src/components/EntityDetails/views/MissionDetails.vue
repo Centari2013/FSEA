@@ -12,20 +12,20 @@
     <p><strong>Supervisor:</strong> {{mission.supervisor.firstName}} {{mission.supervisor.lastName}}</p>
     <p><strong>Description:</strong> {{mission.description}}</p>
 
-    <p><SectionTitle :title="'Origins'"/>
+    <div><SectionTitle :title="'Origins'"/>
         <ul>
           <li v-for="o in mission.origins"> {{ o.originId }} - {{ o.originName }}</li>
         </ul>
-    </p>
+    </div>
 
-    <p>
+    <div>
     <SectionTitle :title="'Missions'"/>
         <ul class="space-y-4">
           <template v-for="e in mission.employees">
             <hr><li >{{e.employeeId}} - {{e.firstName}} {{e.lastName}}</li>
           </template>
         </ul>
-    </p>
+    </div>
 
     <p>
       <Table
