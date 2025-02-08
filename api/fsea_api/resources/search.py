@@ -57,7 +57,7 @@ class Search(graphene.Mutation):
         type_priority = {'D': 1, 'E': 2, 'O': 3, 'M': 4, 'S': 5}
 
         # Set up some weights — adjust these until your results stop looking like a shitshow.
-        RELEVANCY_WEIGHT = 1.0
+        RELEVANCY_WEIGHT = 0.6
         TYPE_PRIORITY_WEIGHT = 0.3  # Adjust this to balance type priority influence
 
         def combined_score(result):
@@ -67,8 +67,8 @@ class Search(graphene.Mutation):
             type_penalty = type_priority.get(result.entity_type, 100) * TYPE_PRIORITY_WEIGHT
             return relevancy - type_penalty
 
-        # Now sort your results by this unified combined score (higher score first)
-        results = sorted(results, key=combined_score, reverse=True)
+        
+        results = sorted(results, key=combined_score)
 
         return Search(results=results)
 
