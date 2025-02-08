@@ -57,7 +57,8 @@ Password: admin
 - pdf generation
 - document search/access
 
-
+### Some Fun? Facts
+- User tokens become invalid after 4 hours, prompting users to login again.
 
 ## Contact
 <!-- Include icons and links to your RELEVANT, PROFESSIONAL 'DEV-ORIENTED' social media. LinkedIn and dev.to are minimum. -->

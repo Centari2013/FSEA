@@ -1,5 +1,5 @@
 *.env
 *.venv
 __pycache__
-.vscode
+*.vscode
 node_modules
