@@ -1,7 +1,12 @@
 <template>
     <div class="h-full w-full flex justify-center items-center">
-        <div class="h-1/2 w-3/11">
-            <div class="login-form-container h-full w-full rounded-xl shadow shadow-black flex flex-col justify-center items-center space-y-4">
+        
+            <div class="login-form-container 
+            rounded-xl 
+            shadow shadow-black 
+            flex flex-col justify-center items-center space-y-4
+            w-11/12 h-4/5 min-h-100 md:w-1/2 md:h-3/4 lg:h-1/2 lg:w-3/11
+            ">
                 <!-- TODO: Replace logo with vector version -->
                 <img src="../assets/fsea_logo.png" alt="FSEA Logo" class="form-logo">
                 
@@ -29,7 +34,7 @@
                     
                 </div>
             </div>
-        </div>
+        
     </div>
 </template>
 
