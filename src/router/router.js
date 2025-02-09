@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import { useAuthStore } from '../components/stores/authStore';
 import { nextTick } from 'vue';
 import LoginPage from '../components/LoginPage.vue';
@@ -17,7 +17,7 @@ const routes = [
 
 const router = createRouter({
     routes,
-    history: createWebHistory(),
+    history: createWebHashHistory(),
 })
 
 router.beforeEach(async (to, from, next) => {
