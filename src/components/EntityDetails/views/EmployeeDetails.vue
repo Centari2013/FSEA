@@ -27,8 +27,15 @@
         <p><strong>Blood type:</strong> {{employee.medicalRecord.bloodtype}}</p>
         <p><strong>Height:</strong> {{employee.medicalRecord.heightCm}} cm</p>
         <p><strong>Weight:</strong> {{employee.medicalRecord.kilograms}} kg</p>
-        <p><strong>Notes:</strong></p>
-        <ul>{{employee.medicalRecord.notes ? employee.medicalRecord.notes : 'N/A'}}</ul>
+        
+        <div class="mt-5">
+        <Table
+        :title="'Notes'"
+        :headerTitles="['Timestamp', 'Note']"
+        :keys="['timestamp', 'note']"
+        :dictArr="employee.medicalRecord.notes ? JSON.parse(employee.medicalRecord.notes) : []"
+        />
+      </div>
       </div>
     </CollapsibleDiv>
 
@@ -41,9 +48,10 @@ import fetchEmployeeDetails from '../../../scripts/api_access/fetchEmployeeDetai
 import LoadSpinner from "../../Dashboard/animations/LoadSpinner.vue";
 import CollapsibleTable from "./components/CollapsibleTable.vue";
 import CollapsibleDiv from './components/CollapsibleDiv.vue';
+import Table from './components/Table.vue';
 
 export default {
-  components: { LoadSpinner, CollapsibleTable, CollapsibleDiv },
+  components: { LoadSpinner, CollapsibleTable, CollapsibleDiv, Table },
   props: { id: String },
   data(){
     return {
