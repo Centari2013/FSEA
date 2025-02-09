@@ -6,13 +6,14 @@
         <img src="../../assets/fsea_logo.png" alt="FSEA Logo" class="w-auto"/>
       </div>
       
-      <ul id="menu" class="h-full flex flex-col space-y-4">
+      <ul id="menu" class="h-full flex flex-col items-center space-y-4">
         <MenuButton 
           v-for="item in menuItems" 
           :key="item" 
           :name="item" 
           :selected="currentMenuItem === item"
           @click="handleMenuClick(item)"
+          class="justify-around w-full"
         />
       </ul>
     </div>
@@ -53,6 +54,9 @@
         <!--  Mobile Navigation Menu -->
         <nav :class="hamMenuisOpen ? 'block' : 'hidden'" class="absolute top-16 left-0 w-full bg-gray-900 shadow-md md:hidden md:block md:bg-transparent md:shadow-none">
           <ul class="flex flex-col items-center md:flex-row md:space-x-6 space-y-4">
+            <div class="h-1/8 mx-auto">
+        <img src="../../assets/fsea_logo.png" alt="FSEA Logo" class="w-auto"/>
+      </div>
             <MenuButton 
           v-for="item in menuItems" 
           :key="item" 
