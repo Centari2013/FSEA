@@ -1,5 +1,5 @@
 <template>
-  <div class="md:grid grid-cols-6 h-screen w-full overflow-hidden">
+  <div class="md:grid grid-cols-6 h-screen w-full overflow-clip">
     <!-- Sidebar -->
     <div class="hidden h-full pt-4 col-span-1 md:flex md:flex-col shadow-[2px_0px_5px_0px_rgba(0,0,0)]">
       <div class="h-1/8 mx-auto">
@@ -104,6 +104,9 @@ export default {
     currentPage() {
       return this.store.currentPage;
     }
+  },
+  mounted() {
+    window.addEventListener('resize', this.setupPagination);
   },
   watch: {
     totalPages(_new){
