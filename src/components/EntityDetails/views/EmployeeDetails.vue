@@ -15,6 +15,7 @@
         <li><strong>{{c.clearanceName}}: </strong> {{c.description}}</li>
       </template>
     </CollapsibleDiv>
+    
     <CollapsibleTable
     :title="'Missions'"
     :headerTitles="['Mission ID', 'Mission Name', 'Employee Involvement']"
@@ -28,7 +29,7 @@
         <p><strong>Height:</strong> {{employee.medicalRecord.heightCm}} cm</p>
         <p><strong>Weight:</strong> {{employee.medicalRecord.kilograms}} kg</p>
         
-        <div class="mt-5">
+        <div class="mt-5 overflow-x-scroll">
         <Table
         :title="'Notes'"
         :headerTitles="['Timestamp', 'Note']"

@@ -164,7 +164,7 @@ export default {
 }
 
 .next {
-  @apply rounded-r-md;
+  @apply rounded-r-md border-l-0;
 }
 
 .disabled {
