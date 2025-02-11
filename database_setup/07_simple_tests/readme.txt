@@ -1,1 +1,0 @@
--- All the tests in these directories currently use pgtap, which I've installed in my database.
