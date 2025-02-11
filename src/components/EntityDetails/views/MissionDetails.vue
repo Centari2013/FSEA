@@ -19,7 +19,7 @@
     </div>
 
     <div>
-    <SectionTitle :title="'Missions'"/>
+    <SectionTitle :title="'Employees Involved'"/>
         <ul class="space-y-4">
           <template v-for="e in mission.employees">
             <hr><li >{{e.employeeId}} - {{e.firstName}} {{e.lastName}}</li>
