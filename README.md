@@ -1,4 +1,4 @@
-# FSEA Database Project
+# FSEA Database Project (UNDER HEAVY DEVELOPMENT)
 
 ## Table of Contents
 
@@ -65,7 +65,5 @@ Password: admin
 **LinkedIn:** https://www.linkedin.com/in/zariaburton/
 
 
-## License
 
-This project is licensed under the [MIT License](LICENSE).
 
