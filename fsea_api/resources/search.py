@@ -25,8 +25,8 @@ def format_tsquery(search_input):
 
 def perform_search(info, sql_query, e_type, query_param, *permissions):
     """Runs a search query if the user has permission."""
-    if not has_permissions_or(info, *permissions):
-        return []  # No access, return an empty list
+    '''if not has_permissions_or(info, *permissions):
+        return []  # No access, return an empty list'''
 
     with engine.connect() as connection:
         sql = text(sql_query)
