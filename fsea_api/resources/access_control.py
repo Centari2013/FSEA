@@ -3,6 +3,14 @@ from functools import wraps
 from sqlalchemy import join, select
 from ..models.sqlalchemy_models import EmployeeClearance, Resource, ClearanceResourceAccess as CRA
 
+'''
+When employee tries to access table:
+- Use their employeeID to get all of their clearances.
+- Use those clearanceIDs to get resource names and access types.
+- If the resource name and access type matches the user's actions, then send raw data, otherwise disallow/redact.
+
+'''
+
 def getEmployeePermissions(info):
     request = info.context
     
@@ -29,8 +37,8 @@ def has_permission(permission_name):
     def decorator(func):
         @wraps(func)
         def wrapper(root, info, *args, **kwargs):
-            
-            if permission_name not in getEmployeePermissions(info):
+            permissions = getEmployeePermissions(info)
+            if permissions is None or permission_name not in permissions:
                 raise Exception('You do not have permission to perform this action')
             return func(root, info, *args, **kwargs)
         return wrapper
@@ -40,8 +48,9 @@ def has_permissions_and(*permission_names):
     def decorator(func):
         @wraps(func)
         def wrapper(root, info, *args, **kwargs):
+            permissions = getEmployeePermissions(info)
             for permission_name in permission_names:
-                if permission_name not in getEmployeePermissions(info):
+                if permissions is None or permission_name not in permissions:
                     raise Exception(f'You do not have permission to perform this action: {permission_name}')
             return func(root, info, *args, **kwargs)
         return wrapper
@@ -51,7 +60,8 @@ def has_permissions_or(*permission_names):
     def decorator(func):
         @wraps(func)
         def wrapper(root, info, *args, **kwargs):
-            if not any(permission_name in getEmployeePermissions(info) for permission_name in permission_names):
+            permissions = getEmployeePermissions(info)
+            if permissions is None or not any(permission_name in permissions for permission_name in permission_names):
                 raise Exception('You do not have any of the required permissions to perform this action')
             return func(root, info, *args, **kwargs)
         return wrapper
