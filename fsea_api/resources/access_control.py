@@ -33,43 +33,24 @@ def getEmployeePermissions(info):
         result = connection.execute(query)
         return [":".join([r[0],r[1],r[2]]) for r in result]
 
-def has_permission(permission_name):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(root, info, *args, **kwargs):
-            permissions = getEmployeePermissions(info)
-            if permissions is None or permission_name not in permissions:
-                raise Exception('You do not have permission to perform this action')
-            return func(root, info, *args, **kwargs)
-        return wrapper
-    return decorator
+def has_permission(info, permission_name):
+    permissions = getEmployeePermissions(info)
+    return permissions is not None and permission_name in permissions
+       
 
-def has_permissions_and(*permission_names):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(root, info, *args, **kwargs):
-            permissions = getEmployeePermissions(info)
-            for permission_name in permission_names:
-                if permissions is None or permission_name not in permissions:
-                    raise Exception(f'You do not have permission to perform this action: {permission_name}')
-            return func(root, info, *args, **kwargs)
-        return wrapper
-    return decorator
+def has_permissions_and(info, *permission_names):
+    permissions = getEmployeePermissions(info)
+    return permissions is not None and all(permission_name in permissions for permission_name in permission_names)
+            
 
-def has_permissions_or(*permission_names):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(root, info, *args, **kwargs):
-            permissions = getEmployeePermissions(info)
-            if permissions is None or not any(permission_name in permissions for permission_name in permission_names):
-                raise Exception('You do not have any of the required permissions to perform this action')
-            return func(root, info, *args, **kwargs)
-        return wrapper
-    return decorator
+def has_permissions_or(info, *permission_names):
+    permissions = getEmployeePermissions(info)
+    return permissions is not None and any(permission_name in permissions for permission_name in permission_names)
+    
 
 
 possible_permissions = [
-    "credentials:table:read_write",
+    #"credentials:table:read_write",
     "departments:table:read",
     "departments:table:read_write",
     "designations:table:read_write",
