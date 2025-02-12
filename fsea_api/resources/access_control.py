@@ -49,7 +49,7 @@ def has_permissions_or(info, *permission_names):
     
 
 
-possible_permissions = [
+'''possible_permissions = [
     #"credentials:table:read_write",
     "departments:table:read",
     "departments:table:read_write",
@@ -81,3 +81,4 @@ possible_permissions = [
     "specimens:table:read_write",
     "specimen_threat_level:column:read_write"
 ]
+'''
