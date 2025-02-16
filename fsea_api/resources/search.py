@@ -1,9 +1,7 @@
-import graphene
-import json
 from sqlalchemy import create_engine, text
 import os
 from dotenv import load_dotenv
-
+import strawberry
 from .access_control import has_permissions_or
 
 load_dotenv()
@@ -11,10 +9,11 @@ load_dotenv()
 engine = create_engine(os.getenv("DATABASE_URI"))
 
 # Import permission functions
-class SearchResult(graphene.ObjectType):
-    entity_type = graphene.String()
-    data = graphene.JSONString()
-    relevancy = graphene.Float()
+@strawberry.type
+class SearchResult:
+    entity_type: str
+    data: str
+    relevancy: float
 
 
 def format_tsquery(search_input):
@@ -68,14 +67,8 @@ def search_specimens(info, query):
     return perform_search(info, "SELECT * FROM search_specimen_details(:query)", "S", query, "specimens:table:read", "specimens:table:read_write")
 
 
-# 🚀 **GraphQL Mutation with Permission Checks**
-class Search(graphene.Mutation):
-    class Arguments:
-        query = graphene.String(required=True)
-
-    results = graphene.List(SearchResult)
-
-    def mutate(self, info, query):
+@strawberry.mutation
+def search(info: strawberry.Info, query):
         formatted_query = format_tsquery(query)
 
         results = []
@@ -99,8 +92,8 @@ class Search(graphene.Mutation):
 
         results = sorted(results, key=combined_score)
 
-        return Search(results=results)
+        return results
 
-
-class SearchMutation(graphene.ObjectType):
-    search = Search.Field()
+@strawberry.type
+class SearchMutation:
+    search = search

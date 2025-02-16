@@ -1,58 +1,38 @@
 from ..config import *
 from ...models.sqlalchemy_models import DepartmentMission
 
-class DepartmentMissionType(SQLAlchemyObjectType):
-    class Meta:
-        model = DepartmentMission
-        interfaces = (graphene.relay.Node,)
+@mapper.type(DepartmentMission)
+class DepartmentMissionType:
+    pass
 
-class AssociateMissionWithDepartment(graphene.Mutation):
-    class Arguments:
-        department_id = graphene.Int(required=True)
-        mission_id = graphene.Int(required=True)
-
-    success = graphene.Boolean()
-    message = graphene.String()
-
-    def mutate(self, info, department_id, mission_id):
+def associate_mission_with_department(info: strawberry.Info, department_id, mission_id):
+    with SessionLocal() as session:
         new_association = DepartmentMission(department_id=department_id, mission_id=mission_id)
         try:
-            db.session.add(new_association)
-            db.session.commit()
-            return AssociateMissionWithDepartment(success=True, message="Mission associated with department successfully")
+            session.add(new_association)
+            session.commit()
+            return True
         except Exception as e:
-            db.session.rollback()
-            return AssociateMissionWithDepartment(success=False, message=f"Failed to associate mission with department. Error: {str(e)}")
+            session.rollback()
+            return False
 
-class DisassociateMissionFromDepartment(graphene.Mutation):
-    class Arguments:
-        department_id = graphene.Int(required=True)
-        mission_id = graphene.Int(required=True)
-
-    success = graphene.Boolean()
-    message = graphene.String()
-
-    def mutate(self, info, department_id, mission_id):
-        association = DepartmentMission.query.filter_by(department_id=department_id, mission_id=mission_id).first()
+def disassociate_mission_from_department(info: strawberry.Info, department_id, mission_id):
+    with SessionLocal() as session:
+        association = session.query(DepartmentMission).filter_by(department_id=department_id, mission_id=mission_id).first()
         if association:
             try:
-                db.session.delete(association)
-                db.session.commit()
-                return DisassociateMissionFromDepartment(success=True, message="Mission disassociated from department successfully")
+                session.delete(association)
+                session.commit()
+                return True
             except Exception as e:
-                db.session.rollback()
-                return DisassociateMissionFromDepartment(success=False, message=f"Failed to disassociate mission from department. Error: {str(e)}")
+                session.rollback()
+                return False
         else:
-            return DisassociateMissionFromDepartment(success=False, message="Department-mission association not found")
+            return False
 
-class GetMissionsForDepartment(graphene.ObjectType):
-    class Arguments:
-        department_id = graphene.Int(required=True)
-
-    missions = graphene.List(graphene.String)
-
-    def resolve_missions(self, info, department_id):
-        associations = DepartmentMission.query.filter_by(department_id=department_id).all()
+def get_missions_for_department(info: strawberry.Info, department_id):
+    with SessionLocal() as session:
+        associations = session.query(DepartmentMission).filter_by(department_id=department_id).all()
         if associations:
             return [assoc.mission_id for assoc in associations]
         else:
