@@ -13,12 +13,12 @@
                 <div id="loginForm" class="space-y-3 w-5/6">
                     <div class="form-group flex flex-col items-start h-1/3 w-full space-y-2">
                         <label for="username" class="form-label">Username:</label>
-                        <input @keyup.enter="submitLogin" v-model="username" type="text" id="username" name="username" required class="form-control h-1/2 w-full rounded-sm p-2 border-1">
+                        <input @keyup.enter="submitLogin" v-model="username" type="text" id="username" name="username" placeholder="username: zaria" required class="form-control h-1/2 w-full rounded-sm p-2 border-1">
                     </div>
                     
                     <div class="form-group flex flex-col items-start h-1/3 w-full space-y-2">
                         <label for="password" class="form-label">Password:</label>
-                        <input @keyup.enter="submitLogin" v-model="password" type="password" id="password" name="password" required class="form-control h-1/2 w-full rounded-sm p-2 border-1">
+                        <input @keyup.enter="submitLogin" v-model="password" type="password" id="password" name="password" placeholder="password: admin" required class="form-control h-1/2 w-full rounded-sm p-2 border-1">
                     </div>
                     
                     <!-- Container to Prevent Shifting -->
