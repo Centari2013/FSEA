@@ -17,10 +17,10 @@
 Project FSEA (Federal Space Exploration Association) is a passion project, based on one of my fictional stories, that serves as an info-base for the association. It is currently bare-bones, but I plan to add much more functionality. 
 
 The main objective of this project is to develop a more in-depth understanding of database design and web application development. 
-
+The UI in the gif is out of date but the functionality and layout is largely the same.
 <img src="fsea-demo.gif" width="1080"/>
 
-**Link to demo:** https://fsea-if20.onrender.com/login.html \
+**Link to demo:** centari2013.github.io/FSEA \
 Username: zaria\
 Password: admin
 
@@ -28,9 +28,11 @@ Password: admin
 ### Built With
 <!-- List any MAJOR libraries/frameworks (e.g. React, Tailwind) with links to their homepages. -->
 **Frontend**
-- [ViteJS](https://vitejs.dev/)
+- [ViteJs](https://vitejs.dev/)
+- [Vue 3](https://vuejs.org/)
+- [Tailwind v4.0](https://tailwindcss.com/)
 
-**API**
+**API** (planned upgrade to [Strawberry](https://strawberry.rocks/))
 - [Flask](https://flask.palletsprojects.com/en/3.0.x/)
 - [Graphene](https://docs.graphene-python.org/en/latest/) (GraphQL)
 - [SQLAlchemy](https://docs.sqlalchemy.org/en/20/)
@@ -44,13 +46,10 @@ Password: admin
 <!-- List what specific 'user problems' that this application solves. -->
 ### Current
 - user login
-- view department directory
-- view specimen directory
-- view origin directory
-- database search
+- view entity info pages and directories
+- database search (still tweaking relevance sorting)
 
 ### Planned
-- **SWITCHING TO VUE AND TAILWIND**
 - dashboard graphs/metrics
 - access control
 - page editing
@@ -63,6 +62,7 @@ Password: admin
 ## Contact
 <!-- Include icons and links to your RELEVANT, PROFESSIONAL 'DEV-ORIENTED' social media. LinkedIn and dev.to are minimum. -->
 **LinkedIn:** https://www.linkedin.com/in/zariaburton/
+**Email:** zaria.burton2000@gmail.com
 
 
 
