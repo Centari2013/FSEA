@@ -20,7 +20,7 @@ The main objective of this project is to develop a more in-depth understanding o
 The UI in the gif is out of date but the functionality and layout is largely the same.
 <img src="fsea-demo.gif" width="1080"/>
 
-**Link to demo:** centari2013.github.io/FSEA \
+**Link to demo:** [centari2013.github.io/FSEA](centari2013.github.io/FSEA) \
 Username: zaria\
 Password: admin
 
