@@ -1,69 +1,76 @@
-# FSEA Database Project (UNDER HEAVY DEVELOPMENT)
+# 🛰️ FSEA Database Portal
 
-## Table of Contents
+> A fictional database management system for the Federal Space Exploration Association. Built to explore full stack design, database modeling, and role-based data access architecture.
 
-- [Overview](#overview)
-- [Built With](#built-with)
-- [Features](#features)
-- [Contact](#contact)
-## Overview
-<!-- Add a screenshot of the live project.
-    1. Link to a 'live demo.'
-    2. Describe your overall experience in a couple of sentences.
-    3. List a few specific technical things that you learned or improved on.
-    4. Share any other tips or guidance for others attempting this or something similar.
- -->
+---
 
-Project FSEA (Federal Space Exploration Association) is a passion project, based on one of my fictional stories, that serves as an info-base for the association. It is currently bare-bones, but I plan to add much more functionality. 
+## 🚀 Overview
 
-The main objective of this project is to develop a more in-depth understanding of database design and web application development. 
-The UI in the gif is out of date but the functionality and layout is largely the same.
-<img src="fsea-demo.gif" width="1080"/>
+This project began as a lore-driven build, based on a fictional universe I created. Beneath the aesthetic, it functions as a fully structured data management app, developed to deepen my understanding of:
 
-**Link to demo:** [centari2013.github.io/FSEA](https://centari2013.github.io/FSEA/)\
-Username: zaria\
-Password: admin
+- PostgreSQL schema design
+- API architecture with GraphQL
+- Role-based access control
+- Backend logic integration with a frontend SPA
 
+The project is currently offline due to hosting constraints, but the architecture and schema remain core to the work.
 
-### Built With
-<!-- List any MAJOR libraries/frameworks (e.g. React, Tailwind) with links to their homepages. -->
-**Frontend**
-- [ViteJs](https://vitejs.dev/)
-- [Vue 3](https://vuejs.org/)
-- [Tailwind v4.0](https://tailwindcss.com/)
+---
 
-**API** (planned upgrade to [Strawberry](https://strawberry.rocks/))
+## 🧰 Tech Stack
+
+### 🔹 Frontend
+- [Vue 3](https://vuejs.org/) with [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/) (v4)
+
+### 🔸 Backend
 - [Flask](https://flask.palletsprojects.com/en/3.0.x/)
-- [Graphene](https://docs.graphene-python.org/en/latest/) (GraphQL)
+- [Graphene (GraphQL)](https://docs.graphene-python.org/en/latest/) *(planned migration to [Strawberry](https://strawberry.rocks/))*
 - [SQLAlchemy](https://docs.sqlalchemy.org/en/20/)
 
-**Database**
+### 🗄️ Database
 - [PostgreSQL](https://www.postgresql.org/)
+- Well-structured schema with logical entity relationships and normalization
 
+---
 
+## ✨ Features
 
-## Features
-<!-- List what specific 'user problems' that this application solves. -->
-### Current
-- user login
-- view entity info pages and directories
-- database search (still tweaking relevance sorting)
+### ✅ Implemented
+- 🔐 Auth system with token-based session expiration (4-hour limit)
+- 📄 Entity modeling with GraphQL queries
+- 🔍 Basic search across key data fields
 
-### Planned
-- dashboard graphs/metrics
-- access control
-- page editing
-- pdf generation
-- document search/access
+### 🧪 Planned
+- 📊 Admin dashboard with real-time metrics
+- 🔒 Fine-grained permission layers
+- 📎 PDF export for page/document content
+- 📚 File indexing and deep search
 
-### Some Fun? Facts
-- User tokens become invalid after 4 hours, prompting users to login again.
+---
 
-## Contact
-<!-- Include icons and links to your RELEVANT, PROFESSIONAL 'DEV-ORIENTED' social media. LinkedIn and dev.to are minimum. -->
-**LinkedIn:** https://www.linkedin.com/in/zariaburton/
-**Email:** zaria.burton2000@gmail.com
+## 🧠 What I Learned
 
+- Designing normalized, scalable database schemas
+- Structuring GraphQL APIs with query efficiency in mind
+- Integrating backend logic cleanly into a modular frontend
+- Thinking through access patterns and user session lifecycles
 
+This project laid the foundation for deeper backend fluency and architectural thinking that I’ve carried into other full stack work.
 
+---
 
+## 📬 Contact
+
+Want to chat about backend architecture or database design?
+
+- **LinkedIn:** [linkedin.com/in/zariaburton](https://www.linkedin.com/in/zariaburton/)
+- **Email:** zaria.burton2000@gmail.com
+
+---
+
+## 🗃️ Repo TODO
+- [ ] Migrate GraphQL backend to Strawberry for async and type-safety
+- [ ] Add automated tests and CI pipeline
+- [ ] Rework access control layer
+- [ ] Optional lightweight deployment (Supabase / Railway)
